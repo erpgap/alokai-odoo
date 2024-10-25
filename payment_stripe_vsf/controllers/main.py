@@ -79,7 +79,7 @@ class StripeControllerInherit(StripeController):
         # Condition used for VSF
         if tx_sudo.created_on_vsf:
             if payment_intent:
-                if payment_intent.get('status') and payment_intent['status'] == 'succeeded':
+                if payment_intent.get('status') and payment_intent['status'] in ['succeeded', 'requires_capture']:
                     # Confirm sale order
                     PaymentPostProcessing().poll_status()
                     return werkzeug.utils.redirect(vsf_payment_success_return_url)
