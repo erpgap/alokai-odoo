@@ -171,7 +171,7 @@ class WebsiteMenuImage(models.Model):
         menu = self.search([], limit=1, order="sequence DESC")
         return menu.sequence or 0
 
-    menu_id = fields.Many2one('website.menu', 'Website Menu', required=True)
+    menu_id = fields.Many2one('website.menu', 'Website Menu', required=True, ondelete='cascade')
     sequence = fields.Integer(default=_default_sequence)
     image = fields.Image(string='Image', required=True)
     tag = fields.Char('Tag')
