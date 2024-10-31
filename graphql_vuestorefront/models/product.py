@@ -70,21 +70,12 @@ class ProductTemplate(models.Model):
                 domains.append([
                     '|', '|', ('name', 'ilike', srch), ('description_sale', 'like', srch), ('default_code', 'like', srch)])
 
-        partial_domain = domains.copy()
-
-        # Product Price Filter
-        if kwargs.get('min_price', False):
-            domains.append([('list_price', '>=', float(kwargs['min_price']))])
-        if kwargs.get('max_price', False):
-            domains.append([('list_price', '<=', float(kwargs['max_price']))])
-
-        # Deprecated: filter with Attribute Value
-        if kwargs.get('attribute_value_id', False):
-            domains.append([('attribute_line_ids.value_ids', 'in', kwargs['attribute_value_id'])])
+        # Used for improving attributes filtering
+        attributes_partial_domain = domains.copy()
 
         # Filter with Attribute Value
+        filtered_attributes = {}
         if kwargs.get('attrib_values', False):
-            attributes = {}
             attributes_domain = []
 
             for value in kwargs['attrib_values']:
@@ -98,18 +89,32 @@ class ProductTemplate(models.Model):
                 except ValueError:
                     continue
 
-                if attribute_id not in attributes:
-                    attributes[attribute_id] = []
+                if attribute_id not in filtered_attributes:
+                    filtered_attributes[attribute_id] = []
 
-                attributes[attribute_id].append(attribute_value_id)
+                filtered_attributes[attribute_id].append(attribute_value_id)
 
-            for key, value in attributes.items():
+            for key, value in filtered_attributes.items():
                 attributes_domain.append([('attribute_line_ids.value_ids', 'in', value)])
 
             attributes_domain = expression.AND(attributes_domain)
             domains.append(attributes_domain)
 
-        return expression.AND(domains), expression.AND(partial_domain)
+        # Min and max price of recordset need to be calculated without the price filter
+        prices_partial_domain = domains.copy()
+
+        # Product Price Filter
+        if kwargs.get('min_price', False):
+            domains.append([('list_price', '>=', float(kwargs['min_price']))])
+        if kwargs.get('max_price', False):
+            domains.append([('list_price', '<=', float(kwargs['max_price']))])
+
+        return (
+            expression.AND(domains),
+            attributes_partial_domain,
+            expression.AND(prices_partial_domain),
+            filtered_attributes
+        )
 
     def _compute_json_ld(self):
         env = self.env

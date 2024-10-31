@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import graphene
+from odoo.osv import expression
 from graphql import GraphQLError
 from odoo import _
 from odoo.addons.graphql_vuestorefront.schemas.objects import (
@@ -13,7 +14,7 @@ from odoo.addons.graphql_vuestorefront.schemas.objects import (
 def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     Product = env['product.template'].sudo()
     Category = env['product.public.category'].sudo()
-    domain, partial_domain = Product._graphql_get_search_domain(search, **kwargs)
+    domain, attributes_partial_domain, prices_partial_domain, filtered_attributes = Product._graphql_get_search_domain(search, **kwargs)
 
     # First offset is 0 but first page is 1
     if current_page > 1:
@@ -22,50 +23,95 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         offset = 0
     order = Product._graphql_get_search_order(sort)
     products = Product.search(domain, order=order)
-
-    # Attempt to get attribute values from category, otherwise fallback to attribute values from products
     attribute_values = env['product.attribute.value'].sudo()
-    category = None
-    if kwargs.get('category_id'):
-        category = Category.search([('id', 'in', kwargs['category_id'])], limit=1)
-    elif kwargs.get('category_slug'):
-        category = Category.search([('website_slug', '=', kwargs['category_slug'])], limit=1)
-    if category:
-        attribute_values = category.\
-            mapped('attribute_ids').\
-            mapped('value_ids').\
-            filtered(lambda av: av.visibility and av.visibility == 'visible')
+
+    if products:
+        filtered_attribute_values = env['product.attribute.value'].sudo()
+        # Attempt to get attribute values from category, otherwise fallback to attribute values from products
+        category = None
+        if kwargs.get('category_id'):
+            category = Category.search([('id', 'in', kwargs['category_id'])], limit=1)
+        elif kwargs.get('category_slug'):
+            category = Category.search([('website_slug', '=', kwargs['category_slug'])], limit=1)
+        if category:
+            filtered_attribute_values = category.\
+                mapped('attribute_ids').\
+                mapped('value_ids').\
+                filtered(lambda av: av.visibility and av.visibility == 'visible')
+
+        # Attributes from category, they still need to be filtered based on the products we are returning
+        if filtered_attribute_values:
+            category_attribute_value_ids = filtered_attribute_values.ids
+            product_attribute_value_ids = products.\
+                mapped('variant_attribute_value_ids').\
+                filtered(lambda av: av.visibility and av.visibility == 'visible').ids
+            # Convert lists to sets and find the intersection to make sure attributes from category exist on products
+            common_ids = list(set(category_attribute_value_ids) & set(product_attribute_value_ids))
+            filtered_attribute_values = filtered_attribute_values.filtered(lambda av: av.id in common_ids)
+        else:
+            # Attributes from products
+            filtered_attribute_values = products.\
+                mapped('variant_attribute_value_ids').\
+                filtered(lambda av: av.visibility and av.visibility == 'visible')
+
+        # Our goal is to retrieve attribute values from filtered products to ensure that results are always returned,
+        # regardless of the applied filters. A key challenge is that simply retrieving attribute values from filtered
+        # products restricts us to values that match the filter criteria (e.g., filtering for green shoes only yields
+        # the "green" color, excluding other colors).
+        #
+        # To address this, we’ll use the following approach:
+        # 1. First, we collect all attribute values from the filtered products that were not included in the filter
+        #    criteria.
+        # 2. For each attribute, we retrieve products filtered by the remaining attributes, excluding the specific
+        #    attribute in question.
+        # 3. Finally, we cross-check these results to determine which attribute values within the attribute in question
+        #    have products available.
+
+        # Step 1.
+        filtered_attribute_value_ids = list(set(num for sublist in filtered_attributes.values() for num in sublist))
+        for filtered_attribute_value in filtered_attribute_values:
+            if filtered_attribute_value.id not in filtered_attribute_value_ids:
+                attribute_values |= filtered_attribute_value
+
+        # Step 2. and 3.
+        for attribute_id, attribute_value_ids in filtered_attributes.items():
+            domain = attributes_partial_domain
+            attributes_domain = []
+
+            # Step 2.
+            for f_attribute_id, f_attribute_value_ids in filtered_attributes.items():
+                if attribute_id == f_attribute_id:
+                    continue
+                attributes_domain.append([('attribute_line_ids.value_ids', 'in', f_attribute_value_ids)])
+
+            attributes_domain = expression.AND(attributes_domain)
+            domain.append(attributes_domain)
+            domain = expression.AND(domain)
+
+            partial_attribute_values = Product.search(domain). \
+                mapped('variant_attribute_value_ids'). \
+                filtered(lambda av: av.attribute_id.id == attribute_id and av.visibility and av.visibility == 'visible')
+
+            # Step 3.
+            attribute_values |= partial_attribute_values
 
     # The partial domain is being used because when we select (example) attributes, the full list of products is
-    # reduced which in turn also reduces the full list of attribute values, prices and warehouses
-    if domain == partial_domain:
-        without_filters_products = products
+    # reduced which in turn also reduces the min and max prices
+    if domain == prices_partial_domain:
+        prices = products.mapped('list_price')
     else:
-        without_filters_products = Product.search(partial_domain)
+        prices = Product.search(prices_partial_domain).mapped('list_price')
 
-    # Attributes from category, they still need to be filtered based on the products we are returning
-    if attribute_values:
-        category_attribute_value_ids = attribute_values.ids
-        product_attribute_value_ids = without_filters_products.\
-            mapped('variant_attribute_value_ids').\
-            filtered(lambda av: av.visibility and av.visibility == 'visible').ids
-        # Convert lists to sets and find the intersection to make sure attributes from category exist on products
-        common_ids = list(set(category_attribute_value_ids) & set(product_attribute_value_ids))
-        attribute_values = attribute_values.filtered(lambda av: av.id in common_ids)
+    if prices:
+        min_price = min(prices)
+        max_price = max(prices)
     else:
-        # Attributes from products
-        attribute_values = without_filters_products.\
-            mapped('variant_attribute_value_ids').\
-            filtered(lambda av: av.visibility and av.visibility == 'visible')
-
-    prices = without_filters_products.mapped('list_price')
+        min_price = 0.0
+        max_price = 0.0
 
     total_count = len(products)
     products = products[offset:offset + page_size]
-
-    if prices:
-        return products, total_count, attribute_values, min(prices), max(prices)
-    return products, total_count, attribute_values, 0.0, 0.0
+    return products, total_count, attribute_values, min_price, max_price
 
 
 class Products(graphene.Interface):
