@@ -75,7 +75,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
 
         # Step 2. and 3.
         for attribute_id, attribute_value_ids in filtered_attributes.items():
-            domain = attributes_partial_domain
+            domain = attributes_partial_domain.copy()
             attributes_domain = []
 
             # Step 2.
