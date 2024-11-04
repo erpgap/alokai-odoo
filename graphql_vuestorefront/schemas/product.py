@@ -6,6 +6,8 @@ import graphene
 from odoo.osv import expression
 from graphql import GraphQLError
 from odoo import _
+from collections import defaultdict
+from graphene.types import generic
 from odoo.addons.graphql_vuestorefront.schemas.objects import (
     SortEnum, Product, Attribute, AttributeValue
 )
@@ -24,6 +26,8 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     order = Product._graphql_get_search_order(sort)
     products = Product.search(domain, order=order)
     attribute_values = env['product.attribute.value'].sudo()
+    filter_counts = []
+    attribute_value_counts = defaultdict(int)
 
     if products:
         filtered_attribute_values = env['product.attribute.value'].sudo()
@@ -69,9 +73,17 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
 
         # Step 1.
         filtered_attribute_value_ids = list(set(num for sublist in filtered_attributes.values() for num in sublist))
+        # Used for counting attribute values
+        products_attribute_value_ids = [set(p.attribute_line_ids.value_ids.ids) for p in products]
         for filtered_attribute_value in filtered_attribute_values:
             if filtered_attribute_value.id not in filtered_attribute_value_ids:
                 attribute_values |= filtered_attribute_value
+
+                attribute_value_counts[filtered_attribute_value.id] += sum(
+                    1
+                    for products_attribute_value_id in products_attribute_value_ids
+                    if filtered_attribute_value.id in products_attribute_value_id
+                )
 
         # Step 2. and 3.
         for attribute_id, attribute_value_ids in filtered_attributes.items():
@@ -88,12 +100,23 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
             domain.append(attributes_domain)
             domain = expression.AND(domain)
 
-            partial_attribute_values = Product.search(domain). \
+            partial_products = Product.search(domain)
+            partial_attribute_values = partial_products.search(domain). \
                 mapped('variant_attribute_value_ids'). \
                 filtered(lambda av: av.attribute_id.id == attribute_id and av.visibility and av.visibility == 'visible')
 
             # Step 3.
             attribute_values |= partial_attribute_values
+
+            # Used for counting attribute values
+            products_attribute_value_ids = [set(p.attribute_line_ids.value_ids.ids) for p in partial_products]
+            for partial_attribute_value in partial_attribute_values:
+                attribute_value_counts[partial_attribute_value.id] += sum(
+                    1
+                    for products_attribute_value_id in products_attribute_value_ids
+                    if partial_attribute_value.id in products_attribute_value_id
+                    and partial_attribute_value.id in attribute_values.ids
+                )
 
     # The partial domain is being used because when we select (example) attributes, the full list of products is
     # reduced which in turn also reduces the min and max prices
@@ -109,9 +132,17 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         min_price = 0.0
         max_price = 0.0
 
+    # Count filters
+    if attribute_values:
+        filter_counts.extend([{
+            'type': 'attribute_value',
+            'id': av.id,
+            'total': attribute_value_counts[av.id],
+        } for av in attribute_values])
+
     total_count = len(products)
     products = products[offset:offset + page_size]
-    return products, total_count, attribute_values, min_price, max_price
+    return products, total_count, attribute_values, min_price, max_price, filter_counts
 
 
 class Products(graphene.Interface):
@@ -120,6 +151,7 @@ class Products(graphene.Interface):
     attribute_values = graphene.List(AttributeValue)
     min_price = graphene.Float()
     max_price = graphene.Float()
+    filter_counts = generic.GenericScalar()
 
 
 class ProductList(graphene.ObjectType):
@@ -213,10 +245,10 @@ class ProductQuery(graphene.ObjectType):
     @staticmethod
     def resolve_products(self, info, filter, current_page, page_size, search, sort):
         env = info.context["env"]
-        products, total_count, attribute_values, min_price, max_price = get_product_list(
+        products, total_count, attribute_values, min_price, max_price, filter_counts = get_product_list(
             env, current_page, page_size, search, sort, **filter)
         return ProductList(products=products, total_count=total_count, attribute_values=attribute_values,
-                           min_price=min_price, max_price=max_price)
+                           min_price=min_price, max_price=max_price, filter_counts=filter_counts)
 
     @staticmethod
     def resolve_attribute(self, info, id):
