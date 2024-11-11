@@ -83,6 +83,29 @@ def product_is_in_wishlist(env, product):
     return product._is_in_wishlist()
 
 
+def get_image_filename(object, name=None):
+    """
+    Uses write_date timestamp as an unique identifier on the asset. This will make sure we keep it on cache (CDN,
+    browser) until it changes.
+    """
+    if name:
+        image_name = slugify(getattr(object, name, '') or '')
+    else:
+        image_name = slugify(object.name or '')
+
+    try:
+        timestamp = int(object.write_date.timestamp())
+    except ValueError as e:
+        return 'image'
+
+    # Remove '0x' prefix
+    unique_id = hex(timestamp)[2:]
+
+    if image_name:
+        return f'{unique_id}_{image_name}'
+    return unique_id
+
+
 # --------------------- #
 #       Objects         #
 # --------------------- #
@@ -161,7 +184,7 @@ class Company(OdooObjectType):
         return '/web/image/res.company/{}/image_1920'.format(self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.name)
+        return get_image_filename(self)
 
 
 class Pricelist(OdooObjectType):
@@ -231,7 +254,7 @@ class Partner(OdooObjectType):
         return '/web/image/res.partner/{}/image_1920'.format(self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.name)
+        return get_image_filename(self)
 
     def resolve_public_pricelist(self, info):
         website = self.env['website'].get_current_website()
@@ -300,7 +323,7 @@ class Category(OdooObjectType):
         return '/web/image/product.public.category/{}/image_1920'.format(self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.name)
+        return get_image_filename(self)
 
     def resolve_parent(self, info):
         return self.parent_id or None
@@ -380,7 +403,7 @@ class ProductImage(OdooObjectType):
         return '/web/image/product.image/{}/image_1920'.format(self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.name)
+        return get_image_filename(self)
 
     def resolve_video(self, info):
         return self.video_url or None
@@ -492,7 +515,7 @@ class Product(OdooObjectType):
         return '/web/image/{}/{}/image_128'.format(self._name, self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.name)
+        return get_image_filename(self)
 
     def resolve_thumbnail(self, info):
         return '/web/image/{}/{}/image_512'.format(self._name, self.id)
@@ -923,7 +946,7 @@ class PaymentMethod(OdooObjectType):
         return '/web/image/payment.method/{}/image_payment_form'.format(self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.name)
+        return get_image_filename(self)
 
 
 class PaymentProvider(OdooObjectType):
@@ -1017,7 +1040,7 @@ class WebsiteMenuImage(OdooObjectType):
         return '/web/image/website.menu.image/{}/image'.format(self.id)
 
     def resolve_image_filename(self, info):
-        return slugify(self.title or 'image')
+        return get_image_filename(self, name='title')
 
 
 class BlogPostTag(OdooObjectType):
