@@ -1018,3 +1018,25 @@ class WebsiteMenuImage(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return slugify(self.title or 'image')
+
+
+class BlogPostTag(OdooObjectType):
+    id = graphene.Int()
+    name = graphene.String()
+
+
+class BlogPost(OdooObjectType):
+    id = graphene.Int()
+    name = graphene.String()
+    published_date = graphene.String()
+    author_id = graphene.Field(lambda: Partner)
+    content = graphene.String()
+    teaser = graphene.String()
+    tag_ids = graphene.List(graphene.NonNull(lambda: BlogPostTag))
+    visibility = graphene.Int()
+
+    def resolve_visibility(self, info):
+        if self.website_published:
+            return 1
+        else:
+            return 0
