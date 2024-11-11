@@ -25,6 +25,7 @@
         'payment_adyen_vsf',
         'payment_stripe_vsf',
         'auth_totp',
+        'website_blog'
     ],
     'data': [
         'security/ir.model.access.csv',

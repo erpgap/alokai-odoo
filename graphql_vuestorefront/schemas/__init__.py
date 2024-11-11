@@ -16,3 +16,4 @@ from . import payment
 from . import wishlist
 from . import mailing_list
 from . import website
+from . import website_blog
