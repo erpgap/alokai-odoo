@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import graphene
 from graphene.types import generic
-from odoo.addons.http_routing.models.ir_http import slugify
 from odoo.addons.graphql_vuestorefront.schemas.objects import WebsiteMenu, get_image_filename
 
 
