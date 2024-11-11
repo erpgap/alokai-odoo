@@ -4,7 +4,7 @@
 import graphene
 from graphene.types import generic
 from odoo.addons.http_routing.models.ir_http import slugify
-from odoo.addons.graphql_vuestorefront.schemas.objects import WebsiteMenu
+from odoo.addons.graphql_vuestorefront.schemas.objects import WebsiteMenu, get_image_filename
 
 
 class Homepage(graphene.Interface):
@@ -99,6 +99,6 @@ class WebsiteQuery(graphene.ObjectType):
             meta_keyword=website.website_meta_keywords,
             meta_description=website.website_meta_description,
             meta_image=f'/web/image/website/{website.id}/website_meta_img',
-            meta_image_filename=slugify(website.website_meta_title),
+            meta_image_filename=get_image_filename(website, name='website_meta_title'),
             json_ld=website.json_ld,
         )
