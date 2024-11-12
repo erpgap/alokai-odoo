@@ -9,6 +9,7 @@ from PIL import Image, WebPImagePlugin
 from odoo import models
 from odoo.http import request
 from odoo.tools.safe_eval import safe_eval
+from odoo.tools.image import image_process, image_guess_size_from_field_name
 from odoo.tools.mimetypes import guess_mimetype, get_extension
 
 
@@ -27,15 +28,30 @@ class IrBinary(models.AbstractModel):
             if not placeholder:
                 placeholder = record._get_placeholder_filename(field_name)
             stream = self._get_placeholder_stream(placeholder)
+
         image_format = None
         if stream and stream.mimetype and ('jpg' in stream.mimetype or 'jpeg' in stream.mimetype):
             image_format = 'jpeg'
         if stream and stream.mimetype and 'webp' in stream.mimetype:
             image_format = 'webp'
+        
         if image_format:
-            if stream.data and width and height:
-                image_base64 = stream.data
+            if (stream.data or stream.read()) and width and height:
+                image_base64 = stream.data or stream.read()
+                #TODO remove when odoo fix webp resize issue
+                # FIX: convert webp to png and then resize it
+                if image_format == 'webp':
+                    img = self.webp_base64_to_jpeg(stream.read())
+                    new_image_base64 = self.image_to_base64('output.png')
+                    image_base64 = image_process(
+                        new_image_base64,
+                        size=(width, height),
+                        crop=crop,
+                        quality=quality,
+                    )
+
                 img = Image.open(io.BytesIO(image_base64))
+
                 ICP = request.env['ir.config_parameter'].sudo()
                 if img.mode != 'RGBA':
                     img = img.convert('RGBA')
@@ -97,3 +113,28 @@ class IrBinary(models.AbstractModel):
             if (not get_extension(stream.download_name)
                 and stream.mimetype != 'application/octet-stream'):
                 stream.download_name += guess_extension(stream.mimetype) or ''
+
+    def webp_base64_to_jpeg(self,image_bytes, output_file='output.png'):
+        """
+        Converts a WebP image encoded in base64 to a PNG image.
+        """
+
+        # Create an Image object from the bytes
+        image = Image.open(io.BytesIO(image_bytes))
+
+        # Convert the image to PNG format
+        image = image.convert('RGB')
+
+        # Save the image as a PNG
+        image.save(output_file, 'PNG')
+        return image
+
+    def image_to_base64(self, image_path):
+        """
+        Converts an image to a base64 encoded string.
+        """
+
+        with open(image_path, "rb") as f:
+            image_bytes = f.read()
+
+        return image_bytes
