@@ -34,15 +34,15 @@ class IrBinary(models.AbstractModel):
             image_format = 'jpeg'
         if stream and stream.mimetype and 'webp' in stream.mimetype:
             image_format = 'webp'
+            stream.data = stream.read()
         
         if image_format:
-            if (stream.data or stream.read()) and width and height:
-                image_base64 = stream.data or stream.read()
+            if stream.data and width and height:
+                image_base64 = stream.data
                 #TODO remove when odoo fix webp resize issue
                 # FIX: convert webp to png and then resize it
                 if image_format == 'webp':
-                    img = self.webp_base64_to_jpeg(stream.read())
-                    new_image_base64 = self.image_to_base64('output.png')
+                    new_image_base64 = self.webp_base64_to_jpeg(stream.read())
                     image_base64 = image_process(
                         new_image_base64,
                         size=(width, height),
@@ -127,14 +127,8 @@ class IrBinary(models.AbstractModel):
 
         # Save the image as a PNG
         image.save(output_file, 'PNG')
-        return image
-
-    def image_to_base64(self, image_path):
-        """
-        Converts an image to a base64 encoded string.
-        """
-
-        with open(image_path, "rb") as f:
+        
+        with open(output_file, "rb") as f:
             image_bytes = f.read()
 
         return image_bytes
