@@ -25,6 +25,7 @@
     'data': [
         'views/stripe_template.xml',
         'data/website_data.xml',
+        'data/ir_cron_data.xml',
     ],
 
     # Assets
