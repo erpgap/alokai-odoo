@@ -81,7 +81,7 @@ class StripeControllerInherit(StripeController):
             if payment_intent:
                 if payment_intent.get('status') and payment_intent['status'] in ['succeeded', 'requires_capture']:
                     # Confirm sale order
-                    PaymentPostProcessing().poll_status()
+                    # PaymentPostProcessing().poll_status()
                     return werkzeug.utils.redirect(vsf_payment_success_return_url)
                 else:
                     return werkzeug.utils.redirect(vsf_payment_error_return_url)
