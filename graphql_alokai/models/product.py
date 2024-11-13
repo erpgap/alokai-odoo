@@ -378,6 +378,13 @@ class ProductTemplateFBT(models.Model):
     related_product_id = fields.Many2one('product.template', 'Related Product', required=True, ondelete='cascade')
     qty = fields.Float('Quantity', default=0.0, required=True)
 
+    def _has_no_variant_attributes(self):
+        """ Overwrite : always return False regardless of product attributes variant creation mode setting
+        to avoid create multiple sale order line for same product
+        """
+        self.ensure_one()
+        return False
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
