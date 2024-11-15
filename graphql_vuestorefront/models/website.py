@@ -5,6 +5,9 @@ import pprint
 import json
 import requests
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+from odoo import _
+from odoo.addons.http_routing.models.ir_http import slugify
 
 
 class WebsiteSeoMetadata(models.AbstractModel):
@@ -180,3 +183,57 @@ class WebsiteMenuImage(models.Model):
     text_color = fields.Char('Text Color (Hex)', help='#111000')
     button_text = fields.Char('Button Text')
     button_url = fields.Char('Button URL')
+
+
+class BlogBlog(models.Model):
+    _inherit = 'blog.blog'
+
+    def _validate_website_slug(self):
+        for blog in self.filtered(lambda c: c.website_slug):
+            if blog.website_slug[0] != '/':
+                raise ValidationError(_('Slug should start with /'))
+
+            if self.search([('website_slug', '=', blog.website_slug), ('id', '!=', blog.id)], limit=1):
+                raise ValidationError(_('Slug is already in use: {}'.format(blog.website_slug)))
+
+    website_slug = fields.Char('Website Slug', translate=True, copy=False)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(BlogBlog, self).create(vals_list)
+
+        for rec in res:
+            if rec.website_slug:
+                rec._validate_website_slug()
+            else:
+                rec.website_slug = f'/blog/{rec.id}'
+
+        return res
+
+    def write(self, vals):
+        res = super(BlogBlog, self).write(vals)
+        if vals.get('website_slug', False):
+            self._validate_website_slug()
+        self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
+        return res
+
+
+class BlogPost(models.Model):
+    _inherit = 'blog.post'
+
+    @api.depends('name')
+    def _compute_website_slug(self):
+        langs = self.env['res.lang'].search([])
+
+        for blog_post in self:
+            for lang in langs:
+                blog_post = blog_post.with_context(lang=lang.code)
+
+                if not blog_post.id or not blog_post.blog_id:
+                    blog_post.website_slug = None
+                else:
+                    slug_name = slugify(blog_post.name or '').strip().strip('-')
+                    blog_post.website_slug = f'{blog_post.blog_id.website_slug}/{slug_name}-{blog_post.id}'
+
+    website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
+                               translate=True)
