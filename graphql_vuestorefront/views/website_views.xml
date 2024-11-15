@@ -123,6 +123,29 @@
         </field>
     </record>
 
+    <record id="view_blog_blog_form" model="ir.ui.view">
+        <field name="name">blog.blog.form</field>
+        <field name="model">blog.blog</field>
+        <field name="inherit_id" ref="website_blog.view_blog_blog_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website_id']" position="after">
+                <field name="website_slug"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_blog_post_list" model="ir.ui.view">
+        <field name="name">blog.post.tree</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website_url']" position="after">
+                <field name="website_slug"/>
+            </xpath>
+            <xpath expr="//field[@name='website_url']" position="replace"/>
+        </field>
+    </record>
+
     <!-- ====== Actions ====================================================
         ==================================================================== -->
     <record id="website.action_website_menu" model="ir.actions.act_window">

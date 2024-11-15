@@ -5,7 +5,7 @@
 import json
 from odoo.osv import expression
 from datetime import timedelta
-from odoo import models, fields, api, tools, _
+from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_round
 from odoo.addons.http_routing.models.ir_http import slug, slugify
 from odoo.exceptions import ValidationError
@@ -199,7 +199,7 @@ class ProductTemplate(models.Model):
                 else:
                     prefix = '/product'
                     slug_name = slugify(product.name or '').strip().strip('-')
-                    product.website_slug = '{}/{}-{}'.format(prefix, slug_name, product.id)
+                    product.website_slug = f'{prefix}/{slug_name}-{product.id}'
 
     @api.depends('product_variant_ids')
     def _compute_variant_attribute_value_ids(self):
@@ -377,7 +377,7 @@ class ProductPublicCategory(models.Model):
             if rec.website_slug:
                 rec._validate_website_slug()
             else:
-                rec.website_slug = '/category/{}'.format(rec.id)
+                rec.website_slug = f'/category/{rec.id}'
 
         return res
 
