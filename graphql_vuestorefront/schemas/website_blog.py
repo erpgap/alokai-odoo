@@ -3,6 +3,7 @@ import graphene
 from odoo import _
 from odoo.addons.graphql_vuestorefront.schemas.objects import (
     BlogPost,
+    BlogPostTag,
     SortEnum,
     get_document_with_check_access,
     get_document_count_with_check_access
@@ -27,6 +28,7 @@ def get_search_order(sort):
 
 class BlogPosts(graphene.Interface):
     blog_posts = graphene.List(BlogPost)
+    tags = graphene.List(BlogPostTag)
     total_count = graphene.Int(required=True)
 
 
@@ -98,7 +100,10 @@ class BlogPostQuery(graphene.ObjectType):
             offset = 0
 
         BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order, page_size, offset,
-                                                error_msg='Blog Post  does not exist.')
-        total_count = get_document_count_with_check_access(BlogPost, expression.AND(domain))
-        return BlogPostList(blog_posts=blog_posts and blog_posts.sudo() or blog_posts, total_count=total_count)
+        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order,
+                                                    error_msg='Blog Post  does not exist.')
+        blog_posts=blog_posts and blog_posts.sudo() or blog_posts
+        total_count = len(blog_posts)
+        tags = blog_posts.tag_ids
+        blog_posts = blog_posts[offset:offset + page_size]
+        return BlogPostList(blog_posts=blog_posts, tags=tags, total_count=total_count)
