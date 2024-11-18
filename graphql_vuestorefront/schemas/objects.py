@@ -83,15 +83,12 @@ def product_is_in_wishlist(env, product):
     return product._is_in_wishlist()
 
 
-def get_image_filename(object, name=None):
+def get_image_filename(object, name='name'):
     """
     Uses write_date timestamp as an unique identifier on the asset. This will make sure we keep it on cache (CDN,
     browser) until it changes.
     """
-    if name:
-        image_name = slugify(getattr(object, name, '') or '')
-    else:
-        image_name = slugify(object.name or '')
+    image_name = slugify(getattr(object, name, '') or '')
 
     try:
         timestamp = int(object.write_date.timestamp())
@@ -104,6 +101,10 @@ def get_image_filename(object, name=None):
     if image_name:
         return f'{unique_id}_{image_name}'
     return unique_id
+
+
+def get_image_url(object, field_name='image'):
+    return f'/web/image/{object._name}/{object.id}/{field_name}'
 
 
 # --------------------- #
@@ -181,7 +182,7 @@ class Company(OdooObjectType):
         return self.state_id or None
 
     def resolve_image(self, info):
-        return '/web/image/res.company/{}/image_1920'.format(self.id)
+        return get_image_url(self, field_name='image_1920')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
@@ -251,7 +252,7 @@ class Partner(OdooObjectType):
         return self.parent_id or None
 
     def resolve_image(self, info):
-        return '/web/image/res.partner/{}/image_1920'.format(self.id)
+        return get_image_url(self, field_name='image_1920')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
@@ -320,7 +321,7 @@ class Category(OdooObjectType):
     meta_image = graphene.String()
 
     def resolve_image(self, info):
-        return '/web/image/product.public.category/{}/image_1920'.format(self.id)
+        return get_image_url(self, field_name='image_1920')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
@@ -347,7 +348,7 @@ class Category(OdooObjectType):
         return self.website_meta_description or None
 
     def resolve_meta_image(self, info):
-        return '/web/image/product.public.category/{}/website_meta_img'.format(self.id)
+        return get_image_url(self, field_name='website_meta_img')
 
 
 class AttributeValue(OdooObjectType):
@@ -400,7 +401,7 @@ class ProductImage(OdooObjectType):
         return self.id or None
 
     def resolve_image(self, info):
-        return '/web/image/product.image/{}/image_1920'.format(self.id)
+        return get_image_url(self, field_name='image_1920')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
@@ -506,19 +507,19 @@ class Product(OdooObjectType):
         return self.website_meta_description or None
 
     def resolve_meta_image(self, info):
-        return '/web/image/{}/{}/website_meta_img'.format(self._name, self.id)
+        return get_image_url(self, field_name='website_meta_img')
 
     def resolve_image(self, info):
-        return '/web/image/{}/{}/image_1920'.format(self._name, self.id)
+        return get_image_url(self, field_name='image_1920')
 
     def resolve_small_image(self, info):
-        return '/web/image/{}/{}/image_128'.format(self._name, self.id)
+        return get_image_url(self, field_name='image_128')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
 
     def resolve_thumbnail(self, info):
-        return '/web/image/{}/{}/image_512'.format(self._name, self.id)
+        return get_image_url(self, field_name='image_512')
 
     def resolve_categories(self, info):
         website = self.env['website'].get_current_website()
@@ -940,10 +941,10 @@ class PaymentMethod(OdooObjectType):
         return self.brand_ids or None
 
     def resolve_image(self, info):
-        return '/web/image/payment.method/{}/image'.format(self.id)
+        return get_image_url(self)
 
     def resolve_image_payment_form(self, info):
-        return '/web/image/payment.method/{}/image_payment_form'.format(self.id)
+        return get_image_url(self, field_name='image_payment_form')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
@@ -1037,7 +1038,7 @@ class WebsiteMenuImage(OdooObjectType):
     button_url = graphene.String()
 
     def resolve_image(self, info):
-        return '/web/image/website.menu.image/{}/image'.format(self.id)
+        return get_image_url(self)
 
     def resolve_image_filename(self, info):
         return get_image_filename(self, name='title')
@@ -1050,16 +1051,27 @@ class BlogPostTag(OdooObjectType):
 
 class BlogPost(OdooObjectType):
     id = graphene.Int()
+    image = graphene.String()
+    image_filename = graphene.String()
     name = graphene.String()
     published_date = graphene.String()
     author_id = graphene.Field(lambda: Partner)
     content = graphene.String()
     teaser = graphene.String()
     tag_ids = graphene.List(graphene.NonNull(lambda: BlogPostTag))
-    visibility = graphene.Int()
+    slug = graphene.String()
+    json_ld = generic.GenericScalar()
 
-    def resolve_visibility(self, info):
-        if self.website_published:
-            return 1
-        else:
-            return 0
+    def resolve_image(self, info):
+        return get_image_url(self)
+
+    def resolve_image_filename(self, info):
+        return get_image_filename(self)
+
+    def resolve_teaser(self, info):
+        if self.teaser_manual:
+            return self.teaser_manual
+        return self.teaser
+
+    def resolve_slug(self, info):
+        return self.website_slug

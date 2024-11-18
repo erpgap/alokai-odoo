@@ -8,6 +8,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.http_routing.models.ir_http import slugify
+from odoo.addons.graphql_vuestorefront.schemas.objects import get_image_url
 
 
 class WebsiteSeoMetadata(models.AbstractModel):
@@ -234,6 +235,37 @@ class BlogPost(models.Model):
                 else:
                     slug_name = slugify(blog_post.name or '').strip().strip('-')
                     blog_post.website_slug = f'{blog_post.blog_id.website_slug}/{slug_name}-{blog_post.id}'
+
+    def _compute_json_ld(self):
+        website = self.env['website'].get_current_website()
+        base_url = website.domain or ''
+        if base_url and base_url[-1] == '/':
+            base_url = base_url[:-1]
+
+        for blog in self:
+            json_ld = {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": base_url
+                },
+                "headline": blog.name,
+                "description": blog.teaser_manual or blog.teaser,
+                "author": {
+                    "@type": "Person",
+                    "name": blog.author_name,
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": website and website.display_name
+                },
+                "datePublished": blog.published_date.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
+                "dateModified": blog.post_date.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
+                "image": get_image_url(blog)
+            }
+
+            blog.json_ld = json.dumps(json_ld)
 
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
