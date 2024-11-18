@@ -3,10 +3,9 @@ import graphene
 from odoo import _
 from odoo.addons.graphql_vuestorefront.schemas.objects import (
     BlogPost,
-    BlogPostTag,
+    BlogTag,
     SortEnum,
     get_document_with_check_access,
-    get_document_count_with_check_access
 )
 from odoo.osv import expression
 
@@ -26,9 +25,19 @@ def get_search_order(sort):
     return sorting
 
 
+class BlogTags(graphene.Interface):
+    blog_tags = graphene.List(BlogTag)
+    total_count = graphene.Int(required=True)
+
+
+class BlogTagList(graphene.ObjectType):
+    class Meta:
+        interfaces = (BlogTags,)
+
+
 class BlogPosts(graphene.Interface):
     blog_posts = graphene.List(BlogPost)
-    tags = graphene.List(BlogPostTag)
+    blog_tags = graphene.List(BlogTag)
     total_count = graphene.Int(required=True)
 
 
@@ -48,6 +57,9 @@ class BlogPostList(graphene.ObjectType):
 
 
 class BlogPostQuery(graphene.ObjectType):
+    blog_tags = graphene.Field(
+        BlogTags,
+    )
     blog_post = graphene.Field(
         BlogPost,
         required=True,
@@ -62,6 +74,16 @@ class BlogPostQuery(graphene.ObjectType):
         search=graphene.String(default_value=False),
         sort=graphene.Argument(BlogPostSortInput, default_value={})
     )
+
+    @staticmethod
+    def resolve_blog_tags(self, info):
+        env = info.context['env']
+        BlogPost = env['blog.post']
+        blog_posts = get_document_with_check_access(BlogPost, [])
+        blog_posts=blog_posts and blog_posts.sudo() or blog_posts
+        blog_tags = blog_posts.tag_ids
+        total_count = len(blog_tags)
+        return BlogTagList(blog_tags=blog_tags, total_count=total_count)
 
     @staticmethod
     def resolve_blog_post(self, info, id=None, slug=None):
@@ -100,10 +122,9 @@ class BlogPostQuery(graphene.ObjectType):
             offset = 0
 
         BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order,
-                                                    error_msg='Blog Post  does not exist.')
+        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order)
         blog_posts=blog_posts and blog_posts.sudo() or blog_posts
         total_count = len(blog_posts)
-        tags = blog_posts.tag_ids
+        blog_tags = blog_posts.tag_ids
         blog_posts = blog_posts[offset:offset + page_size]
-        return BlogPostList(blog_posts=blog_posts, tags=tags, total_count=total_count)
+        return BlogPostList(blog_posts=blog_posts, blog_tags=blog_tags, total_count=total_count)
