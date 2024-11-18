@@ -1044,7 +1044,7 @@ class WebsiteMenuImage(OdooObjectType):
         return get_image_filename(self, name='title')
 
 
-class BlogPostTag(OdooObjectType):
+class BlogTag(OdooObjectType):
     id = graphene.Int()
     name = graphene.String()
 
@@ -1058,7 +1058,7 @@ class BlogPost(OdooObjectType):
     author_id = graphene.Field(lambda: Partner)
     content = graphene.String()
     teaser = graphene.String()
-    tag_ids = graphene.List(graphene.NonNull(lambda: BlogPostTag))
+    tag_ids = graphene.List(graphene.NonNull(lambda: BlogTag))
     slug = graphene.String()
     json_ld = generic.GenericScalar()
 

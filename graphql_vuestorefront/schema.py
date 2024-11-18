@@ -55,5 +55,5 @@ schema = graphene.Schema(
     mutation=Mutation,
     types=[country.CountryList, category.CategoryList, product.ProductList, product.ProductVariantData, order.OrderList,
            invoice.InvoiceList, wishlist.WishlistData, shop.CartData, mailing_list.MailingContactList,
-           mailing_list.MailingListList, website.HomepageList, website_blog.BlogPostList]
+           mailing_list.MailingListList, website.HomepageList, website_blog.BlogTagList, website_blog.BlogPostList]
 )
