@@ -79,9 +79,9 @@ class BlogPostQuery(graphene.ObjectType):
     def resolve_blog_tags(self, info):
         env = info.context['env']
         BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, [])
+        blog_posts = get_document_with_check_access(BlogPost, [], limit=0)
         blog_posts=blog_posts and blog_posts.sudo() or blog_posts
-        blog_tags = blog_posts.tag_ids
+        blog_tags = blog_posts.mapped('tag_ids').sorted(key=lambda b: (b.name, b.id))
         total_count = len(blog_tags)
         return BlogTagList(blog_tags=blog_tags, total_count=total_count)
 
@@ -122,9 +122,9 @@ class BlogPostQuery(graphene.ObjectType):
             offset = 0
 
         BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order)
+        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order, limit=0)
         blog_posts=blog_posts and blog_posts.sudo() or blog_posts
         total_count = len(blog_posts)
-        blog_tags = blog_posts.tag_ids
+        blog_tags = blog_posts.mapped('tag_ids').sorted(key=lambda b: (b.name, b.id))
         blog_posts = blog_posts[offset:offset + page_size]
         return BlogPostList(blog_posts=blog_posts, blog_tags=blog_tags, total_count=total_count)
