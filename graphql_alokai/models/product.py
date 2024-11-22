@@ -22,7 +22,7 @@ class ProductTemplate(models.Model):
             if field == 'price':
                 sorting += 'list_price %s' % val.value
             elif field == 'popular':
-                sorting += 'sales_count_30_days %s' % val.value
+                sorting += 'recent_sales_count %s' % val.value
             elif field == 'newest':
                 sorting += 'create_date %s' % val.value
             else:
@@ -219,12 +219,13 @@ class ProductTemplate(models.Model):
                 mapped('value_ids')
             product.variant_attribute_value_ids = [(6, 0, attribute_values.ids)]
 
-    def _compute_sales_count_30_days(self):
-        date_30_days_ago = fields.Datetime.now() - timedelta(days=30)
+    def _compute_recent_sales_count(self):
+        lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('vsf_recent_sales_count_days', 30))
+        date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
         done_states = self.env['sale.report'].sudo()._get_done_states()
         domain = [
             ('state', 'in', done_states),
-            ('date', '>=', date_30_days_ago),
+            ('date', '>=', date_days_ago),
         ]
 
         sale_groups = self.env['sale.report'].sudo().read_group(
@@ -237,8 +238,9 @@ class ProductTemplate(models.Model):
 
         for product in self:
             product_id = product.product_variant_id.id
-            count = sale_count_map.get(product_id, 0)
-            product.sales_count_30_days = float_round(count, precision_rounding=product.uom_id.rounding)
+            sales_count = sale_count_map.get(product_id, 0)
+            sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
+            product.recent_sales_count = sales_count + product.recent_sales_count_increment
 
     variant_attribute_value_ids = fields.Many2many('product.attribute.value',
                                                    'product_template_variant_product_attribute_value_rel',
@@ -250,8 +252,9 @@ class ProductTemplate(models.Model):
                                              'product_template_product_public_category_slug_rel',
                                              compute='_compute_public_categ_slug_ids',
                                              store=True, readonly=True)
-    sales_count_30_days = fields.Float('Sales Count 30 Days', compute='_compute_sales_count_30_days', store=True,
-                                       readonly=True)
+    recent_sales_count = fields.Float('Recent Sales Count', compute='_compute_recent_sales_count', store=True,
+                                      readonly=True)
+    recent_sales_count_increment = fields.Integer('Recent Sales Count Increment', default=0, required=True)
 
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
@@ -284,7 +287,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def recalculate_products_popularity(self):
-        self.search([])._compute_sales_count_30_days()
+        self.search([])._compute_recent_sales_count()
 
     def _has_no_variant_attributes(self):
         """ Overwrite : always return False regardless of product attributes variant creation mode setting
