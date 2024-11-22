@@ -6,7 +6,7 @@
     # Application Information
     'name': 'Stripe Payment Acquirer to VSF',
     'category': 'Accounting/Payment Acquirers',
-    'version': '17.0.1.0.0',
+    'version': '18.0.1.0.0',
     'summary': 'Stripe Payment Acquirer: Adapting Stripe to VSF',
 
     # Author

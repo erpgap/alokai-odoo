@@ -2,7 +2,7 @@
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.addons.payment_adyen.const import API_ENDPOINT_VERSIONS, CURRENCY_DECIMALS, DEFAULT_PAYMENT_METHODS_CODES, PAYMENT_METHODS_MAPPING, RESULT_CODES_MAPPING
+from odoo.addons.payment_adyen.const import API_ENDPOINT_VERSIONS, CURRENCY_DECIMALS
 
 # Endpoints of the API.
 # See https://docs.adyen.com/api-explorer/#/CheckoutService/v67/overview for Checkout API

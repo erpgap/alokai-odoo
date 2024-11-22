@@ -6,7 +6,7 @@
     # Application Information
     'name': 'Adyen Payment Acquirer to VSF',
     'category': 'Accounting/Payment Acquirers',
-    'version': '17.0.1.0.0',
+    'version': '18.0.1.0.0',
     'summary': 'Adyen Payment Acquirer: Adapting Adyen to VSF',
 
     # Author
