@@ -13,17 +13,11 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='website_info_settings']" position="after">
                 <block title="Vue Storefront" id="vsf_settings">
-                    <setting help="Enable the debug mode. Will log headers, queries and mutations information" id="vsf_debug_mode_settings">
+                    <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request"
+                             id="vsf_debug_mode_settings">
                         <field name="vsf_debug_mode"/>
                     </setting>
                     <setting></setting>
-
-                    <setting id="vsf_payment_success_return_url_settings">
-                        <field name="vsf_payment_success_return_url"/>
-                    </setting>
-                    <setting id="vsf_payment_error_return_url_settings">
-                        <field name="vsf_payment_error_return_url"/>
-                    </setting>
 
                     <setting title="Enable the Cache Invalidation" id="vsf_cache_invalidation_settings">
                         <field name="vsf_cache_invalidation"/>
@@ -36,10 +30,20 @@
                         <field name="vsf_cache_invalidation_url" required="vsf_cache_invalidation" t-translation="off"/>
                     </setting>
 
+                    <setting id="vsf_payment_success_return_url_settings">
+                        <field name="vsf_payment_success_return_url"/>
+                    </setting>
+                    <setting id="vsf_payment_error_return_url_settings">
+                        <field name="vsf_payment_error_return_url"/>
+                    </setting>
+
                     <setting id="vsf_mailing_list_id_settings">
                         <field name="vsf_mailing_list_id"/>
                     </setting>
-                    <setting></setting>
+                    <setting id="vsf_recent_sales_count_days_settings"
+                             help="The number of days used as the lookback period to calculate the recent sales count for each product">
+                        <field name="vsf_recent_sales_count_days"/>
+                    </setting>
                 </block>
 
                 <block title="Vue Storefront Mail Templates" id="vsf_mail_templates_settings">
@@ -58,7 +62,8 @@
                     <setting id="vsf_image_background_rgba_settings">
                         <field name="vsf_image_background_rgba"/>
                     </setting>
-                    <setting id="vsf_image_resize_limit_settings">
+                    <setting id="vsf_image_resize_limit_settings"
+                             help="Limit in pixels to resize image for width and height">
                         <field name="vsf_image_resize_limit"/>
                     </setting>
                 </block>
