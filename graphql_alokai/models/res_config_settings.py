@@ -33,8 +33,8 @@ class ResConfigSettings(models.TransientModel):
     # Alokai Images
     alokai_image_quality = fields.Integer('Quality (%)', required=True)
     alokai_image_background_rgba = fields.Char('Background RGBA', required=True)
-    alokai_image_resize_limit = fields.Integer('Resize Limit', required=True,
-                                            help='Limit in pixels to resize image for width and height')
+    alokai_image_resize_limit = fields.Integer('Resize Limit', required=True)
+    alokai_recent_sales_count_days = fields.Integer('Recent Sales Count (days)', required=True)
 
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
@@ -47,6 +47,7 @@ class ResConfigSettings(models.TransientModel):
             alokai_image_quality=int(ICP.get_param('alokai_image_quality', 100)),
             alokai_image_background_rgba=ICP.get_param('alokai_image_background_rgba', '(255, 255, 255, 255)'),
             alokai_image_resize_limit=int(ICP.get_param('alokai_image_resize_limit', 1920)),
+            alokai_recent_sales_count_days=int(ICP.get_param('alokai_recent_sales_count_days', 30)),
         )
         return res
 
@@ -66,6 +67,7 @@ class ResConfigSettings(models.TransientModel):
         ICP.set_param('alokai_image_quality', self.alokai_image_quality)
         ICP.set_param('alokai_image_background_rgba', self.alokai_image_background_rgba)
         ICP.set_param('alokai_image_resize_limit', self.alokai_image_resize_limit)
+        ICP.set_param('alokai_recent_sales_count_days', self.alokai_recent_sales_count_days)
 
     @api.model
     def create_alokai_cache_invalidation_key(self):

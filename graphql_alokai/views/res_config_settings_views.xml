@@ -13,17 +13,10 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='website_info_settings']" position="after">
                 <block title="Alokai" id="alokai_settings">
-                    <setting help="Enable the debug mode. Will log headers, queries and mutations information" id="alokai_debug_mode_settings">
+                    <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request" id="alokai_debug_mode_settings">
                         <field name="alokai_debug_mode"/>
                     </setting>
                     <setting></setting>
-
-                    <setting id="alokai_payment_success_return_url_settings">
-                        <field name="alokai_payment_success_return_url"/>
-                    </setting>
-                    <setting id="alokai_payment_error_return_url_settings">
-                        <field name="alokai_payment_error_return_url"/>
-                    </setting>
 
                     <setting title="Enable the Cache Invalidation" id="alokai_cache_invalidation_settings">
                         <field name="alokai_cache_invalidation"/>
@@ -36,10 +29,20 @@
                         <field name="alokai_cache_invalidation_url" required="alokai_cache_invalidation" t-translation="off"/>
                     </setting>
 
+                    <setting id="alokai_payment_success_return_url_settings">
+                        <field name="alokai_payment_success_return_url"/>
+                    </setting>
+                    <setting id="alokai_payment_error_return_url_settings">
+                        <field name="alokai_payment_error_return_url"/>
+                    </setting>
                     <setting id="alokai_mailing_list_id_settings">
                         <field name="alokai_mailing_list_id"/>
+
                     </setting>
-                    <setting></setting>
+                    <setting id="alokai_recent_sales_count_days_settings"
+                            help="The number of days used as the lookback period to calculate the recent sales count for each product">
+                        <field name="alokai_recent_sales_count_days"/>
+                    </setting>
                 </block>
 
                 <block title="Alokai Mail Templates" id="alokai_mail_templates_settings">
@@ -58,7 +61,7 @@
                     <setting id="alokai_image_background_rgba_settings">
                         <field name="alokai_image_background_rgba"/>
                     </setting>
-                    <setting id="alokai_image_resize_limit_settings">
+                    <setting id="alokai_image_resize_limit_settings" help="Limit in pixels to resize image for width and height">
                         <field name="alokai_image_resize_limit"/>
                     </setting>
                 </block>
