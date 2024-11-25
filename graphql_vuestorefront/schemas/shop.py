@@ -3,13 +3,14 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import graphene
-from odoo.addons.graphql_vuestorefront.schemas.objects import Order, Partner
+from odoo.addons.graphql_vuestorefront.schemas.objects import Order, Partner, Product
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
 from odoo.http import request
 
 
 class Cart(graphene.Interface):
     order = graphene.Field(Order)
+    frequently_bought_together = graphene.List(Product)
 
 
 class CartData(graphene.ObjectType):
@@ -27,12 +28,23 @@ class ShoppingCartQuery(graphene.ObjectType):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=True)
+        fbt = None
+
         if order and order.state != 'draft':
             request.session['sale_order_id'] = None
             order = website.sale_get_order(force_create=True)
         if order:
             order.order_line.filtered(lambda l: not l.product_id.active).unlink()
-        return CartData(order=order)
+
+            fbt = order.\
+                mapped('order_line').\
+                mapped('product_id').\
+                mapped('product_tmpl_id').\
+                frequently_bought_together_ids.\
+                sorted(key=lambda r: r.qty, reverse=True)
+            fbt = fbt.mapped('related_product_id')
+
+        return CartData(order=order, frequently_bought_together=fbt)
 
 
 class CartClear(graphene.Mutation):
