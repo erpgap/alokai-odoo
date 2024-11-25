@@ -459,6 +459,7 @@ class Product(OdooObjectType):
     slug = graphene.String()
     alternative_products = graphene.List(graphene.NonNull(lambda: Product))
     accessory_products = graphene.List(graphene.NonNull(lambda: Product))
+    frequently_bought_together = graphene.List(graphene.NonNull(lambda: Product))
     # Specific to use in Product Variant
     combination_info_variant = generic.GenericScalar(description='Specific to Product Variant')
     variant_price = graphene.Float(description='Specific to Product Variant')
@@ -581,6 +582,12 @@ class Product(OdooObjectType):
 
     def resolve_accessory_products(self, info):
         return self.accessory_product_ids or None
+
+    def resolve_frequently_bought_together(self, info):
+        if self.frequently_bought_together_ids:
+            fbt = self.frequently_bought_together_ids.sorted(key=lambda r: r.qty, reverse=True)
+            return fbt.mapped('related_product_id')
+        return None
 
     # Specific to use in Product Variant
     def resolve_combination_info_variant(self, info):

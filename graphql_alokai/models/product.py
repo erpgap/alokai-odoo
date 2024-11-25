@@ -4,6 +4,7 @@
 
 import json
 from odoo.osv import expression
+from collections import defaultdict
 from datetime import timedelta
 from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_round
@@ -233,7 +234,6 @@ class ProductTemplate(models.Model):
             ['product_id', 'product_uom_qty'],
             ['product_id'],
         )
-
         sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups}
 
         for product in self:
@@ -255,6 +255,8 @@ class ProductTemplate(models.Model):
     recent_sales_count = fields.Float('Recent Sales Count', compute='_compute_recent_sales_count', store=True,
                                       readonly=True)
     recent_sales_count_increment = fields.Integer('Recent Sales Count Increment', default=0, required=True)
+    frequently_bought_together_ids = fields.One2many('product.template.fbt', 'product_id', 'Frequently Bought Together',
+                                                     readonly=True)
 
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
@@ -286,15 +288,60 @@ class ProductTemplate(models.Model):
         return combination_info
 
     @api.model
-    def recalculate_products_popularity(self):
+    def calculate_products_popularity(self):
         self.search([])._compute_recent_sales_count()
 
-    def _has_no_variant_attributes(self):
+    @api.model
+    def calculate_frequently_bought_together(self):
+        ProductTemplateFBT = self.env['product.template.fbt']
+
+        ProductTemplateFBT.search([]).unlink()
+        sale_groups = self.env['sale.report'].search([])
+
+        order_to_products = defaultdict(list)
+        for sale_group in sale_groups:
+            order_id = sale_group.order_reference
+            product_id = sale_group.product_id.product_tmpl_id.id
+            qty = sale_group.product_uom_qty
+            order_to_products[order_id].append((product_id, qty))
+
+        product_relations = defaultdict(lambda: defaultdict(float))
+        for order, products in order_to_products.items():
+            # For each order, track pairs of products and add their quantities
+            for i in range(len(products)):
+                for j in range(i + 1, len(products)):
+                    product_a, qty_a = products[i]
+                    product_b, qty_b = products[j]
+                    # Add the quantities of the products to each other (since it's symmetric)
+                    product_relations[product_a][product_b] += min(qty_a, qty_b)
+                    product_relations[product_b][product_a] += min(qty_a, qty_b)
+
+        for product_id, related_products in product_relations.items():
+            related_product_pairs = sorted(related_products.items(), key=lambda p: -p[1])
+
+            for related_product_id, qty in related_product_pairs:
+                ProductTemplateFBT.create({
+                    'product_id': product_id,
+                    'related_product_id': related_product_id,
+                    'qty': qty,
+                })
+
+def _has_no_variant_attributes(self):
         """ Overwrite : always return False regardless of product attributes variant creation mode setting
         to avoid create multiple sale order line for same product
         """
         self.ensure_one()
         return False
+
+
+class ProductTemplateFBT(models.Model):
+    _name = 'product.template.fbt'
+    _description = 'Frequently Bought Together'
+    _order = 'qty DESC'
+
+    product_id = fields.Many2one('product.template', 'Product', required=True, ondelete='cascade')
+    related_product_id = fields.Many2one('product.template', 'Related Product', required=True, ondelete='cascade')
+    qty = fields.Float('Quantity', default=0.0, required=True)
 
 
 class ProductProduct(models.Model):
