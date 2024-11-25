@@ -64,6 +64,14 @@
                         <field name="pprint_json_ld"/>
                     </group>
                 </page>
+                <page name="fbt" string="Frequently Bought Together" groups="base.group_no_one">
+                    <field name="frequently_bought_together_ids" nolabel="1">
+                        <tree>
+                            <field name="related_product_id"/>
+                            <field name="qty"/>
+                        </tree>
+                    </field>
+                </page>
             </notebook>
         </field>
     </record>
