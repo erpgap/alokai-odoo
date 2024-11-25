@@ -4,10 +4,10 @@
 
 {
     # Application Information
-    'name': 'Adyen Payment Acquirer to VSF',
+    'name': 'Adyen Payment Acquirer to Alokai',
     'category': 'Accounting/Payment Acquirers',
     'version': '18.0.1.0.0',
-    'summary': 'Adyen Payment Acquirer: Adapting Adyen to VSF',
+    'summary': 'Adyen Payment Acquirer: Adapting Adyen to Alokai',
 
     # Author
     'author': "ERPGAP",

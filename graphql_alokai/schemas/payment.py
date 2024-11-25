@@ -11,12 +11,12 @@ from odoo.osv import expression
 from odoo.tools import format_amount
 
 from odoo.addons.payment import utils as payment_utils
-from odoo.addons.payment_adyen_vsf.const import CURRENCY_DECIMALS
+from odoo.addons.payment_adyen_alokai.const import CURRENCY_DECIMALS
 from odoo.addons.graphql_alokai.schemas.objects import PaymentProvider, PaymentTransaction
 from odoo.addons.graphql_alokai.schemas.shop import Cart, CartData
 from odoo.addons.website_sale.controllers.payment import PaymentPortal
 from odoo.addons.payment_adyen.controllers.main import AdyenController
-from odoo.addons.payment_adyen_vsf.controllers.main import AdyenControllerInherit
+from odoo.addons.payment_adyen_alokai.controllers.main import AdyenControllerInherit
 
 
 class PaymentQuery(graphene.ObjectType):
@@ -88,7 +88,6 @@ class PaymentQuery(graphene.ObjectType):
 
         PaymentTransaction = env['payment.transaction']
         Order = env['sale.order']
-
         # Pass in the session the sale_order created in alokai
         payment_transaction_id = request.session.get('__payment_monitored_tx_id__')
 

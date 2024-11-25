@@ -39,3 +39,5 @@ CURRENCY_DECIMALS.update({
     "SEK": 2,
     "DKK": 2,
 })
+
+
