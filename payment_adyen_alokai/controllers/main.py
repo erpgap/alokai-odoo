@@ -53,7 +53,7 @@ class AdyenControllerInherit(AdyenController):
         tx_sudo = request.env['payment.transaction'].sudo().search([('reference', '=', reference)])
 
         shopper_ip = payment_utils.get_customer_ip_address()
-        if tx_sudo.created_on_vsf:
+        if tx_sudo.created_on_alokai:
             if request.httprequest.headers.environ.get('HTTP_REAL_IP', False) and \
                     request.httprequest.headers.environ['HTTP_REAL_IP']:
                 shopper_ip = request.httprequest.headers.environ['HTTP_REAL_IP']
@@ -144,9 +144,9 @@ class AdyenControllerInherit(AdyenController):
 
         # Get Website
         website = sale_order.website_id
-        # Redirect to VSF
-        vsf_payment_success_return_url = website.vsf_payment_success_return_url
-        vsf_payment_error_return_url = website.vsf_payment_error_return_url
+        # Redirect to Alokai
+        alokai_payment_success_return_url = website.alokai_payment_success_return_url
+        alokai_payment_error_return_url = website.alokai_payment_error_return_url
 
         request.session["__payment_monitored_tx_id__"] = payment_transaction.id
 
@@ -176,19 +176,19 @@ class AdyenControllerInherit(AdyenController):
             },
         )
 
-        if payment_transaction.created_on_vsf:
+        if payment_transaction.created_on_alokai:
             # For Redirect 3DS2 and MobilePay (Success flow)
             if result and result.get('resultCode') and result['resultCode'] == 'Authorised':
 
                 # Confirm sale order
                 PaymentPostProcessing().poll_status()
 
-                return werkzeug.utils.redirect(vsf_payment_success_return_url)
+                return werkzeug.utils.redirect(alokai_payment_success_return_url)
 
             # For Redirect 3DS2 and MobilePay (Cancel/Error flow)
             elif result and result.get('resultCode') and result['resultCode'] in ['Refused', 'Cancelled']:
 
-                return werkzeug.utils.redirect(vsf_payment_error_return_url)
+                return werkzeug.utils.redirect(alokai_payment_error_return_url)
 
         else:
             # Redirect the user to the status page
@@ -242,8 +242,8 @@ class AdyenControllerInherit(AdyenController):
                 # Handle the notification data as if they were feedback of a S2S payment request
                 tx_sudo._handle_notification_data('adyen', notification_data)
 
-                # Case the transaction was created on vsf (Success flow)
-                if event_code == 'AUTHORISATION' and success and payment_transaction.created_on_vsf:
+                # Case the transaction was created on alokai (Success flow)
+                if event_code == 'AUTHORISATION' and success and payment_transaction.created_on_alokai:
                     # Check the Order and respective website related with the transaction
                     # Check the payment_return url for the success and error pages
                     sale_order_ids = payment_transaction.sale_order_ids.ids
@@ -253,15 +253,15 @@ class AdyenControllerInherit(AdyenController):
 
                     # Get Website
                     website = sale_order.website_id
-                    # Redirect to VSF
-                    vsf_payment_success_return_url = website.vsf_payment_success_return_url
+                    # Redirect to Alokai
+                    alokai_payment_success_return_url = website.alokai_payment_success_return_url
 
                     request.session["__payment_monitored_tx_id__"] = payment_transaction.id
 
                     # Confirm sale order
                     PaymentPostProcessing().poll_status()
 
-                    return werkzeug.utils.redirect(vsf_payment_success_return_url)
+                    return werkzeug.utils.redirect(alokai_payment_success_return_url)
 
             except ValidationError:  # Acknowledge the notification to avoid getting spammed
                 _logger.exception("unable to handle the notification data; skipping to acknowledge")
