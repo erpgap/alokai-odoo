@@ -3,7 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import models
-from odoo.addons.http_routing.models.ir_http import slug
 
 
 class ProductProduct(models.Model):
@@ -19,7 +18,7 @@ class ProductProduct(models.Model):
         for product in self:
             feed_info_array.append({
                 'title': product.display_name,
-                'link': "{}{}".format(domain, slug(product)),
+                'link': "{}{}".format(domain, self.env['ir.http']._slug(product)),
                 'description': product.description_sale,
                 'image_link': '{}/web/image/product.product/{}/image'.format(domain, product.id),
                 'price': '{} {}'.format(product.lst_price, product.currency_id.display_name),

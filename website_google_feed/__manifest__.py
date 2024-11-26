@@ -5,7 +5,7 @@
 {
     'name': 'Website Google Feed',
     'category': 'Website',
-    'version': '17.0.1.0.0',
+    'version': '18.0.1.0.0',
     'summary': 'Website Google Feed',
     'author': "ERPGAP",
     'website': "https://www.erpgap.com/",
