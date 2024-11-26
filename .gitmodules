@@ -1,4 +1,4 @@
 [submodule ".external/rest-framework"]
 	path = .external/rest-framework
 	url = https://github.com/odoogap/rest-framework.git
-	branch = 17.0
+	branch = 18.0-mig-graphql_base
