@@ -18,12 +18,12 @@ You will need these modules installed in your Odoo to publish the GraphQL endpoi
 ## How to install
 
 - Firstly, ensure that the module file is present in the add-ons directory of the Odoo 
-  server ``` git clone --recurse-submodules https://github.com/odoogap/vuestorefront.git  ```
+  server ``` git clone --recurse-submodules https://github.com/erpgap/alokai-odoo.git  ```
 - Update Modules list so that it appears in the UI within Apps store
 - Update Modules list so that it appears in the UI within Apps
 - Look for the module within Apps and click on Install
-- Spin up your store with the [Vuestorefront-Odoo Integration](https://github.com/vuestorefront-community/odoo.git)
-- Check [Vuestorefront-Odoo Documentation] (https://docs.vuestorefront.io/odoo/)
+- Spin up your store with the [Alokai-Odoo Integration](https://github.com/vuestorefront-community/odoo.git)
+- Check [Alokai-Odoo Documentation] (https://docs.alokai.com/odoo/)
 
 ## Dependencies
 
@@ -40,7 +40,7 @@ OCA - Odoo Community Association - Base Graphql
 
 ## Support
 
-To report a problem please [contact us](https://www.odoogap.com/page/contactus/).
+To report a problem please [contact us](https://www.erpgap.com/page/contactus/).
 
-Commercial support is available, please email [info@odoogap.com](info@odoogap.com)
+Commercial support is available, please email [info@erpgap.com](info@erpgap.com)
 or call tel:+351 917848501 for further information.

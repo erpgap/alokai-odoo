@@ -4,10 +4,10 @@
 
 {
     # Application Information
-    'name': 'Stripe Payment Acquirer to VSF',
+    'name': 'Stripe Payment Acquirer to Alokai',
     'category': 'Accounting/Payment Acquirers',
     'version': '18.0.1.0.0',
-    'summary': 'Stripe Payment Acquirer: Adapting Stripe to VSF',
+    'summary': 'Stripe Payment Acquirer: Adapting Stripe to Alokai',
 
     # Author
     'author': "ERPGAP",
@@ -31,7 +31,7 @@
     # Assets
     'assets': {
         'web.assets_frontend': [
-            'payment_stripe_vsf/static/src/stripe.js'
+            'payment_stripe_alokai/static/src/stripe.js'
         ]
     },
 

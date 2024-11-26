@@ -23,7 +23,7 @@
         'crm',
         'theme_default',
         'payment_adyen_alokai',
-        'payment_stripe_vsf',
+        'payment_stripe_alokai',
         'auth_totp',
         'website_blog'
     ],
