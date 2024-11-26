@@ -8,10 +8,7 @@ import werkzeug
 
 from odoo import http, _
 from odoo.http import request
-from odoo.exceptions import ValidationError
-from odoo.addons.payment_stripe.const import HANDLED_WEBHOOK_EVENTS
 from odoo.addons.payment_stripe.controllers.main import StripeController
-from odoo.addons.payment.controllers.post_processing import PaymentPostProcessing
 
 _logger = logging.getLogger(__name__)
 
@@ -47,9 +44,9 @@ class StripeControllerInherit(StripeController):
 
         # Get Website
         website = sale_order.website_id
-        # Redirect to VSF
-        vsf_payment_success_return_url = website.vsf_payment_success_return_url
-        vsf_payment_error_return_url = website.vsf_payment_error_return_url
+        # Redirect to Alokai
+        alokai_payment_success_return_url = website.alokai_payment_success_return_url
+        alokai_payment_error_return_url = website.alokai_payment_error_return_url
 
         request.session["__payment_monitored_tx_id__"] = tx_sudo.id
 
@@ -76,15 +73,15 @@ class StripeControllerInherit(StripeController):
         # Handle the notification data crafted with Stripe API's objects.
         tx_sudo._handle_notification_data('stripe', data)
 
-        # Condition used for VSF
-        if tx_sudo.created_on_vsf:
+        # Condition used for Alokai
+        if tx_sudo.created_on_alokai:
             if payment_intent:
                 if payment_intent.get('status') and payment_intent['status'] in ['succeeded', 'requires_capture']:
                     # Confirm sale order
                     # PaymentPostProcessing().poll_status()
-                    return werkzeug.utils.redirect(vsf_payment_success_return_url)
+                    return werkzeug.utils.redirect(alokai_payment_success_return_url)
                 else:
-                    return werkzeug.utils.redirect(vsf_payment_error_return_url)
+                    return werkzeug.utils.redirect(alokai_payment_error_return_url)
         # Default Condition
         else:
             # Redirect the user to the status page.
