@@ -118,26 +118,26 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             request.uid = website_uid
 
     # The GraphiQL route, providing an IDE for developers
-    @http.route("/graphiql/alokai", auth="public")
+    @http.route(["/graphiql/alokai", "/graphiql/vsf"], auth="user")
     def graphiql(self, **kwargs):
-        # internal_group_id = request.env.ref('base.group_user').id
+        internal_group_id = request.env.ref('base.group_user').id
 
-        # # Check if the current user belongs to the internal user group
-        # if internal_group_id not in request.env.user.groups_id.ids:
-        #     raise Forbidden()
+        # Check if the current user belongs to the internal user group
+        if internal_group_id not in request.env.user.groups_id.ids:
+            raise Forbidden()
 
-        # self._set_website_context()
+        self._set_website_context()
         return self._handle_graphiql_request(schema.graphql_schema)
 
     # The graphql route, for applications.
     # Note csrf=False: you may want to apply extra security
     # (such as origin restrictions) to this route.
-    @http.route("/graphql/alokai", auth="public", csrf=False)
+    @http.route(["/graphql/alokai", "/graphql/vsf"], auth="public", csrf=False)
     def graphql(self, **kwargs):
         self._set_website_context()
         return self._handle_graphql_request(schema.graphql_schema)
 
-    @http.route('/alokai/categories', type='http', auth='public', csrf=False)
+    @http.route(['/alokai/categories', '/vsf/categories'], type='http', auth='public', csrf=False)
     def alokai_categories(self):
         self._set_website_context()
         website = request.env['website'].get_current_website()
@@ -157,7 +157,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             headers={'Content-Type': 'application/json'},
         )
 
-    @http.route('/alokai/products', type='http', auth='public', csrf=False)
+    @http.route(['/alokai/products', '/vsf/products'], type='http', auth='public', csrf=False)
     def alokai_products(self):
         self._set_website_context()
         website = request.env['website'].get_current_website()
@@ -185,7 +185,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             headers={'Content-Type': 'application/json'},
         )
 
-    @http.route('/alokai/redirects', type='http', auth='public', csrf=False)
+    @http.route(['/alokai/redirects', '/vsf/redirects'], type='http', auth='public', csrf=False)
     def alokai_redirects(self):
         redirects = []
 
