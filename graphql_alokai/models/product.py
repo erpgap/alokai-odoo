@@ -326,12 +326,12 @@ class ProductTemplate(models.Model):
                     'qty': qty,
                 })
 
-def _has_no_variant_attributes(self):
-        """ Overwrite : always return False regardless of product attributes variant creation mode setting
-        to avoid create multiple sale order line for same product
-        """
-        self.ensure_one()
-        return False
+    def _has_no_variant_attributes(self):
+            """ Overwrite : always return False regardless of product attributes variant creation mode setting
+            to avoid create multiple sale order line for same product
+            """
+            self.ensure_one()
+            return False
 
 
 class ProductTemplateFBT(models.Model):

@@ -66,10 +66,10 @@
                 </page>
                 <page name="fbt" string="Frequently Bought Together" groups="base.group_no_one">
                     <field name="frequently_bought_together_ids" nolabel="1">
-                        <tree>
+                        <list>
                             <field name="related_product_id"/>
                             <field name="qty"/>
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </notebook>
