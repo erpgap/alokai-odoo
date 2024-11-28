@@ -684,6 +684,25 @@ class Product(OdooObjectType):
             }
         else:
             pricing_info['taxes'] = None
+        if pricing_info.get('combination', False) and pricing_info['combination'].ids:
+            pricing_info['combination'] = [{
+                'id': attribute_value.id,
+                'name': attribute_value.name,
+                'display_type': attribute_value.display_type,
+                'html_color': attribute_value.html_color,
+                'search': '{}-{}'.format(attribute_value.attribute_id.id, attribute_value.id) or None,
+                'price_extra': attribute_value.price_extra,
+                'attribute': [{
+                    'id': attribute_value.attribute_id.id,
+                    'name': attribute_value.attribute_id.name,
+                    'display_type': attribute_value.attribute_id.display_type,
+                    'variant_create_mode': attribute_value.attribute_id.create_variant or None,
+                    'filter_visibility': attribute_value.attribute_id.visibility or None
+                }]
+
+            } for attribute_value in pricing_info['combination']]
+        else:
+            pricing_info['combination'] = None
         return pricing_info or None
 
     def resolve_price(self, info):
