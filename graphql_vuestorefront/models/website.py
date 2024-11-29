@@ -9,6 +9,7 @@ from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.http_routing.models.ir_http import slugify
 from odoo.addons.graphql_vuestorefront.schemas.objects import get_image_url
+from odoo.osv import expression
 
 
 class WebsiteSeoMetadata(models.AbstractModel):
@@ -221,6 +222,43 @@ class BlogBlog(models.Model):
 
 class BlogPost(models.Model):
     _inherit = 'blog.post'
+
+    @api.model
+    def _graphql_get_search_order(self, sort):
+        sorting = ''
+        for field, val in sort.items():
+            if sorting:
+                sorting += ', '
+            sorting += '%s %s' % (field, val.value)
+
+        # Add id as last factor, so we can consistently get the same results
+        if sorting:
+            sorting += ', published_date DESC, id ASC'
+        else:
+            sorting = 'published_date DESC, id ASC'
+
+        return sorting
+
+    @api.model
+    def _graphql_get_search_domain(self, filter, search):
+        env = self.env
+
+        # Only get published products
+        domain = [
+            env['website'].get_current_website().sale_product_domain(),
+            [('is_published', '=', True)],
+        ]
+
+        if search:
+            for srch in search.split(" "):
+                domain.append([
+                    '|', ('name', 'ilike', srch), ('content', 'like', srch)])
+
+        # Filter by stages or default to sales and done
+        if filter.get('tag_id', False):
+            domain.append([('tag_ids', 'in', filter['tag_id'])])
+
+        return expression.AND(domains)
 
     @api.depends('name')
     def _compute_website_slug(self):
