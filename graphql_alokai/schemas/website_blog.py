@@ -7,23 +7,6 @@ from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum,
     get_document_with_check_access,
 )
-from odoo.osv import expression
-
-
-def get_search_order(sort):
-    sorting = ''
-    for field, val in sort.items():
-        if sorting:
-            sorting += ', '
-        sorting += '%s %s' % (field, val.value)
-
-    # Add id as last factor, so we can consistently get the same results
-    if sorting:
-        sorting += ', published_date DESC, id ASC'
-    else:
-        sorting = 'published_date DESC, id ASC'
-
-    return sorting
 
 
 class BlogTags(graphene.Interface):
@@ -104,17 +87,10 @@ class BlogPostQuery(graphene.ObjectType):
     @staticmethod
     def resolve_blog_posts(self, info, filter, current_page, page_size, search, sort):
         env = info.context["env"]
-        sort_order = get_search_order(sort)
-        domain = []
+        BlogPost = env['blog.post']
 
-        if search:
-            for srch in search.split(" "):
-                domain.append([
-                    '|', ('name', 'ilike', srch), ('content', 'like', srch)])
-
-        # Filter by stages or default to sales and done
-        if filter.get('tag_id', False):
-            domain.append([('tag_ids', 'in', filter['tag_id'])])
+        domain = BlogPost._graphql_get_search_domain(filter, search)
+        sort_order = BlogPost._graphql_get_search_order(sort)
 
         # First offset is 0 but first page is 1
         if current_page > 1:
@@ -123,7 +99,7 @@ class BlogPostQuery(graphene.ObjectType):
             offset = 0
 
         BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, expression.AND(domain), sort_order, limit=0)
+        blog_posts = get_document_with_check_access(BlogPost, domain, sort_order, limit=0)
         blog_posts=blog_posts and blog_posts.sudo() or blog_posts
         total_count = len(blog_posts)
         blog_tags = blog_posts.mapped('tag_ids').sorted(key=lambda b: (b.name, b.id))

@@ -8,6 +8,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import get_image_url
+from odoo.osv import expression
 
 
 class WebsiteSeoMetadata(models.AbstractModel):
@@ -220,6 +221,42 @@ class BlogBlog(models.Model):
 
 class BlogPost(models.Model):
     _inherit = 'blog.post'
+
+    @api.model
+    def _graphql_get_search_order(self, sort):
+        sorting = ''
+        for field, val in sort.items():
+            if sorting:
+                sorting += ', '
+            sorting += '%s %s' % (field, val.value)
+
+        # Add id as last factor, so we can consistently get the same results
+        if sorting:
+            sorting += ', published_date DESC, id ASC'
+        else:
+            sorting = 'published_date DESC, id ASC'
+
+        return sorting
+
+    @api.model
+    def _graphql_get_search_domain(self, filter, search):
+        env = self.env
+
+        # Only get published products
+        domain = [
+            [('is_published', '=', True)],
+        ]
+
+        if search:
+            for srch in search.split(" "):
+                domain.append([
+                    '|', ('name', 'ilike', srch), ('content', 'like', srch)])
+
+        # Filter by stages or default to sales and done
+        if filter.get('tag_id', False):
+            domain.append([('tag_ids', 'in', filter['tag_id'])])
+
+        return expression.AND(domain)
 
     @api.depends('name')
     def _compute_website_slug(self):
