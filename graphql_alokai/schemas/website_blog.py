@@ -27,6 +27,7 @@ class BlogPosts(graphene.Interface):
 
 class BlogPostFilterInput(graphene.InputObjectType):
     tag_id = graphene.List(graphene.Int)
+    tag_slug = graphene.String()
 
 
 class BlogPostSortInput(graphene.InputObjectType):
