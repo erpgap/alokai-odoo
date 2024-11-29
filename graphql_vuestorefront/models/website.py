@@ -245,7 +245,6 @@ class BlogPost(models.Model):
 
         # Only get published products
         domain = [
-            env['website'].get_current_website().sale_product_domain(),
             [('is_published', '=', True)],
         ]
 
@@ -258,7 +257,7 @@ class BlogPost(models.Model):
         if filter.get('tag_id', False):
             domain.append([('tag_ids', 'in', filter['tag_id'])])
 
-        return expression.AND(domains)
+        return expression.AND(domain)
 
     @api.depends('name')
     def _compute_website_slug(self):
