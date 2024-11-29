@@ -1054,6 +1054,10 @@ class WebsiteMenuImage(OdooObjectType):
 class BlogTag(OdooObjectType):
     id = graphene.Int()
     name = graphene.String()
+    slug = graphene.String()
+
+    def resolve_slug(self, info):
+        return self.website_slug
 
 
 class BlogPost(OdooObjectType):

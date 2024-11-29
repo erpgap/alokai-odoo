@@ -187,6 +187,27 @@ class WebsiteMenuImage(models.Model):
     button_url = fields.Char('Button URL')
 
 
+class BlogTag(models.Model):
+    _inherit = 'blog.tag'
+
+    @api.depends('name')
+    def _compute_website_slug(self):
+        langs = self.env['res.lang'].search([])
+
+        for blog_tag in self:
+            for lang in langs:
+                blog_tag = blog_tag.with_context(lang=lang.code)
+
+                if not blog_tag.id:
+                    blog_tag.website_slug = None
+                else:
+                    slug_name = slugify(blog_tag.name or '').strip().strip('-')
+                    blog_tag.website_slug = f'/{slug_name}-{blog_tag.id}'
+
+    website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
+                               translate=True)
+
+
 class BlogBlog(models.Model):
     _inherit = 'blog.blog'
 
@@ -253,9 +274,10 @@ class BlogPost(models.Model):
                 domain.append([
                     '|', ('name', 'ilike', srch), ('content', 'like', srch)])
 
-        # Filter by stages or default to sales and done
         if filter.get('tag_id', False):
             domain.append([('tag_ids', 'in', filter['tag_id'])])
+        if filter.get('tag_slug', False):
+            domain.append([('tag_ids.website_slug', '=', filter['tag_slug'])])
 
         return expression.AND(domain)
 
