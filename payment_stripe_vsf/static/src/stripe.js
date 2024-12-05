@@ -11,12 +11,11 @@ publicWidget.registry.WebsiteSaleStripe = publicWidget.Widget.extend({
     init: function () {
         let self = this;
         this._super.apply(this, arguments);
-        this.stripeJs = Stripe('pk_test_51Q5TQCCsRfUCvfWIlYOylZI5rSJ0FoqZGBFSFQ9rdDGmr6ZXTjKk038fWG7YPCDHzVlQsP5fAPp7Frxs2bFMVacC00CSEYMmw3', {
+        const stripe = Stripe('pk_test_51Q5TQCCsRfUCvfWIlYOylZI5rSJ0FoqZGBFSFQ9rdDGmr6ZXTjKk038fWG7YPCDHzVlQsP5fAPp7Frxs2bFMVacC00CSEYMmw3', {
             'apiVersion': '2019-05-16',  // The API version of Stripe implemented in this module.
         });
-        let clientSecret = 'pi_3QAxLoCsRfUCvfWI1BsCKtp1_secret_ik0R8Ez0lvJJcQq1wpl93cCyt';
-        this.clientSecret = clientSecret;
-        this.billingDetails = {
+        const clientSecret = 'pi_3QSeE9CsRfUCvfWI0j98szu1_secret_xlApILlvMl5RNgPPMjEl6gLxv';
+        const billingDetails = {
             "name": "Test02",
             "email": "test02@hotmail.com",
             "phone": "966222333",
@@ -29,13 +28,18 @@ publicWidget.registry.WebsiteSaleStripe = publicWidget.Widget.extend({
                 "postal_code": "3510-605"
             }
         }
-        this.return_url = `http://2f2e-2001-818-de5d-da00-3f59-eac8-191a-c707.ngrok-free.app/payment/stripe/return?reference=S00070-1`;
+        const return_url = `http://localhost:8069/payment/stripe/return?reference=S00113`;
+        this.stripeJs = stripe;
+        this.clientSecret = clientSecret;
+        this.billingDetails = billingDetails;
+        this.return_url = return_url;
+
         let elementsOptions =  {
             appearance: { theme: 'stripe' },
-            currency: "usd",
+            currency: "eur",
             captureMethod: "automatic",
             mode: 'payment',
-            amount:7381,
+            amount:9741,
             paymentMethodTypes: ['card', 'klarna', 'paypal']
         };
         this.paymentType = '';
@@ -51,7 +55,64 @@ publicWidget.registry.WebsiteSaleStripe = publicWidget.Widget.extend({
             if (event.complete) {
                 self.paymentType = event.value.type;
             }
-        })
+        });
+
+        // Express Checkout Element
+        /*const stripe = Stripe('pk_test_51Q5TQCCsRfUCvfWIlYOylZI5rSJ0FoqZGBFSFQ9rdDGmr6ZXTjKk038fWG7YPCDHzVlQsP5fAPp7Frxs2bFMVacC00CSEYMmw3', {
+            'apiVersion': '2019-05-16',  // The API version of Stripe implemented in this module.
+        });*/
+        const expressCheckoutOptions = {
+            clientSecret: this.clientSecret,
+            billingDetails: this.billingDetails,
+        };
+        const expressElements = stripe.elements({ clientSecret , elementsOptions });
+        const expressCheckoutElement = expressElements.create('expressCheckout', expressCheckoutOptions);
+        expressCheckoutElement.mount('#express-checkout-element');
+
+        expressCheckoutElement.on('click', function(event) {
+            const options = {
+                emailRequired: true
+            };
+            event.resolve(options);
+        });
+
+        expressCheckoutElement.on('confirm', function(event) {
+            console.log('Express Checkout Confirm Triggered');
+
+            stripe.createPaymentMethod({
+                type: event.expressPaymentType,  // Example: 'paypal', 'card', etc.
+                billing_details: billingDetails,
+            }).then(function(result) {
+                if (result.error) {
+                    console.error("'Payment Method' Error:", result.error.message);
+                } else {
+                    const paymentMethod = result.paymentMethod.id; // id -> pm_....
+                    console.log("'Payment Method' Created:", paymentMethod);
+
+                    // Confirm Payment
+                    stripe.confirmPayment({
+                        elements: expressElements,
+                        clientSecret: clientSecret,
+                        confirmParams: {
+                            payment_method: paymentMethod,
+                            return_url: return_url,
+                        },
+                    }).then(function(result) {
+                        if (result.error) {
+                            console.error("'Payment' Error:", result.error.message);
+                        } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+                            console.log("'Payment' Done with Success:", result.paymentIntent);
+                            window.location.href = return_url;
+                        } else {
+                            console.log("'Payment' Failed or is Pendent", result.paymentIntent);
+                        }
+                    });
+                }
+            }).catch(function(error) {
+                console.error("'Payment Method' Failed during Creation or Confirmation:", error);
+            });
+        });
+
     },
     async _onClickCheckoutSubmit(event) {
         event.preventDefault();

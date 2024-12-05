@@ -13,8 +13,11 @@
                     <div id="link-authentication-element">
                         <!-- Elements will create authentication element here -->
                     </div>
+                    <div id="express-checkout-element">
+                        <!-- Stripe Express Checkout will be mounted here -->
+                    </div>
                     <div id="payment-element">
-                    <!-- Elements will create form elements here -->
+                        <!-- Elements will create form elements here -->
                     </div>
                     <button type="submit" id="submit">Pay now</button>
                     <div id="error-message">
