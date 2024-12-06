@@ -200,7 +200,7 @@ class BlogTag(models.Model):
                 if not blog_tag.id:
                     blog_tag.website_slug = None
                 else:
-                    slug_name = slugify(blog_tag.name or '').strip().strip('-')
+                    slug_name = self.env['ir.http']._slugify(blog_tag.name or '').strip().strip('-')
                     blog_tag.website_slug = f'/{slug_name}-{blog_tag.id}'
 
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
