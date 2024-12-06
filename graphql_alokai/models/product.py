@@ -234,7 +234,8 @@ class ProductTemplate(models.Model):
             ['product_id', 'product_uom_qty'],
             ['product_id'],
         )
-        sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups}
+        # TODO: check why product id is False in sale.report
+        sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups if group and group.get('product_uom_qty')}
 
         for product in self:
             product_id = product.product_variant_id.id
