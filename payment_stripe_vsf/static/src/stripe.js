@@ -36,8 +36,8 @@ publicWidget.registry.WebsiteSaleStripe = publicWidget.Widget.extend({
 
         let elementsOptions =  {
             appearance: { theme: 'stripe' },
-            currency: "eur",
-            captureMethod: "automatic",
+            currency: 'eur',
+            captureMethod: 'automatic',
             mode: 'payment',
             amount:9741,
             paymentMethodTypes: ['card', 'klarna', 'paypal']
@@ -57,10 +57,16 @@ publicWidget.registry.WebsiteSaleStripe = publicWidget.Widget.extend({
             }
         });
 
+        // Payment Method Messaging Element
+        const paymentMethodMessagingOptions =  {
+            currency: 'EUR',
+            amount:9741,
+            countryCode: 'PT',
+        };
+        const PaymentMessageElement = this.elements.create('paymentMethodMessaging', paymentMethodMessagingOptions);
+        PaymentMessageElement.mount('#payment-method-messaging-element');
+
         // Express Checkout Element
-        /*const stripe = Stripe('pk_test_51Q5TQCCsRfUCvfWIlYOylZI5rSJ0FoqZGBFSFQ9rdDGmr6ZXTjKk038fWG7YPCDHzVlQsP5fAPp7Frxs2bFMVacC00CSEYMmw3', {
-            'apiVersion': '2019-05-16',  // The API version of Stripe implemented in this module.
-        });*/
         const expressCheckoutOptions = {
             clientSecret: this.clientSecret,
             billingDetails: this.billingDetails,
