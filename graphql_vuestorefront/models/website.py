@@ -328,3 +328,4 @@ class BlogPost(models.Model):
 
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
+    image = fields.Image(string='Image', required=True)
