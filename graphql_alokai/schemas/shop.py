@@ -163,11 +163,13 @@ class CreateUpdatePartner(graphene.Mutation):
         name = graphene.String(required=True)
         email = graphene.String(required=True)
         subscribe_newsletter = graphene.Boolean(required=True)
+        phone = graphene.String()
+        mobile = graphene.String()
 
     Output = Partner
 
     @staticmethod
-    def mutate(self, info, name, email, subscribe_newsletter):
+    def mutate(self, info, name, email, subscribe_newsletter, phone=False, mobile=False):
         env = info.context['env']
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=1)
@@ -176,6 +178,10 @@ class CreateUpdatePartner(graphene.Mutation):
             'name': name,
             'email': email,
         }
+        if phone:
+            data['phone'] = phone
+        if mobile:
+            data['mobile'] = mobile
 
         partner = order.partner_id
 
