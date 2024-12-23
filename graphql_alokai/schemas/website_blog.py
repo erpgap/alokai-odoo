@@ -64,7 +64,8 @@ class BlogPostQuery(graphene.ObjectType):
     def resolve_blog_tags(self, info):
         env = info.context['env']
         BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, [], limit=0)
+        blog_domain = BlogPost._graphql_get_search_domain({}, None)
+        blog_posts = get_document_with_check_access(BlogPost, blog_domain, limit=0)
         blog_posts=blog_posts and blog_posts.sudo() or blog_posts
         blog_tags = blog_posts.mapped('tag_ids').sorted(key=lambda b: (b.name, b.id))
         total_count = len(blog_tags)
