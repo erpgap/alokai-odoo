@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="blog_post_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">blog.post.kanban.inherit</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.blog_post_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="action" remove="open_website_url"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_blog_post_list_inherit" model="ir.ui.view">
+        <field name="name">blog.post.list.inherit</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="action" remove="open_website_url"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_blog_post_form_inherit" model="ir.ui.view">
+        <field name="name">blog.post.form.inherit</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
+        <field name="arch" type="xml">
+            <notebook>
+                <page name="content" string="Content">
+                    <field name="content"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
