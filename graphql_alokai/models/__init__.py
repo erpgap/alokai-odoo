@@ -10,3 +10,4 @@ from . import res_users
 from . import payment_transaction
 from . import ir_binary
 from . import sale_order
+from . import alokai_website_page

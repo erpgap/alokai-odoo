@@ -9,7 +9,8 @@ from odoo.addons.graphql_alokai.schemas import (
     country, category, product, order,
     invoice, contact_us, user_profile, sign,
     address, wishlist, shop, payment,
-    mailing_list, website, payment_stripe,website_blog
+    mailing_list, website, payment_stripe, website_blog,
+    website_page
 )
 
 
@@ -28,7 +29,8 @@ class Query(
     mailing_list.MailingContactQuery,
     mailing_list.MailingListQuery,
     website.WebsiteQuery,
-    website_blog.BlogPostQuery
+    website_blog.BlogPostQuery,
+    website_page.WebsitePageQuery,
 ):
     pass
 
@@ -55,5 +57,6 @@ schema = graphene.Schema(
     mutation=Mutation,
     types=[country.CountryList, category.CategoryList, product.ProductList, product.ProductVariantData, order.OrderList,
            invoice.InvoiceList, wishlist.WishlistData, shop.CartData, mailing_list.MailingContactList,
-           mailing_list.MailingListList, website.HomepageList, website_blog.BlogTagList, website_blog.BlogPostList]
+           mailing_list.MailingListList, website.HomepageList, website_blog.BlogTagList, website_blog.BlogPostList,
+           website_page.WebsitePageList]
 )

@@ -38,6 +38,8 @@ PaymentTransactionState = graphene.Enum('PaymentTransactionState', [('Draft', 'd
                                                                ('Authorized', 'authorized'), ('Confirmed', 'done'),
                                                                ('Canceled', 'cancel'), ('Error', 'error')])
 
+PageType = graphene.Enum('PageType', [('StaticPage', 'static'), ('ProductsPage', 'products')])
+
 
 class SortEnum(graphene.Enum):
     ASC = 'ASC'
@@ -1112,6 +1114,36 @@ class WebsiteMenuImage(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self, name='title')
+
+# ----------------------------- #
+#         Website Page          #
+# ----------------------------- #
+
+class WebsitePage(OdooObjectType):
+    id = graphene.Int()
+    page_type = PageType()
+    name = graphene.String()
+    website_url = graphene.String()
+    is_published = graphene.Boolean()
+    publishing_date = graphene.String()
+    website = graphene.Field(lambda: Website)
+    content = graphene.String()
+    products = graphene.List(graphene.NonNull(lambda: Product))
+
+    def resolve_page_type(self, info):
+        return self.page_type or None
+
+    def resolve_website_url(self, info):
+        return self.url or None
+
+    def resolve_publishing_date(self, info):
+        return self.date_publish or None
+
+    def resolve_website(self, info):
+        return self.website_id or None
+
+    def resolve_products(self, info):
+        return self.product_tmpl_ids or None
 
 
 class BlogTag(OdooObjectType):
