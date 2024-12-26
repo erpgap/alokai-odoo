@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="alokai_website_pages_form_view" model="ir.ui.view">
+        <field name="name">alokai.website.page.form</field>
+        <field name="model">alokai.website.page</field>
+        <field name="arch" type="xml">
+            <form string="Website Page Settings">
+                <sheet>
+                    <group name="page_type">
+                        <group>
+                            <field name="page_type"/>
+                        </group>
+                        <group/>
+                    </group>
+                    <group name="page_details">
+                        <group>
+                            <field name="name"/>
+                            <field name="url" required="1"/>
+                            <field name="website_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="is_published"/>
+                            <field name="date_publish" invisible="page_type == 'products'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <!-- Page Type: Static -->
+                        <page name="content" string="Content" invisible="page_type == 'products'">
+                            <group name="content_info">
+                                <field name="content" widget="markdown" options="{'placeholder': 'Type content here'}" nolabel="1"/>
+                            </group>
+                        </page>
+                        <!-- Page Type: Products -->
+                        <page name="page_products" string="Products" invisible="page_type == 'static'">
+                            <group name="group_products">
+                                <field name="product_tmpl_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="alokai_website_pages_list_view" model="ir.ui.view">
+        <field name="name">alokai.website.page.list</field>
+        <field name="model">alokai.website.page</field>
+        <field name="arch" type="xml">
+            <list string="Website Pages" default_order="name" multi_edit="1">
+                <field name="page_type"/>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="website_id" groups="website.group_multi_website"/>
+                <field name="is_published" string="Is Published"/>
+                <field name="create_uid" invisible="1"/>
+                <field name="write_uid"/>
+                <field name="write_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="alokai_website_pages_view_search" model="ir.ui.view">
+        <field name="name">alokai.website.page.view.search</field>
+        <field name="model">alokai.website.page</field>
+        <field name="arch" type="xml">
+            <search string="Website Pages">
+                <field name="url"/>
+                <filter string="Published" name="published" domain="[('website_published', '=', True)]"/>
+                <filter string="Not published" name="not_published" domain="[('website_published', '=', False)]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Page Type" name="group_by_page_type" context="{'group_by':'page_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="website.action_website_pages_list" model="ir.actions.act_window">
+        <field name="name">Website Pages</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="alokai_website_pages_list_view"/>
+        <field name="target">current</field>
+        <field name="context">{'search_default_group_by_page_type': 1}</field>
+    </record>
+</odoo>
