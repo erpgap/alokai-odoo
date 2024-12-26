@@ -17,8 +17,6 @@ patch(WebsitePreview.prototype, {
         this.websiteService = useService('website');
         this.dialogService = useService('dialog');
         this.title = useService('title');
-        this.user = useService('user');
-        this.router = useService('router');
         this.action = useService('action');
         this.orm = useService('orm');
 
@@ -73,6 +71,7 @@ patch(WebsitePreview.prototype, {
                 this.initialUrl = `/website/force/${encodeURIComponent(this.websiteId)}?path=${encodedPath}`;
             }
         });
+
         useEffect(() => {
             this.websiteService.currentWebsiteId = this.websiteId;
             if (this.isRestored) {
@@ -136,10 +135,8 @@ patch(WebsitePreview.prototype, {
             const backendIconEl = document.querySelector("link[rel~='icon']");
             // Save initial backend values.
             const backendIconHref = backendIconEl.href;
-            const { zopenerp } = this.title.getParts();
             this.iframe.el.addEventListener('load', () => {
                 // Replace backend values with frontend's ones.
-                this.title.setParts({ zopenerp: null });
                 const frontendIconEl = this.iframe.el.contentDocument.querySelector("link[rel~='icon']");
                 if (frontendIconEl) {
                     backendIconEl.href = frontendIconEl.href;
@@ -147,49 +144,19 @@ patch(WebsitePreview.prototype, {
             }, { once: true });
             return () => {
                 // Restore backend initial values when leaving.
-                this.title.setParts({ zopenerp, action: null });
                 backendIconEl.href = backendIconHref;
             };
         }, () => []);
 
-        useEffect(() => {
-            let leftOnBackNavigation = false;
-            // When reaching a "regular" url of the webclient's router, an
-            // hashchange event should be dispatched to properly display the
-            // content of the previous URL before reaching the client action,
-            // which was lost after being replaced for the frontend's URL.
-            const handleBackNavigation = () => {
-                if (window.location.pathname === '/web') {
-                    window.dispatchEvent(new HashChangeEvent('hashchange', {
-                        newURL: window.location.href.toString()
-                    }));
-                    leftOnBackNavigation = true;
-                }
-            };
-            window.addEventListener('popstate', handleBackNavigation);
-            return () => {
-                window.removeEventListener('popstate', handleBackNavigation);
-                // When leaving the client action, its original url is pushed
-                // so that the router can replay the action on back navigation
-                // from other screens.
-                if (!leftOnBackNavigation) {
-                    history.pushState({}, null, this.backendUrl);
-                }
-            };
-        }, () => []);
-
         const toggleIsMobile = () => {
-            const wrapwrapEl = this.iframe.el.contentDocument.querySelector('#wrapwrap');
-            if (wrapwrapEl) {
-                wrapwrapEl.classList.toggle('o_is_mobile', this.websiteContext.isMobile);
-            }
+            this.iframe.el.contentDocument.documentElement
+                .classList.toggle('o_is_mobile', this.websiteContext.isMobile);
         };
-        // Toggle the 'o_is_mobile' class on the wrapwrap when 'isMobile'
-        // changes in the context. (e.g. Click on mobile preview buttons)
+        // Toggle the 'o_is_mobile' class when the context 'isMobile' changes
+        // (e.g. Click on mobile preview buttons).
         useEffect(toggleIsMobile, () => [this.websiteContext.isMobile]);
 
-        // Toggle the 'o_is_mobile' class on the wrapwrap according to
-        // 'isMobile' on iframe load.
+        // Toggle the 'o_is_mobile' class according to 'isMobile' on iframe load
         useEffect(() => {
             this.iframe.el.addEventListener('OdooFrameContentLoaded', toggleIsMobile);
             return () => this.iframe.el.removeEventListener('OdooFrameContentLoaded', toggleIsMobile);
