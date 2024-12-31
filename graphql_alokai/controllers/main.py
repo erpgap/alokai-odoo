@@ -115,7 +115,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
 
         if request_uid != website_uid \
                 and request.env['res.users'].sudo().browse(request_uid).has_group('base.group_public'):
-            request.uid = website_uid
+            request.update_env(user=website_uid)
 
     # The GraphiQL route, providing an IDE for developers
     @http.route(["/graphiql/alokai", "/graphiql/vsf"], auth="user")
