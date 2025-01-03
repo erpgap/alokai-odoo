@@ -54,7 +54,7 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page name="seo" string="SEO" groups="base.group_no_one">
+                <page name="seo" string="SEO">
                     <group name="default_opengraph">
                         <field name="website_meta_title" string="Meta Title"/>
                         <field name="website_meta_description" string="Meta Description"/>
@@ -64,7 +64,7 @@
                         <field name="pprint_json_ld"/>
                     </group>
                 </page>
-                <page name="fbt" string="Frequently Bought Together" groups="base.group_no_one">
+                <page name="fbt" string="Frequently Bought Together">
                     <field name="frequently_bought_together_ids" nolabel="1">
                         <tree>
                             <field name="related_product_id"/>
