@@ -82,5 +82,9 @@
         <field name="view_id" ref="alokai_website_pages_list_view"/>
         <field name="target">current</field>
         <field name="context">{'search_default_group_by_page_type': 1}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('alokai_website_pages_list_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('alokai_website_pages_form_view')}),
+        ]"/>
     </record>
 </odoo>
