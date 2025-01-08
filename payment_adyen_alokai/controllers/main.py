@@ -23,32 +23,21 @@ class AdyenControllerInherit(AdyenController):
 
     _webhook_url = AdyenController()._webhook_url
 
-    @http.route('/payment/adyen/payments', type='json', auth='public')
+    @http.route()
     def adyen_payments(
-            self, provider_id, reference, converted_amount, currency_id, partner_id, payment_method,
-            access_token, browser_info=None
+        self, provider_id, reference, converted_amount, currency_id, partner_id, payment_method,
+        access_token, browser_info=None
     ):
-        """ Make a payment request and process the feedback data.
-
-        :param int provider_id: The provider handling the transaction, as a `payment.provider` id
-        :param str reference: The reference of the transaction
-        :param int converted_amount: The amount of the transaction in minor units of the currency
-        :param int currency_id: The currency of the transaction, as a `res.currency` id
-        :param int partner_id: The partner making the transaction, as a `res.partner` id
-        :param dict payment_method: The details of the payment method used for the transaction
-        :param str access_token: The access token used to verify the provided values
-        :param dict browser_info: The browser info to pass to Adyen
-        :return: The JSON-formatted content of the response
-        :rtype: dict
+        """ overwrite to inject real ip as shopper ip
         """
         # Check that the transaction details have not been altered. This allows preventing users
         # from validating transactions by paying less than agreed upon.
         if not payment_utils.check_access_token(
-                access_token, reference, converted_amount, currency_id, partner_id
+            access_token, reference, converted_amount, currency_id, partner_id
         ):
             raise ValidationError("Adyen: " + _("Received tampered payment request data."))
 
-        # Make the payment request to Adyen
+        # Prepare the payment request to Adyen
         provider_sudo = request.env['payment.provider'].sudo().browse(provider_id).exists()
         tx_sudo = request.env['payment.transaction'].sudo().search([('reference', '=', reference)])
 
@@ -101,8 +90,11 @@ class AdyenControllerInherit(AdyenController):
             data.update(captureDelayHours=0)
 
         # Make the payment request to Adyen
+        idempotency_key = payment_utils.generate_idempotency_key(
+            tx_sudo, scope='payment_request_controller'
+        )
         response_content = provider_sudo._adyen_make_request(
-            endpoint='/payments', payload=data, method='POST'
+            endpoint='/payments', payload=data, method='POST', idempotency_key=idempotency_key
         )
 
         # Handle the payment request response
@@ -115,29 +107,19 @@ class AdyenControllerInherit(AdyenController):
         )
         return response_content
 
-    @http.route('/payment/adyen/return', type='http', auth='public', csrf=False, save_session=False)
+    @http.route()
     def adyen_return_from_3ds_auth(self, **data):
-        """ Process the authentication data sent by Adyen after redirection from the 3DS1 page.
-
-        The route is flagged with `save_session=False` to prevent Odoo from assigning a new session
-        to the user if they are redirected to this route with a POST request. Indeed, as the session
-        cookie is created without a `SameSite` attribute, some browsers that don't implement the
-        recommended default `SameSite=Lax` behavior will not include the cookie in the redirection
-        request from the payment provider to Odoo. As the redirection to the '/payment/status' page
-        will satisfy any specification of the `SameSite` attribute, the session of the user will be
-        retrieved and with it the transaction which will be immediately post-processed.
-
-        :param dict data: The authentication result data. May include custom params sent to Adyen in
-                          the request to allow matching the transaction when redirected here.
+        """ overwrite to redirect to alokai if transaction is created from alokai
         """
-        payment_transaction = data.get('merchantReference') and request.env['payment.transaction'].sudo().search(
-            [('reference', 'in', [data.get('merchantReference')])], limit=1
+        # Retrieve the transaction based on the reference included in the return url
+        tx_sudo = request.env['payment.transaction'].sudo()._get_tx_from_notification_data(
+            'adyen', data
         )
 
         # Check the Order and respective website related with the transaction
         # Check the payment_return url for the success and error pages
         # Pass the transaction_id on the session
-        sale_order_ids = payment_transaction.sale_order_ids.ids
+        sale_order_ids = tx_sudo.sale_order_ids.ids
         sale_order = request.env['sale.order'].sudo().search([
             ('id', 'in', sale_order_ids), ('website_id', '!=', False)
         ], limit=1)
@@ -148,7 +130,7 @@ class AdyenControllerInherit(AdyenController):
         alokai_payment_success_return_url = website.alokai_payment_success_return_url
         alokai_payment_error_return_url = website.alokai_payment_error_return_url
 
-        request.session["__payment_monitored_tx_id__"] = payment_transaction.id
+        request.session["__payment_monitored_tx_id__"] = tx_sudo.id
 
         # Retrieve the transaction based on the reference included in the return url
         tx_sudo = request.env['payment.transaction'].sudo()._get_tx_from_notification_data(
@@ -176,7 +158,7 @@ class AdyenControllerInherit(AdyenController):
             },
         )
 
-        if payment_transaction.created_on_alokai:
+        if tx_sudo.created_on_alokai:
             # For Redirect 3DS2 and MobilePay (Success flow)
             if result and result.get('resultCode') and result['resultCode'] == 'Authorised':
 
@@ -193,16 +175,10 @@ class AdyenControllerInherit(AdyenController):
         else:
             # Redirect the user to the status page
             return request.redirect('/payment/status')
-
-    @http.route(_webhook_url, type='http', methods=['POST'], auth='public', csrf=False)
+    
+    @http.route()
     def adyen_webhook(self):
-        """ Process the data sent by Adyen to the webhook based on the event code.
-
-        See https://docs.adyen.com/development-resources/webhooks/understand-notifications for the
-        exhaustive list of event codes.
-
-        :return: The '[accepted]' string to acknowledge the notification
-        :rtype: str
+        """ overwrite to redirect to alokai if transaction is created from alokai
         """
         data = request.get_json_data()
         for notification_item in data['notificationItems']:
@@ -211,16 +187,16 @@ class AdyenControllerInherit(AdyenController):
             _logger.info(
                 "notification received from Adyen with data:\n%s", pprint.pformat(notification_data)
             )
-            PaymentTransaction = request.env['payment.transaction']
             try:
-                payment_transaction = notification_data.get('merchantReference') and PaymentTransaction.sudo().search(
-                    [('reference', 'in', [notification_data.get('merchantReference')])], limit=1
-                )
-
                 # Check the integrity of the notification
                 tx_sudo = request.env['payment.transaction'].sudo()._get_tx_from_notification_data(
                     'adyen', notification_data
                 )
+            except ValidationError:
+                # Warn rather than log the traceback to avoid noise when a POS payment notification
+                # is received and the corresponding `payment.transaction` record is not found.
+                _logger.warning("unable to find the transaction; skipping to acknowledge")
+            else:
                 self._verify_notification_signature(notification_data, tx_sudo)
 
                 # Check whether the event of the notification succeeded and reshape the notification
@@ -238,32 +214,32 @@ class AdyenControllerInherit(AdyenController):
                     notification_data['resultCode'] = 'Error'
                 else:
                     continue  # Don't handle unsupported event codes and failed events
+                try:
+                    # Handle the notification data as if they were feedback of a S2S payment request
+                    tx_sudo._handle_notification_data('adyen', notification_data)
 
-                # Handle the notification data as if they were feedback of a S2S payment request
-                tx_sudo._handle_notification_data('adyen', notification_data)
+                    if event_code == 'AUTHORISATION' and success and tx_sudo.created_on_alokai:
+                        # Check the Order and respective website related with the transaction
+                        # Check the payment_return url for the success and error pages
+                        sale_order_ids = tx_sudo.sale_order_ids.ids
+                        sale_order = request.env['sale.order'].sudo().search([
+                            ('id', 'in', sale_order_ids), ('website_id', '!=', False)
+                        ], limit=1)
 
-                # Case the transaction was created on alokai (Success flow)
-                if event_code == 'AUTHORISATION' and success and payment_transaction.created_on_alokai:
-                    # Check the Order and respective website related with the transaction
-                    # Check the payment_return url for the success and error pages
-                    sale_order_ids = payment_transaction.sale_order_ids.ids
-                    sale_order = request.env['sale.order'].sudo().search([
-                        ('id', 'in', sale_order_ids), ('website_id', '!=', False)
-                    ], limit=1)
+                        # Get Website
+                        website = sale_order.website_id
+                        # Redirect to Alokai
+                        alokai_payment_success_return_url = website.alokai_payment_success_return_url
 
-                    # Get Website
-                    website = sale_order.website_id
-                    # Redirect to Alokai
-                    alokai_payment_success_return_url = website.alokai_payment_success_return_url
+                        request.session["__payment_monitored_tx_id__"] = tx_sudo.id
 
-                    request.session["__payment_monitored_tx_id__"] = payment_transaction.id
+                        # Confirm sale order
+                        PaymentPostProcessing().poll_status()
 
-                    # Confirm sale order
-                    PaymentPostProcessing().poll_status()
-
-                    return werkzeug.utils.redirect(alokai_payment_success_return_url)
-
-            except ValidationError:  # Acknowledge the notification to avoid getting spammed
-                _logger.exception("unable to handle the notification data; skipping to acknowledge")
+                        return werkzeug.utils.redirect(alokai_payment_success_return_url)
+                except ValidationError:  # Acknowledge the notification to avoid getting spammed
+                    _logger.exception(
+                        "unable to handle the notification data;skipping to acknowledge"
+                    )
 
         return request.make_json_response('[accepted]')  # Acknowledge the notification
