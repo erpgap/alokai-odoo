@@ -48,6 +48,7 @@ class CountryQuery(graphene.ObjectType):
         Country,
         required=True,
         id=graphene.Int(),
+        code=graphene.String(),
     )
     countries = graphene.Field(
         Countries,
@@ -59,8 +60,13 @@ class CountryQuery(graphene.ObjectType):
     )
 
     @staticmethod
-    def resolve_country(self, info, id):
-        return info.context['env']['res.country'].search([('id', '=', id)], limit=1)
+    def resolve_country(self, info, id=None, code=None):
+        domain = []
+        if id:
+            domain += [('id', '=', id)]
+        if code:
+            domain += [('code', '=', code.upper())]
+        return info.context['env']['res.country'].search(domain, limit=1)
 
     @staticmethod
     def resolve_countries(self, info, filter, current_page, page_size, search, sort):
