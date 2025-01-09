@@ -35,6 +35,23 @@
                         <field name="order_confirmation_email_template_id"/>
                     </group>
                 </page>
+
+                <page name="alokai_redis" string="Redis">
+                    <group>
+                        <field name="redis_host"/>
+                        <field name="redis_port"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="/form/*" position="before">
+                <header>
+                    <button
+                        name="redis_flushdb"
+                        type="object"
+                        string="Flush Redis"
+                        class="btn-primary"
+                    />
+                </header>
             </xpath>
         </field>
     </record>

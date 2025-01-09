@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+import redis
 import pprint
 import json
 import requests
@@ -9,6 +10,7 @@ from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import get_image_url
 from odoo.osv import expression
+from odoo.exceptions import UserError
 
 
 class WebsiteSeoMetadata(models.AbstractModel):
@@ -105,6 +107,69 @@ class Website(models.Model):
 
             website.json_ld = json.dumps(json_ld)
 
+    def _redis_connect(self):
+        if not self.redis_host or not self.redis_port:
+            raise UserError(_('Please configure Redis for this website.'))
+
+        try:
+            redis_client = redis.Redis(
+                host=self.redis_host,
+                port=self.redis_port,
+                socket_timeout=1.0,
+                socket_connect_timeout=1.0,
+                decode_responses=True,
+            )
+            redis_client.ping()
+
+            return redis_client
+        except TimeoutError:
+            raise UserError(_('Timeout while connecting to Redis.'))
+        except AuthenticationError:
+            raise UserError(_('Invalid username or password.'))
+        except ConnectionError:
+            raise UserError(_('Unable to connect to Redis.'))
+
+    def redis_flushdb(self):
+        """
+        Deletes all keys from a Redis database except those matching specified patterns.
+        SCAN iterates over keys in batches without blocking Redis.
+        The loop ends when the cursor returned by SCAN is 0, indicating all keys have been scanned.
+        """
+        self.ensure_one()
+
+        # Keep cart and stock keys in redis
+        patterns_to_keep = ['cart:*', 'stock:*']
+        batch_size = 100
+
+        client = self._redis_connect()
+
+        cursor = 0
+        while True:
+            cursor, keys = client.scan(cursor, match='*', count=batch_size)
+
+            keys_to_delete = []
+            for key in keys:
+                if not any(key.startswith(pattern[:-1]) for pattern in patterns_to_keep):
+                    keys_to_delete.append(key)
+
+            if keys_to_delete:
+                client.delete(*keys_to_delete)
+
+            if cursor == 0:
+                break
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Redis flushed'),
+                'message': _('Redis cache has been successfully flushed.'),
+                'type': 'success',
+                'sticky': False,
+                'fadeout': 'slow',
+            },
+        }
+
     alokai_payment_success_return_url = fields.Char(
         'Payment Success Return Url', required=True, translate=True, default='Dummy'
     )
@@ -114,6 +179,9 @@ class Website(models.Model):
     alokai_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)])
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password')
     order_confirmation_email_template_id = fields.Many2one('mail.template', string='Order confirmation')
+
+    redis_host = fields.Char('Host', default='localhost')
+    redis_port = fields.Integer('Port', default=6379)
 
     @api.model
     def enable_b2c_reset_password(self):
