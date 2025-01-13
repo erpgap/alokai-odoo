@@ -73,7 +73,10 @@ class IrBinary(models.AbstractModel):
                     background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
                 bg_w, bg_h = background.size
                 offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
-                background.paste(img, offset)
+                if image_format == 'png':
+                    background.paste(img, offset, img.convert("RGBA").split()[3])
+                else:
+                    background.paste(img, offset)
 
                 # Get compression quality from settings
                 quality = ICP.get_param('vsf_image_quality', 100)
