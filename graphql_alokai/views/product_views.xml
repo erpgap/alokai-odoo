@@ -45,6 +45,11 @@
                     <field colspan="2" name="website_description" nolabel="1"/>
                 </group>
             </page>
+            <field name="is_published" position="replace">
+                <button name="website_publish_button" type="object" class="oe_stat_button" icon="fa-globe">
+                    <field name="is_published" widget="website_publish_button"/>
+                </button>
+            </field>
         </field>
     </record>
 
