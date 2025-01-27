@@ -61,6 +61,18 @@ class StripeControllerInherit(StripeController):
                 payload={'expand[]': 'payment_method'},  # Expand all required objects.
                 method='GET',
             )
+            # Populate the fields related to the "Payment Risk"
+            if payment_intent.get('charges'):
+                charges = payment_intent['charges']
+                if charges.get('data'):
+                    charges_data = charges['data']
+                    if charges_data[0].get('outcome'):
+                        charges_data_outcome = charges_data[0]['outcome']
+                        tx_sudo.write({
+                            'stripe_payment_risk_level': charges_data_outcome['risk_level'] if charges_data_outcome.get('risk_level') else False,
+                            'stripe_payment_risk_score': charges_data_outcome['risk_score'] if charges_data_outcome.get('risk_score') else False,
+                            'stripe_payment_risk_reason': charges_data_outcome['reason'] if charges_data_outcome.get('reason') else False,
+                        })
             _logger.info("Received payment_intents response:\n%s", pprint.pformat(payment_intent))
             self._include_payment_intent_in_notification_data(payment_intent, data)
         else:

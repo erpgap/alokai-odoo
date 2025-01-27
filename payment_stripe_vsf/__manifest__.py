@@ -17,6 +17,7 @@
 
     # Dependencies
     'depends': [
+        'sale',
         'payment',
         'payment_stripe',
     ],
@@ -26,6 +27,8 @@
         'views/stripe_template.xml',
         'data/website_data.xml',
         'data/ir_cron_data.xml',
+        'views/payment_transaction_views.xml',
+        'views/sale_order_views.xml',
     ],
 
     # Assets

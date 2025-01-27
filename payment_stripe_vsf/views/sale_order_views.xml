@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2025 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[last()]" position="after">
+                <page string="Stripe Payment Details" name="stripe_payment_details" invisible="not stripe_payment_risk_level and not stripe_payment_risk_score">
+                    <group>
+                        <field name="stripe_payment_risk_level" readonly="1"/>
+                        <field name="stripe_payment_risk_score" readonly="1"/>
+                        <field name="stripe_payment_risk_reason" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
