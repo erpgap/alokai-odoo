@@ -28,18 +28,10 @@
                         <field name="pprint_json_ld"/>
                     </group>
                 </page>
-
                 <page name="email_templates" string="Email Templates">
                     <group>
                         <field name="reset_password_email_template_id"/>
                         <field name="order_confirmation_email_template_id"/>
-                    </group>
-                </page>
-
-                <page name="alokai_redis" string="Redis">
-                    <group>
-                        <field name="redis_host"/>
-                        <field name="redis_port"/>
                     </group>
                 </page>
             </xpath>

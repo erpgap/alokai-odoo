@@ -3,7 +3,7 @@
 from odoo import models, fields, api, _
 
 
-class VsfWebsitePage(models.Model):
+class AlokaiWebsitePage(models.Model):
     _name = 'alokai.website.page'
     _inherit = [
         'website.published.multi.mixin',

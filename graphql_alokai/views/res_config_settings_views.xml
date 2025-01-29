@@ -45,6 +45,15 @@
                     </setting>
                 </block>
 
+                <block title="Alokai Redis" id="alokai_redis_settings">
+                    <setting id="alokai_redis_host">
+                        <field name="alokai_redis_host"/>
+                    </setting>
+                    <setting id="alokai_redis_port">
+                        <field name="alokai_redis_port"/>
+                    </setting>
+                </block>
+
                 <block title="Alokai Mail Templates" id="alokai_mail_templates_settings">
                     <setting id="reset_password_email_template_id_settings">
                         <field name="reset_password_email_template_id"/>
