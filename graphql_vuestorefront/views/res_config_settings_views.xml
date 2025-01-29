@@ -46,6 +46,15 @@
                     </setting>
                 </block>
 
+                <block title="Vue Storefront Redis" id="vsf_redis_settings">
+                    <setting id="vsf_redis_host">
+                        <field name="vsf_redis_host"/>
+                    </setting>
+                    <setting id="vsf_redis_port">
+                        <field name="vsf_redis_port"/>
+                    </setting>
+                </block>
+
                 <block title="Vue Storefront Mail Templates" id="vsf_mail_templates_settings">
                     <setting id="reset_password_email_template_id_settings">
                         <field name="reset_password_email_template_id"/>

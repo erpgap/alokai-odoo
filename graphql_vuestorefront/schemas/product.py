@@ -169,6 +169,7 @@ class ProductFilterInput(graphene.InputObjectType):
     name = graphene.String()
     min_price = graphene.Float()
     max_price = graphene.Float()
+    in_stock = graphene.Boolean()
 
 
 class ProductSortInput(graphene.InputObjectType):

@@ -36,6 +36,10 @@ class ResConfigSettings(models.TransientModel):
     vsf_image_resize_limit = fields.Integer('Resize Limit', required=True)
     vsf_recent_sales_count_days = fields.Integer('Recent Sales Count (days)', required=True)
 
+    # Redis
+    vsf_redis_host = fields.Char('Redis Host', default='localhost')
+    vsf_redis_port = fields.Integer('Redis Port', default=6379)
+
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
         ICP = self.env['ir.config_parameter'].sudo()
@@ -48,6 +52,8 @@ class ResConfigSettings(models.TransientModel):
             vsf_image_background_rgba=ICP.get_param('vsf_image_background_rgba', '(255, 255, 255, 255)'),
             vsf_image_resize_limit=int(ICP.get_param('vsf_image_resize_limit', 1920)),
             vsf_recent_sales_count_days=int(ICP.get_param('vsf_recent_sales_count_days', 30)),
+            vsf_redis_host=ICP.get_param('vsf_redis_host', 'localhost'),
+            vsf_redis_port=int(ICP.get_param('vsf_redis_port', 6379)),
         )
         return res
 
@@ -68,6 +74,8 @@ class ResConfigSettings(models.TransientModel):
         ICP.set_param('vsf_image_background_rgba', self.vsf_image_background_rgba)
         ICP.set_param('vsf_image_resize_limit', self.vsf_image_resize_limit)
         ICP.set_param('vsf_recent_sales_count_days', self.vsf_recent_sales_count_days)
+        ICP.set_param('vsf_redis_host', self.vsf_redis_host)
+        ICP.set_param('vsf_redis_port', self.vsf_redis_port)
 
     @api.model
     def create_vsf_cache_invalidation_key(self):

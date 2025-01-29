@@ -43,5 +43,29 @@
             <field name="user_id" ref="base.user_admin"/>
         </record>
 
+        <record id="ir_cron_update_all_products_stock_redis" model="ir.cron">
+            <field name="name">Update All Products Stock on Redis</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="state">code</field>
+            <field name="code">model._update_all_products_stock_redis()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="ir_cron_update_dirty_products_stock_redis" model="ir.cron">
+            <field name="name">Update Dirty Products Stock on Redis</field>
+            <field name="model_id" ref="product.model_product_product"/>
+            <field name="state">code</field>
+            <field name="code">model._update_dirty_products_stock_redis()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="user_id" ref="base.user_admin"/>
+        </record>
+
     </data>
 </odoo>

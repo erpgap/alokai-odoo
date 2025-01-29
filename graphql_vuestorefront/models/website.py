@@ -108,14 +108,19 @@ class Website(models.Model):
 
             website.json_ld = json.dumps(json_ld)
 
+    @api.model
     def _redis_connect(self):
-        if not self.redis_host or not self.redis_port:
-            raise UserError(_('Please configure Redis for this website.'))
+        ICP = self.env['ir.config_parameter'].sudo()
+        redis_host = ICP.get_param('vsf_redis_host', False)
+        redis_port = ICP.get_param('vsf_redis_port', False)
+
+        if not redis_host or not redis_port:
+            raise UserError(_('Please configure Redis.'))
 
         try:
             redis_client = redis.Redis(
-                host=self.redis_host,
-                port=self.redis_port,
+                host=redis_host,
+                port=redis_port,
                 socket_timeout=1.0,
                 socket_connect_timeout=1.0,
                 decode_responses=True,
@@ -142,11 +147,11 @@ class Website(models.Model):
         patterns_to_keep = ['cart:*', 'stock:*']
         batch_size = 100
 
-        client = self._redis_connect()
+        redis_client = self._redis_connect()
 
         cursor = 0
         while True:
-            cursor, keys = client.scan(cursor, match='*', count=batch_size)
+            cursor, keys = redis_client.scan(cursor, match='*', count=batch_size)
 
             keys_to_delete = []
             for key in keys:
@@ -154,7 +159,7 @@ class Website(models.Model):
                     keys_to_delete.append(key)
 
             if keys_to_delete:
-                client.delete(*keys_to_delete)
+                redis_client.delete(*keys_to_delete)
 
             if cursor == 0:
                 break
@@ -180,9 +185,6 @@ class Website(models.Model):
     vsf_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)])
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password')
     order_confirmation_email_template_id = fields.Many2one('mail.template', string='Order confirmation')
-
-    redis_host = fields.Char('Host', default='localhost')
-    redis_port = fields.Integer('Port', default=6379)
 
     @api.model
     def enable_b2c_reset_password(self):

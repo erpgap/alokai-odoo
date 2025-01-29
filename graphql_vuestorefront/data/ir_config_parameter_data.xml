@@ -27,4 +27,14 @@
         <field name="value">1920</field>
     </record>
 
+    <record id="vsf_redis_host" model="ir.config_parameter">
+        <field name="key">vsf_redis_host</field>
+        <field name="value">localhost</field>
+    </record>
+
+    <record id="vsf_redis_port" model="ir.config_parameter">
+        <field name="key">vsf_redis_port</field>
+        <field name="value">6379</field>
+    </record>
+
 </odoo>

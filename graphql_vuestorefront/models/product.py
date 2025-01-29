@@ -41,10 +41,11 @@ class ProductTemplate(models.Model):
     @api.model
     def _graphql_get_search_domain(self, search, **kwargs):
         env = self.env
+        website = env['website'].get_current_website()
 
         # Only get published products
         domains = [
-            env['website'].get_current_website().sale_product_domain(),
+            website.sale_product_domain(),
             [('is_published', '=', True)],
         ]
 
@@ -65,6 +66,13 @@ class ProductTemplate(models.Model):
             name = kwargs['name']
             for n in name.split(" "):
                 domains.append([('name', 'ilike', n)])
+
+        # Stock
+        if kwargs.get('in_stock', False):
+            domains.append([
+                ('product_tmpl_redis_stock_ids.quantity', '>', 0),
+                ('product_tmpl_redis_stock_ids.website_id', '=', website.id)
+            ])
 
         if search:
             for srch in search.split(" "):
@@ -258,6 +266,8 @@ class ProductTemplate(models.Model):
     recent_sales_count_increment = fields.Integer('Recent Sales Count Increment', default=0, required=True)
     frequently_bought_together_ids = fields.One2many('product.template.fbt', 'product_id', 'Frequently Bought Together',
                                                      readonly=True)
+    product_tmpl_redis_stock_ids = fields.One2many('product.template.redis_stock', 'product_id', 'Redis Stock',
+                                                   readonly=True)
 
     def write(self, vals):
         res = super(ProductTemplate, self).write(vals)
@@ -348,6 +358,8 @@ class ProductTemplateFBT(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
+    product_redis_stock_ids = fields.One2many('product.product.redis_stock', 'product_id', 'Redis Stock', readonly=True)
+
     def _compute_json_ld(self):
         env = self.env
         website = env['website'].get_current_website()
@@ -387,6 +399,78 @@ class ProductProduct(models.Model):
                 json_ld.update({"sku": product.default_code})
 
             product.json_ld = json.dumps(json_ld)
+
+    def _update_dirty_products_stock_redis(self):
+        redis_client = self.env['website']._redis_connect()
+        dirty_keys = [key for key in redis_client.scan_iter('stock-is-dirty-*')]
+        product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
+        products = self.search([('id', 'in', product_ids)])
+
+        self._update_products_stock_redis(redis_client, products)
+
+        for dirty_key in dirty_keys:
+            redis_client.delete(dirty_key)
+
+    def _update_all_products_stock_redis(self):
+        redis_client = self.env['website']._redis_connect()
+        products = self.search([])
+        self._update_products_stock_redis(redis_client, products)
+
+    def _update_products_stock_redis(self, redis_client, products):
+        if products:
+            product_tmpls = products.mapped('product_tmpl_id')
+            websites = self.env['website'].search([])
+
+            ProductProductRedisStock = self.env['product.product.redis_stock']
+            ProductTemplateRedisStock = self.env['product.template.redis_stock']
+            pipe = redis_client.pipeline()
+
+            for product in products:
+                data = {}
+                for website in websites:
+                    ProductProductRedisStock.create_redis_stock(product.id, website.id, product.free_qty)
+                    data.update({website.id: self.free_qty})
+                pipe.set(f'product-stock-{product.id}', json.dumps(data))
+
+            for product_tmpl in product_tmpls:
+                for website in websites:
+                    free_qty = sum(product_tmpl.product_variant_ids.mapped('free_qty'))
+                    ProductTemplateRedisStock.create_redis_stock(product_tmpl.id, website.id, free_qty)
+
+            pipe.execute()
+
+
+class ProductStockRedis(models.AbstractModel):
+    _name = 'product.redis_stock'
+
+    website_id = fields.Many2one('website', 'Website', required=True)
+    quantity = fields.Float('Quantity', digits='Product Unit of Measure', required=True)
+
+    @api.model
+    def create_redis_stock(self, product_id, website_id, quantity):
+        line = self.search([('product_id', '=', product_id), ('website_id', '=', website_id)])
+        if line:
+            line.quantity = quantity
+        else:
+            self.create({
+                'product_id': product_id,
+                'website_id': website_id,
+                'quantity': quantity,
+            })
+
+
+class ProductProductRedisStock(models.Model):
+    _name = 'product.product.redis_stock'
+    _inherit = 'product.redis_stock'
+
+    product_id = fields.Many2one('product.product', 'Product', required=True)
+
+
+class ProductTemplateRedisStock(models.Model):
+    _name = 'product.template.redis_stock'
+    _inherit = 'product.redis_stock'
+
+    product_id = fields.Many2one('product.template', 'Product', required=True)
 
 
 class ProductPublicCategory(models.Model):
