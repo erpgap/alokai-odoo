@@ -77,7 +77,34 @@
                         </list>
                     </field>
                 </page>
+                <page name="redis_stock" string="Redis Stock">
+                    <field name="product_tmpl_redis_stock_ids" nolabel="1">
+                        <list>
+                            <field name="website_id"/>
+                            <field name="quantity"/>
+                        </list>
+                    </field>
+                </page>
             </notebook>
         </field>
     </record>
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="redis_stock" string="Redis Stock">
+                    <field name="product_redis_stock_ids" nolabel="1">
+                        <list>
+                            <field name="website_id"/>
+                            <field name="quantity"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
 </odoo>
