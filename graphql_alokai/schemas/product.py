@@ -24,7 +24,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     else:
         offset = 0
     order = Product._graphql_get_search_order(sort)
-    products = Product.search(domain, order=order)
+    products = Product.search(expression.AND(domain), order=order)
     attribute_values = env['product.attribute.value'].sudo()
     filter_counts = []
     attribute_value_counts = defaultdict(int)
@@ -123,7 +123,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     if domain == prices_partial_domain:
         prices = products.mapped('list_price')
     else:
-        prices = Product.search(prices_partial_domain).mapped('list_price')
+        prices = Product.search(expression.AND(prices_partial_domain)).mapped('list_price')
 
     if prices:
         min_price = min(prices)
@@ -132,7 +132,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         min_price = 0.0
         max_price = 0.0
 
-    # Count filters
+    # Count attribute filters
     if attribute_values:
         filter_counts.extend([{
             'type': 'attribute_value',
@@ -142,6 +142,24 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
 
     total_count = len(products)
     products = products[offset:offset + page_size]
+
+    # Count products in stock
+    if kwargs.get('in_stock', False):
+        filter_counts.append({
+            'type': 'in_stock',
+            'total': total_count,
+        })
+    else:
+        website = env['website'].get_current_website()
+        domain.append([
+            ('product_tmpl_redis_stock_ids.quantity', '>', 0),
+            ('product_tmpl_redis_stock_ids.website_id', '=', website.id)
+        ])
+        filter_counts.append({
+            'type': 'in_stock',
+            'total': Product.search_count(expression.AND(domain)),
+        })
+
     return products, total_count, attribute_values, min_price, max_price, filter_counts
 
 
