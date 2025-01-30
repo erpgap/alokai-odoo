@@ -119,9 +119,9 @@ class ProductTemplate(models.Model):
             domains.append([('list_price', '<=', float(kwargs['max_price']))])
 
         return (
-            expression.AND(domains),
+            domains,
             attributes_partial_domain,
-            expression.AND(prices_partial_domain),
+            prices_partial_domain,
             filtered_attributes
         )
 
