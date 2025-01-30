@@ -12,6 +12,7 @@ from odoo.addons.http_routing.models.ir_http import slugify
 from odoo.addons.graphql_vuestorefront.schemas.objects import get_image_url
 from odoo.osv import expression
 from odoo.exceptions import UserError
+from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
 
 
 class WebsiteSeoMetadata(models.AbstractModel):
