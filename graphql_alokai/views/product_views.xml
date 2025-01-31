@@ -107,4 +107,15 @@
         </field>
     </record>
 
+    <record id="product_tag_form_view" model="ir.ui.view">
+        <field name="name">product.tag.form</field>
+        <field name="model">product.tag</field>
+        <field name="inherit_id" ref="product.product_tag_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='color']" position="after">
+                <field name="background_color" widget="color"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
