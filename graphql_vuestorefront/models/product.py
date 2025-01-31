@@ -531,3 +531,9 @@ class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
     visibility = fields.Selection(related='attribute_id.visibility', store=True, readonly=True)
+
+
+class ProductTag(models.Model):
+    _inherit = 'product.tag'
+
+    background_color = fields.Char('Background Color', default='#ffffff')

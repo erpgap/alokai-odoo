@@ -419,6 +419,21 @@ class Ribbon(OdooObjectType):
     display_name = graphene.String()
 
 
+class ProductTag(OdooObjectType):
+    name = graphene.String()
+    color = graphene.String()
+    background_color = graphene.String()
+    visible_on_ecommerce = graphene.Boolean()
+    image = graphene.String()
+    image_filename = graphene.String()
+
+    def resolve_image(self, info):
+        return get_image_url(self, field_name='image')
+
+    def resolve_image_filename(self, info):
+        return get_image_filename(self)
+
+
 class Product(OdooObjectType):
     id = graphene.Int(required=True)
     type_id = graphene.String()
@@ -470,6 +485,7 @@ class Product(OdooObjectType):
     product_variants = graphene.List(graphene.NonNull(lambda: Product), description='Specific to Product Template')
     first_variant = graphene.Field((lambda: Product), description='Specific to use in Product Template')
     json_ld = generic.GenericScalar()
+    tags = graphene.List(graphene.NonNull(lambda: ProductTag))
 
     def resolve_type_id(self, info):
         if self.detailed_type == 'product':
@@ -660,6 +676,9 @@ class Product(OdooObjectType):
 
     def resolve_first_variant(self, info):
         return self.product_variant_id or None
+
+    def resolve_tags(self, info):
+        return self.product_tag_ids or None
 
 
 class Payment(OdooObjectType):
