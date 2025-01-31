@@ -402,7 +402,7 @@ class ProductProduct(models.Model):
 
     def _update_dirty_products_stock_redis(self):
         redis_client = self.env['website']._redis_connect()
-        dirty_keys = [key for key in redis_client.scan_iter('stock-is-dirty-*')]
+        dirty_keys = [key for key in redis_client.scan_iter('product-stock-is-dirty-*')]
         product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
         products = self.search([('id', 'in', product_ids)])
 
