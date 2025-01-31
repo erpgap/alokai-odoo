@@ -144,7 +144,7 @@ class Website(models.Model):
         self.ensure_one()
 
         # Keep cart and stock keys in redis
-        patterns_to_keep = ['cart:*', 'stock:*']
+        patterns_to_keep = ['cart:*', 'stock:*', 'product-stock-*', 'product-stock-is-dirty-*']
         batch_size = 100
 
         redis_client = self._redis_connect()
