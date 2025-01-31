@@ -87,7 +87,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
 
         # Step 2. and 3.
         for attribute_id, attribute_value_ids in filtered_attributes.items():
-            domain = attributes_partial_domain.copy()
+            new_domain = attributes_partial_domain.copy()
             attributes_domain = []
 
             # Step 2.
@@ -97,11 +97,11 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
                 attributes_domain.append([('attribute_line_ids.value_ids', 'in', f_attribute_value_ids)])
 
             attributes_domain = expression.AND(attributes_domain)
-            domain.append(attributes_domain)
-            domain = expression.AND(domain)
+            new_domain.append(attributes_domain)
+            new_domain = expression.AND(new_domain)
 
-            partial_products = Product.search(domain)
-            partial_attribute_values = partial_products.search(domain). \
+            partial_products = Product.search(new_domain)
+            partial_attribute_values = partial_products.search(new_domain). \
                 mapped('variant_attribute_value_ids'). \
                 filtered(lambda av: av.attribute_id.id == attribute_id and av.visibility and av.visibility == 'visible')
 
