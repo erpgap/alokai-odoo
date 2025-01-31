@@ -743,7 +743,7 @@ class Product(OdooObjectType):
         return self.product_variant_id or None
 
     def resolve_tags(self, info):
-        return self.product_tag_ids or None
+        return self.product_tag_ids.filtered(lambda t: t.visible_on_ecommerce) or None
 
 
 class Payment(OdooObjectType):
