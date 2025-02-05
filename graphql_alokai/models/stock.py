@@ -14,7 +14,7 @@ class StockQuant(models.Model):
 
         for quant in self:
             product_id = quant.product_id.id
-            product_key = f'product-stock-is-dirty-{product_id}'
+            product_key = f'stock:product-is-dirty-{product_id}'
             pipe.set(product_key, product_id)
 
         pipe.execute()
