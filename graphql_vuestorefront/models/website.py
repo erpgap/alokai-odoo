@@ -136,16 +136,15 @@ class Website(models.Model):
         except ConnectionError:
             raise UserError(_('Unable to connect to Redis.'))
 
+    @api.model
     def redis_flushdb(self):
         """
         Deletes all keys from a Redis database except those matching specified patterns.
         SCAN iterates over keys in batches without blocking Redis.
         The loop ends when the cursor returned by SCAN is 0, indicating all keys have been scanned.
         """
-        self.ensure_one()
-
         # Keep cart and stock keys in redis
-        patterns_to_keep = ['cart:*', 'stock:*', 'product-stock-*', 'product-stock-is-dirty-*']
+        patterns_to_keep = ['cart:*', 'stock:*']
         batch_size = 100
 
         redis_client = self._redis_connect()

@@ -402,7 +402,7 @@ class ProductProduct(models.Model):
 
     def _update_dirty_products_stock_redis(self):
         redis_client = self.env['website']._redis_connect()
-        dirty_keys = [key for key in redis_client.scan_iter('product-stock-is-dirty-*')]
+        dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
         product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
         products = self.search([('id', 'in', product_ids)])
 
@@ -417,27 +417,38 @@ class ProductProduct(models.Model):
         self._update_products_stock_redis(redis_client, products)
 
     def _update_products_stock_redis(self, redis_client, products):
-        if products:
-            product_tmpls = products.mapped('product_tmpl_id')
-            websites = self.env['website'].search([])
+        if not products:
+            return
 
-            ProductProductRedisStock = self.env['product.product.redis_stock']
-            ProductTemplateRedisStock = self.env['product.template.redis_stock']
-            pipe = redis_client.pipeline()
+        ProductProductRedisStock = self.env['product.product.redis_stock']
+        ProductTemplateRedisStock = self.env['product.template.redis_stock']
+        StockWarehouse = self.env['stock.warehouse']
+        pipe = redis_client.pipeline()
 
-            for product in products:
-                data = {}
-                for website in websites:
-                    ProductProductRedisStock.create_redis_stock(product.id, website.id, product.free_qty)
-                    data.update({website.id: self.free_qty})
-                pipe.set(f'product-stock-{product.id}', json.dumps(data))
+        product_tmpls = products.mapped('product_tmpl_id')
+        websites = self.env['website'].search([])
 
-            for product_tmpl in product_tmpls:
-                for website in websites:
-                    free_qty = sum(product_tmpl.product_variant_ids.mapped('free_qty'))
-                    ProductTemplateRedisStock.create_redis_stock(product_tmpl.id, website.id, free_qty)
+        website_warehouses_map = {
+            website.id: StockWarehouse.search([('company_id', '=', website.company_id.id)]).mapped('lot_stock_id').ids
+            for website in websites
+        }
 
-            pipe.execute()
+        for product in products:
+            data = {}
+            for website in websites:
+                lot_stock_ids = website_warehouses_map.get(website.id, [])
+                free_qty = product.with_context(location=lot_stock_ids).free_qty
+                ProductProductRedisStock.create_redis_stock(product.id, website.id, free_qty)
+                data[website.id] = free_qty
+            pipe.set(f'stock:product-{product.id}', json.dumps(data))
+
+        for product_tmpl in product_tmpls:
+            for website in websites:
+                lot_stock_ids = website_warehouses_map.get(website.id, [])
+                free_qty = sum(product_tmpl.product_variant_ids.with_context(location=lot_stock_ids).mapped('free_qty'))
+                ProductTemplateRedisStock.create_redis_stock(product_tmpl.id, website.id, free_qty)
+
+        pipe.execute()
 
 
 class ProductStockRedis(models.AbstractModel):
