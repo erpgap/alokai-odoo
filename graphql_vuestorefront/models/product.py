@@ -400,24 +400,26 @@ class ProductProduct(models.Model):
 
             product.json_ld = json.dumps(json_ld)
 
+    @api.model
     def _update_dirty_products_stock_redis(self):
         redis_client = self.env['website']._redis_connect()
         dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
         product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
         products = self.search([('id', 'in', product_ids)])
 
-        self._update_products_stock_redis(redis_client, products)
+        products._update_products_stock_redis(redis_client)
 
         for dirty_key in dirty_keys:
             redis_client.delete(dirty_key)
 
+    @api.model
     def _update_all_products_stock_redis(self):
         redis_client = self.env['website']._redis_connect()
         products = self.search([])
-        self._update_products_stock_redis(redis_client, products)
+        products._update_products_stock_redis(redis_client)
 
-    def _update_products_stock_redis(self, redis_client, products):
-        if not products:
+    def _update_products_stock_redis(self, redis_client):
+        if not self:
             return
 
         ProductProductRedisStock = self.env['product.product.redis_stock']
@@ -425,7 +427,7 @@ class ProductProduct(models.Model):
         StockWarehouse = self.env['stock.warehouse']
         pipe = redis_client.pipeline()
 
-        product_tmpls = products.mapped('product_tmpl_id')
+        product_tmpls = self.mapped('product_tmpl_id')
         websites = self.env['website'].search([])
 
         website_warehouses_map = {
@@ -433,7 +435,7 @@ class ProductProduct(models.Model):
             for website in websites
         }
 
-        for product in products:
+        for product in self:
             data = {}
             for website in websites:
                 lot_stock_ids = website_warehouses_map.get(website.id, [])
