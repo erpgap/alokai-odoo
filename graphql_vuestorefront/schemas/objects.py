@@ -271,12 +271,26 @@ class Partner(OdooObjectType):
         return True if not self or not self.user_ids or self.user_ids == website.user_id else False
 
 
+class WishlistItem(OdooObjectType):
+    id = graphene.Int(required=True)
+    partner = graphene.Field(lambda: Partner)
+    product = graphene.Field(lambda: Product)
+
+    def resolve_partner(self, info):
+        return self.partner_id or None
+
+    def resolve_product(self, info):
+        return self.product_id or None
+
+
 class User(OdooObjectType):
     id = graphene.Int(required=True)
     name = graphene.String(required=True)
     email = graphene.String(required=True)
     partner = graphene.Field(lambda: Partner)
     totp_required = graphene.Boolean()
+    cart = graphene.Field(lambda: Order)
+    wishlist = graphene.List(WishlistItem)
 
     def resolve_email(self, info):
         return self.login or None
@@ -297,6 +311,15 @@ class User(OdooObjectType):
             return True
 
         return False
+
+    def resolve_cart(self, info):
+        env = info.context["env"]
+        website = env['website'].get_current_website()
+        return website.sale_get_order(force_create=True)
+
+    def resolve_wishlist(self, info):
+        env = info.context['env']
+        return env['product.wishlist'].current() or None
 
 
 class Currency(OdooObjectType):
@@ -934,18 +957,6 @@ class Invoice(OdooObjectType):
 
     def resolve_transactions(self, info):
         return self.transaction_ids or None
-
-
-class WishlistItem(OdooObjectType):
-    id = graphene.Int(required=True)
-    partner = graphene.Field(lambda: Partner)
-    product = graphene.Field(lambda: Product)
-
-    def resolve_partner(self, info):
-        return self.partner_id or None
-
-    def resolve_product(self, info):
-        return self.product_id or None
 
 
 class PaymentMethod(OdooObjectType):
