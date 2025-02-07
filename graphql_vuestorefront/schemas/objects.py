@@ -289,8 +289,8 @@ class User(OdooObjectType):
     email = graphene.String(required=True)
     partner = graphene.Field(lambda: Partner)
     totp_required = graphene.Boolean()
-    cart = graphene.Field(lambda: Order)
-    wishlist = graphene.List(WishlistItem)
+    website_cart = graphene.Field(lambda: Order)
+    website_wishlist = graphene.List(WishlistItem)
 
     def resolve_email(self, info):
         return self.login or None
@@ -311,15 +311,6 @@ class User(OdooObjectType):
             return True
 
         return False
-
-    def resolve_cart(self, info):
-        env = info.context["env"]
-        website = env['website'].get_current_website()
-        return website.sale_get_order(force_create=True)
-
-    def resolve_wishlist(self, info):
-        env = info.context['env']
-        return env['product.wishlist'].current() or None
 
 
 class Currency(OdooObjectType):

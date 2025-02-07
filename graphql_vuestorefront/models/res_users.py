@@ -5,7 +5,7 @@
 import logging
 
 from odoo.http import request
-from odoo import api, models, _
+from odoo import api, models, fields, _
 from odoo.addons.auth_signup.models.res_partner import now
 from odoo.exceptions import UserError
 
@@ -60,3 +60,16 @@ class ResUsers(models.Model):
                 template.with_context(lang=user.lang, signup_url=signup_url).send_mail(
                     user.id, force_send=force_send, raise_exception=True, email_values=email_values)
             _logger.info("Password reset email sent for user <%s> to <%s>", user.login, user.email)
+
+    website_cart = fields.Many2one('sale.order', 'Cart', compute='_compute_website_cart', readonly=True)
+    website_wishlist = fields.Many2many('product.wishlist', 'Wishlist', compute='_compute_website_wishlist',
+                                        readonly=True)
+
+    def _compute_website_cart(self):
+        website = self.env['website'].get_current_website()
+        for user in self:
+            user.cart = website.sale_get_order(force_create=True)
+
+    def _compute_website_wishlist(self):
+        for user in self:
+            user.wishlist = [(6, 0, self.env['product.wishlist'].current().ids)]
