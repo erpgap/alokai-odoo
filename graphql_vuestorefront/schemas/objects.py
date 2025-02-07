@@ -289,8 +289,8 @@ class User(OdooObjectType):
     email = graphene.String(required=True)
     partner = graphene.Field(lambda: Partner)
     totp_required = graphene.Boolean()
-    website_cart = graphene.Field(lambda: Order)
-    website_wishlist = graphene.List(WishlistItem)
+    website_cart_id = graphene.Field(lambda: Order)
+    website_wishlist_ids = graphene.List(WishlistItem)
 
     def resolve_email(self, info):
         return self.login or None
