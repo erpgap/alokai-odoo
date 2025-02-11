@@ -136,7 +136,6 @@ class Website(models.Model):
         except ConnectionError:
             raise UserError(_('Unable to connect to Redis.'))
 
-    @api.model
     def redis_flushdb(self):
         """
         Deletes all keys from a Redis database except those matching specified patterns.
