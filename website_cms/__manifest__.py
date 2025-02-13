@@ -4,7 +4,7 @@
 
 {
     'name': 'Website CMS',
-    'version': '15.0.1.0.0',
+    'version': '18.0.1.0.0',
     'category': 'Website',
     'license': 'LGPL-3',
     'summary': 'Website CMS',
@@ -17,7 +17,7 @@ Website CMS - Publish Content on VSF Website
     'website': 'https://www.erpgap.com/',
     'depends': [
         'website',
-        'web_widget_markdown',
+        # 'web_widget_markdown',
     ],
     'data': [
         'security/ir.model.access.csv',

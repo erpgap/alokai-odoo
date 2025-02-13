@@ -5,7 +5,6 @@
 import re
 
 from odoo import api, models, fields, _
-from odoo.addons.http_routing.models.ir_http import slugify, slug
 from odoo.addons.website.tools import text_from_html
 from odoo.tools.json import scriptsafe as json_scriptsafe
 
@@ -44,7 +43,7 @@ class CmsCollection(models.Model):
                     rec.website_slug = None
                 else:
                     prefix = '/cms'
-                    rec_slug = slugify(rec.name or '').strip().strip('-')
+                    rec_slug = self.env['ir.http']._slugify(rec.name or '').strip().strip('-')
                     rec.website_slug = '{}/{}-{}'.format(prefix, rec_slug, rec.id)
 
     @api.depends('content_ids')
@@ -148,10 +147,10 @@ class CmsContent(models.Model):
                     rec.website_slug = None
                 else:
                     prefix = '/cms'
-                    rec_slug = slugify(rec.name or '').strip().strip('-')
+                    rec_slug = self.env['ir.http']._slugify(rec.name or '').strip().strip('-')
 
                     if rec.collection_id and rec.collection_id.id:
-                        collection_slug = slugify(rec.collection_id.name or '').strip().strip('-')
+                        collection_slug = self.env['ir.http']._slugify(rec.collection_id.name or '').strip().strip('-')
                         rec.website_slug = '{}/{}-{}/{}-{}'.format(
                             prefix, collection_slug, rec.collection_id.id, rec_slug, rec.id
                         )
