@@ -5,7 +5,7 @@
 import json
 from odoo.osv import expression
 from collections import defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta
 from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_round
 from odoo.addons.http_routing.models.ir_http import slug, slugify
@@ -251,6 +251,15 @@ class ProductTemplate(models.Model):
             sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
             product.recent_sales_count = sales_count + product.recent_sales_count_increment
 
+    @api.depends('published_datetime')
+    def _compute_published_hours(self):
+        for product in self:
+            if product.published_datetime:
+                delta = datetime.now() - product.published_datetime
+                product.published_hours = int(delta.total_seconds() // 3600)
+            else:
+                product.published_hours = 0
+
     variant_attribute_value_ids = fields.Many2many('product.attribute.value',
                                                    'product_template_variant_product_attribute_value_rel',
                                                    compute='_compute_variant_attribute_value_ids',
@@ -268,8 +277,23 @@ class ProductTemplate(models.Model):
                                                      readonly=True)
     product_tmpl_redis_stock_ids = fields.One2many('product.template.redis_stock', 'product_id', 'Redis Stock',
                                                    readonly=True)
+    published_datetime = fields.Datetime('Published On', help='Datetime when the product was published', readonly=True)
+    published_hours = fields.Integer('Hours Published', compute='_compute_published_hours',
+                                     help='Total hours the product has been published', readonly=True)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('website_published'):
+                vals['published_datetime'] = datetime.now()
+        return super(ProductTemplate, self).create(vals_list)
 
     def write(self, vals):
+        if 'website_published' in vals:
+            for product in self:
+                if vals['website_published'] and not product.website_published:
+                    vals['published_datetime'] = datetime.now()
+
         res = super(ProductTemplate, self).write(vals)
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
         return res
