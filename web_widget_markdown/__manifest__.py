@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2023 ODOOGAP/PROMPTEQUATION LDA
+# Copyright 2025 ODOOGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
@@ -17,15 +17,15 @@
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["base", "web"],
-    "data": [],
-    "qweb": [],
     "assets": {
         "web.assets_backend": [
-            "/web_widget_markdown/static/src/js/web_markdown.js"
+            'web_widget_markdown/static/src/views/fields/**/*',
         ],
-        "web.assets_qweb": [
-            "/web_widget_markdown/static/src/xml/qweb_template.xml",
-        ],
+        "web_widget_markdown.easymdejs_lib" : [
+            "/web_widget_markdown/static/lib/easymde.min.js",
+            "/web_widget_markdown/static/lib/marked.min.js",
+            "/web_widget_markdown/static/lib/easymde.min.css",
+        ]
     },
     "auto_install": False,
     "installable": True,
