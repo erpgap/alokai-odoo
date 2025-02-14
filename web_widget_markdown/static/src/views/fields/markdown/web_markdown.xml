@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_markdown.FieldMarkdown">
+        <t t-if="props.readonly">
+            <span t-out="props.record.data[props.name] or ''" />
+        </t>
+        <t t-else="">
+            <div class="o_field_markdown" t-ref="div">
+                <textarea
+                    name="o_field_markdown"
+                    id="o_field_markdown"
+                    t-att-value="state.initialValue"
+                    t-ref="textarea"
+                    t-att-placeholder="props.placeholder"
+                    onBlur.bind="commitChanges"
+                    onChange.bind="handleChange"
+                />
+            </div>
+        </t>
+    </t>
+</templates>

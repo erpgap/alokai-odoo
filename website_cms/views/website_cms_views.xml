@@ -56,7 +56,7 @@
                         <!-- Content Page -->
                         <page name="content" string="Content">
                             <group name="content_info">
-                                <field name="content" options="{'placeholder': 'Type content here'}" nolabel="1"/>
+                                <field name="content" widget="markdown" options="{'placeholder': 'Type content here'}" nolabel="1"/>
                             </group>
                         </page>
                         <!-- Images Page -->

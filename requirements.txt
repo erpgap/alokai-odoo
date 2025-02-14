@@ -1,3 +1,4 @@
 graphene
 graphql_server
 redis
+markdown
