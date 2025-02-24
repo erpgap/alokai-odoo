@@ -26,7 +26,7 @@ class ProductTemplate(models.Model):
             elif field == 'popular':
                 sorting += 'recent_sales_count %s' % val.value
             elif field == 'newest':
-                sorting += 'create_date %s' % val.value
+                sorting += 'published_datetime %s, create_date %s' % (val.value, val.value)
             else:
                 sorting += '%s %s' % (field, val.value)
 
