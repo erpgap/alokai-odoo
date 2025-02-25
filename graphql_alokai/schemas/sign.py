@@ -190,7 +190,6 @@ class UpdatePassword(graphene.Mutation):
             # Prevent "Public User" to be Updated
             if user and user.id and user.id == website_user.id:
                 raise GraphQLError(_('Partner cannot be updated.'))
-
             try:
                 credential = {'login': user.login, 'password': current_password, 'type': 'password'}
                 user._check_credentials(credential, env)
@@ -201,7 +200,7 @@ class UpdatePassword(graphene.Mutation):
                 if bool(user._mfa_type()):
                     request.session.finalize(request.env)
                 return user
-            except odoo.exceptions.AccessDenied:
+            except Exception as e:
                 raise GraphQLError(_('Incorrect password.'))
         else:
             raise GraphQLError(_('You must be logged in.'))
