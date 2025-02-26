@@ -39,11 +39,12 @@ class UpdateMyAccountParams(graphene.InputObjectType):
 class UpdateMyAccount(graphene.Mutation):
     class Arguments:
         myaccount = UpdateMyAccountParams()
+        password = graphene.String(required=True)
 
     Output = Partner
 
     @staticmethod
-    def mutate(self, info, myaccount):
+    def mutate(self, info, myaccount, password):
         env = info.context["env"]
         website = env['website'].get_current_website()
         user = request.env.user
@@ -54,12 +55,20 @@ class UpdateMyAccount(graphene.Mutation):
             raise GraphQLError(_('Partner cannot be updated.'))
 
         partner = user.partner_id
-        if partner:
-            partner.write(myaccount)
-        else:
+        if not partner:
             raise GraphQLError(_('Partner does not exist.'))
+        # try:
+        user._check_credentials(password, env)
+        partner.write(myaccount)
+        if myaccount.get('email'):
+            user.login = myaccount['email']
+        env.cr.commit()
+        request.session.authenticate(request.session.db, user.login, password)
+        if bool(user._mfa_type()):
+            request.session.finalize(request.env)
         return partner
-
+        # except Exception as e:
+        #     raise GraphQLError(_('Incorrect password.'))
 
 class UserProfileMutation(graphene.ObjectType):
     update_my_account = UpdateMyAccount.Field(description='Update MyAccount')
