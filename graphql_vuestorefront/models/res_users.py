@@ -60,16 +60,3 @@ class ResUsers(models.Model):
                 template.with_context(lang=user.lang, signup_url=signup_url).send_mail(
                     user.id, force_send=force_send, raise_exception=True, email_values=email_values)
             _logger.info("Password reset email sent for user <%s> to <%s>", user.login, user.email)
-
-    website_cart_id = fields.Many2one('sale.order', 'Cart', compute='_compute_website_cart_id', readonly=True)
-    website_wishlist_ids = fields.Many2many('product.wishlist', 'Wishlist', compute='_compute_website_wishlist_ids',
-                                        readonly=True)
-
-    def _compute_website_cart_id(self):
-        website = self.env['website'].get_current_website()
-        for user in self:
-            user.website_cart_id = website.sale_get_order(force_create=True)
-
-    def _compute_website_wishlist_ids(self):
-        for user in self:
-            user.website_wishlist_ids = [(6, 0, self.env['product.wishlist'].current().ids)]

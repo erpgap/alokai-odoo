@@ -10,7 +10,7 @@ from odoo import _
 from odoo.http import request
 from odoo.exceptions import UserError, AccessDenied
 from odoo.addons.auth_signup.models.res_users import SignupError
-from odoo.addons.graphql_vuestorefront.schemas.objects import User
+from odoo.addons.graphql_vuestorefront.schemas.objects import User, Order, WishlistItem
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE,TRUSTED_DEVICE_AGE
 
@@ -24,13 +24,19 @@ class TwoFactorOutput(graphene.ObjectType):
     samesite = graphene.String()
 
 
+class LoginOutput(graphene.ObjectType):
+    user = graphene.Field(lambda: User)
+    cart = graphene.Field(lambda: Order)
+    wishlist_items = graphene.List(WishlistItem)
+
+
 class Login(graphene.Mutation):
     class Arguments:
         email = graphene.String(required=True)
         password = graphene.String(required=True)
         subscribe_newsletter = graphene.Boolean(default_value=False)
 
-    Output = User
+    Output = LoginOutput
 
     @staticmethod
     def mutate(self, info, email, password, subscribe_newsletter):
@@ -47,18 +53,30 @@ class Login(graphene.Mutation):
             if bool(user._mfa_type()):
                 cookies = request.httprequest.cookies
                 key = cookies.get(TRUSTED_DEVICE_COOKIE)
-
                 if key:
                     user_match = request.env['auth_totp.device']._check_credentials_for_uid(
                         scope="browser", key=key, uid=user.id)
-
                     if user_match:
                         request.session.finalize(request.env)
+
             # Subscribe Newsletter
-            if website and website.vsf_mailing_list_id and subscribe_newsletter:
+            if website.vsf_mailing_list_id and subscribe_newsletter:
                 MassMailController().subscribe(website.vsf_mailing_list_id.id, email, 'email')
 
-            return user
+            wishlist_items = env['product.wishlist'].search([
+                ('partner_id', '=', user.partner_id.id), ('website_id', '=', website.id)])
+            wishlist_items = wishlist_items.filtered(
+                lambda wish:
+                wish.sudo().product_id.product_tmpl_id.website_published
+                and wish.sudo().product_id.product_tmpl_id._can_be_added_to_cart()
+            )
+
+            return LoginOutput(
+                user=user,
+                cart=website.sale_get_order(),
+                wishlist_items=wishlist_items,
+            )
+
         except odoo.exceptions.AccessDenied as e:
             if e.args == odoo.exceptions.AccessDenied().args:
                 raise GraphQLError(_('Wrong email or password.'))
