@@ -63,7 +63,7 @@ class Login(graphene.Mutation):
             if website.vsf_mailing_list_id and subscribe_newsletter:
                 MassMailController().subscribe(website.vsf_mailing_list_id.id, email, 'email')
 
-            wishlist_items = env['product.wishlist'].search([
+            wishlist_items = env['product.wishlist'].sudo().search([
                 ('partner_id', '=', user.partner_id.id), ('website_id', '=', website.id)])
             wishlist_items = wishlist_items.filtered(
                 lambda wish:
