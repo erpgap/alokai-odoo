@@ -73,7 +73,7 @@ class Login(graphene.Mutation):
 
             return LoginOutput(
                 user=user,
-                cart=website.sale_get_order(),
+                cart=website.sale_get_order(force_create=True),
                 wishlist_items=wishlist_items,
             )
 
