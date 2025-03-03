@@ -44,7 +44,7 @@ class UpdateMyAccount(graphene.Mutation):
     Output = Partner
 
     @staticmethod
-    def mutate(self, info, myaccount):
+    def mutate(self, info, myaccount, current_password=''):
         env = info.context["env"]
         website = env['website'].get_current_website()
         user = request.env.user
@@ -55,11 +55,22 @@ class UpdateMyAccount(graphene.Mutation):
             raise GraphQLError(_('Partner cannot be updated.'))
 
         partner = user.partner_id
-        if partner:
-            partner.write(myaccount)
-        else:
+        if not partner:
             raise GraphQLError(_('Partner does not exist.'))
-        return partner
+
+        try:
+            user._check_credentials(current_password, env)
+            partner.write(myaccount)
+            if myaccount.get('email'):
+                user.login = myaccount['email']
+            env.cr.commit()
+            if myaccount.get('email'):
+                request.session.authenticate(request.session.db, user.login, current_password)
+                if bool(user._mfa_type()):
+                    request.session.finalize(request.env)
+            return partner
+        except Exception as e:
+            raise GraphQLError(_('Incorrect password.'))
 
 
 class DeleteMyAccount(graphene.Mutation):
