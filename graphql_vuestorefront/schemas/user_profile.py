@@ -34,6 +34,7 @@ class UpdateMyAccountParams(graphene.InputObjectType):
     id = graphene.Int()
     name = graphene.String()
     email = graphene.String()
+    phone = graphene.String()
 
 
 class UpdateMyAccount(graphene.Mutation):
