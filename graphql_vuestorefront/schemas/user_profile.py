@@ -58,24 +58,21 @@ class UpdateMyAccount(graphene.Mutation):
         partner = user.partner_id
         if not partner:
             raise GraphQLError(_('Partner does not exist.'))
-        if myaccount.get('email') and partner.email != myaccount['email']:
-            if not current_password:
-                raise GraphQLError(_('Password is required to change email.'))
-            try:
-                partner.write(myaccount)
-                user._check_credentials(current_password, env)
-                if myaccount.get('email'):
-                    user.login = myaccount['email']
-                env.cr.commit()
+
+        try:
+            user._check_credentials(current_password, env)
+            partner.write(myaccount)
+            if myaccount.get('email'):
+                user.login = myaccount['email']
+            env.cr.commit()
+            if myaccount.get('email'):
                 request.session.authenticate(request.session.db, user.login, current_password)
                 if bool(user._mfa_type()):
                     request.session.finalize(request.env)
-                return partner
-            except Exception as e:
-                raise GraphQLError(_('Incorrect password.'))
-        else:
-            partner.write(myaccount)
             return partner
+        except Exception as e:
+            raise GraphQLError(_('Incorrect password.'))
+
 
 class UserProfileMutation(graphene.ObjectType):
     update_my_account = UpdateMyAccount.Field(description='Update MyAccount')
