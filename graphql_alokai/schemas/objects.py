@@ -109,6 +109,13 @@ def get_image_filename(object, name='name'):
 def get_image_url(object, field_name='image'):
     return f'/web/image/{object._name}/{object.id}/{field_name}'
 
+def get_parent_company(partner):
+    if partner.parent_id:
+        return get_parent_company(partner.parent_id)
+    if partner.is_company:
+        return partner
+    return None
+
 
 # --------------------- #
 #       Objects         #
@@ -227,6 +234,8 @@ class Partner(OdooObjectType):
     public_pricelist = graphene.Field(lambda: Pricelist)
     current_pricelist = graphene.Field(lambda: Pricelist)
     is_public = graphene.Boolean()
+    company_name = graphene.String()
+    company_reg_no = graphene.String()
 
     def resolve_country(self, info):
         return self.country_id or None
@@ -278,6 +287,18 @@ class Partner(OdooObjectType):
     def resolve_is_public(self, info):
         website = self.env['website'].get_current_website()
         return True if not self or not self.user_ids or self.user_ids == website.user_id else False
+
+    def resolve_company_name(self, info):
+        company = get_parent_company(self)
+        if company:
+            return company.name
+        return None
+
+    def resolve_company_reg_no(self, info):
+        company = get_parent_company(self)
+        if company:
+            return company.company_registry or ''
+        return None
 
 
 class WishlistItem(OdooObjectType):
