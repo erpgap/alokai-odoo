@@ -297,7 +297,7 @@ class Partner(OdooObjectType):
     def resolve_company_reg_no(self, info):
         company = get_parent_company(self)
         if company:
-            return company.company_reg_no or ''
+            return company.company_registry or ''
         return None
 
 

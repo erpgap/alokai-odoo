@@ -12,4 +12,3 @@ from . import ir_binary
 from . import sale_order
 from . import alokai_website_page
 from . import stock
-from . import res_partner
