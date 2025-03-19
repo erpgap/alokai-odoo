@@ -38,6 +38,7 @@
         'views/alokai_website_page_views.xml',
         'views/website_blog_views.xml',
         'views/res_config_settings_views.xml',
+        'views/res_partner_views.xml',
         'views/menu.xml'
     ],
     'demo': [
