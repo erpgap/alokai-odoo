@@ -199,3 +199,28 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             json.dumps(redirects),
             headers={'Content-Type': 'application/json'},
         )
+
+    @http.route('/set_session', type='http', auth='none')
+    def set_session(self):
+        """Replace the Odoo session ID with the provided one, used to redirect Alokai to Odoo checkout"""
+        session_id = http.request.httprequest.headers.get('Session-Id')
+        if session_id:
+            session_store = http.root.session_store
+            session = session_store.get(session_id)
+
+            if session:
+                request.session = session
+                request.session.sid = session_id
+                request.session.modified = True
+
+                response = request.make_response(
+                    json.dumps({'success': True}),
+                    headers=[('Content-Type', 'application/json')]
+                )
+                response.set_cookie('session_id', session_id, path='/', httponly=True)
+                return response
+
+        return request.make_response(
+            json.dumps({'success': False, 'error': 'Invalid session ID'}),
+            headers=[('Content-Type', 'application/json')]
+        )
