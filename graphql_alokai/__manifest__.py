@@ -25,7 +25,8 @@
         'payment_adyen_alokai',
         'payment_stripe_alokai',
         'auth_totp',
-        'website_blog'
+        'website_blog',
+        'fleet'
     ],
     'data': [
         'security/ir.model.access.csv',
