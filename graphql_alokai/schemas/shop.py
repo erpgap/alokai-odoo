@@ -7,6 +7,7 @@ from graphql import GraphQLError
 
 from odoo.addons.graphql_alokai.schemas.objects import Order, Partner, Product
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
 from odoo.http import request
 from odoo import _
 
@@ -212,3 +213,7 @@ class ShopMutation(graphene.ObjectType):
     cart_remove_multiple_items = CartRemoveMultipleItems.Field(description="Remove Multiple Items")
     set_shipping_method = SetShippingMethod.Field(description="Set Shipping Method on Cart")
     create_update_partner = CreateUpdatePartner.Field(description="Create or update a partner for guest checkout")
+
+
+query_registry.append(ShoppingCartQuery)
+mutation_registry.append(ShopMutation)

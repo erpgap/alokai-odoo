@@ -12,6 +12,7 @@ from odoo import _
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.website_sale.controllers.payment import PaymentPortal
 from odoo.addons.payment_stripe.const import API_VERSION, PROXY_URL
+from odoo.addons.graphql_alokai.graphql.registry import mutation_registry
 
 # --------------------------------- #
 #           Stripe Payment          #
@@ -156,3 +157,6 @@ class StripePaymentMutation(graphene.ObjectType):
     stripe_provider_info = StripeProviderInfo.Field(description='Get Stripe Provider Info.')
     stripe_get_inline_form_values = StripeGetInlineFormValues.Field(description='Get Stripe Inline Form Values')
     stripe_transaction = StripeTransaction.Field(description='Create Stripe Transaction')
+
+
+mutation_registry.append(StripePaymentMutation)

@@ -9,6 +9,7 @@ from odoo import _
 from odoo.http import request
 from odoo.osv import expression
 from odoo.tools import format_amount
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
 
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment_adyen_alokai.const import CURRENCY_DECIMALS
@@ -360,3 +361,8 @@ class AdyenPaymentMutation(graphene.ObjectType):
     adyen_transaction = AdyenTransaction.Field(description='Create Adyen Transaction')
     adyen_payments = AdyenPayments.Field(description='Make Adyen Payment request.')
     adyen_payment_details = AdyenPaymentDetails.Field(description='Submit the Adyen Payment Details.')
+
+
+query_registry.append(PaymentQuery)
+mutation_registry.append(PaymentMutation)
+mutation_registry.append(AdyenPaymentMutation)

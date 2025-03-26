@@ -8,7 +8,7 @@ from graphql import GraphQLError
 from odoo import _
 from odoo.http import request
 from odoo.addons.graphql_alokai.schemas.objects import Partner
-
+from odoo.addons.graphql_alokai.graphql.registry import mutation_registry, query_registry
 
 def get_partner_id(env, order, website):
     if order:
@@ -313,3 +313,8 @@ class AddressMutation(graphene.ObjectType):
     delete_address = DeleteAddress.Field(description='Delete a billing or shipping address.')
     select_address = SelectAddress.Field(description="Select a billing or shipping address to be used on the shopping "
                                                      "cart.")
+
+
+query_registry.append(AddressQuery)
+
+mutation_registry.append(AddressMutation)
