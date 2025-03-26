@@ -11,7 +11,7 @@ from odoo.addons.graphql_base import OdooObjectType
 from odoo.exceptions import AccessError
 from odoo.http import request
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE
-
+from odoo.addons.graphql_alokai.graphql.registry import type_registry
 
 # --------------------- #
 #       ENUMS           #
@@ -1221,3 +1221,43 @@ class BlogPost(OdooObjectType):
 
     def resolve_slug(self, info):
         return self.website_slug
+
+
+type_registry.extend([
+    Lead,
+    State,
+    Country,
+    Company,
+    Pricelist,
+    Partner,
+    WishlistItem,
+    User,
+    Currency,
+    Category,
+    AttributeValue,
+    Attribute,
+    ProductImage,
+    Ribbon,
+    ProductTag,
+    Product,
+    Payment,
+    PaymentTransaction,
+    OrderLine,
+    Coupon,
+    GiftCard,
+    ShippingMethod,
+    Order,
+    InvoiceLine,
+    Invoice,
+    PaymentMethod,
+    PaymentProvider,
+    MailingList,
+    MailingContactSubscription,
+    MailingContact,
+    Website,
+    WebsiteMenu,
+    WebsiteMenuImage,
+    WebsitePage,
+    BlogTag,
+    BlogPost
+])

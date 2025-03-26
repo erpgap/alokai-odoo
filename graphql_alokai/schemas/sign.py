@@ -13,6 +13,7 @@ from odoo.addons.auth_signup.models.res_users import SignupError
 from odoo.addons.graphql_alokai.schemas.objects import User, Order, WishlistItem
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE,TRUSTED_DEVICE_AGE
+from odoo.addons.graphql_alokai.graphql.registry import mutation_registry
 
 
 class TwoFactorOutput(graphene.ObjectType):
@@ -281,3 +282,5 @@ class SignMutation(graphene.ObjectType):
                                                        "password url received in the email.")
     update_password = UpdatePassword.Field(description="Update user password.")
     totp_verification = TotpVerification.Field(description="Two-Factor Verification")
+
+mutation_registry.append(SignMutation)

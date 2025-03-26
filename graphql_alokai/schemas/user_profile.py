@@ -8,6 +8,7 @@ from odoo import _, SUPERUSER_ID
 from odoo.http import request
 
 from odoo.addons.graphql_alokai.schemas.objects import Partner
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
 
 
 class UserProfileQuery(graphene.ObjectType):
@@ -104,3 +105,6 @@ class DeleteMyAccount(graphene.Mutation):
 class UserProfileMutation(graphene.ObjectType):
     update_my_account = UpdateMyAccount.Field(description='Update MyAccount')
     delete_my_account = DeleteMyAccount.Field(description='Delete MyAccount')
+
+query_registry.append(UserProfileQuery)
+mutation_registry.append(UserProfileMutation)

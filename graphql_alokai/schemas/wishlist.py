@@ -7,6 +7,7 @@ from graphql import GraphQLError
 from odoo.http import request
 from odoo import _
 
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
 from odoo.addons.website_sale_wishlist.controllers.main import WebsiteSaleWishlist
 from odoo.addons.graphql_alokai.schemas.objects import WishlistItem
 
@@ -79,3 +80,6 @@ class WishlistRemoveItem(graphene.Mutation):
 class WishlistMutation(graphene.ObjectType):
     wishlist_add_item = WishlistAddItem.Field(description="Add Item")
     wishlist_remove_item = WishlistRemoveItem.Field(description="Remove Item")
+
+query_registry.append(WishlistQuery)
+mutation_registry.append(WishlistMutation)

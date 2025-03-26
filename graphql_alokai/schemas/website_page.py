@@ -2,6 +2,7 @@
 import graphene
 
 from odoo.http import request
+from odoo.addons.graphql_alokai.graphql.registry import query_registry
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum,
     WebsitePage,
@@ -111,3 +112,5 @@ class WebsitePageQuery(graphene.ObjectType):
         total_count = WebsitePage.search_count(domain)
         website_pages = WebsitePage.search(domain, limit=page_size, offset=offset, order=order)
         return WebsitePageList(website_pages=website_pages, total_count=total_count)
+
+query_registry.append(WebsitePageQuery)

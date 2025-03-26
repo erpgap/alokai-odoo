@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import graphene
+from odoo.addons.graphql_alokai.graphql.registry import query_registry
 
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum, Country
@@ -91,3 +92,5 @@ class CountryQuery(graphene.ObjectType):
         total_count = Country.search_count(domain)
         countries = Country.search(domain, limit=page_size, offset=offset, order=order)
         return CountryList(countries=countries, total_count=total_count)
+
+query_registry.append(CountryQuery)

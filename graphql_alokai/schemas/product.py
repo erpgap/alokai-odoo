@@ -8,6 +8,7 @@ from graphql import GraphQLError
 from odoo import _
 from collections import defaultdict
 from graphene.types import generic
+from odoo.addons.graphql_alokai.graphql.registry import query_registry
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum, Product, Attribute, AttributeValue
 )
@@ -311,3 +312,6 @@ class ProductQuery(graphene.ObjectType):
             has_discounted_price=variant_info['has_discounted_price'],
             is_combination_possible=variant_info['is_combination_possible']
         )
+
+
+query_registry.append(ProductQuery)
