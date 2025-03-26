@@ -4,6 +4,7 @@
 import graphene
 from graphene.types import generic
 from odoo.addons.graphql_alokai.schemas.objects import WebsiteMenu, get_image_filename
+from odoo.addons.graphql_alokai.graphql.registry import query_registry
 
 
 class Homepage(graphene.Interface):
@@ -101,3 +102,5 @@ class WebsiteQuery(graphene.ObjectType):
             meta_image_filename=get_image_filename(website, name='website_meta_title'),
             json_ld=website.json_ld,
         )
+
+query_registry.append(WebsiteQuery)

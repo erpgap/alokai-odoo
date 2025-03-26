@@ -5,6 +5,7 @@
 import graphene
 
 from odoo.addons.graphql_alokai.schemas.objects import Lead
+from odoo.addons.graphql_alokai.graphql.registry import mutation_registry
 
 
 class ContactUsParams(graphene.InputObjectType):
@@ -44,3 +45,5 @@ class ContactUs(graphene.Mutation):
 
 class ContactUsMutation(graphene.ObjectType):
     contact_us = ContactUs.Field(description='Creates a new lead with the contact information.')
+
+mutation_registry.append(ContactUsMutation)

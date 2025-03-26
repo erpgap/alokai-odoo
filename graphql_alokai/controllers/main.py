@@ -14,9 +14,11 @@ from odoo.http import request, Response
 from urllib.parse import urlparse
 from werkzeug.exceptions import Forbidden
 
-from ..schema import schema
 
 _logger = logging.getLogger(__name__)
+
+
+from ..graphql.registry import build_alokai_schema
 
 
 class AlokaiBinary(Binary):
@@ -59,6 +61,12 @@ class AlokaiBinary(Binary):
 
 
 class GraphQLController(http.Controller, GraphQLControllerMixin):
+
+    _graphql_schema = False
+
+    def __init__(self):
+        super(GraphQLController, self).__init__()
+        self._graphql_schema = build_alokai_schema().graphql_schema
 
     def _process_request(self, schema, data):
         # Set the alokai_debug_mode value that exist in the settings
@@ -127,7 +135,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             raise Forbidden()
 
         self._set_website_context()
-        return self._handle_graphiql_request(schema.graphql_schema)
+        return self._handle_graphiql_request(self._graphql_schema)
 
     # The graphql route, for applications.
     # Note csrf=False: you may want to apply extra security
@@ -135,7 +143,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
     @http.route(["/graphql/alokai", "/graphql/vsf"], auth="public", csrf=False)
     def graphql(self, **kwargs):
         self._set_website_context()
-        return self._handle_graphql_request(schema.graphql_schema)
+        return self._handle_graphql_request(self._graphql_schema)
 
     @http.route(['/alokai/categories', '/vsf/categories'], type='http', auth='public', csrf=False)
     def alokai_categories(self):
