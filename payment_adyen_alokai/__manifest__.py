@@ -18,7 +18,8 @@
     # Dependencies
     'depends': [
         'payment',
-        'payment_adyen'
+        'payment_adyen',
+        'graphql_alokai',
     ],
 
     # Views
