@@ -22,7 +22,6 @@
         'contacts',
         'crm',
         'theme_default',
-        'payment_adyen_alokai',
         'auth_totp',
         'website_blog'
     ],
