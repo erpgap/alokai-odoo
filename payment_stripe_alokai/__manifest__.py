@@ -19,6 +19,7 @@
     'depends': [
         'payment',
         'payment_stripe',
+        'graphql_alokai',
     ],
 
     # Views
