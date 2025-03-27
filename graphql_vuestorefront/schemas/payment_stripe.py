@@ -94,6 +94,10 @@ class StripeGetInlineFormValues(graphene.Mutation):
         )
         stripe_get_inline_form_values = json.loads(stripe_get_inline_form_values)
         stripe_get_inline_form_values['payment_methods'] = payment_provider.payment_method_ids.mapped('code')
+        # Condition to prevent calling the "Affirm" payment_method when the amount is less than 50.00$
+        if float(order.amount_total) < 50.00:
+            if 'affirm' in stripe_get_inline_form_values['payment_methods']:
+                stripe_get_inline_form_values['payment_methods'].remove('affirm')
         return StripeGetInlineFormValuesResult(stripe_get_inline_form_values=stripe_get_inline_form_values)
 
 

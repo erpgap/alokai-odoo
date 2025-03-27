@@ -13,6 +13,7 @@ from . import sign
 from . import address
 from . import shop
 from . import payment
+from . import payment_stripe
 from . import wishlist
 from . import mailing_list
 from . import website

@@ -15,4 +15,8 @@ class PaymentTransactionInherit(models.Model):
     def _stripe_prepare_payment_intent_payload(self):
         payment_intent_payload = super()._stripe_prepare_payment_intent_payload()
         payment_intent_payload['payment_method_types[]'] = self.provider_id.payment_method_ids.mapped('code')
+        # Condition to prevent calling the "Affirm" payment_method when the amount is less than 50.00$
+        if float(self.amount) < 50.00:
+            if 'affirm' in payment_intent_payload['payment_method_types[]']:
+                payment_intent_payload['payment_method_types[]'].remove('affirm')
         return payment_intent_payload
