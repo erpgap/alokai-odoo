@@ -102,9 +102,6 @@ class CmsContent(models.Model):
             if rec.website_slug:
                 rec.website_url = rec.website_slug
 
-    def _default_content(self):
-        return '<p class="o_default_snippet_text">' + _("Start writing here...") + '</p>'
-
     name = fields.Char(string='Title', required=True, translate=True, default='', tracking=True)
     subtitle = fields.Char(string='Subtitle', translate=True, tracking=True)
     author_id = fields.Many2one('res.partner', 'Author', default=lambda self: self.env.user.partner_id, tracking=True)
@@ -113,11 +110,11 @@ class CmsContent(models.Model):
     active = fields.Boolean(string='Active', default=True, tracking=True)
     is_published = fields.Boolean(string='Is Published', default=False, tracking=True)
     publish_val = fields.Boolean(string='Publish Value', related='is_published')
-    content = fields.Text(string='Content', default=_default_content, translate=True, tracking=True)
+    content = fields.Html(string='Content', translate=True, tracking=True)
     teaser = fields.Text(string='Teaser', compute='_compute_teaser', inverse='_set_teaser')
     teaser_manual = fields.Text(string='Teaser Content')
     collection_id = fields.Many2one('cms.collection', 'Collection', required=True, ondelete='cascade', tracking=True)
-    website_id = fields.Many2one(related='collection_id.website_id', store=True, tracking=True)
+    website_id = fields.Many2one(related='collection_id.website_id', store=True, tracking=True, readonly=True)
     image_ids = fields.One2many('cms.image', 'content_id', string='Images')
 
     # Creation / Update stuff
