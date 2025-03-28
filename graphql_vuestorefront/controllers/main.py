@@ -94,7 +94,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         """Set website context based on http_request_host header."""
         website = None
         try:
-            request_host = request.httprequest.headers.environ.get('HTTP_RESQUEST_HOST')
+            request_host = request.httprequest.headers.environ.get('HTTP_REQUEST_HOST')
             if not request_host.startswith(('http://', 'https://')):
                 request_host = f'https://{request_host}'
             website = request.env['website'].search([('domain', '=', request_host)], limit=1)
