@@ -39,7 +39,6 @@
                         <field name="collection_id"/>
                         <field name="active" invisible="1"/>
                         <field name="subtitle" placeholder="Subtitle"/>
-                        <field name="website_id" groups="website.group_multi_website" readonly="collection_id"/>
                     </group>
                     <group name="other_details" string="Other Details">
                         <field name="is_published"/>
@@ -55,9 +54,7 @@
                     <notebook>
                         <!-- Content Page -->
                         <page name="content" string="Content">
-                            <group name="content_info">
-                                <field name="content" widget="markdown" options="{'placeholder': 'Type content here'}" nolabel="1"/>
-                            </group>
+                                <field name="content"  placeholder="Add a content..." options="{'collaborative': true}" />
                         </page>
                         <!-- Images Page -->
                         <page string="Images" name="images">
@@ -68,6 +65,7 @@
                         <!-- SEO Info Page -->
                         <page name="seo" string="SEO">
                             <group name="default_opengraph">
+                                <field name="website_id" groups="website.group_multi_website" readonly="collection_id"/>
                                 <field name="website_meta_title" string="Meta Title"/>
                                 <field name="website_meta_description" string="Meta Description"/>
                                 <field name="website_meta_keywords" string="Meta Keywords" help="Separate every keyword with a comma"/>
