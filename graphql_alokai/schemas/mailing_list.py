@@ -6,7 +6,7 @@ import graphene
 from graphql import GraphQLError
 from odoo.http import request
 from odoo import _
-from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry, type_registry
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum, MailingContact, MailingList
@@ -245,3 +245,5 @@ class NewsletterSubscribeMutation(graphene.ObjectType):
 query_registry.append(MailingContactQuery)
 query_registry.append(MailingListQuery)
 mutation_registry.append(NewsletterSubscribeMutation)
+type_registry.append(MailingContactList)
+type_registry.append(MailingListList)
