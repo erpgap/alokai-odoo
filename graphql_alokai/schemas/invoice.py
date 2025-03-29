@@ -6,8 +6,7 @@ import graphene
 from graphql import GraphQLError
 from odoo.http import request
 from odoo import _
-from odoo.addons.graphql_alokai.graphql.registry import query_registry
-
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum, Invoice,
     get_document_with_check_access,
@@ -93,3 +92,4 @@ class InvoiceQuery(graphene.ObjectType):
         return InvoiceList(invoices=invoices and invoices.sudo() or invoices, total_count=total_count)
 
 query_registry.append(InvoiceQuery)
+type_registry.append(InvoiceList)

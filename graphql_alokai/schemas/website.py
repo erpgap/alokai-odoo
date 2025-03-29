@@ -4,7 +4,7 @@
 import graphene
 from graphene.types import generic
 from odoo.addons.graphql_alokai.schemas.objects import WebsiteMenu, get_image_filename
-from odoo.addons.graphql_alokai.graphql.registry import query_registry
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 
 
 class Homepage(graphene.Interface):
@@ -104,3 +104,4 @@ class WebsiteQuery(graphene.ObjectType):
         )
 
 query_registry.append(WebsiteQuery)
+type_registry.append(HomepageList)
