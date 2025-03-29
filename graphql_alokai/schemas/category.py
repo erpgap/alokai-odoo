@@ -3,8 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import graphene
-from odoo.addons.graphql_alokai.graphql.registry import query_registry
-
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum, Category
 )
@@ -105,3 +104,4 @@ class CategoryQuery(graphene.ObjectType):
         return CategoryList(categories=categories, total_count=total_count)
 
 query_registry.extend([CategoryQuery])
+type_registry.append(CategoryList)

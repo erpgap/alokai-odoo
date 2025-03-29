@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import graphene
-from odoo.addons.graphql_alokai.graphql.registry import query_registry
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import (
     BlogPost,
@@ -110,3 +110,5 @@ class BlogPostQuery(graphene.ObjectType):
         return BlogPostList(blog_posts=blog_posts, blog_tags=blog_tags, total_count=total_count)
 
 query_registry.append(BlogPostQuery)
+type_registry.append(BlogPostList)
+type_registry.append(BlogTagList)

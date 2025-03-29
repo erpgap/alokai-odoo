@@ -7,7 +7,7 @@ from graphql import GraphQLError
 
 from odoo.addons.graphql_alokai.schemas.objects import Order, Partner, Product
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
-from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry, type_registry
 from odoo.http import request
 from odoo import _
 
@@ -217,3 +217,4 @@ class ShopMutation(graphene.ObjectType):
 
 query_registry.append(ShoppingCartQuery)
 mutation_registry.append(ShopMutation)
+type_registry.append(CartData)

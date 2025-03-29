@@ -6,8 +6,7 @@ import graphene
 from graphql import GraphQLError
 from odoo.http import request
 from odoo import _
-from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
-
+from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry, type_registry
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum, OrderStage, InvoiceStatus, Order, ShippingMethod,
     get_document_with_check_access,
@@ -203,3 +202,5 @@ class OrderMutation(graphene.ObjectType):
 
 query_registry.append(OrderQuery)
 mutation_registry.append(OrderMutation)
+type_registry.append(OrderList
+                     )
