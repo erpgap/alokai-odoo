@@ -5,7 +5,7 @@ import redis
 import pprint
 import json
 import requests
-from odoo import models, fields, api
+from odoo import models, fields, api, tools
 from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import get_image_url
@@ -113,7 +113,9 @@ class Website(models.Model):
         ICP = self.env['ir.config_parameter'].sudo()
         redis_host = ICP.get_param('alokai_redis_host', False)
         redis_port = ICP.get_param('alokai_redis_port', False)
-
+        # If running tests, skip redis
+        if tools.config['test_enable']:
+            return 0
         if not redis_host or not redis_port:
             raise UserError(_('Please configure Redis.'))
 

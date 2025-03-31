@@ -2,13 +2,17 @@
 # Copyright 2025 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, api, _
+from odoo import tools, models, api, _
 
 
 class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     def _create_stock_is_dirty_redis(self):
+        # If running tests, skip redis
+        if tools.config['test_enable']:
+            return 0
+
         redis_client = self.env['website']._redis_connect()
         pipe = redis_client.pipeline()
 

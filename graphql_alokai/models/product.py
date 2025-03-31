@@ -6,7 +6,7 @@ import json
 from odoo.osv import expression
 from collections import defaultdict
 from datetime import datetime, timedelta
-from odoo import models, fields, api, _
+from odoo import tools, models, fields, api, _
 from odoo.tools.float_utils import float_round
 from odoo.exceptions import ValidationError
 
@@ -433,6 +433,10 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_dirty_products_stock_redis(self):
+        # If running tests, skip redis
+        if tools.config['test_enable']:
+            return 0
+
         redis_client = self.env['website']._redis_connect()
         dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
         product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
@@ -445,6 +449,9 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_all_products_stock_redis(self):
+        # skip redis if running tests
+        if tools.config['test_enable']:
+            return 0
         redis_client = self.env['website']._redis_connect()
         products = self.search([])
         products._update_products_stock_redis(redis_client)
