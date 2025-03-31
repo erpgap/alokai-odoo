@@ -21,12 +21,15 @@ class IrBinary(models.AbstractModel):
         mimetype=None, default_mimetype='image/png', placeholder=None,
         width=0, height=0, crop=False, quality=0,
     ):
-        stream = super()._get_image_stream_from(record=record, field_name=field_name, filename=filename, filename_field=filename_field,
-                                    mimetype=mimetype, default_mimetype=default_mimetype, placeholder=placeholder,
-                                    width=width, height=height, crop=crop, quality=quality)
+        if not placeholder:
+            placeholder = record._get_placeholder_filename(field_name)
+        try:
+            stream = super()._get_image_stream_from(record=record, field_name=field_name, filename=filename, filename_field=filename_field,
+                                        mimetype=mimetype, default_mimetype=default_mimetype, placeholder=placeholder,
+                                        width=width, height=height, crop=crop, quality=quality)
+        except:
+            stream = self._get_placeholder_stream(placeholder)
         if not stream or stream.size == 0:
-            if not placeholder:
-                placeholder = record._get_placeholder_filename(field_name)
             stream = self._get_placeholder_stream(placeholder)
 
         image_format = None
