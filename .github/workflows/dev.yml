@@ -5,9 +5,20 @@ on:
     branches: [ 18.0 ]
 
 jobs:
-  deployment:
+  test:
     runs-on: self-hosted
     steps:
-    - run: |
-        echo "-------- Deploying https://vsf-odoo18.labs.erpgap.com/ "
-        /home/egap/.deploy
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          /home/egap/.test
+
+  deploy:
+    # This job will only run if 'test' completes successfully.
+    runs-on: self-hosted
+    needs: test
+    steps:
+      - name: Deploy
+        run: |
+          echo "-------- Deploying https://vsf-odoo18.labs.erpgap.com/ "
+          /home/egap/.deploy
