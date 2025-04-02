@@ -208,7 +208,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             headers={'Content-Type': 'application/json'},
         )
 
-    @http.route('/set_session', type='http', auth='none')
+    @http.route('/set_session', type='http', auth='none', csrf=False)
     def set_session(self):
         """Replace the Odoo session ID with the provided one, used to redirect Alokai to Odoo checkout"""
         session_id = http.request.httprequest.headers.get('Session-Id')
