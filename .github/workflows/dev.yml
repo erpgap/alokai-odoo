@@ -2,12 +2,12 @@ name: Build VSF
 
 on:
   push:
-    branches: [ 16.0 ]
+    branches: [ 18.0 ]
 
 jobs:
   deployment:
     runs-on: self-hosted
     steps:
     - run: |
-        echo "-------- Deploying https://vsfdemo16.labs.odoogap.com/ "
-        /home/egap/.scripts/update
+        echo "-------- Deploying https://vsf-odoo18.labs.erpgap.com/ "
+        /home/egap/.deploy
