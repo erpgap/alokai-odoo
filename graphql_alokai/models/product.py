@@ -411,7 +411,7 @@ class ProductProduct(models.Model):
                 "image": images,
                 "offers": {
                     "@type": "Offer",
-                    "url": f"{website.domain or ''}/product/{slug(product)}",
+                    "url": f"{website.domain or ''}/product/{self.env['ir.http']._slug(product)}",
                     "priceCurrency": product.currency_id.name,
                     "price": product.list_price,
                     "itemCondition": "https://schema.org/NewCondition",
