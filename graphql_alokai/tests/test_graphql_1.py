@@ -69,3 +69,38 @@ class TestGraphqlAlokai(HttpCase):
             all('id' in product_dict for product_dict in body['data']['products']['products']),
             "All product dictionaries must have a 'id' key"
         )
+
+
+    def test_graphql_create_update_partner(self):
+        # Define your GraphQL mutation
+        mutation = """
+            mutation {
+              createUpdatePartner(
+                email: "john@example.com",
+                mobile: "555-1234",
+                name: "John Doe",
+                phone: "555-4321",
+                subscribeNewsletter: true
+              ) {
+                id
+                email
+                mobile
+                name
+                phone
+              }
+            }
+        """
+        # Send the mutation request to your GraphQL endpoint
+        response = self.url_open(
+            '/graphql/alokai',
+            data=json.dumps({'query': mutation}),
+            headers={'Content-Type': 'application/json'},
+        )
+        # Check that the HTTP response is OK
+        self.assertEqual(response.status_code, 200, "Should return HTTP 200 OK")
+        # Parse the response and perform assertions
+        body = json.loads(response.text)
+        self.assertIn('data', body)
+        self.assertIn('createUpdatePartner', body['data'])
+        self.assertIn('email', body['data']['createUpdatePartner'])
+        self.assertEqual(body['data']['createUpdatePartner']['name'], "John Doe")

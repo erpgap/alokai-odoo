@@ -9,8 +9,8 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     def _create_stock_is_dirty_redis(self):
-        # If running tests, skip redis
-        if tools.config['test_enable']:
+        # In some situations, like running tests, skip redis
+        if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
             return 0
 
         redis_client = self.env['website']._redis_connect()
