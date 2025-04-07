@@ -433,8 +433,8 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_dirty_products_stock_redis(self):
-        # If running tests, skip redis
-        if tools.config['test_enable']:
+        # In some situations, like running tests, skip redis
+        if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
             return 0
 
         redis_client = self.env['website']._redis_connect()
@@ -449,8 +449,8 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_all_products_stock_redis(self):
-        # skip redis if running tests
-        if tools.config['test_enable']:
+        # In some situations, like running tests, skip redis
+        if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
             return 0
         redis_client = self.env['website']._redis_connect()
         products = self.search([])

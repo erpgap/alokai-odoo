@@ -38,6 +38,9 @@ OCA - Odoo Community Association - Base Graphql
   - Cache Invalidation Key
   - Web Base Url
 
+Special system parameter ```alokai_disable_redis_stock``` will disable the stock update from Odoo to Redis. This
+can be used for testing purposes, but also for production for some edge cases.
+
 ## Support
 
 To report a problem please [contact us](https://www.erpgap.com/page/contactus/).
