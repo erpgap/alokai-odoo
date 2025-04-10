@@ -9,7 +9,7 @@ from PIL import Image, WebPImagePlugin
 from odoo import models
 from odoo.http import request
 from odoo.tools.safe_eval import safe_eval
-from odoo.tools.image import image_process, image_guess_size_from_field_name
+from odoo.tools.image import image_process
 from odoo.tools.mimetypes import guess_mimetype, get_extension
 
 
@@ -32,70 +32,70 @@ class IrBinary(models.AbstractModel):
         if not stream or stream.size == 0:
             stream = self._get_placeholder_stream(placeholder)
 
-        image_format = None
-        if stream and stream.mimetype and ('jpg' in stream.mimetype or 'jpeg' in stream.mimetype):
-            image_format = 'jpeg'
-        if stream and stream.mimetype and ('png' in stream.mimetype or 'png' in stream.mimetype):
-            image_format = 'png'
-        if stream and stream.mimetype and 'webp' in stream.mimetype:
-            image_format = 'webp'
+        if width and height and filename:
+            image_format = None
+            if stream and stream.mimetype and ('jpg' in stream.mimetype or 'jpeg' in stream.mimetype):
+                image_format = 'jpeg'
+            if stream and stream.mimetype and ('png' in stream.mimetype or 'png' in stream.mimetype):
+                image_format = 'png'
+            if stream and stream.mimetype and 'webp' in stream.mimetype:
+                image_format = 'webp'
 
-        if not stream.data:
-            stream.data = stream.read()
-        
-        if image_format:
-            if stream.data and width and height:
-                image_base64 = stream.data
-                #TODO remove when odoo fix webp resize issue
-                # FIX: convert webp to png and then resize it
-                if image_format == 'webp':
-                    new_image_base64 = self.webp_base64_to_png(stream.read())
-                    image_base64 = image_process(
-                        new_image_base64,
-                        size=(width, height),
-                        crop=crop,
-                        quality=quality,
-                    )
+            if not stream.data:
+                stream.data = stream.read()
 
-                img = Image.open(io.BytesIO(image_base64))
+            if image_format:
+                if stream.data and width and height:
+                    # Get background color from context or settings
+                    try:
+                        if self.env.context.get('background_rgba'):
+                            background_rgba = safe_eval(self.env.context.get('background_rgba'))
+                        else:
+                            background_rgba = safe_eval(ICP.get_param('alokai_image_background_rgba', '(255, 255, 255, 255)'))
+                    except:
+                        background_rgba = (66, 28, 82)
 
-                ICP = request.env['ir.config_parameter'].sudo()
-                if img.mode != 'RGBA':
-                    img = img.convert('RGBA')
+                    image_base64 = stream.data
+                    #TODO remove when odoo fix webp resize issue
+                    # FIX: convert webp to png and then resize it
+                    if image_format == 'webp':
+                        new_image_base64 = self.webp_base64_to_png(image_base64, background_rgba)
+                        image_base64 = image_process(
+                            new_image_base64,
+                            size=(width, height),
+                            crop=crop,
+                            quality=quality,
+                        )
+                    img = Image.open(io.BytesIO(image_base64))
 
-                # Get background color from context or settings
-                try:
-                    if self.env.context.get('background_rgba'):
-                        background_rgba = safe_eval(self.env.context.get('background_rgba'))
+                    ICP = request.env['ir.config_parameter'].sudo()
+                    if img.mode != 'RGBA':
+                        img = img.convert('RGBA')
+                    # Create a new background, merge the background with the image centered
+                    img_w, img_h = img.size
+                    if image_format in ['jpeg', 'png']:
+                        background = Image.new('RGB', (width, height), background_rgba[:3])
                     else:
-                        background_rgba = safe_eval(ICP.get_param('alokai_image_background_rgba', '(255, 255, 255, 255)'))
-                except:
-                    background_rgba = (66, 28, 82)
-                # Create a new background, merge the background with the image centered
-                img_w, img_h = img.size
-                if image_format in ['jpeg', 'png']:
-                    background = Image.new('RGB', (width, height), background_rgba[:3])
-                else:
-                    background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
-                bg_w, bg_h = background.size
-                offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
-                background.paste(img, offset)
+                        background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
+                    bg_w, bg_h = background.size
+                    offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
+                    background.paste(img, offset)
 
-                # Get compression quality from settings
-                quality = ICP.get_param('alokai_image_quality', 100)
+                    # Get compression quality from settings
+                    quality = ICP.get_param('alokai_image_quality', 100)
 
-                stream_image = io.BytesIO()
-                if image_format in ['jpeg', 'png']:
-                    background.save(stream_image, format="WEBP", subsampling=0)
-                    stream_image.seek(0)
-                else:
-                    background.save(stream_image, format=image_format.upper(), quality=quality, subsampling=0)
+                    stream_image = io.BytesIO()
+                    if image_format in ['jpeg', 'png']:
+                        background.save(stream_image, format="WEBP", subsampling=0)
+                        stream_image.seek(0)
+                    else:
+                        background.save(stream_image, format=image_format.upper(), quality=quality, subsampling=0)
 
-                image_base64 = base64.b64encode(stream_image.getvalue())
+                    image_base64 = base64.b64encode(stream_image.getvalue())
 
-                # Response
-                stream.data = base64.b64decode(image_base64)
-            self._update_download_name(record, stream, filename, field_name, filename_field, f'image/webp', default_mimetype)
+                    # Response
+                    stream.data = base64.b64decode(image_base64)
+                self._update_download_name(record, stream, filename, field_name, filename_field, f'image/webp', default_mimetype)
         return stream
 
     def _update_download_name(self, record, stream, filename, field_name, filename_field, mimetype, default_mimetype):
@@ -122,19 +122,20 @@ class IrBinary(models.AbstractModel):
                 and stream.mimetype != 'application/octet-stream'):
                 stream.download_name += guess_extension(stream.mimetype) or ''
 
-    def webp_base64_to_png(self, image_bytes):
+    def webp_base64_to_png(self, image_bytes, background_rgba=(255, 255, 255)):
         """
         Converts a WebP image encoded in base64 to a PNG image.
         """
 
         # Create an Image object from the bytes
-        image = Image.open(io.BytesIO(image_bytes))
+        webp_image = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
 
-        # Convert the image to PNG format
-        image = image.convert('RGB')
+        background = Image.new("RGB", webp_image.size, background_rgba)
+        background.paste(webp_image, mask=webp_image.getchannel("A"))
 
         stream = io.BytesIO()
         # Save the image as a PNG
-        image.save(stream, format='PNG')
+        background.save(stream, format='PNG')
+        stream.seek(0)
 
         return stream.getvalue()
