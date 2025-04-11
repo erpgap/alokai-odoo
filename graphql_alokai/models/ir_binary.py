@@ -46,6 +46,7 @@ class IrBinary(models.AbstractModel):
 
             if image_format:
                 if stream.data and width and height:
+                    ICP = request.env['ir.config_parameter'].sudo()
                     # Get background color from context or settings
                     try:
                         if self.env.context.get('background_rgba'):
@@ -68,7 +69,6 @@ class IrBinary(models.AbstractModel):
                         )
                     img = Image.open(io.BytesIO(image_base64))
 
-                    ICP = request.env['ir.config_parameter'].sudo()
                     if img.mode != 'RGBA':
                         img = img.convert('RGBA')
                     # Create a new background, merge the background with the image centered
