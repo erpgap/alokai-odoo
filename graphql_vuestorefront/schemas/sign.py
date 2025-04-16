@@ -5,8 +5,9 @@
 import graphene
 from graphql import GraphQLError
 import odoo
+import uuid
 import re
-from odoo import _
+from odoo import http, _
 from odoo.http import request
 from odoo.exceptions import UserError, AccessDenied
 from odoo.addons.auth_signup.models.res_users import SignupError
@@ -28,6 +29,10 @@ class LoginOutput(graphene.ObjectType):
     user = graphene.Field(lambda: User)
     cart = graphene.Field(lambda: Order)
     wishlist_items = graphene.List(WishlistItem)
+
+
+class CheckoutRedirectOutput(graphene.ObjectType):
+    access_token = graphene.String()
 
 
 class Login(graphene.Mutation):
@@ -269,6 +274,32 @@ class TotpVerification(graphene.Mutation):
                                samesite='Lax')
 
 
+class CheckoutRedirect(graphene.Mutation):
+    class Arguments:
+        session_id = graphene.String(required=True)
+
+    Output = CheckoutRedirectOutput
+
+    @staticmethod
+    def mutate(self, info, session_id=None):
+        # Always return an access token regardless of session validity
+        # to avoid exposing whether a given session_id exists (prevents session probing)
+        access_token = str(uuid.uuid4())
+
+        if session_id:
+            try:
+                session = http.root.session_store.get(session_id)
+                if session:
+                    redis_client = info.context['env']['website']._redis_connect()
+                    pipe = redis_client.pipeline()
+                    pipe.set(access_token, session_id, ex=60)  # 60-second TTL
+                    pipe.execute()
+            except:
+                pass
+
+        return CheckoutRedirectOutput(access_token=access_token)
+
+
 class SignMutation(graphene.ObjectType):
     login = Login.Field(description='Authenticate user with email and password and retrieves token.')
     logout = Logout.Field(description='Logout user')
@@ -278,3 +309,4 @@ class SignMutation(graphene.ObjectType):
                                                        "password url received in the email.")
     update_password = UpdatePassword.Field(description="Update user password.")
     totp_verification = TotpVerification.Field(description="Two-Factor Verification")
+    checkout_redirect = CheckoutRedirect.Field(description="Returns access token to redirect user to Odoo checkout")
