@@ -208,27 +208,28 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             headers={'Content-Type': 'application/json'},
         )
 
-    @http.route('/set_session', type='http', auth='none', csrf=False)
-    def set_session(self):
+    @http.route('/checkout-redirect', type='http', auth='none', csrf=False)
+    def checkout_redirect(self, access_token=None, **kwargs):
         """Replace the Odoo session ID with the provided one, used to redirect Alokai to Odoo checkout"""
-        session_id = http.request.httprequest.headers.get('Session-Id')
-        if session_id:
-            session_store = http.root.session_store
-            session = session_store.get(session_id)
+        if access_token:
+            redis_client = request.env['website']._redis_connect()
+            session_id = redis_client.get(access_token)
+            if session_id:
+                session = http.root.session_store.get(session_id)
+                if session:
+                    request.session = session
+                    request.session.sid = session_id
+                    request.session.modified = True
 
-            if session:
-                request.session = session
-                request.session.sid = session_id
-                request.session.modified = True
+                    response = request.redirect('/shop/checkout')
+                    response.set_cookie(
+                        'session_id',
+                        session_id,
+                        path='/',
+                        httponly=True,
+                        samesite='None',
+                        secure=True
+                    )
+                    return response
 
-                response = request.make_response(
-                    json.dumps({'success': True}),
-                    headers=[('Content-Type', 'application/json')]
-                )
-                response.set_cookie('session_id', session_id, path='/', httponly=True)
-                return response
-
-        return request.make_response(
-            json.dumps({'success': False, 'error': 'Invalid session ID'}),
-            headers=[('Content-Type', 'application/json')]
-        )
+        return request.redirect('/shop/checkout')
