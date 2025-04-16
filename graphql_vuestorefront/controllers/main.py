@@ -209,7 +209,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             if session_id:
                 try:
                     session = http.root.session_store.get(session_id)
-                    if session:
+                    if session and session.get('uid'):
                         request.session = session
                         request.session.sid = session_id
                         request.session.modified = True

@@ -289,7 +289,7 @@ class CheckoutRedirect(graphene.Mutation):
         if session_id:
             try:
                 session = http.root.session_store.get(session_id)
-                if session:
+                if session and session.get('uid'):
                     redis_client = info.context['env']['website']._redis_connect()
                     pipe = redis_client.pipeline()
                     pipe.set(access_token, session_id, ex=60)  # 60-second TTL
