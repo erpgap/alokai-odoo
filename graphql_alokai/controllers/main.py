@@ -215,21 +215,24 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             redis_client = request.env['website']._redis_connect()
             session_id = redis_client.get(access_token)
             if session_id:
-                session = http.root.session_store.get(session_id)
-                if session:
-                    request.session = session
-                    request.session.sid = session_id
-                    request.session.modified = True
+                try:
+                    session = http.root.session_store.get(session_id)
+                    if session:
+                        request.session = session
+                        request.session.sid = session_id
+                        request.session.modified = True
 
-                    response = request.redirect('/shop/checkout')
-                    response.set_cookie(
-                        'session_id',
-                        session_id,
-                        path='/',
-                        httponly=True,
-                        samesite='None',
-                        secure=True
-                    )
-                    return response
+                        response = request.redirect('/shop/checkout')
+                        response.set_cookie(
+                            'session_id',
+                            session_id,
+                            path='/',
+                            httponly=True,
+                            samesite='None',
+                            secure=True
+                        )
+                        return response
+                except:
+                    pass
 
         return request.redirect('/shop/checkout')
