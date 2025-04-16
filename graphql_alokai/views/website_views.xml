@@ -160,7 +160,7 @@
     <record id="website.action_website_menu" model="ir.actions.act_window">
         <field name="name">Website Menu</field>
         <field name="res_model">website.menu</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'search_default_is_menu': 1, 'search_default_group_by_website_id': 1}</field>
         <field name="view_id" ref="website.menu_tree"/>
         <field name="target">current</field>
@@ -169,7 +169,7 @@
     <record id="action_website_footer" model="ir.actions.act_window">
         <field name="name">Website Footer</field>
         <field name="res_model">website.menu</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'default_is_footer': True, 'search_default_is_footer': 1, 'search_default_group_by_website_id': 1}</field>
         <field name="view_id" ref="graphql_alokai.menu_tree"/>
         <field name="target">current</field>
@@ -178,7 +178,7 @@
     <record id="action_website_mega_menu" model="ir.actions.act_window">
         <field name="name">Website Mega Menu</field>
         <field name="res_model">website.menu</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'default_is_mega_menu': True, 'search_default_is_mega_menu': 1, 'search_default_group_by_website_id': 1}</field>
         <field name="view_id" ref="graphql_alokai.menu_tree"/>
         <field name="target">current</field>
