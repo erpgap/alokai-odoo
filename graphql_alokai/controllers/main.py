@@ -217,12 +217,12 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             if session_id:
                 try:
                     session = http.root.session_store.get(session_id)
-                    if session and session.get('uid'):
+                    if session and session.get('sale_order_id'):
                         request.session = session
                         request.session.sid = session_id
                         request.session.modified = True
 
-                        response = request.redirect('/shop/checkout')
+                        response = request.env['ir.http']._dispatch('/shop/cart', request.httprequest.method)
                         response.set_cookie(
                             'session_id',
                             session_id,
@@ -235,4 +235,4 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 except:
                     pass
 
-        return request.redirect('/shop/checkout')
+        return request.redirect('/shop/cart')
