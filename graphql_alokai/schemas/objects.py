@@ -528,6 +528,7 @@ class Product(OdooObjectType):
     first_variant = graphene.Field((lambda: Product), description='Specific to use in Product Template')
     json_ld = generic.GenericScalar()
     tags = graphene.List(graphene.NonNull(lambda: ProductTag))
+    alokai_pages = graphene.List(graphene.NonNull(lambda: WebsitePage))
 
     def resolve_type_id(self, info):
         if self.type == 'consu':
@@ -777,6 +778,9 @@ class Product(OdooObjectType):
 
     def resolve_tags(self, info):
         return self.product_tag_ids.filtered(lambda t: t.visible_on_ecommerce) or None
+
+    def resolve_alokai_pages(self, info):
+        return self.alokai_page_ids or None
 
 
 class Payment(OdooObjectType):
