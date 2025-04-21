@@ -280,6 +280,10 @@ class ProductTemplate(models.Model):
     published_datetime = fields.Datetime('Published On', help='Datetime when the product was published', readonly=True)
     published_hours = fields.Integer('Hours Published', compute='_compute_published_hours',
                                      help='Total hours the product has been published', readonly=True)
+    alokai_page_ids = fields.Many2many(
+        'alokai.website.page', 'product_template_alokai_website_page_rel', 'product_tmpl_id', 'alokai_page_id',
+        string='Alokai Website Pages'
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
