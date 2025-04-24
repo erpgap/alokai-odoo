@@ -218,11 +218,15 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 try:
                     session = http.root.session_store.get(session_id)
                     if session and session.get('sale_order_id'):
+                        sale_order_id = session.get('sale_order_id')
                         request.session = session
                         request.session.sid = session_id
                         request.session.modified = True
-
-                        response = request.env['ir.http']._dispatch('/shop/cart', request.httprequest.method)
+                        request.session.sale_order_id = sale_order_id
+                        SaleOrder = request.env['sale.order'].sudo()
+                        order_sudo = SaleOrder.browse(sale_order_id).exists()
+                        request.session.website_sale_cart_quantity = order_sudo.cart_quantity
+                        response = request.env['ir.http']._dispatch('/shop/checkout', request.httprequest.method)
                         response.set_cookie(
                             'session_id',
                             session_id,
@@ -235,4 +239,4 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 except:
                     pass
 
-        return request.redirect('/shop/cart')
+        return request.redirect('/shop/checkout')
