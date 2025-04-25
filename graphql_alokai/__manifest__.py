@@ -31,6 +31,7 @@
         'data/website_data.xml',
         'data/ir_config_parameter_data.xml',
         'data/ir_cron_data.xml',
+        'data/remove_default_category_product.xml',
         'views/product_views.xml',
         'views/website_views.xml',
         'views/alokai_website_page_views.xml',
