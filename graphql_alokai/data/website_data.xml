@@ -14,6 +14,7 @@
         <field name="alokai_mailing_list_id" eval="ref('mass_mailing.mailing_list_data')"/>
         <field name="reset_password_email_template_id" eval="ref('graphql_alokai.website_reset_password_email')"/>
         <field name="order_confirmation_email_template_id" eval="ref('sale.mail_template_sale_confirmation')"/>
+        <field name="website_meta_title">Home Page</field>
     </record>
 
 </odoo>
