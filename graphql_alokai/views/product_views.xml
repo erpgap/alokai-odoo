@@ -28,13 +28,6 @@
                     </page>
                 </notebook>
             </sheet>
-            <sheet position="inside">
-                <div class="oe_button_box" name="button_box">
-                    <button name="website_publish_button" type="object" class="oe_stat_button" icon="fa-globe">
-                        <field name="is_published" widget="website_publish_button"/>
-                    </button>
-                </div>
-            </sheet>
         </field>
     </record>
 
