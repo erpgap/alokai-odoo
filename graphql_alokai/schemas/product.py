@@ -3,6 +3,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import graphene
+from werkzeug import urls
+
 from odoo.osv import expression
 from graphql import GraphQLError
 from odoo import _
@@ -171,6 +173,7 @@ class Products(graphene.Interface):
     min_price = graphene.Float()
     max_price = graphene.Float()
     filter_counts = generic.GenericScalar()
+    search_url = graphene.String()
 
 
 class ProductList(graphene.ObjectType):
@@ -267,8 +270,29 @@ class ProductQuery(graphene.ObjectType):
         env = info.context["env"]
         products, total_count, attribute_values, min_price, max_price, filter_counts = get_product_list(
             env, current_page, page_size, search, sort, **filter)
+
+        filter_data = {k.replace('_', '-'): v for k, v in filter.items()}
+        filter_data['search'] = search
+        ProductAttribute = env['product.attribute']
+        if filter_data.get('attrib-values', False):
+            for value in filter_data.pop('attrib-values'):
+                try:
+                    val = value.split('-')
+                    if len(val) != 2:
+                        continue
+                    attribute_id = int(val[0])
+                    attribute = ProductAttribute.search([('id', '=', attribute_id)])
+                    attribute_name = attribute.name.lower()
+                except ValueError:
+                    continue
+
+                if attribute_name not in filter_data:
+                    filter_data[attribute_name] = []
+                filter_data[attribute_name].append(value)
+
+        search_url = urls.url_encode(dict(sorted(filter_data.items())))
         return ProductList(products=products, total_count=total_count, attribute_values=attribute_values,
-                           min_price=min_price, max_price=max_price, filter_counts=filter_counts)
+                           min_price=min_price, max_price=max_price, filter_counts=filter_counts, search_url=search_url)
 
     @staticmethod
     def resolve_attribute(self, info, id):
