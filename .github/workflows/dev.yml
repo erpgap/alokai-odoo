@@ -1,4 +1,4 @@
-name: Build VSF
+name: Test and deploy Alokai
 
 on:
   push:
@@ -8,17 +8,22 @@ jobs:
   test:
     runs-on: self-hosted
     steps:
+      - name: Create Test Database
+        run: |
+          echo "Creating test database..."
+          /home/egap/.new-db
+
       - name: Run Tests
         run: |
           echo "Running tests..."
           /home/egap/.test
 
   deploy:
-    # This job will only run if 'test' completes successfully.
-    runs-on: self-hosted
     needs: test
+    runs-on: self-hosted
     steps:
       - name: Deploy
         run: |
           echo "-------- Deploying https://vsf-odoo18.labs.erpgap.com/ "
           /home/egap/.deploy
+       
