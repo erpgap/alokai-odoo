@@ -39,6 +39,9 @@ PaymentTransactionState = graphene.Enum('PaymentTransactionState', [('Draft', 'd
                                                                ('Authorized', 'authorized'), ('Confirmed', 'done'),
                                                                ('Canceled', 'cancel'), ('Error', 'error')])
 
+DeliveryStatus = graphene.Enum('DeliveryStatus', [('NotDelivered', 'pending'), ('Started', 'started'),
+                                        ('PartiallyDelivered', 'partial'), ('FullyDelivered', 'full')])
+
 
 class SortEnum(graphene.Enum):
     ASC = 'ASC'
@@ -816,6 +819,7 @@ class Order(OdooObjectType):
     gift_cards = graphene.List(graphene.NonNull(lambda: GiftCard))
     cart_quantity = graphene.Int()
     report_order_line = graphene.List(graphene.NonNull(lambda: OrderLine))
+    delivery_status = DeliveryStatus()
 
     def resolve_partner(self, info):
         return self.partner_id or None
