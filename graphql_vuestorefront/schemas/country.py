@@ -18,9 +18,9 @@ def get_search_order(sort):
 
     # Add id as last factor, so we can consistently get the same results
     if sorting:
-        sorting += ', id ASC'
+        sorting += ', name, id ASC'
     else:
-        sorting = 'id ASC'
+        sorting = 'name, id ASC'
 
     return sorting
 
