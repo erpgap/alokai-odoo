@@ -153,7 +153,7 @@ class Country(OdooObjectType):
     image_url = graphene.String()
 
     def resolve_states(self, info):
-        return self.state_ids or None
+        return self.state_ids.sorted('name') or None
 
 
 class Company(OdooObjectType):
