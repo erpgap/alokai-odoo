@@ -604,10 +604,7 @@ class Product(OdooObjectType):
         return self.website_ribbon_id or None
 
     def resolve_is_in_stock(self, info):
-        if self._name == 'product.template':
-            return bool(sum(self.product_variant_ids.mapped('free_qty')) > 0)
-        else:
-            return bool(self.free_qty > 0)
+        return self.has_stock
 
     # TODO: check request object does not contain website
     def resolve_is_in_wishlist(self, info):
