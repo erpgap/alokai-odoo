@@ -61,6 +61,7 @@
             <xpath expr="//field[@name='product_tag_ids']" position="after">
                 <field name="published_datetime"/>
                 <field name="published_hours"/>
+                <field name="has_stock" invisible="1"/>
             </xpath>
             <notebook position="inside">
                 <page name="seo" string="SEO">
@@ -100,6 +101,7 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="redis_stock" string="Redis Stock">
+                    <field name="has_stock" invisible="1"/>
                     <field name="product_redis_stock_ids" nolabel="1">
                         <tree>
                             <field name="website_id"/>

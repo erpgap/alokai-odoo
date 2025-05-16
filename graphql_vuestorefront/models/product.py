@@ -17,7 +17,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _graphql_get_search_order(self, sort):
-        sorting = ''
+        sorting = 'has_stock DESC'
         for field, val in sort.items():
             if sorting:
                 sorting += ', '
@@ -280,6 +280,12 @@ class ProductTemplate(models.Model):
     published_datetime = fields.Datetime('Published On', help='Datetime when the product was published', readonly=True)
     published_hours = fields.Integer('Hours Published', compute='_compute_published_hours',
                                      help='Total hours the product has been published', readonly=True)
+    has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', store=True)
+
+    @api.depends('product_variant_ids.product_redis_stock_ids')
+    def _compute_has_stock(self):
+        for template in self:
+            template.has_stock = sum(template.product_variant_ids.mapped('product_redis_stock_ids.quantity')) > 0
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -383,6 +389,12 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     product_redis_stock_ids = fields.One2many('product.product.redis_stock', 'product_id', 'Redis Stock', readonly=True)
+    has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', store=True)
+
+    @api.depends('product_redis_stock_ids')
+    def _compute_has_stock(self):
+        for product in self:
+            product.has_stock = sum(product.product_redis_stock_ids.mapped('quantity')) > 0
 
     def _compute_json_ld(self):
         env = self.env

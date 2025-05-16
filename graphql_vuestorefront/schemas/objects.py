@@ -571,7 +571,7 @@ class Product(OdooObjectType):
         return self.website_ribbon_id or None
 
     def resolve_is_in_stock(self, info):
-        return bool(self.free_qty > 0)
+        return self.has_stock
 
     def resolve_is_in_wishlist(self, info):
         env = info.context["env"]
