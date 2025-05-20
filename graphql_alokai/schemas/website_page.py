@@ -6,6 +6,7 @@ from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_reg
 from odoo.addons.graphql_alokai.schemas.objects import (
     SortEnum,
     WebsitePage,
+    PageTypeEnum
 )
 
 
@@ -20,12 +21,6 @@ def get_search_order(sort):
         sorting = 'id ASC'
 
     return sorting
-
-
-class PageTypeEnum(graphene.Enum):
-    Static = 'static'
-    Products = 'products'
-
 
 class WebsitePageFilterInput(graphene.InputObjectType):
     id = graphene.List(graphene.Int)
