@@ -38,7 +38,9 @@ PaymentTransactionState = graphene.Enum('PaymentTransactionState', [('Draft', 'd
                                                                ('Authorized', 'authorized'), ('Confirmed', 'done'),
                                                                ('Canceled', 'cancel'), ('Error', 'error')])
 
-PageType = graphene.Enum('PageType', [('StaticPage', 'static'), ('ProductsPage', 'products')])
+class PageTypeEnum(graphene.Enum):
+    STATIC = 'static'
+    PRODUCTS = 'products'
 
 
 class SortEnum(graphene.Enum):
@@ -1163,7 +1165,7 @@ class WebsiteMenuImage(OdooObjectType):
 
 class WebsitePage(OdooObjectType):
     id = graphene.Int()
-    page_type = PageType()
+    page_type = PageTypeEnum()
     name = graphene.String()
     website_url = graphene.String()
     is_published = graphene.Boolean()
