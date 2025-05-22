@@ -297,7 +297,7 @@ class ProductTemplate(models.Model):
     def write(self, vals):
         if 'website_published' in vals:
             for product in self:
-                if vals['website_published'] and not product.website_published:
+                if vals['website_published'] and not product.website_published and not product.published_datetime:
                     vals['published_datetime'] = datetime.now()
 
         res = super(ProductTemplate, self).write(vals)
