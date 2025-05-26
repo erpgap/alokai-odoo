@@ -31,7 +31,6 @@
         'data/website_data.xml',
         'data/ir_config_parameter_data.xml',
         'data/ir_cron_data.xml',
-        'data/remove_default_category_product.xml',
         'views/product_views.xml',
         'views/website_views.xml',
         'views/alokai_website_page_views.xml',
@@ -50,6 +49,7 @@
         'data/demo_products_men_clothing_3.xml',
         'data/demo_products_men_clothing_4.xml',
         'data/demo_products_men_shoes.xml',
+        'data/remove_default_category_product.xml',
     ],
     'assets': {
         'web.assets_backend': [
