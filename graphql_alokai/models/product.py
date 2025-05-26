@@ -12,7 +12,8 @@ from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _name = 'product.template'
+    _inherit = ['product.template', 'website.slug.redis.mixin']
 
     @api.model
     def _graphql_get_search_order(self, sort):
@@ -296,6 +297,7 @@ class ProductTemplate(models.Model):
         for vals in vals_list:
             if vals.get('website_published'):
                 vals['published_datetime'] = datetime.now()
+
         return super(ProductTemplate, self).create(vals_list)
 
     def write(self, vals):
@@ -306,6 +308,7 @@ class ProductTemplate(models.Model):
 
         res = super(ProductTemplate, self).write(vals)
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
+
         return res
 
     def unlink(self):
@@ -541,7 +544,8 @@ class ProductTemplateRedisStock(models.Model):
 
 
 class ProductPublicCategory(models.Model):
-    _inherit = 'product.public.category'
+    _name = 'product.public.category'
+    _inherit = ['product.public.category', 'website.slug.redis.mixin']
 
     def _compute_json_ld(self):
         website = self.env['website'].get_current_website()

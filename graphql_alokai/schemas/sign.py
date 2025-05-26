@@ -74,7 +74,7 @@ class Login(graphene.Mutation):
                 ('partner_id', '=', user.partner_id.id), ('website_id', '=', website.id)])
             wishlist_items = wishlist_items.filtered(
                 lambda wish:
-                wish.sudo().product_id.product_tmpl_id.website_published
+                wish.sudo().product_id.product_tmpl_id.is_published
                 and wish.sudo().product_id.product_tmpl_id._can_be_added_to_cart()
             )
 

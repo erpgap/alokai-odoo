@@ -174,7 +174,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
 
         if website.default_lang_id:
             lang_code = website.default_lang_id.code
-            domain = [('website_published', '=', True), ('website_slug', '!=', False)]
+            domain = [('is_published', '=', True), ('website_slug', '!=', False)]
 
             for product in request.env['product.template'].sudo().search(domain):
                 product = product.with_context(lang=lang_code)
