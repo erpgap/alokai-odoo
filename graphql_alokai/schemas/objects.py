@@ -540,10 +540,7 @@ class Product(OdooObjectType):
             return 'configurable'
 
     def resolve_visibility(self, info):
-        if self.website_published:
-            return 1
-        else:
-            return 0
+        return int(self.is_published)
 
     def resolve_status(self, info):
         free_qty = 0

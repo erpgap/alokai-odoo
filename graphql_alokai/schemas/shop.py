@@ -77,7 +77,7 @@ class SetShippingMethod(graphene.Mutation):
 
         delivery_method = env['delivery.carrier'].sudo().search([
             ('id', '=', shipping_method_id),
-            ('website_published', '=', True)], limit=1
+            ('is_published', '=', True)], limit=1
         )
         if not delivery_method:
             raise GraphQLError(_('Shipping method does not exist.'))

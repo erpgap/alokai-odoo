@@ -14,6 +14,41 @@ from odoo.exceptions import UserError
 from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
 
 
+class WebsiteSlugRedisMixin(models.AbstractModel):
+    _name = 'website.slug.redis.mixin'
+    _description = 'Mixin to sync website slugs with Redis'
+
+    def _update_slug_in_redis(self):
+        redis_client = self.env['website']._redis_connect()
+        langs = self.env['res.lang'].search([])
+        pipe = redis_client.pipeline()
+
+        for record in self:
+            # Optional: skip unpublished or not relevant records
+            if hasattr(record, 'is_published') and not record.is_published:
+                continue
+            if hasattr(record, 'sale_ok') and not record.sale_ok:
+                continue
+
+            for lang in langs:
+                slug = record.with_context(lang=lang.code).website_slug
+                if slug:
+                    pipe.set(f'slug:{slug}', record._name)
+
+        pipe.execute()
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._update_slug_in_redis()
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        self._update_slug_in_redis()
+        return res
+
+
 class WebsiteSeoMetadata(models.AbstractModel):
     _inherit = 'website.seo.metadata'
 
@@ -142,7 +177,7 @@ class Website(models.Model):
         The loop ends when the cursor returned by SCAN is 0, indicating all keys have been scanned.
         """
         # Keep cart and stock keys in redis
-        patterns_to_keep = ['cart:*', 'stock:*']
+        patterns_to_keep = ['cart:*', 'stock:*', 'slug:*']
         batch_size = 100
 
         redis_client = self._redis_connect()
@@ -194,6 +229,21 @@ class Website(models.Model):
         ICP = self.env['ir.config_parameter'].sudo()
         ICP.set_param('auth_signup.invitation_scope', 'b2c')
         ICP.set_param('auth_signup.reset_password', True)
+
+    @api.model
+    def _update_all_slugs_redis(self):
+        redis_client = self.env['website']._redis_connect()
+
+        # Delet one-by-one to avoid Redis blocking or memory pressure
+        delete_keys = list(redis_client.scan_iter('slug:*'))
+        for delete_key in delete_keys:
+            redis_client.delete(delete_key)
+
+        self.env['product.template'].search([])._update_slug_in_redis()
+        self.env['product.public.category'].search([])._update_slug_in_redis()
+        self.env['blog.tag'].search([])._update_slug_in_redis()
+        self.env['blog.blog'].search([])._update_slug_in_redis()
+        self.env['blog.post'].search([])._update_slug_in_redis()
 
 
 class WebsiteRewrite(models.Model):
@@ -256,7 +306,8 @@ class WebsiteMenuImage(models.Model):
 
 
 class BlogTag(models.Model):
-    _inherit = 'blog.tag'
+    _name = 'blog.tag'
+    _inherit = ['blog.tag', 'website.slug.redis.mixin']
 
     @api.depends('name')
     def _compute_website_slug(self):
@@ -277,7 +328,8 @@ class BlogTag(models.Model):
 
 
 class BlogBlog(models.Model):
-    _inherit = 'blog.blog'
+    _name = 'blog.blog'
+    _inherit = ['blog.blog', 'website.slug.redis.mixin']
 
     def _validate_website_slug(self):
         for blog in self.filtered(lambda c: c.website_slug):
@@ -310,7 +362,8 @@ class BlogBlog(models.Model):
 
 
 class BlogPost(models.Model):
-    _inherit = 'blog.post'
+    _name = 'blog.post'
+    _inherit = ['blog.post', 'website.slug.redis.mixin']
 
     @api.model
     def _graphql_get_search_order(self, sort):
