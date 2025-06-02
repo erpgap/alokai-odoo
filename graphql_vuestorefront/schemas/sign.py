@@ -47,6 +47,7 @@ class Login(graphene.Mutation):
     def mutate(self, info, email, password, subscribe_newsletter):
         env = info.context['env']
         website = env['website'].get_current_website()
+        order = website.sale_get_order(force_create=True)
 
         # Set email in lowercase
         email = email.lower()
@@ -63,6 +64,9 @@ class Login(graphene.Mutation):
                         scope="browser", key=key, uid=user.id)
                     if user_match:
                         request.session.finalize(request.env)
+
+            # Update SO
+            order._update_sale_order(website, user)
 
             # Subscribe Newsletter
             if website.vsf_mailing_list_id and subscribe_newsletter:
@@ -112,6 +116,7 @@ class Register(graphene.Mutation):
     def mutate(self, info, name, email, password, subscribe_newsletter):
         env = info.context['env']
         website = env['website'].get_current_website()
+        order = website.sale_get_order(force_create=True)
 
         # Set email in lowercase
         email = email.lower()
@@ -127,11 +132,17 @@ class Register(graphene.Mutation):
 
         env['res.users'].sudo().signup(data)
 
+        # Get created user
+        user = env['res.users'].sudo().search([('login', '=', data['login'])], limit=1)
+
+        # Update SO
+        order._update_sale_order(website, user)
+
         # Subscribe Newsletter
         if website and website.vsf_mailing_list_id and subscribe_newsletter:
             MassMailController().subscribe(website.vsf_mailing_list_id.id, email, 'email')
 
-        return env['res.users'].sudo().search([('login', '=', data['login'])], limit=1)
+        return user
 
 
 class ResetPassword(graphene.Mutation):
