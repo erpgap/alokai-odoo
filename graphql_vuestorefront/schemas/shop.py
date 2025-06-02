@@ -112,16 +112,6 @@ class CartAddMultipleItems(graphene.Mutation):
         order = website.sale_get_order(force_create=1)
         # Forcing the website_id to be passed to the Order
         order.write({'website_id': website.id})
-
-        # User
-        user = env['res.users'].sudo().search([('id', '=', env.uid)], limit=1)
-        # When Cart is created by one Public User
-        if not user:
-            user = env.user
-
-        # Update SO
-        order._update_sale_order(website, user)
-
         for product in products:
             product_id = product['id']
             quantity = product['quantity']
@@ -140,16 +130,6 @@ class CartUpdateMultipleItems(graphene.Mutation):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=1)
-
-        # User
-        user = env['res.users'].sudo().search([('id', '=', env.uid)], limit=1)
-        # When Cart is created by one Public User
-        if not user:
-            user = env.user
-
-        # Update SO
-        order._update_sale_order(website, user)
-
         for line in lines:
             line_id = line['id']
             quantity = line['quantity']
@@ -171,16 +151,6 @@ class CartRemoveMultipleItems(graphene.Mutation):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=1)
-
-        # User
-        user = env['res.users'].sudo().search([('id', '=', env.uid)], limit=1)
-        # When Cart is created by one Public User
-        if not user:
-            user = env.user
-
-        # Update SO
-        order._update_sale_order(website, user)
-
         for line_id in line_ids:
             line = order.order_line.filtered(lambda rec: rec.id == line_id)
             line.unlink()
