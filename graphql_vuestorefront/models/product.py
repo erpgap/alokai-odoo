@@ -77,7 +77,7 @@ class ProductTemplate(models.Model):
         if search:
             for srch in search.split(" "):
                 domains.append([
-                    '|', '|', ('name', 'ilike', srch), ('description_sale', 'like', srch), ('default_code', 'like', srch)])
+                    '|', '|', ('name', 'ilike', srch), ('description_sale', 'ilike', srch), ('default_code', 'ilike', srch)])
 
         # Used for improving attributes filtering
         attributes_partial_domain = domains.copy()
