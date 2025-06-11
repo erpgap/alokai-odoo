@@ -393,7 +393,7 @@ class BlogPost(models.Model):
         if search:
             for srch in search.split(" "):
                 domain.append([
-                    '|', ('name', 'ilike', srch), ('content', 'like', srch)])
+                    '|', ('name', 'ilike', srch), ('content', 'ilike', srch)])
 
         if filter.get('tag_id', False):
             domain.append([('tag_ids', 'in', filter['tag_id'])])
