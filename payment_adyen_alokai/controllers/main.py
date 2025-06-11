@@ -9,7 +9,7 @@ import werkzeug
 from werkzeug import urls
 
 from odoo import http, _
-from odoo.http import request
+from odoo.http import request, Response
 from odoo.exceptions import ValidationError
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment_adyen import utils as adyen_utils
@@ -221,25 +221,15 @@ class AdyenControllerInherit(AdyenController):
                     if event_code == 'AUTHORISATION' and success and tx_sudo.created_on_alokai:
                         # Check the Order and respective website related with the transaction
                         # Check the payment_return url for the success and error pages
-                        sale_order_ids = tx_sudo.sale_order_ids.ids
-                        sale_order = request.env['sale.order'].sudo().search([
-                            ('id', 'in', sale_order_ids), ('website_id', '!=', False)
-                        ], limit=1)
-
-                        # Get Website
-                        website = sale_order.website_id
-                        # Redirect to Alokai
-                        alokai_payment_success_return_url = website.alokai_payment_success_return_url
-
                         request.session["__payment_monitored_tx_id__"] = tx_sudo.id
 
                         # Confirm sale order
                         PaymentPostProcessing().poll_status()
-
-                        return werkzeug.utils.redirect(alokai_payment_success_return_url)
                 except ValidationError:  # Acknowledge the notification to avoid getting spammed
+                    request.env.cr.rollback()
                     _logger.exception(
                         "unable to handle the notification data;skipping to acknowledge"
                     )
+                    return Response('Server Error', status=400)
 
         return request.make_json_response('[accepted]')  # Acknowledge the notification
