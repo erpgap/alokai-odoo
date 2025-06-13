@@ -210,7 +210,7 @@ class ProductTemplate(models.Model):
                     slug_name = slugify(product.name or '').strip().strip('-')
                     product.website_slug = f'{prefix}/{slug_name}-{product.id}'
 
-    @api.depends('product_variant_ids')
+    @api.depends('product_variant_ids', 'product_variant_id')
     def _compute_variant_attribute_value_ids(self):
         """
         Used to filter attribute values on the website.
