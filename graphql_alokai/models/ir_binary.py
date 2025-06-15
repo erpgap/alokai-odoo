@@ -73,7 +73,7 @@ class IrBinary(models.AbstractModel):
                         img = img.convert('RGBA')
                     # Create a new background, merge the background with the image centered
                     img_w, img_h = img.size
-                    if image_format in ['jpeg', 'png']:
+                    if image_format == 'jpeg':
                         background = Image.new('RGB', (width, height), background_rgba[:3])
                     else:
                         background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
