@@ -5,6 +5,7 @@ import redis
 import pprint
 import json
 import requests
+import urllib.parse
 from odoo import models, fields, api, tools
 from odoo.exceptions import ValidationError
 from odoo import _
@@ -33,7 +34,8 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
             for lang in langs:
                 slug = record.with_context(lang=lang.code).website_slug
                 if slug:
-                    pipe.set(f'slug:{slug}', record._name)
+                    encoded_slug = urllib.parse.quote(slug, safe='')
+                    pipe.set(f'slug:{encoded_slug}', record._name)
 
         pipe.execute()
 
