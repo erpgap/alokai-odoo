@@ -165,6 +165,49 @@ class ProductTemplate(models.Model):
 
             product.json_ld = json.dumps(json_ld)
 
+    def _get_breadcrumb_category(self, categories, category):
+        categories.append({
+            'name': category.name,
+            'slug': category.website_slug,
+        })
+        if category.parent_id:
+            categories = self._get_breadcrumb_category(categories, category.parent_id)
+        return categories
+
+    def _compute_breadcrumb(self):
+        for product in self:
+            categories = []
+            if product.public_categ_ids[0]:
+                categories = product._get_breadcrumb_category([], product.public_categ_ids[0])
+                categories.reverse()
+            product.breadcrumb = json.dumps(categories)
+
+    def get_json_ld_breadcrumb(self):
+        items = []
+
+        if self.public_categ_ids:
+            website = self.env['website'].get_current_website()
+            domain = website.domain or ''
+            if domain and domain[-1] == '/':
+                domain = domain[:-1]
+
+            categories = self._get_breadcrumb_category([], self.public_categ_ids[0])
+            categories.reverse()
+
+            for index, category in enumerate(categories):
+                items.append({
+                    "@type": "ListItem",
+                    "position": index + 1,
+                    "name": category['name'],
+                    "item": f"{domain}{category['slug']}"
+                })
+
+        return {
+            "@context": "https://schema.org/",
+            "@type": "BreadcrumbList",
+            "itemListElement": items
+        }
+
     def _get_public_categ_slug(self, category_ids, category):
         category_ids.append(category.id)
 
@@ -562,6 +605,21 @@ class ProductPublicCategory(models.Model):
             }
 
             category.json_ld = json.dumps(json_ld)
+
+    def _get_breadcrumb_category(self, categories, category):
+        categories.append({
+            'name': category.name,
+            'slug': category.website_slug,
+        })
+        if category.parent_id:
+            categories = self._get_breadcrumb_category(categories, category.parent_id)
+        return categories
+
+    def _compute_breadcrumb(self):
+        for category in self:
+            categories = category._get_breadcrumb_category([], category)
+            categories.reverse()
+            category.breadcrumb = json.dumps(categories)
 
     def _validate_website_slug(self):
         for category in self.filtered(lambda c: c.website_slug):

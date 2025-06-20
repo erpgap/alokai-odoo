@@ -364,6 +364,7 @@ class Category(OdooObjectType):
     meta_keyword = graphene.String()
     meta_description = graphene.String()
     meta_image = graphene.String()
+    breadcrumb = generic.GenericScalar()
 
     def resolve_image(self, info):
         return get_image_url(self, field_name='image_1920')
@@ -532,6 +533,8 @@ class Product(OdooObjectType):
     json_ld = generic.GenericScalar()
     tags = graphene.List(graphene.NonNull(lambda: ProductTag))
     alokai_pages = graphene.List(graphene.NonNull(lambda: WebsitePage))
+    breadcrumb = generic.GenericScalar()
+    json_ld_breadcrumb = generic.GenericScalar()
 
     def resolve_type_id(self, info):
         if self.type == 'consu':
@@ -778,6 +781,9 @@ class Product(OdooObjectType):
 
     def resolve_alokai_pages(self, info):
         return self.alokai_page_ids or None
+
+    def resolve_json_ld_breadcrumb(self, info):
+        return self and self.get_json_ld_breadcrumb() or None
 
 
 class Payment(OdooObjectType):
