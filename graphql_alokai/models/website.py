@@ -66,9 +66,14 @@ class WebsiteSeoMetadata(models.AbstractModel):
             else:
                 record.pprint_json_ld = None
 
+    def _compute_breadcrumb(self):
+        for record in self:
+            record.breadcrumb = None
+
     website_meta_img = fields.Image('Website meta image')
     json_ld = fields.Char('JSON-LD', compute='_compute_json_ld', store=False, readonly=True)
     pprint_json_ld = fields.Text('JSON-LD', compute='_compute_pprint_json_ld', store=False, readonly=True)
+    breadcrumb = fields.Char('Breadcrumb', compute='_compute_breadcrumb', store=False, readonly=True)
 
 
 class Website(models.Model):
