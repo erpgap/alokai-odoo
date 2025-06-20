@@ -126,15 +126,20 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             request.update_env(user=website_uid)
 
     # The GraphiQL route, providing an IDE for developers
-    @http.route(["/graphiql/alokai", "/graphiql/vsf"], auth="user")
+    @http.route(["/graphiql/alokai", "/graphiql/vsf"], auth="public")
     def graphiql(self, **kwargs):
-        internal_group_id = request.env.ref('base.group_user').id
-
-        # Check if the current user belongs to the internal user group
-        if internal_group_id not in request.env.user.groups_id.ids:
-            raise Forbidden()
-
         self._set_website_context()
+
+        # If debug mode is active, we can access with public user which is useful for testing
+        ICP = http.request.env['ir.config_parameter'].sudo()
+        alokai_debug_mode = ICP.get_param('alokai_debug_mode', False)
+        if not alokai_debug_mode:
+            internal_group_id = request.env.ref('base.group_user').id
+
+            # Check if the current user belongs to the internal user group
+            if internal_group_id not in request.env.user.groups_id.ids:
+                raise Forbidden()
+
         return self._handle_graphiql_request(self._graphql_schema)
 
     # The graphql route, for applications.
