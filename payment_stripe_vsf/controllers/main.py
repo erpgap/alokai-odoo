@@ -12,6 +12,7 @@ from odoo.exceptions import ValidationError
 from odoo.addons.payment_stripe.const import HANDLED_WEBHOOK_EVENTS
 from odoo.addons.payment_stripe.controllers.main import StripeController
 from odoo.addons.payment.controllers.post_processing import PaymentPostProcessing
+from odoo.addons.website_sale.controllers.delivery import WebsiteSaleDelivery
 
 _logger = logging.getLogger(__name__)
 
@@ -188,3 +189,69 @@ class StripeControllerInherit(StripeController):
         except ValidationError:  # Acknowledge the notification to avoid getting spammed
             _logger.exception("unable to handle the notification data; skipping to acknowledge")
         return request.make_json_response('')
+
+    # ------------------------------- #
+    #    ApplePay Express Checkout    #
+    # ------------------------------- #
+
+    @http.route('/stripe/applepay/shipping_methods', type='json', auth='public', csrf=False)
+    def stripe_applepay_get_shipping_options(self, **post):
+        data = post
+        if not data:
+            data = request.dispatcher.jsonrequest
+        transaction_reference = data.get('transaction_reference')
+        transaction = request.env['payment.transaction'].sudo().search([('reference', '=', transaction_reference)])
+
+        order_ids = transaction.sale_order_ids.ids
+        order = request.env['sale.order'].sudo().search([
+            ('id', 'in', order_ids), ('website_id', '!=', False)
+        ], limit=1)
+
+        # Get Shipping Methods
+        delivery_methods = order._get_delivery_methods()
+        shipping_methods = []
+        if delivery_methods:
+            for delivery_method in delivery_methods:
+                rate = WebsiteSaleDelivery._get_rate(delivery_method, order, is_express_checkout_flow=True)
+                method = {
+                    'id': str(delivery_method.id),
+                    'label': delivery_method.name,
+                    'detail': delivery_method.carrier_description if delivery_method.carrier_description else '',
+                    'amount': rate['price'],
+                }
+                shipping_methods.append(method)
+
+        new_total = {
+            'label': order.name,
+            'amount': round(order.amount_total, 2)
+        }
+
+        return {
+            'shippingMethods': shipping_methods,
+            'newTotal': new_total
+        }
+
+    @http.route('/stripe/applepay/select_shipping_method', type='json', auth='public',  csrf=False)
+    def stripe_applepay_select_shipping_method(self, **post):
+        data = post
+        if not data:
+            data = request.dispatcher.jsonrequest
+        carrier_id = data.get('carrier_id')
+        transaction_reference = data.get('transaction_reference')
+        transaction = request.env['payment.transaction'].sudo().search([('reference', '=', transaction_reference)])
+
+        order_ids = transaction.sale_order_ids.ids
+        order = request.env['sale.order'].sudo().search([
+            ('id', 'in', order_ids), ('website_id', '!=', False)
+        ], limit=1)
+
+        if order and carrier_id != order.carrier_id.id:
+            order._check_carrier_quotation(force_carrier_id=int(carrier_id))
+
+        # Calculate new total
+        return {
+            'newTotal': {
+                'label': order.name,
+                'amount': round(order.amount_total, 2)
+            }
+        }

@@ -11,6 +11,7 @@ from odoo import _
 
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.website_sale.controllers.main import PaymentPortal
+from odoo.addons.payment_stripe_vsf.controllers.main import StripeControllerInherit
 from odoo.addons.payment_stripe.const import API_VERSION, PROXY_URL
 
 # --------------------------------- #
@@ -27,6 +28,14 @@ class StripeTransactionResult(graphene.ObjectType):
 
 class StripeGetInlineFormValuesResult(graphene.ObjectType):
     stripe_get_inline_form_values = generic.GenericScalar()
+
+
+class StripeApplepayGetShippingOptionsResult(graphene.ObjectType):
+    stripe_applepay_get_shipping_options = generic.GenericScalar()
+
+
+class StripeApplepaySelectShippingMethodResult(graphene.ObjectType):
+    stripe_applepay_select_shipping_method = generic.GenericScalar()
 
 
 class StripeProviderInfo(graphene.Mutation):
@@ -156,7 +165,51 @@ class StripeTransaction(graphene.Mutation):
         return StripeTransactionResult(transaction=transaction)
 
 
+class StripeApplepayGetShippingOptions(graphene.Mutation):
+    class Arguments:
+        transaction_reference = graphene.String(required=True)
+
+    Output = StripeApplepayGetShippingOptionsResult
+
+    @staticmethod
+    def mutate(self, info, transaction_reference):
+        env = info.context["env"]
+        PaymentTransaction = env['payment.transaction'].sudo()
+        transaction = PaymentTransaction.search([('reference', '=', transaction_reference)], limit=1)
+
+        if not transaction:
+            raise GraphQLError(_('Payment Transaction does not exist.'))
+        stripe_applepay_get_shipping_options = StripeControllerInherit().stripe_applepay_get_shipping_options(
+            transaction_reference=transaction_reference
+        )
+        return StripeApplepayGetShippingOptionsResult(stripe_applepay_get_shipping_options=stripe_applepay_get_shipping_options)
+
+
+class StripeApplepaySelectShippingMethod(graphene.Mutation):
+    class Arguments:
+        transaction_reference = graphene.String(required=True)
+        carrier_id = graphene.Int(required=True)
+
+    Output = StripeApplepaySelectShippingMethodResult
+
+    @staticmethod
+    def mutate(self, info, transaction_reference, carrier_id):
+        env = info.context["env"]
+        PaymentTransaction = env['payment.transaction'].sudo()
+        transaction = PaymentTransaction.search([('reference', '=', transaction_reference)], limit=1)
+
+        if not transaction:
+            raise GraphQLError(_('Payment Transaction does not exist.'))
+        stripe_applepay_select_shipping_method = StripeControllerInherit().stripe_applepay_select_shipping_method(
+            transaction_reference=transaction_reference,
+            carrier_id=carrier_id
+        )
+        return StripeApplepaySelectShippingMethodResult(stripe_applepay_select_shipping_method=stripe_applepay_select_shipping_method)
+
+
 class StripePaymentMutation(graphene.ObjectType):
     stripe_provider_info = StripeProviderInfo.Field(description='Get Stripe Provider Info.')
     stripe_get_inline_form_values = StripeGetInlineFormValues.Field(description='Get Stripe Inline Form Values')
     stripe_transaction = StripeTransaction.Field(description='Create Stripe Transaction')
+    stripe_applepay_get_shipping_options = StripeApplepayGetShippingOptions.Field(description='Get Shipping Options on "Stripe - ApplePay"')
+    stripe_applepay_select_shipping_method = StripeApplepaySelectShippingMethod.Field(description='Select Shipping Method on "Stripe - ApplePay"')

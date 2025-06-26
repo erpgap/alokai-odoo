@@ -119,6 +119,129 @@ publicWidget.registry.WebsiteSaleStripe = publicWidget.Widget.extend({
             });
         });
 
+        // 🔸 Apple Pay Start
+        this.paymentRequest = this.stripeJs.paymentRequest({
+            country: 'PT',
+            currency: 'eur',
+            total: {
+                label: 'Total',
+                amount: 4870,
+            },
+            requestPayerName: true, // Force fetching the billing address for Apple Pay.
+            requestPayerEmail: true,
+            requestPayerPhone: true,
+            requestShipping: true,
+            shippingOptions: [], // Will be initiated as empty; Will be updated after
+        });
+
+        this.paymentRequest.canMakePayment().then((result) => {
+            if (result) {
+                const prButton = this.elements.create('paymentRequestButton', {
+                    paymentRequest: this.paymentRequest,
+                });
+                prButton.mount('#payment-request-button');
+                document.getElementById('payment-request-button-wrapper').style.display = 'block';
+            } else {
+                document.getElementById('payment-request-button-wrapper').style.display = 'none';
+            }
+        });
+
+        // ShippingAddress and ShippingOptions
+        this.paymentRequest.on('shippingaddresschange', (ev) => {
+            const shipping_address = ev.shippingAddress;
+            fetch('/stripe/applepay/shipping_methods', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    transaction_reference: "S00113",
+                    //shipping_address: shipping_address,
+                }),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                const result = data.result;
+                if (result.shippingMethods && result.newTotal) {
+                    this.availableShippingOptions = result.shippingMethods;
+                    ev.updateWith({
+                        status: 'success',
+                        shippingOptions: result.shippingMethods.map((m) => ({
+                            id: m.id,
+                            label: m.label,
+                            detail: m.detail,
+                            amount: Math.round(parseFloat(m.amount) * 100), // Stripe uses centimes
+                        })),
+                        total: {
+                            label: result.newTotal.label,
+                            amount: Math.round(parseFloat(result.newTotal.amount) * 100),
+                        },
+                    });
+                } else {
+                    ev.updateWith({ status: 'fail' });
+                }
+            })
+            .catch((error) => {
+                console.error('Error getting the Shipping Methods:', error);
+                ev.updateWith({ status: 'fail' });
+            });
+        });
+
+        // When User Selects the Shipping Method
+        this.paymentRequest.on('shippingoptionchange', (ev) => {
+            const carrier_id = ev.shippingOption.id;
+            fetch('/stripe/applepay/select_shipping_method', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    transaction_reference: "S00113",
+                    carrier_id: carrier_id,
+                }),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                const result = data.result;
+                if (result.newTotal) {
+                    ev.updateWith({
+                        status: 'success',
+                        total: {
+                            label: result.newTotal.label,
+                            amount: Math.round(parseFloat(result.newTotal.amount) * 100),
+                        },
+                    });
+                } else {
+                    ev.updateWith({ status: 'fail' });
+                }
+            })
+            .catch((error) => {
+                console.error('Error updating the total:', error);
+                ev.updateWith({ status: 'fail' });
+            });
+        });
+
+        this.paymentRequest.on('paymentmethod', (ev) => {
+            this.stripeJs.confirmPayment({
+                confirmParams: {
+                    return_url: return_url,
+                    payment_method: ev.paymentMethod.id,
+                },
+                clientSecret: clientSecret,
+            }).then((result) => {
+                if (result.error) {
+                    ev.complete('fail');
+                    console.error("Apple Pay Error:", result.error.message);
+                } else {
+                    ev.complete('success');
+                    const pi = result.paymentIntent;
+                    if (pi && ['succeeded', 'requires_capture'].includes(pi.status)) {
+                        console.log("'Payment' Done with Success:", pi);
+                        window.location.href = return_url;
+                    } else {
+                        console.log("'Payment' Failed or is Pending", pi);
+                    }
+                }
+            });
+        });
+        // 🔸 Apple Pay End
+
     },
     async _onClickCheckoutSubmit(event) {
         event.preventDefault();

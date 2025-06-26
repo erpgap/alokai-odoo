@@ -13,6 +13,11 @@
                     <div id="link-authentication-element">
                         <!-- Elements will create authentication element here -->
                     </div>
+                    <div id="payment-request-button-wrapper" style="display: none;">
+                      <div id="payment-request-button">
+                          <!-- Stripe Payment Request Button will be mounted here -->
+                      </div>
+                    </div>
                     <div id="express-checkout-element">
                         <!-- Stripe Express Checkout will be mounted here -->
                     </div>
