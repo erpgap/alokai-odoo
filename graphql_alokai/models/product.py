@@ -238,7 +238,7 @@ class ProductTemplate(models.Model):
                     VALUES(%s, %s);
                 """, (product.id, category_id,))
 
-    @api.depends('name', 'default_code')
+    @api.depends('name')
     def _compute_website_slug(self):
         langs = self.env['res.lang'].search([])
 
