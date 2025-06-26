@@ -238,7 +238,7 @@ class ProductTemplate(models.Model):
                     VALUES(%s, %s);
                 """, (product.id, category_id,))
 
-    @api.depends('name')
+    @api.depends('name', 'default_code')
     def _compute_website_slug(self):
         langs = self.env['res.lang'].search([])
 
@@ -385,9 +385,16 @@ class ProductTemplate(models.Model):
     @api.model
     def calculate_frequently_bought_together(self):
         ProductTemplateFBT = self.env['product.template.fbt']
-
         ProductTemplateFBT.search([]).unlink()
-        sale_groups = self.env['sale.report'].search([])
+
+        lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('alokai_recent_sales_count_days', 30))
+        date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
+        done_states = self.env['sale.report'].sudo()._get_done_states()
+        domain = [
+            ('state', 'in', done_states),
+            ('date', '>=', date_days_ago),
+        ]
+        sale_groups = self.env['sale.report'].search(domain)
 
         order_to_products = defaultdict(list)
         for sale_group in sale_groups:
