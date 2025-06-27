@@ -246,10 +246,13 @@ class ProductTemplate(models.Model):
         sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups}
 
         for product in self:
-            product_id = product.product_variant_id.id
-            sales_count = sale_count_map.get(product_id, 0)
-            sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
-            product.recent_sales_count = sales_count + product.recent_sales_count_increment
+            if product.detailed_type in ['product', 'consu']:
+                product_id = product.product_variant_id.id
+                sales_count = sale_count_map.get(product_id, 0)
+                sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
+                product.recent_sales_count = sales_count + product.recent_sales_count_increment
+            else:
+                product.recent_sales_count = 0
 
     @api.depends('published_datetime')
     def _compute_published_hours(self):
@@ -348,10 +351,11 @@ class ProductTemplate(models.Model):
 
         order_to_products = defaultdict(list)
         for sale_group in sale_groups:
-            order_id = sale_group.order_reference
-            product_id = sale_group.product_id.product_tmpl_id.id
-            qty = sale_group.product_uom_qty
-            order_to_products[order_id].append((product_id, qty))
+            if sale_group.product_id.detailed_type in ['product', 'consu']:
+                order_id = sale_group.order_reference
+                product_id = sale_group.product_id.product_tmpl_id.id
+                qty = sale_group.product_uom_qty
+                order_to_products[order_id].append((product_id, qty))
 
         product_relations = defaultdict(lambda: defaultdict(float))
         for order, products in order_to_products.items():
