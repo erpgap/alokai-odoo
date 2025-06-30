@@ -8,7 +8,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_round
-from odoo.addons.http_routing.models.ir_http import slug, slugify
+from odoo.addons.http_routing.models.ir_http import slugify
 from odoo.exceptions import ValidationError
 
 
@@ -132,11 +132,15 @@ class ProductTemplate(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
+        website_domain = website.domain or ''
+        if website_domain and website_domain[-1:] == '/':
+            website_domain = website_domain[:-1]
+
         for product in self:
             # Get list of images
             images = list()
             if product.image_1920:
-                images.append(f'{base_url}/web/image/product.product/{product.id}/image')
+                images.append(f'{base_url}/web/image/product.template/{product.id}/image_1920')
 
             json_ld = {
                 "@context": "https://schema.org/",
@@ -145,7 +149,7 @@ class ProductTemplate(models.Model):
                 "image": images,
                 "offers": {
                     "@type": "Offer",
-                    "url": f"{website.domain or ''}/product/{slug(product)}",
+                    "url": f"{website_domain}{product.website_slug}",
                     "priceCurrency": product.currency_id.name,
                     "price": product.list_price,
                     "itemCondition": "https://schema.org/NewCondition",
@@ -414,11 +418,15 @@ class ProductProduct(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
+        website_domain = website.domain or ''
+        if website_domain and website_domain[-1:] == '/':
+            website_domain = website_domain[:-1]
+
         for product in self:
             # Get list of images
             images = list()
             if product.image_1920:
-                images.append(f'{base_url}/web/image/product.product/{product.id}/image')
+                images.append(f'{base_url}/web/image/product.product/{product.id}/image_1920')
 
             json_ld = {
                 "@context": "https://schema.org/",
@@ -427,7 +435,7 @@ class ProductProduct(models.Model):
                 "image": images,
                 "offers": {
                     "@type": "Offer",
-                    "url": f"{website.domain or ''}/product/{slug(product)}",
+                    "url": f"{website_domain}{product.website_slug}",
                     "priceCurrency": product.currency_id.name,
                     "price": product.list_price,
                     "itemCondition": "https://schema.org/NewCondition",
@@ -538,15 +546,16 @@ class ProductPublicCategory(models.Model):
 
     def _compute_json_ld(self):
         website = self.env['website'].get_current_website()
-        base_url = website.domain or ''
-        if base_url and base_url[-1] == '/':
-            base_url = base_url[:-1]
+
+        website_domain = website.domain or ''
+        if website_domain and website_domain[-1:] == '/':
+            website_domain = website_domain[:-1]
 
         for category in self:
             json_ld = {
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
-                "url": f'{base_url}{category.website_slug}',
+                "url": f'{website_domain}{category.website_slug}',
                 "name": category.display_name,
             }
 
