@@ -145,17 +145,22 @@ class ApplyCoupon(graphene.Mutation):
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=1)
 
-        coupon_status = order._try_apply_code(promo)
-        if 'error' in coupon_status:
-            raise GraphQLError(coupon_status['error'])
-
-        # Apply Coupon
-        order._update_programs_and_rewards()
-        order._auto_apply_rewards()
-        order.action_open_reward_wizard()
-
-        error = coupon_status.get('error') or coupon_status.get('not_found')
-
+        status = order._try_apply_code(promo)
+        error = status.get('error')
+        if 'error' in status:
+            return ApplyCouponList(order=order, error=error)
+        if not status:
+            error = _('No reward to claim with this coupon')
+            return ApplyCouponList(order=order, error=error)
+        coupons = env['loyalty.card']
+        rewards = env['loyalty.reward']
+        for coupon, coupon_rewards in status.items():
+            coupons |= coupon
+            rewards |= coupon_rewards
+        if len(coupons) == 1 and len(rewards) == 1:
+            status = order._apply_program_reward(rewards.sudo(), coupons.sudo())
+            if 'error' in status:
+                error = status['error']
         return ApplyCouponList(order=order, error=error)
 
 
@@ -181,17 +186,22 @@ class ApplyGiftCard(graphene.Mutation):
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=1)
 
-        gift_card_status = order._try_apply_code(promo)
-        if 'error' in gift_card_status:
-            raise GraphQLError(gift_card_status['error'])
-
-        # Apply Coupon
-        order._update_programs_and_rewards()
-        order._auto_apply_rewards()
-        order.action_open_reward_wizard()
-
-        error = gift_card_status.get('error') or gift_card_status.get('not_found')
-
+        status = order._try_apply_code(promo)
+        error = status.get('error')
+        if 'error' in status:
+            return ApplyGiftCardList(order=order, error=error)
+        if not status:
+            error = _('No reward to claim with this gift card')
+            return ApplyGiftCardList(order=order, error=error)
+        coupons = env['loyalty.card']
+        rewards = env['loyalty.reward']
+        for coupon, coupon_rewards in status.items():
+            coupons |= coupon
+            rewards |= coupon_rewards
+        if len(coupons) == 1 and len(rewards) == 1:
+            status = order._apply_program_reward(rewards.sudo(), coupons.sudo())
+            if 'error' in status:
+                error = status['error']
         return ApplyGiftCardList(order=order, error=error)
 
 
