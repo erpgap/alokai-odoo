@@ -284,7 +284,8 @@ class ProductTemplate(models.Model):
                                                      readonly=True)
     product_tmpl_redis_stock_ids = fields.One2many('product.template.redis_stock', 'product_id', 'Redis Stock',
                                                    readonly=True)
-    published_datetime = fields.Datetime('Published On', help='Datetime when the product was published', readonly=True)
+    published_datetime = fields.Datetime('Published On', help='Datetime when the product was published', readonly=True,
+                                         copy=False)
     published_hours = fields.Integer('Hours Published', compute='_compute_published_hours',
                                      help='Total hours the product has been published', readonly=True)
     has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', store=True)
