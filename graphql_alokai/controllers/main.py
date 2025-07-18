@@ -5,7 +5,8 @@
 import os
 import json
 import logging
-import pprint
+import hashlib
+from graphql import parse, print_ast
 
 from odoo import http
 from odoo.addons.web.controllers.binary import Binary
@@ -70,30 +71,62 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
 
     def _process_request(self, schema, data):
         # Set the alokai_debug_mode value that exist in the settings
-        ICP = http.request.env['ir.config_parameter'].sudo()
-        alokai_debug_mode = ICP.get_param('alokai_debug_mode', False)
-        if alokai_debug_mode:
+        env = http.request.env
+
+        ICP = env['ir.config_parameter'].sudo()
+        if ICP.get_param('alokai_debug_mode', False):
+            request = http.request.httprequest
+
+            # Headers
+            headers = request.headers.environ and dict(request.headers.environ) or {}
+            headers = json.dumps(headers, indent=2)
+
+            # Query / Mutation
             try:
-                request = http.request.httprequest
-                _logger.info('# ------------------------------- GRAPHQL: DEBUG MODE -------------------------------- #')
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('#                          HEADERS                        #')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', pprint.pformat(request.headers.environ))
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('#                     QUERY / MUTATION                    #')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', data.get('query', None))
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('#                         ARGUMENTS                       #')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', request.args.get('variables', None))
-                _logger.info('\n%s', data.get('variables', None))
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------------------------------------ #')
+                query = parse(data.get('query') or '')
+                query = print_ast(query)
+            except Exception:
+                query = data.get('query') or ''
+
+            variables = json.loads(data.get('variables') or '{}')
+            variables = json.dumps(variables, indent=2)
+
+            query_hash = hashlib.sha256((query + variables).encode('utf-8')).hexdigest()
+
+            WebsiteGraphqlHash = env['website.graphql.hash'].sudo()
+            if not WebsiteGraphqlHash.search([('hash', '=', query_hash)], limit=1):
+                # First time seeing this hash
+                WebsiteGraphqlHash.create({'hash': query_hash})
+            else:
+                WebsiteQueryNotCached = env['website.graphql.not_cached'].sudo()
+
+                # Seen before, log not cached
+                not_cached_hash = WebsiteQueryNotCached.search([('hash', '=', query_hash)], limit=1)
+                if not_cached_hash:
+                    not_cached_hash.write({
+                        'count': not_cached_hash.count + 1,
+                    })
+                else:
+                    WebsiteQueryNotCached.create({
+                        'hash': query_hash,
+                        'query': query,
+                        'variables': variables,
+                        'count': 1,
+                    })
+
+            try:
+                def log_section(title, content):
+                    separator = '-' * 100
+                    _logger.info(separator)
+                    _logger.info(f'{title:^100}')  # Centered title in chars width
+                    _logger.info(separator)
+                    if content:
+                        _logger.info(content)
+
+                log_section(f'GRAPHQL DEBUG: {query_hash}', '')
+                log_section('HEADERS', headers)
+                log_section('QUERY / MUTATION', query)
+                log_section('VARIABLES', f"{variables}")
             except:
                 pass
         return super(GraphQLController, self)._process_request(schema, data)
