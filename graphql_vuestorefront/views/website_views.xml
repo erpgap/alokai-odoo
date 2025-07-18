@@ -186,17 +186,6 @@
 
     <!-- TREE VIEWS -->
 
-    <!-- Tree View: Hash -->
-    <record id="view_graphql_hash_tree" model="ir.ui.view">
-        <field name="name">website.graphql.hash.tree</field>
-        <field name="model">website.graphql.hash</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="hash"/>
-            </tree>
-        </field>
-    </record>
-
     <!-- Tree View: Duplicates -->
     <record id="view_graphql_duplicate_tree" model="ir.ui.view">
         <field name="name">website.graphql.duplicate.tree</field>
@@ -211,22 +200,32 @@
         </field>
     </record>
 
-    <!-- ACTIONS -->
-
-    <!-- Action for Hashes -->
-    <record id="action_graphql_hash" model="ir.actions.act_window">
-        <field name="name">GraphQL Query Hashes</field>
-        <field name="res_model">website.graphql.hash</field>
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_graphql_hash_tree"/>
+    <record id="view_graphql_duplicate_form" model="ir.ui.view">
+        <field name="name">website.graphql.duplicate.form</field>
+        <field name="model">website.graphql.duplicate</field>
+        <field name="arch" type="xml">
+            <form string="GraphQL Duplicate">
+                <sheet>
+                    <group>
+                        <field name="hash" readonly="1"/>
+                        <field name="query" readonly="1" widget="text"/>
+                        <field name="variables" readonly="1" widget="text"/>
+                        <field name="count"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
     </record>
+
+    <!-- ACTIONS -->
 
     <!-- Action for Duplicates -->
     <record id="action_graphql_duplicate" model="ir.actions.act_window">
         <field name="name">GraphQL Duplicates</field>
         <field name="res_model">website.graphql.duplicate</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_graphql_duplicate_tree"/>
+        <field name="views" eval="[(ref('view_graphql_duplicate_tree'), 'tree'), (ref('view_graphql_duplicate_form'), 'form')]"/>
     </record>
 
     <!-- MENUS -->
@@ -238,14 +237,6 @@
               groups="base.group_no_one"
               sequence="60"/>
 
-    <!-- Submenu for Query Hashes -->
-    <menuitem id="menu_graphql_hash"
-              name="Query Hashes"
-              parent="menu_graphql_logs_root"
-              action="action_graphql_hash"
-              groups="base.group_no_one"
-              sequence="10"/>
-
     <!-- Submenu for Duplicates -->
     <menuitem id="menu_graphql_duplicate"
               name="Duplicates"
@@ -253,15 +244,6 @@
               action="action_graphql_duplicate"
               groups="base.group_no_one"
               sequence="20"/>
-
-    <record id="action_clean_graphql_hash" model="ir.actions.server">
-        <field name="name">Clean Query Hashes</field>
-        <field name="model_id" ref="model_website_graphql_hash"/>
-        <field name="state">code</field>
-        <field name="code">model.clean()</field>
-        <field name="binding_model_id" ref="model_website_graphql_hash"/>
-        <field name="binding_type">action</field>
-    </record>
 
     <record id="action_clean_graphql_duplicate" model="ir.actions.server">
         <field name="name">Clean Query Duplicates</field>
@@ -271,13 +253,6 @@
         <field name="binding_model_id" ref="model_website_graphql_duplicate"/>
         <field name="binding_type">action</field>
     </record>
-
-    <menuitem id="menu_clean_graphql_hash"
-              name="Clean Query Hashes"
-              parent="menu_graphql_logs_root"
-              action="action_clean_graphql_hash"
-              sequence="30"
-              groups="base.group_erp_manager"/>
 
     <menuitem id="menu_clean_graphql_duplicate"
               name="Clean Query Duplicates"

@@ -409,10 +409,6 @@ class WebsiteQueryHash(models.Model):
 
     hash = fields.Char(required=True, index=True, unique=True)
 
-    @api.model
-    def clean(self):
-        self.env.cr.execute("TRUNCATE TABLE website_graphql_hash RESTART IDENTITY CASCADE")
-
 
 class WebsiteQueryDuplicate(models.Model):
     _name = 'website.graphql.duplicate'
@@ -425,4 +421,5 @@ class WebsiteQueryDuplicate(models.Model):
 
     @api.model
     def clean(self):
+        self.env.cr.execute("TRUNCATE TABLE website_graphql_hash RESTART IDENTITY CASCADE")
         self.env.cr.execute("TRUNCATE TABLE website_graphql_duplicate RESTART IDENTITY CASCADE")

@@ -7,6 +7,7 @@ import json
 import logging
 import pprint
 import hashlib
+from graphql import parse, print_ast
 
 from odoo import http
 from odoo.addons.web.controllers.binary import Binary
@@ -68,16 +69,26 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         ICP = env['ir.config_parameter'].sudo()
         vsf_debug_mode = ICP.get_param('vsf_debug_mode', False)
         if vsf_debug_mode:
-            WebsiteGraphqlHash = env['website.graphql.hash'].sudo()
-
             request = http.request.httprequest
-            headers = request.headers.environ or ''
-            query = data.get('query', '')
-            request_variables = request.args.get('variables', '')
-            data_variables = data.get('variables', '')
 
-            query_hash = hashlib.sha256((query + request_variables + data_variables).encode('utf-8')).hexdigest()
+            # Headers
+            headers = request.headers.environ and dict(request.headers.environ) or {}
+            headers = json.dumps(headers, indent=2)
 
+            # Query / Mutation
+            try:
+                query = parse(data.get('query', ''))
+                query = print_ast(query)
+            except Exception:
+                query = data.get('query', '')
+
+            # Variables
+            variables = json.loads(data.get('variables', '{}'))
+            variables = json.dumps(variables, indent=2)
+
+            query_hash = hashlib.sha256((query + variables).encode('utf-8')).hexdigest()
+
+            WebsiteGraphqlHash = env['website.graphql.hash'].sudo()
             if not WebsiteGraphqlHash.search([('hash', '=', query_hash)], limit=1):
                 # First time seeing this hash
                 WebsiteGraphqlHash.create({'hash': query_hash})
@@ -94,30 +105,23 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                     WebsiteGraphqlDuplicate.create({
                         'hash': query_hash,
                         'query': query,
-                        'variables': request_variables + data_variables,
+                        'variables': variables,
                         'count': 1,
                     })
 
             try:
-                _logger.info('# ------------------------------- GRAPHQL: DEBUG MODE -------------------------------- #')
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('#                          HEADERS                        #')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', pprint.pformat(headers))
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('#                     QUERY / MUTATION                    #')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', query)
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('#                         ARGUMENTS                       #')
-                _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', request_variables)
-                _logger.info('\n%s', data_variables)
-                _logger.info('')
-                _logger.info('# ------------------------------------------------------------------------------------ #')
+                def log_section(title, content):
+                    separator = '-' * 100
+                    _logger.info(separator)
+                    _logger.info(f'{title:^100}')  # Centered title in chars width
+                    _logger.info(separator)
+                    if content:
+                        _logger.info(content)
+
+                log_section(f'GRAPHQL DEBUG: {query_hash}', '')
+                log_section('HEADERS', headers)
+                log_section('QUERY / MUTATION', query)
+                log_section('VARIABLES', f"{variables}")
             except:
                 pass
         return super(GraphQLController, self)._process_request(schema, data)
