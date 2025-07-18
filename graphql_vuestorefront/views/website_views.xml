@@ -246,7 +246,7 @@
               sequence="20"/>
 
     <record id="action_clean_graphql_duplicate" model="ir.actions.server">
-        <field name="name">Clean Query Duplicates</field>
+        <field name="name">Clean Duplicates</field>
         <field name="model_id" ref="model_website_graphql_duplicate"/>
         <field name="state">code</field>
         <field name="code">model.clean()</field>
@@ -255,7 +255,7 @@
     </record>
 
     <menuitem id="menu_clean_graphql_duplicate"
-              name="Clean Query Duplicates"
+              name="Clean Duplicates"
               parent="menu_graphql_logs_root"
               action="action_clean_graphql_duplicate"
               sequence="40"
