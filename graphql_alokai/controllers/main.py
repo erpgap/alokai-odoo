@@ -88,7 +88,9 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
             except Exception:
                 query = data.get('query') or ''
 
-            variables = json.loads(data.get('variables') or '{}')
+            variables = data.get('variables') or '{}'
+            if isinstance(variables, str):
+                variables = json.loads(variables)
             variables = json.dumps(variables, indent=2)
 
             query_hash = hashlib.sha256((query + variables).encode('utf-8')).hexdigest()
