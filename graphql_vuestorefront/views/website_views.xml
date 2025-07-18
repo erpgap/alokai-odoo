@@ -186,10 +186,10 @@
 
     <!-- TREE VIEWS -->
 
-    <!-- Tree View: Duplicates -->
-    <record id="view_graphql_duplicate_tree" model="ir.ui.view">
-        <field name="name">website.graphql.duplicate.tree</field>
-        <field name="model">website.graphql.duplicate</field>
+    <!-- Tree View: Not Cached -->
+    <record id="view_graphql_not_cached_tree" model="ir.ui.view">
+        <field name="name">website.graphql.not_cached.tree</field>
+        <field name="model">website.graphql.not_cached</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="hash"/>
@@ -200,11 +200,11 @@
         </field>
     </record>
 
-    <record id="view_graphql_duplicate_form" model="ir.ui.view">
-        <field name="name">website.graphql.duplicate.form</field>
-        <field name="model">website.graphql.duplicate</field>
+    <record id="view_graphql_not_cached_form" model="ir.ui.view">
+        <field name="name">website.graphql.not_cached.form</field>
+        <field name="model">website.graphql.not_cached</field>
         <field name="arch" type="xml">
-            <form string="GraphQL Duplicate">
+            <form string="GraphQL Not Cached">
                 <sheet>
                     <group>
                         <field name="hash" readonly="1"/>
@@ -219,13 +219,13 @@
 
     <!-- ACTIONS -->
 
-    <!-- Action for Duplicates -->
-    <record id="action_graphql_duplicate" model="ir.actions.act_window">
-        <field name="name">GraphQL Duplicates</field>
-        <field name="res_model">website.graphql.duplicate</field>
+    <!-- Action for Not Cached -->
+    <record id="action_graphql_not_cached" model="ir.actions.act_window">
+        <field name="name">GraphQL Not Cached</field>
+        <field name="res_model">website.graphql.not_cached</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_graphql_duplicate_tree"/>
-        <field name="views" eval="[(ref('view_graphql_duplicate_tree'), 'tree'), (ref('view_graphql_duplicate_form'), 'form')]"/>
+        <field name="view_id" ref="view_graphql_not_cached_tree"/>
+        <field name="views" eval="[(ref('view_graphql_not_cached_tree'), 'tree'), (ref('view_graphql_not_cached_form'), 'form')]"/>
     </record>
 
     <!-- MENUS -->
@@ -237,27 +237,27 @@
               groups="base.group_no_one"
               sequence="60"/>
 
-    <!-- Submenu for Duplicates -->
-    <menuitem id="menu_graphql_duplicate"
-              name="Duplicates"
+    <!-- Submenu for Not Cached -->
+    <menuitem id="menu_graphql_not_cached"
+              name="Not Cached"
               parent="menu_graphql_logs_root"
-              action="action_graphql_duplicate"
+              action="action_graphql_not_cached"
               groups="base.group_no_one"
               sequence="20"/>
 
-    <record id="action_clean_graphql_duplicate" model="ir.actions.server">
-        <field name="name">Clean Duplicates</field>
-        <field name="model_id" ref="model_website_graphql_duplicate"/>
+    <record id="action_clean_graphql_not_cached" model="ir.actions.server">
+        <field name="name">Clean Not Cached</field>
+        <field name="model_id" ref="model_website_graphql_not_cached"/>
         <field name="state">code</field>
         <field name="code">model.clean()</field>
-        <field name="binding_model_id" ref="model_website_graphql_duplicate"/>
+        <field name="binding_model_id" ref="model_website_graphql_not_cached"/>
         <field name="binding_type">action</field>
     </record>
 
-    <menuitem id="menu_clean_graphql_duplicate"
-              name="Clean Duplicates"
+    <menuitem id="menu_clean_graphql_not_cached"
+              name="Clean Not Cached"
               parent="menu_graphql_logs_root"
-              action="action_clean_graphql_duplicate"
+              action="action_clean_graphql_not_cached"
               sequence="40"
               groups="base.group_erp_manager"/>
 

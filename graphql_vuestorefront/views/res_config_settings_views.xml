@@ -13,7 +13,7 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='website_info_settings']" position="after">
                 <block title="Vue Storefront" id="vsf_settings">
-                    <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request"
+                    <setting help="Enabling debug mode will log headers, queries, mutations and variables on each request"
                              id="vsf_debug_mode_settings">
                         <field name="vsf_debug_mode"/>
                     </setting>

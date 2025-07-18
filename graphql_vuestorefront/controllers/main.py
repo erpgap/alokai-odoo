@@ -93,16 +93,16 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 # First time seeing this hash
                 WebsiteGraphqlHash.create({'hash': query_hash})
             else:
-                WebsiteGraphqlDuplicate = env['website.graphql.duplicate'].sudo()
+                WebsiteQueryNotCached = env['website.graphql.not_cached'].sudo()
 
-                # Seen before, log duplicate
-                duplicate_hash = WebsiteGraphqlDuplicate.search([('hash', '=', query_hash)], limit=1)
-                if duplicate_hash:
-                    duplicate_hash.write({
-                        'count': duplicate_hash.count + 1,
+                # Seen before, log not cached
+                not_cached_hash = WebsiteQueryNotCached.search([('hash', '=', query_hash)], limit=1)
+                if not_cached_hash:
+                    not_cached_hash.write({
+                        'count': not_cached_hash.count + 1,
                     })
                 else:
-                    WebsiteGraphqlDuplicate.create({
+                    WebsiteQueryNotCached.create({
                         'hash': query_hash,
                         'query': query,
                         'variables': variables,
