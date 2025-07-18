@@ -6,6 +6,7 @@ import os
 import json
 import logging
 import pprint
+import hashlib
 
 from odoo import http
 from odoo.addons.web.controllers.binary import Binary
@@ -62,28 +63,59 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
 
     def _process_request(self, schema, data):
         # Set the vsf_debug_mode value that exist in the settings
-        ICP = http.request.env['ir.config_parameter'].sudo()
+        env = http.request.env
+
+        ICP = env['ir.config_parameter'].sudo()
         vsf_debug_mode = ICP.get_param('vsf_debug_mode', False)
         if vsf_debug_mode:
+            WebsiteGraphqlHash = env['website.graphql.hash'].sudo()
+
+            request = http.request.httprequest
+            headers = request.headers.environ or ''
+            query = data.get('query', '')
+            request_variables = request.args.get('variables', '')
+            data_variables = data.get('variables', '')
+
+            query_hash = hashlib.sha256((query + request_variables + data_variables).encode('utf-8')).hexdigest()
+
+            if not WebsiteGraphqlHash.search([('hash', '=', query_hash)], limit=1):
+                # First time seeing this hash
+                WebsiteGraphqlHash.create({'hash': query_hash})
+            else:
+                WebsiteGraphqlDuplicate = env['website.graphql.duplicate'].sudo()
+
+                # Seen before, log duplicate
+                duplicate_hash = WebsiteGraphqlDuplicate.search([('hash', '=', query_hash)], limit=1)
+                if duplicate_hash:
+                    duplicate_hash.write({
+                        'count': duplicate_hash.count + 1,
+                    })
+                else:
+                    WebsiteGraphqlDuplicate.create({
+                        'hash': query_hash,
+                        'query': query,
+                        'variables': request_variables + data_variables,
+                        'count': 1,
+                    })
+
             try:
-                request = http.request.httprequest
                 _logger.info('# ------------------------------- GRAPHQL: DEBUG MODE -------------------------------- #')
                 _logger.info('')
                 _logger.info('# ------------------------------------------------------- #')
                 _logger.info('#                          HEADERS                        #')
                 _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', pprint.pformat(request.headers.environ))
+                _logger.info('\n%s', pprint.pformat(headers))
                 _logger.info('')
                 _logger.info('# ------------------------------------------------------- #')
                 _logger.info('#                     QUERY / MUTATION                    #')
                 _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', data.get('query', None))
+                _logger.info('\n%s', query)
                 _logger.info('')
                 _logger.info('# ------------------------------------------------------- #')
                 _logger.info('#                         ARGUMENTS                       #')
                 _logger.info('# ------------------------------------------------------- #')
-                _logger.info('\n%s', request.args.get('variables', None))
-                _logger.info('\n%s', data.get('variables', None))
+                _logger.info('\n%s', request_variables)
+                _logger.info('\n%s', data_variables)
                 _logger.info('')
                 _logger.info('# ------------------------------------------------------------------------------------ #')
             except:

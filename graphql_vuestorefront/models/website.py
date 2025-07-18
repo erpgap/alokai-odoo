@@ -163,6 +163,9 @@ class Website(models.Model):
             if cursor == 0:
                 break
 
+        self.env.cr.execute("TRUNCATE TABLE website_graphql_hash RESTART IDENTITY CASCADE;")
+        self.env.cr.execute("TRUNCATE TABLE website_graphql_duplicate RESTART IDENTITY CASCADE;")
+
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
@@ -398,3 +401,28 @@ class BlogPost(models.Model):
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
     image = fields.Image(string='Image', required=True)
+
+
+class WebsiteQueryHash(models.Model):
+    _name = 'website.graphql.hash'
+    _description = 'GraphQL Unique Query Hash'
+
+    hash = fields.Char(required=True, index=True, unique=True)
+
+    @api.model
+    def clean(self):
+        self.env.cr.execute("TRUNCATE TABLE website_graphql_hash RESTART IDENTITY CASCADE")
+
+
+class WebsiteQueryDuplicate(models.Model):
+    _name = 'website.graphql.duplicate'
+    _description = 'GraphQL Duplicate Queries'
+
+    hash = fields.Char(required=True, index=True)
+    query = fields.Char(required=True)
+    variables = fields.Char(required=True)
+    count = fields.Integer(default=1)
+
+    @api.model
+    def clean(self):
+        self.env.cr.execute("TRUNCATE TABLE website_graphql_duplicate RESTART IDENTITY CASCADE")
