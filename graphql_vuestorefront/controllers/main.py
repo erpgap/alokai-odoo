@@ -77,13 +77,14 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
 
             # Query / Mutation
             try:
-                query = parse(data.get('query', ''))
+                query = parse(data.get('query') or '')
                 query = print_ast(query)
             except Exception:
-                query = data.get('query', '')
+                query = data.get('query') or ''
 
-            # Variables
-            variables = json.loads(data.get('variables', '{}'))
+            variables = data.get('variables') or '{}'
+            if isinstance(variables, str):
+                variables = json.loads(variables)
             variables = json.dumps(variables, indent=2)
 
             query_hash = hashlib.sha256((query + variables).encode('utf-8')).hexdigest()
