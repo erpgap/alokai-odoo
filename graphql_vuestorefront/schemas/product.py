@@ -160,6 +160,9 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
             'total': Product.search_count(expression.AND(domain)),
         })
 
+    attribute_values = attribute_values.sorted(lambda av: (
+        av.attribute_id.sequence, av.attribute_id.id, av.sequence, av.id))
+
     return products, total_count, attribute_values, min_price, max_price, filter_counts
 
 
