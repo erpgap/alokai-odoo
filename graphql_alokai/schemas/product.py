@@ -154,10 +154,17 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         })
     else:
         website = env['website'].get_current_website()
-        domain.append([
-            ('product_tmpl_redis_stock_ids.quantity', '>', 0),
-            ('product_tmpl_redis_stock_ids.website_id', '=', website.id)
-        ])
+        # TODO:
+        # Possible index to improve performance
+        # CREATE INDEX idx_redis_stock_website_quantity
+        # ON product_template_redis_stock (website_id, quantity, product_id);
+        env.cr.execute("""
+            SELECT DISTINCT product_id
+            FROM product_template_redis_stock
+            WHERE website_id = %s AND quantity > 0
+        """, (website.id,))
+        product_ids = [row[0] for row in env.cr.fetchall()]
+        domain.append([('id', 'in', product_ids)])
         filter_counts.append({
             'type': 'in_stock',
             'total': Product.search_count(expression.AND(domain)),
