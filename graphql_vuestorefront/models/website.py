@@ -163,9 +163,6 @@ class Website(models.Model):
             if cursor == 0:
                 break
 
-        self.env.cr.execute("TRUNCATE TABLE website_graphql_hash RESTART IDENTITY CASCADE;")
-        self.env.cr.execute("TRUNCATE TABLE website_graphql_duplicate RESTART IDENTITY CASCADE;")
-
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
