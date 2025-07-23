@@ -47,7 +47,6 @@ class Login(graphene.Mutation):
     def mutate(self, info, email, password, subscribe_newsletter):
         env = info.context['env']
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=True)
 
         # Set email in lowercase
         email = email.lower()
@@ -66,6 +65,10 @@ class Login(graphene.Mutation):
                         request.session.finalize(request.env)
 
             # Update SO
+            order = user.partner_id.last_website_so_id
+            if not order or order.state != 'draft':
+                request.session['sale_order_id'] = None
+                order = website.sale_get_order(force_create=True)
             order._update_sale_order(website, user)
 
             # Subscribe Newsletter
@@ -82,7 +85,7 @@ class Login(graphene.Mutation):
 
             return LoginOutput(
                 user=user,
-                cart=website.sale_get_order(force_create=True),
+                cart=order,
                 wishlist_items=wishlist_items,
             )
 
