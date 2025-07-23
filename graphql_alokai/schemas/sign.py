@@ -66,6 +66,13 @@ class Login(graphene.Mutation):
                     if user_match:
                         request.session.finalize(request.env)
 
+            # Update SO
+            order = user.partner_id.last_website_so_id
+            if not order or order.state != 'draft':
+                request.session['sale_order_id'] = None
+                order = website.sale_get_order(force_create=True)
+            order._update_sale_order(website, user)
+
             # Subscribe Newsletter
             if website and website.alokai_mailing_list_id and subscribe_newsletter:
                 MassMailController().subscribe(website.alokai_mailing_list_id.id, email, 'email')
@@ -80,7 +87,7 @@ class Login(graphene.Mutation):
 
             return LoginOutput(
                 user=user,
-                cart=website.sale_get_order(force_create=True),
+                cart=order,
                 wishlist_items=wishlist_items,
             )
 
