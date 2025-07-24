@@ -7,6 +7,11 @@ import graphene
 from odoo.addons.graphql_vuestorefront.schemas.objects import Lead
 
 
+class ContactusAttachmentInput(graphene.InputObjectType):
+    name = graphene.String(required=True)
+    file_data = graphene.String(required=True)
+
+
 class ContactUsParams(graphene.InputObjectType):
     name = graphene.String(required=True)
     email = graphene.String(required=True)
@@ -14,7 +19,7 @@ class ContactUsParams(graphene.InputObjectType):
     company = graphene.String()
     subject = graphene.String(required=True)
     message = graphene.String(required=True)
-
+    attachments = graphene.List(ContactusAttachmentInput, default_value={})
 
 class ContactUs(graphene.Mutation):
     class Arguments:
@@ -39,7 +44,20 @@ class ContactUs(graphene.Mutation):
             company = {'partner_name': contactus['company']}
             data.update(company)
 
-        return env['crm.lead'].sudo().create(data)
+        CrmLead = env['crm.lead'].sudo()
+        lead =  CrmLead.create(data)
+
+        attachments = env['ir.attachment']
+        for file_upload in contactus.get('attachments', []):
+            attachments |= env['ir.attachment'].sudo().create({
+                'name': file_upload['name'],
+                'datas': file_upload['file_data'].encode(),
+                'res_model': CrmLead._name,
+                'res_id': lead.id,
+            })
+        if attachments:
+            lead.message_post(attachment_ids=attachments.ids)
+        return lead
 
 
 class ContactUsMutation(graphene.ObjectType):
