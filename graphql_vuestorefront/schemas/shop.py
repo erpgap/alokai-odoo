@@ -41,9 +41,8 @@ class ShoppingCartQuery(graphene.ObjectType):
             # When Cart is created by one Public User
             if not user:
                 user = env.user
-
-            # Update SO
-            order._update_sale_order(website, user)
+                # Update SO
+                order._update_sale_order(website, user)
 
             fbt = order.\
                 mapped('order_line').\
