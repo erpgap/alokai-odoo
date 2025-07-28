@@ -40,6 +40,14 @@ class ShoppingCartQuery(graphene.ObjectType):
         if order:
             order.order_line.filtered(lambda l: not l.product_id.active).unlink()
 
+            # User
+            user = env['res.users'].sudo().search([('id', '=', env.uid)], limit=1)
+            # When Cart is created by one Public User
+            if not user:
+                user = env.user
+                # Update SO
+                order._update_sale_order(website, user)
+
             fbt = order.\
                 mapped('order_line').\
                 mapped('product_id').\
