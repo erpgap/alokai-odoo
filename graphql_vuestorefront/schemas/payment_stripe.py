@@ -97,7 +97,7 @@ class StripeGetInlineFormValues(graphene.Mutation):
         stripe_get_inline_form_values = payment_provider._stripe_get_inline_form_values(
             amount=order.amount_total,
             currency=order.currency_id,
-            partner_id=order.partner_id.id,
+            partner_id=order.partner_invoice_id.id,
             is_validation=True,
             sale_order_id=order.id
         )
@@ -142,7 +142,7 @@ class StripeTransaction(graphene.Mutation):
             raise GraphQLError(_('Payment Provider "Stripe" does not exist.'))
 
         # Generate a new access token
-        access_token = payment_utils.generate_access_token(order.partner_id.id, order.amount_total, order.currency_id.id)
+        access_token = payment_utils.generate_access_token(order.partner_invoice_id.id, order.amount_total, order.currency_id.id)
         order.access_token = access_token
 
         transaction = PaymentPortal().shop_payment_transaction(
