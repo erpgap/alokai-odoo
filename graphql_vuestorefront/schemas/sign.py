@@ -66,9 +66,10 @@ class Login(graphene.Mutation):
 
             # Update SO
             order = user.partner_id.last_website_so_id
-            if not order or order.state != 'draft':
+            public_order = website.sale_get_order(force_create=True)
+            if not order or order.state != 'draft' or public_order.order_line:
+                order = public_order
                 request.session['sale_order_id'] = None
-                order = website.sale_get_order(force_create=True)
                 order._update_sale_order(website, user)
 
             # Subscribe Newsletter
