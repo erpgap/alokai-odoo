@@ -64,11 +64,13 @@ class Login(graphene.Mutation):
                     if user_match:
                         request.session.finalize(request.env)
 
+            # get public order
+            order = website.sale_get_order()
+            if not order.order_line:
+                order = user.partner_id.last_website_so_id
             # Update SO
-            order = user.partner_id.last_website_so_id
-            public_order = website.sale_get_order(force_create=True)
-            if not order or order.state != 'draft' or public_order.order_line:
-                order = public_order
+            if not order or order.state not in ['draft', 'sent']:
+                order = website.sale_get_order(force_create=True)
                 request.session['sale_order_id'] = None
                 order._update_sale_order(website, user)
 
