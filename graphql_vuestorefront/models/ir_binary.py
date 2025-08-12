@@ -51,49 +51,65 @@ class IrBinary(models.AbstractModel):
                         quality=quality,
                     )
 
-                img = Image.open(io.BytesIO(image_base64))
-
-                ICP = request.env['ir.config_parameter'].sudo()
-                if img.mode != 'RGBA':
-                    img = img.convert('RGBA')
-
-                # Get background color from context or settings
-                try:
-                    if self.env.context.get('background_rgba'):
-                        background_rgba = safe_eval(self.env.context.get('background_rgba'))
-                    else:
-                        background_rgba = safe_eval(ICP.get_param('vsf_image_background_rgba', '(255, 255, 255, 255)'))
-                except:
-                    background_rgba = (66, 28, 82)
-                # Create a new background, merge the background with the image centered
-                img_w, img_h = img.size
-                if image_format in ['jpeg', 'png']:
-                    background = Image.new('RGB', (width, height), background_rgba[:3])
-                else:
-                    background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
-                bg_w, bg_h = background.size
-                offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
                 if image_format == 'png':
-                    background.paste(img, offset, img.convert("RGBA").split()[3])
+                    processed_image = image_process(
+                        image_base64,
+                        size=(width, height),
+                        crop=crop,
+                        quality=quality,
+                    )
+                    stream.data = processed_image
                 else:
-                    background.paste(img, offset)
+                    # Original background processing logic
+                    img = Image.open(io.BytesIO(image_base64))
 
-                # Get compression quality from settings
-                quality = ICP.get_param('vsf_image_quality', 100)
+                    ICP = request.env['ir.config_parameter'].sudo()
+                    if img.mode != 'RGBA':
+                        img = img.convert('RGBA')
 
-                stream_image = io.BytesIO()
-                if image_format in ['jpeg', 'png']:
-                    background.save(stream_image, format="WEBP", quality=quality)
-                    stream_image.seek(0)
-                else:
-                    background.save(stream_image, format=image_format.upper(), quality=quality, subsampling=0)
+                    # Get background color from context or settings
+                    try:
+                        if self.env.context.get('background_rgba'):
+                            background_rgba = safe_eval(self.env.context.get('background_rgba'))
+                        else:
+                            background_rgba = safe_eval(ICP.get_param('vsf_image_background_rgba', '(255, 255, 255, 255)'))
+                    except:
+                        background_rgba = (66, 28, 82)
+                    # Create a new background, merge the background with the image centered
+                    img_w, img_h = img.size
+                    if image_format in ['jpeg', 'png']:
+                        background = Image.new('RGB', (width, height), background_rgba[:3])
+                    else:
+                        background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
+                    bg_w, bg_h = background.size
+                    offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
+                    if image_format == 'png':
+                        background.paste(img, offset, img.convert("RGBA").split()[3])
+                    else:
+                        background.paste(img, offset)
 
-                image_base64 = base64.b64encode(stream_image.getvalue())
+                    # Get compression quality from settings
+                    quality = ICP.get_param('vsf_image_quality', 100)
 
-                # Response
-                stream.data = base64.b64decode(image_base64)
+                    stream_image = io.BytesIO()
+                    if image_format in ['jpeg', 'png']:
+                        background.save(stream_image, format="WEBP", quality=quality)
+                        stream_image.seek(0)
+                    else:
+                        background.save(stream_image, format=image_format.upper(), quality=quality, subsampling=0)
 
-            self._update_download_name(record, stream, filename, field_name, filename_field, f'image/webp', default_mimetype)
+                    image_base64 = base64.b64encode(stream_image.getvalue())
+
+                    # Response
+                    stream.data = base64.b64decode(image_base64)
+
+            # Use appropriate mimetype based on transparency preservation
+            if image_format == 'png':
+                update_mimetype = f'image/{image_format}'
+            else:
+                update_mimetype = f'image/webp'
+            
+            self._update_download_name(record, stream, filename, field_name, filename_field, update_mimetype, default_mimetype)
         return stream
 
     def _update_download_name(self, record, stream, filename, field_name, filename_field, mimetype, default_mimetype):
