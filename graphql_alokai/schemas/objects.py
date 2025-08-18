@@ -287,9 +287,7 @@ class Partner(OdooObjectType):
         return website._get_current_pricelist()
 
     def resolve_is_public(self, info):
-        website = self.env['website'].get_current_website()
-        user = self.with_context(active_test=False).user_ids
-        return True if not self or (user and user == website.user_id) else False
+        return not self or self.is_public_user
 
     def resolve_company_name(self, info):
         company = get_parent_company(self)

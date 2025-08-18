@@ -213,13 +213,11 @@ class UpdatePassword(graphene.Mutation):
     @staticmethod
     def mutate(self, info, current_password, new_password):
         env = info.context['env']
-        website = env['website'].get_current_website()
-        website_user = website.user_id
         if env.uid:
             user = env['res.users'].sudo().search([('id', '=', env.uid), ('active', 'in', [True, False])], limit=1)
 
             # Prevent "Public User" to be Updated
-            if user and user.id and user.id == website_user.id:
+            if user and user.is_public_user:
                 raise GraphQLError(_('Partner cannot be updated.'))
             try:
                 credential = {'login': user.login, 'password': current_password, 'type': 'password'}
