@@ -13,11 +13,11 @@ from odoo.addons.graphql_alokai.graphql.registry import mutation_registry, query
 def get_partner_id(env, order, website):
     if order:
         # Is public user
-        if not order.partner_id.user_ids or order.partner_id.id == website.user_id.sudo().partner_id.id:
+        if not order.partner_id.user_ids or order.partner_id.is_public_user:
             partner_id = order.partner_id.id
         else:
             partner_id = env.user.partner_id.commercial_partner_id.id
-    elif env.user.id == website.user_id.id:
+    elif env.user.id == env.user.is_public_user:
         # Public users need to have an order to be able to list addresses
         raise GraphQLError(_('Shopping cart not found.'))
     else:
@@ -68,13 +68,13 @@ class AddressQuery(graphene.ObjectType):
 
         if order:
             # Is public user
-            if not order.partner_id.user_ids or order.partner_id == website.user_id.sudo().partner_id:
+            if not order.partner_id.user_ids or order.partner_id.is_public_user:
                 partner_id = order.partner_id.id
             else:
                 partner_id = env.user.partner_id.commercial_partner_id.id
         else:
             # Is public user
-            if env.user == website.user_id.sudo():
+            if env.user.is_public_user:
                 partner_id = env.user.partner_id.id
             else:
                 partner_id = env.user.partner_id.commercial_partner_id.id
@@ -146,11 +146,13 @@ class AddAddress(graphene.Mutation):
         order = website.sale_get_order()
 
         if order:
-            partner_id = order.partner_id.id
-        elif env.user.id == website.user_id.id:
+            partner = order.partner_id
+        elif env.user.is_public_user:
             raise GraphQLError(_('Shopping cart not found.'))
         else:
-            partner_id = env.user.partner_id.id
+            partner = env.user.partner_id
+
+        partner_id = partner.id
 
         values = {
             'name': address.get('name'),
@@ -165,7 +167,7 @@ class AddAddress(graphene.Mutation):
         }
 
         # Check public user
-        if partner_id == website.user_id.sudo().partner_id.id:
+        if partner.is_public_user:
             # Create main contact
             values['type'] = 'contact'
             partner_id = ResPartner.create(values).id

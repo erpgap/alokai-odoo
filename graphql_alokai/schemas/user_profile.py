@@ -47,13 +47,14 @@ class UpdateMyAccount(graphene.Mutation):
     @staticmethod
     def mutate(self, info, myaccount):
         env = info.context["env"]
+<<<<<<< HEAD:graphql_alokai/schemas/user_profile.py
         website = env['website'].get_current_website()
         request.website = website
+=======
+>>>>>>> 94c6b2b ([IMP] public user for muilti website):graphql_vuestorefront/schemas/user_profile.py
         user = request.env.user
-        website_user = website.user_id
-
         # Prevent "Public User" to be Updated
-        if user.id == website_user.id:
+        if user.is_public_user:
             raise GraphQLError(_('Partner cannot be updated.'))
 
         partner = user.partner_id
