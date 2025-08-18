@@ -11,3 +11,4 @@ from . import payment_transaction
 from . import ir_binary
 from . import sale_order
 from . import stock
+from . import res_partner
