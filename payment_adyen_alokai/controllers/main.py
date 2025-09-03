@@ -163,7 +163,8 @@ class AdyenControllerInherit(AdyenController):
             if result and result.get('resultCode') and result['resultCode'] == 'Authorised':
 
                 # Confirm sale order
-                PaymentPostProcessing().poll_status()
+                if not tx_sudo.is_post_processed:
+                    PaymentPostProcessing().poll_status()
 
                 return werkzeug.utils.redirect(alokai_payment_success_return_url)
 
