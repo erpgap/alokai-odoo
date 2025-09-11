@@ -47,11 +47,6 @@ class UpdateMyAccount(graphene.Mutation):
     @staticmethod
     def mutate(self, info, myaccount):
         env = info.context["env"]
-<<<<<<< HEAD:graphql_alokai/schemas/user_profile.py
-        website = env['website'].get_current_website()
-        request.website = website
-=======
->>>>>>> 94c6b2b ([IMP] public user for muilti website):graphql_vuestorefront/schemas/user_profile.py
         user = request.env.user
         # Prevent "Public User" to be Updated
         if user.is_public_user:
@@ -72,13 +67,10 @@ class DeleteMyAccount(graphene.Mutation):
     @staticmethod
     def mutate(self, info):
         env = info.context["env"]
-        website = env['website'].get_current_website()
-        request.website = website
         user = request.env.user.sudo()
-        website_user = website.user_id
 
         # Prevent "Public User" to be deleted
-        if user.id == website_user.id or not user.has_group('base.group_portal'):
+        if user.is_public_user or not user.has_group('base.group_portal'):
             raise GraphQLError(_('User cannot be deleted.'))
 
         if user:
