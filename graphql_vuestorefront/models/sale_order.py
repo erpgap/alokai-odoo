@@ -15,18 +15,25 @@ class SaleOrder(models.Model):
         """ This function is used to force some necessary updates on the SO """
         # SO Updates
         order_vals = {}
+        partner = user.partner_id
+        if not self.partner_id.is_public_user:
+            partner = self.partner_id
+        else:
+            partner = user.partner_id.commercial_partner_id
+
+        delivery_addr = partner.address_get(['delivery'])
+        invoice_addr = partner.address_get(['invoice'])
         # Update Pricelist, Partner and respective Addresses
-        pricelist = user.partner_id.property_product_pricelist.id or website.pricelist_id.id
-        delivery_addr = user.partner_id.address_get(['delivery'])
-        invoice_addr = user.partner_id.address_get(['invoice'])
+        pricelist = partner.property_product_pricelist.id or website.pricelist_id.id
+
         order_vals.update({
             'pricelist_id': pricelist,
-            'partner_id': user.partner_id.id,
+            'partner_id': partner.id,
             'partner_shipping_id': delivery_addr['delivery'],
             'partner_invoice_id': invoice_addr['invoice'],
         })
         # Update Payment Term
-        payment_term_id = user.partner_id.property_payment_term_id
+        payment_term_id = partner.property_payment_term_id
         if self.payment_term_id.id != payment_term_id.id:
             order_vals.update({'payment_term_id': payment_term_id.id})
 
