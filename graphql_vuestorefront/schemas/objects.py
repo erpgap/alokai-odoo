@@ -41,7 +41,8 @@ PaymentTransactionState = graphene.Enum('PaymentTransactionState', [('Draft', 'd
 
 DeliveryStatus = graphene.Enum('DeliveryStatus', [('NotDelivered', 'pending'), ('Started', 'started'),
                                         ('PartiallyDelivered', 'partial'), ('FullyDelivered', 'full')])
-
+ProductType = graphene.Enum('ProductType', [('Consumable', 'consu'), ('Service', 'service'),
+                                        ('StorableProduct', 'product')])
 
 class SortEnum(graphene.Enum):
     ASC = 'ASC'
@@ -500,6 +501,7 @@ class Product(OdooObjectType):
     first_variant = graphene.Field((lambda: Product), description='Specific to use in Product Template')
     json_ld = generic.GenericScalar()
     tags = graphene.List(graphene.NonNull(lambda: ProductTag))
+    product_type = ProductType()
 
     def resolve_type_id(self, info):
         if self.detailed_type == 'product':
@@ -693,6 +695,9 @@ class Product(OdooObjectType):
 
     def resolve_tags(self, info):
         return self.product_tag_ids.filtered(lambda t: t.visible_on_ecommerce) or None
+
+    def resolve_product_type(self, info):
+        return self.detailed_type or None
 
 
 class Payment(OdooObjectType):
