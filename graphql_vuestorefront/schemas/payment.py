@@ -14,7 +14,6 @@ from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment_adyen_vsf.const import CURRENCY_DECIMALS
 from odoo.addons.graphql_vuestorefront.schemas.objects import PaymentProvider, PaymentTransaction
 from odoo.addons.graphql_vuestorefront.schemas.shop import Cart, CartData
-from odoo.addons.website_sale.controllers.main import PaymentPortal
 from odoo.addons.payment_adyen.controllers.main import AdyenController
 from odoo.addons.payment_adyen_vsf.controllers.main import AdyenControllerInherit
 
@@ -86,21 +85,11 @@ class PaymentQuery(graphene.ObjectType):
     def resolve_payment_confirmation(self, info):
         env = info.context["env"]
 
-        PaymentTransaction = env['payment.transaction']
-        Order = env['sale.order']
-
-        # Pass in the session the sale_order created in vsf
-        payment_transaction_id = request.session.get('__payment_monitored_tx_id__')
-
-        if payment_transaction_id:
-            payment_transaction = PaymentTransaction.sudo().search([('id', '=', payment_transaction_id)], limit=1)
-            sale_order_id = payment_transaction.sale_order_ids.ids[0]
-
-            if sale_order_id:
-                order = Order.sudo().search([('id', '=', sale_order_id)], limit=1)
-
-                if order.exists():
-                    return CartData(order=order)
+        sale_order_id = request.session.get('alokai_last_sale_order_id')
+        if sale_order_id:
+            order = env['sale.order'].sudo().browse(sale_order_id)
+            if order.exists() and order.state and order.state == 'sale':
+                return CartData(order=order)
 
         raise GraphQLError(_('Cart does not exist'))
 
@@ -244,7 +233,10 @@ class AdyenTransaction(graphene.Mutation):
         access_token = payment_utils.generate_access_token(order.partner_id.id, order.amount_total, order.currency_id.id)
         order.access_token = access_token
 
-        transaction = PaymentPortal().shop_payment_transaction(
+        # TODO: improve this late import to fix circular import
+        from odoo.addons.graphql_vuestorefront.controllers.main import AlokaiPaymentPortal
+
+        transaction = AlokaiPaymentPortal().shop_payment_transaction(
             order_id=order.id,
             access_token=order.access_token,
             provider_id=provider_id,

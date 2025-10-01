@@ -5,12 +5,12 @@
 import os
 import json
 import logging
-import pprint
 import hashlib
 from graphql import parse, print_ast
 
 from odoo import http
 from odoo.addons.web.controllers.binary import Binary
+from odoo.addons.website_sale.controllers.main import PaymentPortal
 from odoo.addons.graphql_base import GraphQLControllerMixin
 from odoo.http import request, Response
 from urllib.parse import urlparse
@@ -269,3 +269,10 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                     pass
 
         return request.redirect('/shop/checkout')
+
+
+class AlokaiPaymentPortal(PaymentPortal):
+    @http.route('/shop/payment/transaction/<int:order_id>', type='json', auth='public', website=True)
+    def shop_payment_transaction(self, order_id, access_token, **kwargs):
+        request.session['alokai_last_sale_order_id'] = order_id
+        return super(AlokaiPaymentPortal, self).shop_payment_transaction(order_id, access_token, **kwargs)

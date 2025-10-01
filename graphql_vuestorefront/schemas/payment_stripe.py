@@ -10,7 +10,6 @@ import json
 from odoo import _
 
 from odoo.addons.payment import utils as payment_utils
-from odoo.addons.website_sale.controllers.main import PaymentPortal
 from odoo.addons.payment_stripe_vsf.controllers.main import StripeControllerInherit
 from odoo.addons.payment_stripe.const import API_VERSION, PROXY_URL
 
@@ -145,7 +144,10 @@ class StripeTransaction(graphene.Mutation):
         access_token = payment_utils.generate_access_token(order.partner_invoice_id.id, order.amount_total, order.currency_id.id)
         order.access_token = access_token
 
-        transaction = PaymentPortal().shop_payment_transaction(
+        # TODO: improve this late import to fix circular import
+        from odoo.addons.graphql_vuestorefront.controllers.main import AlokaiPaymentPortal
+
+        transaction = AlokaiPaymentPortal().shop_payment_transaction(
             order_id=order.id,
             access_token=order.access_token,
             provider_id=provider_id,
