@@ -39,7 +39,7 @@ class ShoppingCartQuery(graphene.ObjectType):
             # User
             user = env['res.users'].sudo().search([('id', '=', env.uid)], limit=1)
             # When Cart is created by one Public User
-            if not user:
+            if user.partner_id.is_public_user:
                 user = env.user
                 # Update SO
                 order._update_sale_order(website, user)
