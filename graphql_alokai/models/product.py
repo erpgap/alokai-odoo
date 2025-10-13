@@ -346,12 +346,38 @@ class ProductTemplate(models.Model):
         'alokai.website.page', 'product_template_alokai_website_page_rel', 'product_tmpl_id', 'alokai_page_id',
         string='Alokai Website Pages'
     )
-    has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', store=True)
+    has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', search='_search_has_stock',
+                               store=False)
 
-    @api.depends('product_variant_ids.product_redis_stock_ids')
     def _compute_has_stock(self):
-        for template in self:
-            template.has_stock = sum(template.product_variant_ids.mapped('product_redis_stock_ids.quantity')) > 0
+        website = self.env['website'].get_current_website()
+        self.env.cr.execute("""
+            SELECT DISTINCT product_id
+            FROM product_template_redis_stock
+            WHERE website_id = %s AND quantity > 0
+        """, (website.id,))
+        product_ids = [row[0] for row in self.env.cr.fetchall()]
+        products_with_stock = set(product_ids)
+
+        for product in self:
+            product.has_stock = product.id in products_with_stock
+
+    def _search_has_stock(self, operator, value):
+        website = self.env['website'].get_current_website()
+        self.env.cr.execute("""
+            SELECT DISTINCT product_id
+            FROM product_template_redis_stock
+            WHERE website_id = %s AND quantity > 0
+        """, (website.id,))
+        product_ids = [row[0] for row in self.env.cr.fetchall()]
+
+        # We only handle True/False filters here
+        if (operator in ('=', '==') and value) or (operator == '!=' and not value):
+            # has_stock = True
+            return [('id', 'in', product_ids)]
+        else:
+            # has_stock = False
+            return [('id', 'not in', product_ids)]
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -472,12 +498,38 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     product_redis_stock_ids = fields.One2many('product.product.redis_stock', 'product_id', 'Redis Stock', readonly=True)
-    has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', store=True)
+    has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', search='_search_has_stock',
+                               store=False)
 
-    @api.depends('product_redis_stock_ids')
     def _compute_has_stock(self):
+        website = self.env['website'].get_current_website()
+        self.env.cr.execute("""
+            SELECT DISTINCT product_id
+            FROM product_product_redis_stock
+            WHERE website_id = %s AND quantity > 0
+        """, (website.id,))
+        product_ids = [row[0] for row in self.env.cr.fetchall()]
+        products_with_stock = set(product_ids)
+
         for product in self:
-            product.has_stock = sum(product.product_redis_stock_ids.mapped('quantity')) > 0
+            product.has_stock = product.id in products_with_stock
+
+    def _search_has_stock(self, operator, value):
+        website = self.env['website'].get_current_website()
+        self.env.cr.execute("""
+            SELECT DISTINCT product_id
+            FROM product_product_redis_stock
+            WHERE website_id = %s AND quantity > 0
+        """, (website.id,))
+        product_ids = [row[0] for row in self.env.cr.fetchall()]
+
+        # We only handle True/False filters here
+        if (operator in ('=', '==') and value) or (operator == '!=' and not value):
+            # has_stock = True
+            return [('id', 'in', product_ids)]
+        else:
+            # has_stock = False
+            return [('id', 'not in', product_ids)]
 
     def _compute_json_ld(self):
         env = self.env
