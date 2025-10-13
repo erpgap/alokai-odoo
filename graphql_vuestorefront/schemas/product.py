@@ -16,6 +16,7 @@ from odoo.addons.graphql_vuestorefront.schemas.objects import (
 def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     Product = env['product.template'].sudo()
     Category = env['product.public.category'].sudo()
+    website = None
     domain, attributes_partial_domain, prices_partial_domain, filtered_attributes = Product._graphql_get_search_domain(search, **kwargs)
 
     # First offset is 0 but first page is 1
@@ -23,7 +24,12 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         offset = (current_page - 1) * page_size
     else:
         offset = 0
-    order = Product._graphql_get_search_order(sort)
+
+    if 'price' in sort:
+        order = Product._graphql_get_search_order(sort=None)
+    else:
+        order = Product._graphql_get_search_order(sort)
+
     products = Product.search(expression.AND(domain), order=order)
     attribute_values = env['product.attribute.value'].sudo()
     filter_counts = []
@@ -140,6 +146,28 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
             'total': attribute_value_counts[av.id],
         } for av in attribute_values])
 
+    # Sort price
+    if 'price' in sort:
+        website = env['website'].get_current_website()
+        pricelist = website._get_current_pricelist()
+
+        # Create a list of tuples (product, computed_price)
+        products_with_price = [
+            (product, pricelist._get_product_price(product.product_variant_id, 1.0, env.user.partner_id))
+            for product in products
+        ]
+
+        # Sort
+        if sort['price'].value == 'ASC':
+            # Ascending price, then ascending ID
+            products_with_price.sort(key=lambda x: (x[1], x[0].id))
+        else:
+            # Descending price, then ascending ID
+            products_with_price.sort(key=lambda x: (-x[1], x[0].id))
+
+        # Extract sorted products
+        products = [p[0] for p in products_with_price]
+
     total_count = len(products)
     products = products[offset:offset + page_size]
 
@@ -150,7 +178,8 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
             'total': total_count,
         })
     else:
-        website = env['website'].get_current_website()
+        if not website:
+            website = env['website'].get_current_website()
         # TODO:
         # Possible index to improve performance
         # CREATE INDEX idx_redis_stock_website_quantity

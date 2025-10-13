@@ -16,19 +16,21 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     @api.model
-    def _graphql_get_search_order(self, sort):
+    def _graphql_get_search_order(self, sort=None):
         sorting = 'has_stock DESC'
-        for field, val in sort.items():
-            if sorting:
-                sorting += ', '
-            if field == 'price':
-                sorting += 'list_price %s' % val.value
-            elif field == 'popular':
-                sorting += 'recent_sales_count %s' % val.value
-            elif field == 'newest':
-                sorting += 'published_datetime %s, create_date %s' % (val.value, val.value)
-            else:
-                sorting += '%s %s' % (field, val.value)
+
+        if sort is not None:
+            for field, val in sort.items():
+                if sorting:
+                    sorting += ', '
+                if field == 'price':
+                    sorting += 'list_price %s' % val.value
+                elif field == 'popular':
+                    sorting += 'recent_sales_count %s' % val.value
+                elif field == 'newest':
+                    sorting += 'published_datetime %s, create_date %s' % (val.value, val.value)
+                else:
+                    sorting += '%s %s' % (field, val.value)
 
         # Add id as last factor, so we can consistently get the same results
         if sorting:
