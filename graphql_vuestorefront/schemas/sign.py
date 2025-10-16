@@ -125,7 +125,7 @@ class Register(graphene.Mutation):
     def mutate(self, info, name, email, password, subscribe_newsletter):
         env = info.context['env']
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=True)
+        order = website.sale_get_order()
 
         # Set email in lowercase
         email = email.lower()
@@ -145,7 +145,8 @@ class Register(graphene.Mutation):
         user = env['res.users'].sudo().search([('login', '=', data['login'])], limit=1)
 
         # Update SO
-        order._update_sale_order(website, user)
+        if order:
+            order._update_sale_order(website, user)
 
         # Subscribe Newsletter
         if website and website.vsf_mailing_list_id and subscribe_newsletter:
