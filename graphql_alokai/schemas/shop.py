@@ -31,12 +31,12 @@ class ShoppingCartQuery(graphene.ObjectType):
     def resolve_cart(self, info):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=True)
+        order = website.sale_get_order()
         fbt = None
 
         if order and order.state != 'draft':
             request.session['sale_order_id'] = None
-            order = website.sale_get_order(force_create=True)
+            order = website.sale_get_order()
         if order:
             order.order_line.filtered(lambda l: not l.product_id.active).unlink()
 
