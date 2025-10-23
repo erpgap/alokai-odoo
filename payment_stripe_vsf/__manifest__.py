@@ -25,6 +25,7 @@
     # Views
     'data': [
         'views/stripe_template.xml',
+        # 'views/stripe_template_elements.xml',
         'data/website_data.xml',
         'data/ir_cron_data.xml',
         'views/payment_transaction_views.xml',
@@ -35,6 +36,7 @@
     'assets': {
         'web.assets_frontend': [
             'payment_stripe_vsf/static/src/stripe.js'
+            # 'payment_stripe_vsf/static/src/stripe_elements.js'
         ]
     },
 

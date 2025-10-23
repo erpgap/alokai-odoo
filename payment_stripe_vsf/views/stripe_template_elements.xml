@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="stripe_template">
+    <xpath expr="//head" position="inside">
+      <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+    </xpath>
+    <t t-call="website.layout">
+
+      <!-- DATA from the Mutation StripeGetInlineFormValues -->
+      <t t-set="inline_form_values" t-value="{
+           'billing_details': {
+               'name': 'Test User',
+               'email': 'test@example.com',
+               'phone': '123456789',
+               'address': {
+                   'line1': 'Rua Exemplo',
+                   'line2': '',
+                   'city': 'Lisboa',
+                   'state': 'Lisboa',
+                   'country': 'PT',
+                   'postal_code': '1000-001'
+               }
+           },
+           'payment_methods': ['card','klarna','paypal','affirm'],
+           'amount': 12050,
+           'currency': 'usd'
+      }"/>
+
+      <!-- Serializa em JSON (usar json.dumps para garantir JSON válido) -->
+      <t t-set="inline_form_values_json" t-value="json.dumps(inline_form_values)"/>
+
+      <div id="stripe-elements-container"
+           t-att-data-stripe-inline-form-values="inline_form_values_json">
+
+        <div class="payment-methods-cards" style="display:flex; flex-direction:column; gap:8px; max-width:720px;">
+          <t t-foreach="inline_form_values['payment_methods']" t-as="method">
+            <div class="payment-card" style="display:flex; align-items:flex-start; gap:12px; border:1px solid #e2e2e2; padding:12px; border-radius:8px;">
+              <!-- radio visual no início do card -->
+              <div style="flex:0 0 28px;">
+                <input type="radio"
+                       t-att-id="'pm_'+method"
+                       name="payment_method_radio"
+                       t-att-value="method"
+                       style="width:18px; height:18px;"/>
+              </div>
+
+              <div style="flex:1;">
+                <label t-att-for="'pm_'+method" style="cursor:pointer; display:block;">
+                  <strong t-esc="(method or '').capitalize()"/>
+                </label>
+                <div style="margin-top:8px;">
+                  <!-- Aqui criamos o container com id dinâmico corretamente -->
+                  <div t-att-id="'element_' + method" style="min-height:60px;"></div>
+                </div>
+              </div>
+            </div>
+          </t>
+        </div>
+
+        <div style="margin-top:14px;">
+          <button id="pay-btn" class="btn btn-primary">Pay</button>
+        </div>
+      </div>
+    </t>
+  </template>
+
+</odoo>
