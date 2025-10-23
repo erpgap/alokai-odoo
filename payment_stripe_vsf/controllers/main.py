@@ -9,6 +9,7 @@ import werkzeug
 from odoo import http, _
 from odoo.http import request
 from odoo.exceptions import ValidationError
+from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment_stripe.const import HANDLED_WEBHOOK_EVENTS
 from odoo.addons.payment_stripe.controllers.main import StripeController
 from odoo.addons.payment.controllers.post_processing import PaymentPostProcessing
@@ -92,6 +93,23 @@ class StripeControllerInherit(StripeController):
         # Condition used for VSF
         if tx_sudo.created_on_vsf:
             if payment_intent:
+                # Update "Partner Info" on the Transaction
+                if tx_sudo.partner_id.id != sale_order.partner_invoice_id.id:
+                    partner = sale_order.partner_invoice_id
+                    tx_sudo.write({
+                        'partner_id': partner.id,
+                        'partner_name': partner.name or partner.parent_id.name,
+                        'partner_lang': partner.lang,
+                        'partner_email': partner.email,
+                        'partner_address': payment_utils.format_partner_address(
+                            partner.street, partner.street2
+                        ),
+                        'partner_zip': partner.zip,
+                        'partner_city': partner.city,
+                        'partner_state_id': partner.state_id.id,
+                        'partner_country_id': partner.country_id.id,
+                        'partner_phone': partner.phone,
+                    })
                 if payment_intent.get('status') and payment_intent['status'] in ['succeeded', 'requires_capture']:
                     # Confirm sale order
                     # PaymentPostProcessing().poll_status()
