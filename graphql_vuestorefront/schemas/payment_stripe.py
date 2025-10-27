@@ -107,7 +107,6 @@ class StripeGetInlineFormValues(graphene.Mutation):
         partner_shipping_id = order.partner_shipping_id
         stripe_get_inline_form_values['shipping'] = {
             'name': partner_shipping_id.name or '',
-            'email': partner_shipping_id.email or '',
             'phone': partner_shipping_id.phone or '',
             'address': {
                 'line1': partner_shipping_id.street or '',
