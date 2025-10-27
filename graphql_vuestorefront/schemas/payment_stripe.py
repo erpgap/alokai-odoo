@@ -102,6 +102,23 @@ class StripeGetInlineFormValues(graphene.Mutation):
         )
         stripe_get_inline_form_values = json.loads(stripe_get_inline_form_values)
         stripe_get_inline_form_values['payment_methods'] = payment_provider.payment_method_ids.mapped('code')
+
+        # Shipping Info
+        partner_shipping_id = order.partner_shipping_id
+        stripe_get_inline_form_values['shipping'] = {
+            'name': partner_shipping_id.name or '',
+            'email': partner_shipping_id.email or '',
+            'phone': partner_shipping_id.phone or '',
+            'address': {
+                'line1': partner_shipping_id.street or '',
+                'line2': partner_shipping_id.street2 or '',
+                'city': partner_shipping_id.city or '',
+                'state': partner_shipping_id.state_id.code or '',
+                'country': partner_shipping_id.country_id.code or '',
+                'postal_code': partner_shipping_id.zip or '',
+            },
+        }
+
         # Condition to prevent calling the "Affirm" payment_method when the amount is less than 50.00$
         if float(order.amount_total) < 50.00:
             if 'affirm' in stripe_get_inline_form_values['payment_methods']:
