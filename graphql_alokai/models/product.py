@@ -17,7 +17,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _graphql_get_search_order(self, sort=None):
-        sorting = 'has_stock DESC'
+        sorting = ''
 
         if sort is not None:
             for field, val in sort.items():
