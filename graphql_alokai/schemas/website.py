@@ -45,7 +45,6 @@ class WebsiteQuery(graphene.ObjectType):
 
         domain = [
             ('website_id', '=', website.id),
-            ('is_visible', '=', True),
             ('is_footer', '=', False),
             ('is_mega_menu', '=', False),
         ]
@@ -53,7 +52,7 @@ class WebsiteQuery(graphene.ObjectType):
         if no_parent:
             domain += [('parent_id', '=', False)]
 
-        return env['website.menu'].search(domain)
+        return env['website.menu'].search(domain).filtered(lambda m: m.is_visible)
 
     @staticmethod
     def resolve_website_mega_menu(self, info, no_parent=False):
@@ -62,7 +61,6 @@ class WebsiteQuery(graphene.ObjectType):
 
         domain = [
             ('website_id', '=', website.id),
-            ('is_visible', '=', True),
             ('is_footer', '=', False),
             ('is_mega_menu', '=', True),
         ]
@@ -70,7 +68,7 @@ class WebsiteQuery(graphene.ObjectType):
         if no_parent:
             domain += [('parent_id', '=', False)]
 
-        return env['website.menu'].search(domain)
+        return env['website.menu'].search(domain).filtered(lambda m: m.is_visible)
 
     @staticmethod
     def resolve_website_footer(self, info, no_parent=False):
@@ -79,7 +77,6 @@ class WebsiteQuery(graphene.ObjectType):
 
         domain = [
             ('website_id', '=', website.id),
-            ('is_visible', '=', True),
             ('is_footer', '=', True),
             ('is_mega_menu', '=', False),
         ]
@@ -87,7 +84,7 @@ class WebsiteQuery(graphene.ObjectType):
         if no_parent:
             domain += [('parent_id', '=', False)]
 
-        return env['website.menu'].search(domain)
+        return env['website.menu'].search(domain).filtered(lambda m: m.is_visible)
 
     @staticmethod
     def resolve_website_homepage(self, info):
