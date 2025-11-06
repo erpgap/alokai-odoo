@@ -106,6 +106,7 @@ class MakeGiftCardPayment(graphene.Mutation):
 
         if order and not order.amount_total and not tx:
             order.with_context(send_email=True).action_confirm()
+            request.session['alokai_last_sale_order_id'] = order.id
             return MakeGiftCardPayment(done=True)
 
         return MakeGiftCardPayment(done=False)
