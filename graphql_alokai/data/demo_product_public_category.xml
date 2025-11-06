@@ -1,247 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2024 ERPGAP/PROMPTEQUATION LDA
+    Copyright 2025 ERPGAP
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 -->
 <odoo noupdate="1">
 
-    <!-- product.category -->
-    <record id="product_category_pants" model="product.category">
-            <field name="name">Pants</field>
-    </record>
+  <!-- =========================
+       CATEGORIAS PRINCIPAIS
+       ========================= -->
+  <record id="ppc_living_room_seating" model="product.public.category">
+    <field name="name">Living Room Seating</field>
+    <field name="sequence">10</field>
+  </record>
+  <record id="ppc_tables" model="product.public.category">
+    <field name="name">Tables</field>
+    <field name="sequence">20</field>
+  </record>
+  <record id="ppc_bedroom_furniture" model="product.public.category">
+    <field name="name">Bedroom Furniture</field>
+    <field name="sequence">30</field>
+  </record>
+  <record id="ppc_storage_shelving" model="product.public.category">
+    <field name="name">Storage &amp; Shelving</field>
+    <field name="sequence">40</field>
+  </record>
+  <record id="ppc_lighting" model="product.public.category">
+    <field name="name">Lighting</field>
+    <field name="sequence">50</field>
+  </record>
+  <record id="ppc_home_office" model="product.public.category">
+    <field name="name">Home Office</field>
+    <field name="sequence">60</field>
+  </record>
 
-    <!-- product.public.category -->
-    <record id="public_category_women" model="product.public.category">
-      <field name="name">WOMEN</field>
-      <field name="sequence">27</field>
-    </record>
-    <record id="public_category_men" model="product.public.category">
-      <field name="name">MEN</field>
-      <field name="sequence">61</field>
-    </record>
+  <!-- =========================
+       LIVING ROOM SEATING 
+       ========================= -->
+  <record id="ppc_lrs_sofas_sectionals" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Sofas &amp; Sectionals</field>
+    <field name="sequence">11</field>
+  </record>
+  <record id="ppc_lrs_armchairs_accent" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Armchairs &amp; Accent Chairs</field>
+    <field name="sequence">12</field>
+  </record>
+  <record id="ppc_lrs_ottomans_poufs" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Ottomans &amp; Poufs</field>
+    <field name="sequence">13</field>
+  </record>
+  <record id="ppc_lrs_chaises" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Chaise Lounges</field>
+    <field name="sequence">14</field>
+  </record>
+  <record id="ppc_lrs_rocking" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Rocking Chairs</field>
+    <field name="sequence">15</field>
+  </record>
+  <record id="ppc_lrs_futons" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Futons</field>
+    <field name="sequence">16</field>
+  </record>
+ 
 
-    <!-- subcategories Women -->
-    <record id="public_category_women_clothing" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women')"/>
-      <field name="name">Clothing</field>
-      <field name="sequence">28</field>
-    </record>
-    <record id="public_category_women_shoes" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women')"/>
-      <field name="name">Shoes</field>
-      <field name="sequence">40</field>
-    </record>
-    <record id="public_category_women_bags" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women')"/>
-      <field name="name">bags</field>
-      <field name="sequence">51</field>
-    </record>
+  <!-- =========================
+       TABLES
+       ========================= -->
+  <record id="ppc_tbl_coffee" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_tables')"/>
+    <field name="name">Coffee Tables</field>
+    <field name="sequence">21</field>
+  </record>
+  <record id="ppc_tbl_side_end" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_tables')"/>
+    <field name="name">Side &amp; End Tables</field>
+    <field name="sequence">22</field>
+  </record>
+  <record id="ppc_tbl_console" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_tables')"/>
+    <field name="name">Console Tables</field>
+    <field name="sequence">23</field>
+  </record>
+  <record id="ppc_tbl_dining" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_tables')"/>
+    <field name="name">Dining Tables</field>
+    <field name="sequence">24</field>
+  </record>
 
-    <!-- sub-subcategories Women-Clothing -->
-    <record id="public_category_women_clothing_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">All</field>
-      <field name="sequence">29</field>
-    </record>
-    <record id="public_category_women_clothing_jackets" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Jackets</field>
-      <field name="sequence">30</field>
-    </record>
-    <record id="public_category_women_clothing_blazer" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Blazer</field>
-      <field name="sequence">31</field>
-    </record>
-    <record id="public_category_women_clothing_tops" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Tops</field>
-      <field name="sequence">32</field>
-    </record>
-    <record id="public_category_women_clothing_shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Shirts</field>
-      <field name="sequence">33</field>
-    </record>
-    <record id="public_category_women_clothing_t-shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">T-shirts</field>
-      <field name="sequence">33</field>
-    </record>
-    <record id="public_category_women_clothing_jeans" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Jeans</field>
-      <field name="sequence">35</field>
-    </record>
-    <record id="public_category_women_clothing_trouser" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Trouser</field>
-      <field name="sequence">36</field>
-    </record>
-    <record id="public_category_women_clothing_skirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Skirts</field>
-      <field name="sequence">37</field>
-    </record>
-    <record id="public_category_women_clothing_dresses" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Dresses</field>
-      <field name="sequence">38</field>
-    </record>
+  <!-- =========================
+       BEDROOM FURNITURE
+       ========================= -->
+  <record id="ppc_bed_beds" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Beds &amp; Frames</field>
+    <field name="sequence">31</field>
+  </record>
+  <record id="ppc_bed_headboards" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Headboards</field>
+    <field name="sequence">32</field>
+  </record>
+  <record id="ppc_bed_dressers" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Dressers</field>
+    <field name="sequence">33</field>
+  </record>
+  <record id="ppc_bed_nightstands" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Nightstands</field>
+    <field name="sequence">34</field>
+  </record>
+  <record id="ppc_bed_wardrobes" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Wardrobes</field>
+    <field name="sequence">35</field>
+  </record>
+  <record id="ppc_bed_chests" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Chests of Drawers</field>
+    <field name="sequence">36</field>
+  </record>
+  <record id="ppc_bed_benches" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">End-of-Bed Benches</field>
+    <field name="sequence">37</field>
+  </record>
+  <record id="ppc_bed_valets" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_bedroom_furniture')"/>
+    <field name="name">Valet Stands</field>
+    <field name="sequence">38</field>
+  </record>
 
-    <!-- sub-subcategories Women-Shoes -->
-    <record id="public_category_women_shoes_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">All</field>
-      <field name="sequence">41</field>
-    </record>
-    <record id="public_category_women_shoes_sneakers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Sneakers</field>
-      <field name="sequence">42</field>
-    </record>
-    <record id="public_category_women_shoes_boots" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Boots</field>
-      <field name="sequence">43</field>
-    </record>
-    <record id="public_category_women_shoes_ankle_boots" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Ankle boots</field>
-      <field name="sequence">44</field>
-    </record>
-    <record id="public_category_women_shoes_pumps" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Pumps</field>
-      <field name="sequence">45</field>
-    </record>
-    <record id="public_category_women_shoes_ballerinas" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Ballerinas</field>
-      <field name="sequence">46</field>
-    </record>
-    <record id="public_category_women_shoes_loafers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Loafers</field>
-      <field name="sequence">48</field>
-    </record>
-    <record id="public_category_women_shoes_sandals" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Sandals</field>
-      <field name="sequence">49</field>
-    </record>
+  <!-- =========================
+       STORAGE & SHELVING
+       ========================= -->
+  <record id="ppc_stg_bookshelves" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Bookshelves</field>
+    <field name="sequence">41</field>
+  </record>
+  <record id="ppc_stg_cube_shelving" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Cube Shelving</field>
+    <field name="sequence">42</field>
+  </record>
+  <record id="ppc_stg_filing_cabinets" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Filing Cabinets</field>
+    <field name="sequence">43</field>
+  </record>
+  <record id="ppc_stg_tv_stands" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">TV Stands</field>
+    <field name="sequence">44</field>
+  </record>
+  <record id="ppc_stg_floating_shelves" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Floating Shelves</field>
+    <field name="sequence">45</field>
+  </record>
+  <record id="ppc_stg_sideboards" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Sideboards</field>
+    <field name="sequence">46</field>
+  </record>
+  <record id="ppc_stg_baskets" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Baskets</field>
+    <field name="sequence">47</field>
+  </record>
+  <record id="ppc_stg_shoe_storage" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Shoe Storage</field>
+    <field name="sequence">48</field>
+  </record>
+  <record id="ppc_stg_wine_racks" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_storage_shelving')"/>
+    <field name="name">Wine Racks</field>
+    <field name="sequence">49</field>
+  </record>
 
-    <!-- sub-subcategories Women-Bags -->
-    <record id="public_category_women_bags_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">All</field>
-      <field name="sequence">52</field>
-    </record>
-    <record id="public_category_women_bags_clutches" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Clutches</field>
-      <field name="sequence">53</field>
-    </record>
-    <record id="public_category_women_bags_shoulder_bags" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Shoulder Bags</field>
-      <field name="sequence">54</field>
-    </record>
-    <record id="public_category_women_bags_shopper" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Shopper</field>
-      <field name="sequence">55</field>
-    </record>
-    <record id="public_category_women_bags_handbag" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Handbag</field>
-      <field name="sequence">56</field>
-    </record>
-    <record id="public_category_women_bags_wallets" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Wallets</field>
-      <field name="sequence">57</field>
-    </record>
+  <!-- =========================
+       LIGHTING
+       ========================= -->
+  <record id="ppc_lgt_floor_lamps" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_lighting')"/>
+    <field name="name">Floor Lamps</field>
+    <field name="sequence">51</field>
+  </record>
+  <record id="ppc_lgt_desk_table_lamps" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_lighting')"/>
+    <field name="name">Desk &amp; Table Lamps</field>
+    <field name="sequence">52</field>
+  </record>
+  <record id="ppc_lgt_pendant_lights" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_lighting')"/>
+    <field name="name">Pendant Lights</field>
+    <field name="sequence">53</field>
+  </record>
+  <record id="ppc_lgt_chandeliers" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_lighting')"/>
+    <field name="name">Chandeliers</field>
+    <field name="sequence">54</field>
+  </record>
 
-    <!-- subcategories Man -->
-    <record id="public_category_men_clothing" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men')"/>
-      <field name="name">Clothing</field>
-      <field name="sequence">62</field>
-    </record>
-    <record id="public_category_men_shoes" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men')"/>
-      <field name="name">Shoes</field>
-      <field name="sequence">72</field>
-    </record>
-
-    <!-- sub-subcategories Men-Clothing -->
-    <record id="public_category_men_clothing_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">All</field>
-      <field name="sequence">63</field>
-    </record>
-    <record id="public_category_men_clothing_jackets" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Jackets</field>
-      <field name="sequence">64</field>
-    </record>
-    <record id="public_category_men_clothing_tops" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Tops</field>
-      <field name="sequence">65</field>
-    </record>
-    <record id="public_category_men_clothing_shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Shirts</field>
-      <field name="sequence">66</field>
-    </record>
-    <record id="public_category_men_clothing_trousers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Trousers</field>
-      <field name="sequence">67</field>
-    </record>
-    <record id="public_category_men_clothing_jeans" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Jeans</field>
-      <field name="sequence">68</field>
-    </record>
-    <record id="public_category_men_clothing_blazer" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Blazer</field>
-      <field name="sequence">69</field>
-    </record>
-    <record id="public_category_men_clothing_suits" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Suits</field>
-      <field name="sequence">70</field>
-    </record>
-    <record id="public_category_men_clothing_t-shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">T-shirts</field>
-      <field name="sequence">71</field>
-    </record>
-
-    <!-- sub-subcategories Men-Shoes -->
-    <record id="public_category_men_shoes_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">All</field>
-      <field name="sequence">73</field>
-    </record>
-    <record id="public_category_men_shoes_sneakers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">Sneakers</field>
-      <field name="sequence">74</field>
-    </record>
-    <record id="public_category_men_shoes_lace-up_shoes" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">Lace-up shoes</field>
-      <field name="sequence">76</field>
-    </record>
-    <record id="public_category_men_shoes_loafers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">Loafers</field>
-      <field name="sequence">77</field>
-    </record>
+  <!-- =========================
+       HOME OFFICE
+       ========================= -->
+  <record id="ppc_off_desks" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_home_office')"/>
+    <field name="name">Desks</field>
+    <field name="sequence">61</field>
+  </record>
+  <record id="ppc_off_chairs" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_home_office')"/>
+    <field name="name">Office Chairs</field>
+    <field name="sequence">62</field>
+  </record>
+  <record id="ppc_off_storage" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_home_office')"/>
+    <field name="name">Storage</field>
+    <field name="sequence">63</field>
+  </record>
+  <record id="ppc_off_shelving" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_home_office')"/>
+    <field name="name">Shelving</field>
+    <field name="sequence">64</field>
+  </record>
+  <record id="ppc_off_accessories" model="product.public.category">
+    <field name="parent_id" eval="ref('ppc_home_office')"/>
+    <field name="name">Accessories</field>
+    <field name="sequence">65</field>
+  </record>
 
 </odoo>
