@@ -259,14 +259,27 @@ class ProductTemplate(models.Model):
         )
         sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups}
 
+        values = []
+
         for product in self:
             if product.detailed_type in ['product', 'consu']:
                 product_id = product.product_variant_id.id
                 sales_count = sale_count_map.get(product_id, 0)
                 sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
-                product.recent_sales_count = sales_count + product.recent_sales_count_increment
+                recent_sales_count = sales_count + product.recent_sales_count_increment
             else:
-                product.recent_sales_count = 0
+                recent_sales_count = 0
+
+            values.append((recent_sales_count, product.id))
+
+        if values:
+            query = f"""
+                UPDATE product_template AS t
+                SET recent_sales_count = v.recent_sales_count
+                FROM (VALUES %s) AS v(recent_sales_count, id)
+                WHERE v.id = t.id
+            """
+            execute_values(self.env.cr, query, values)
 
     @api.depends('published_datetime')
     def _compute_published_hours(self):
