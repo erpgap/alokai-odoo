@@ -304,7 +304,7 @@ class ProductTemplate(models.Model):
         sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups if group and group.get('product_uom_qty')}
 
         for product in self:
-            if product.detailed_type in ['product', 'consu']:
+            if product.type in ['product', 'consu']:
                 product_id = product.product_variant_id.id
                 sales_count = sale_count_map.get(product_id, 0)
                 sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
@@ -442,7 +442,7 @@ class ProductTemplate(models.Model):
 
         order_to_products = defaultdict(list)
         for sale_group in sale_groups:
-            if sale_group.product_id.detailed_type in ['product', 'consu']:
+            if sale_group.product_id.type in ['product', 'consu']:
                 order_id = sale_group.order_reference
                 product_id = sale_group.product_id.product_tmpl_id.id
                 qty = sale_group.product_uom_qty
