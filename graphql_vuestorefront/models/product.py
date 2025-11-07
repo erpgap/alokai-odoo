@@ -576,18 +576,6 @@ class ProductStockRedis(models.AbstractModel):
     website_id = fields.Many2one('website', 'Website', required=True)
     quantity = fields.Float('Quantity', digits='Product Unit of Measure', required=True)
 
-    @api.model
-    def create_redis_stock(self, product_id, website_id, quantity):
-        line = self.search([('product_id', '=', product_id), ('website_id', '=', website_id)])
-        if line:
-            line.quantity = quantity
-        else:
-            self.create({
-                'product_id': product_id,
-                'website_id': website_id,
-                'quantity': quantity,
-            })
-
 
 class ProductProductRedisStock(models.Model):
     _name = 'product.product.redis_stock'
@@ -595,12 +583,40 @@ class ProductProductRedisStock(models.Model):
 
     product_id = fields.Many2one('product.product', 'Product', required=True)
 
+    @api.model
+    def create_redis_stock(self, product_id, website_id, quantity):
+        self.env.cr.execute("""
+            WITH updated AS (
+                UPDATE product_product_redis_stock
+                SET quantity = %s
+                WHERE product_id = %s AND website_id = %s
+                RETURNING *
+            )
+            INSERT INTO product_product_redis_stock (product_id, website_id, quantity)
+            SELECT %s, %s, %s
+            WHERE NOT EXISTS (SELECT 1 FROM updated);
+        """, (quantity, product_id, website_id, product_id, website_id, quantity))
+
 
 class ProductTemplateRedisStock(models.Model):
     _name = 'product.template.redis_stock'
     _inherit = 'product.redis_stock'
 
     product_id = fields.Many2one('product.template', 'Product', required=True)
+
+    @api.model
+    def create_redis_stock(self, product_id, website_id, quantity):
+        self.env.cr.execute("""
+            WITH updated AS (
+                UPDATE product_template_redis_stock
+                SET quantity = %s
+                WHERE product_id = %s AND website_id = %s
+                RETURNING *
+            )
+            INSERT INTO product_template_redis_stock (product_id, website_id, quantity)
+            SELECT %s, %s, %s
+            WHERE NOT EXISTS (SELECT 1 FROM updated);
+        """, (quantity, product_id, website_id, product_id, website_id, quantity))
 
 
 class ProductPublicCategory(models.Model):
