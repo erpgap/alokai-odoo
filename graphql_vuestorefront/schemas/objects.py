@@ -591,15 +591,23 @@ class Product(OdooObjectType):
         return self.website_slug
 
     def resolve_alternative_products(self, info):
-        return self.alternative_product_ids or None
+        website = request.website
+        return self.alternative_product_ids.filtered(lambda p: not p.website_id or p.website_id == website) or None
 
     def resolve_accessory_products(self, info):
-        return self.accessory_product_ids or None
+        website = request.website
+        return self.accessory_product_ids.filtered(lambda p: not p.website_id or p.website_id == website) or None
 
     def resolve_frequently_bought_together(self, info):
         if self.frequently_bought_together_ids:
+            website = request.website
+            ICP = request.env['ir.config_parameter'].sudo()
+            fbt_limit = int(ICP.get_param('graphql_vuestorefront.vsf_fbt_limit', 10))
             fbt = self.frequently_bought_together_ids.sorted(key=lambda r: r.qty, reverse=True)
-            return fbt.mapped('related_product_id')
+            return (
+                fbt.mapped('related_product_id')
+                .filtered(lambda p: not p.website_id or p.website_id == website)
+            )[:fbt_limit]
         return None
 
     # Specific to use in Product Variant

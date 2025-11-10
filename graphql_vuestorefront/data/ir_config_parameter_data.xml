@@ -37,4 +37,9 @@
         <field name="value">6379</field>
     </record>
 
+    <record id="vsf_fbt_limit" model="ir.config_parameter">
+        <field name="key">vsf_fbt_limit</field>
+        <field name="value">10</field>
+    </record>
+
 </odoo>

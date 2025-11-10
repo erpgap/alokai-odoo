@@ -44,13 +44,19 @@ class ShoppingCartQuery(graphene.ObjectType):
                 # Update SO
                 order._update_sale_order(website, user)
 
+            ICP = request.env['ir.config_parameter'].sudo()
+            fbt_limit = int(ICP.get_param('graphql_vuestorefront.vsf_fbt_limit', 10))
+
             fbt = order.\
                 mapped('order_line').\
                 mapped('product_id').\
                 mapped('product_tmpl_id').\
                 frequently_bought_together_ids.\
                 sorted(key=lambda r: r.qty, reverse=True)
-            fbt = fbt.mapped('related_product_id')
+            fbt = (
+                fbt.mapped('related_product_id')
+                .filtered(lambda p: not p.website_id or p.website_id == website)
+            )[:fbt_limit]
 
         return CartData(order=order, frequently_bought_together=fbt)
 
