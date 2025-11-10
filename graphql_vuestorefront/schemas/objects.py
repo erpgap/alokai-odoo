@@ -40,7 +40,8 @@ PaymentTransactionState = graphene.Enum('PaymentTransactionState', [('Draft', 'd
                                                                ('Canceled', 'cancel'), ('Error', 'error')])
 
 DeliveryStatus = graphene.Enum('DeliveryStatus', [('NotDelivered', 'pending'), ('Started', 'started'),
-                                        ('PartiallyDelivered', 'partial'), ('FullyDelivered', 'full')])
+                                        ('PartiallyDelivered', 'partial'), ('FullyDelivered', 'full'),
+                                        ('Cancelled', 'cancel')])
 ProductType = graphene.Enum('ProductType', [('Consumable', 'consu'), ('Service', 'service'),
                                         ('StorableProduct', 'product')])
 
