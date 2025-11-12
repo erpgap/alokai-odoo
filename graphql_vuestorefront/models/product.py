@@ -244,6 +244,8 @@ class ProductTemplate(models.Model):
             product.variant_attribute_value_ids = [(6, 0, attribute_values.ids)]
 
     def _compute_recent_sales_count(self):
+        self = self.filtered(lambda p: not isinstance(p.id, models.NewId))
+
         lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('vsf_recent_sales_count_days', 30))
         date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
         done_states = self.env['sale.report'].sudo()._get_done_states()
