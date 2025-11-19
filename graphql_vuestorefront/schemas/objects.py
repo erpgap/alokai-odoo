@@ -722,6 +722,7 @@ class PaymentTransaction(OdooObjectType):
     payment = graphene.Field(lambda: Payment)
     amount = graphene.Float()
     currency = graphene.Field(lambda: Currency)
+    payment_method = graphene.Field(lambda: PaymentMethod)
     provider = graphene.String()
     provider_reference = graphene.String()
     company = graphene.Field(lambda: Partner)
@@ -733,6 +734,9 @@ class PaymentTransaction(OdooObjectType):
 
     def resolve_currency(self, info):
         return self.currency_id or None
+
+    def resolve_payment_method(self, info):
+        return self.payment_method_id or None
 
     def resolve_provider(self, info):
         return self.provider_id.name or None
