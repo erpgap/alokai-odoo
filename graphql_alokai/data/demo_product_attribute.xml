@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright 2025 ERPGAP
-    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
--->
-<odoo noupdate="1">
+<odoo>
 
   <!-- =========================
-       COR (com chip de cor)
+       ATTRIBUTE: Color
+       (uses the “color” display type to show a color chip)
        ========================= -->
   <record id="attr_color" model="product.attribute">
     <field name="name">Color</field>
@@ -14,262 +11,54 @@
     <field name="sequence">10</field>
   </record>
 
+  <!-- === Color values === -->
   <record id="attr_color_black" model="product.attribute.value">
     <field name="name">Black</field>
     <field name="attribute_id" ref="attr_color"/>
     <field name="html_color">#000000</field>
     <field name="sequence">1</field>
   </record>
+
   <record id="attr_color_white" model="product.attribute.value">
     <field name="name">White</field>
     <field name="attribute_id" ref="attr_color"/>
     <field name="html_color">#FFFFFF</field>
     <field name="sequence">2</field>
   </record>
+
   <record id="attr_color_grey" model="product.attribute.value">
     <field name="name">Grey</field>
     <field name="attribute_id" ref="attr_color"/>
     <field name="html_color">#BFBFBF</field>
     <field name="sequence">3</field>
   </record>
-  <record id="attr_color_navy" model="product.attribute.value">
-    <field name="name">Navy</field>
+
+  <record id="attr_color_yellow" model="product.attribute.value">
+    <field name="name">Yellow</field>
+    <field name="attribute_id" ref="attr_color"/>
+    <field name="html_color">#FFD700</field>
+    <field name="sequence">4</field>
+  </record>
+
+  <record id="attr_color_dark_blue" model="product.attribute.value">
+    <field name="name">Dark Blue</field>
     <field name="attribute_id" ref="attr_color"/>
     <field name="html_color">#0B2C5F</field>
-    <field name="sequence">4</field>
+    <field name="sequence">5</field>
   </record>
-  <record id="attr_color_emerald" model="product.attribute.value">
-    <field name="name">Emerald</field>
+
+  <record id="attr_color_dark_green" model="product.attribute.value">
+    <field name="name">Dark Green</field>
     <field name="attribute_id" ref="attr_color"/>
     <field name="html_color">#0F7B5F</field>
-    <field name="sequence">5</field>
-  </record>
-  <record id="attr_color_cognac" model="product.attribute.value">
-    <field name="name">Cognac</field>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#A0522D</field>
     <field name="sequence">6</field>
   </record>
-  <record id="attr_color_mustard" model="product.attribute.value">
-    <field name="name">Mustard</field>
+
+  <record id="attr_color_pattern" model="product.attribute.value">
+    <field name="name">Pattern</field>
     <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#D4A017</field>
+    <field name="html_color">#CCCCCC</field>
     <field name="sequence">7</field>
-  </record>
-  <record id="attr_color_beige" model="product.attribute.value">
-    <field name="name">Beige</field>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#FAECDC</field>
-    <field name="sequence">8</field>
-  </record>
-  <record id="attr_color_brown" model="product.attribute.value">
-    <field name="name">Brown</field>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#7B4A12</field>
-    <field name="sequence">9</field>
-  </record>
-  <record id="attr_color_brass" model="product.attribute.value">
-    <field name="name">Brass</field>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#B89C2C</field>
-    <field name="sequence">10</field>
-  </record>
-  <record id="attr_color_chrome" model="product.attribute.value">
-    <field name="name">Chrome</field>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#C0C0C0</field>
-    <field name="sequence">11</field>
-  </record>
-  <record id="attr_color_smoked_glass" model="product.attribute.value">
-    <field name="name">Smoked Glass</field>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="html_color">#6B6B6B</field>
-    <field name="sequence">12</field>
-  </record>
-
-  <!-- =========================
-       REVESTIMENTO / ESTOFOS (para sofás/cadeiras)
-       ========================= -->
-  <record id="attr_upholstery" model="product.attribute">
-    <field name="name">Upholstery</field>
-    <field name="display_type">select</field>
-    <field name="sequence">20</field>
-  </record>
-
-  <record id="attr_upholstery_linen" model="product.attribute.value">
-    <field name="name">Linen</field>
-    <field name="attribute_id" ref="attr_upholstery"/>
-    <field name="sequence">1</field>
-  </record>
-  <record id="attr_upholstery_leather" model="product.attribute.value">
-    <field name="name">Leather</field>
-    <field name="attribute_id" ref="attr_upholstery"/>
-    <field name="sequence">2</field>
-  </record>
-  <record id="attr_upholstery_boucle" model="product.attribute.value">
-    <field name="name">Bouclé</field>
-    <field name="attribute_id" ref="attr_upholstery"/>
-    <field name="sequence">3</field>
-  </record>
-  <record id="attr_upholstery_velvet" model="product.attribute.value">
-    <field name="name">Velvet</field>
-    <field name="attribute_id" ref="attr_upholstery"/>
-    <field name="sequence">4</field>
-  </record>
-  <record id="attr_upholstery_none" model="product.attribute.value">
-    <field name="name">None</field>
-    <field name="attribute_id" ref="attr_upholstery"/>
-    <field name="sequence">5</field>
-  </record>
-
-  <!-- =========================
-       TIPO DE MADEIRA (espécie)
-       ========================= -->
-  <record id="attr_wood_type" model="product.attribute">
-    <field name="name">Wood Type</field>
-    <field name="display_type">select</field>
-    <field name="sequence">30</field>
-  </record>
-
-  <record id="attr_wood_oak" model="product.attribute.value">
-    <field name="name">Oak</field>
-    <field name="attribute_id" ref="attr_wood_type"/>
-    <field name="sequence">1</field>
-  </record>
-  <record id="attr_wood_walnut" model="product.attribute.value">
-    <field name="name">Walnut</field>
-    <field name="attribute_id" ref="attr_wood_type"/>
-    <field name="sequence">2</field>
-  </record>
-  <record id="attr_wood_ash" model="product.attribute.value">
-    <field name="name">Ash</field>
-    <field name="attribute_id" ref="attr_wood_type"/>
-    <field name="sequence">3</field>
-  </record>
-  <record id="attr_wood_mango" model="product.attribute.value">
-    <field name="name">Mango</field>
-    <field name="attribute_id" ref="attr_wood_type"/>
-    <field name="sequence">4</field>
-  </record>
-  <record id="attr_wood_bamboo" model="product.attribute.value">
-    <field name="name">Bamboo</field>
-    <field name="attribute_id" ref="attr_wood_type"/>
-    <field name="sequence">5</field>
-  </record>
-  <record id="attr_wood_driftwood" model="product.attribute.value">
-    <field name="name">Driftwood</field>
-    <field name="attribute_id" ref="attr_wood_type"/>
-    <field name="sequence">6</field>
-  </record>
-
-  <!-- =========================
-       ACABAMENTO METÁLICO
-       ========================= -->
-  <record id="attr_metal_finish" model="product.attribute">
-    <field name="name">Metal Finish</field>
-    <field name="display_type">select</field>
-    <field name="sequence">40</field>
-  </record>
-
-  <record id="attr_metal_black" model="product.attribute.value">
-    <field name="name">Black</field>
-    <field name="attribute_id" ref="attr_metal_finish"/>
-    <field name="sequence">1</field>
-  </record>
-  <record id="attr_metal_chrome" model="product.attribute.value">
-    <field name="name">Chrome</field>
-    <field name="attribute_id" ref="attr_metal_finish"/>
-    <field name="sequence">2</field>
-  </record>
-  <record id="attr_metal_brass" model="product.attribute.value">
-    <field name="name">Brass</field>
-    <field name="attribute_id" ref="attr_metal_finish"/>
-    <field name="sequence">3</field>
-  </record>
-
-  <!-- =========================
-       PEDRA / SUPERFÍCIE MINERAL
-       ========================= -->
-  <record id="attr_stone_type" model="product.attribute">
-    <field name="name">Stone Type</field>
-    <field name="display_type">select</field>
-    <field name="sequence">50</field>
-  </record>
-
-  <record id="attr_stone_concrete" model="product.attribute.value">
-    <field name="name">Concrete</field>
-    <field name="attribute_id" ref="attr_stone_type"/>
-    <field name="sequence">1</field>
-  </record>
-  <record id="attr_stone_carrara_marble" model="product.attribute.value">
-    <field name="name">Carrara Marble</field>
-    <field name="attribute_id" ref="attr_stone_type"/>
-    <field name="sequence">2</field>
-  </record>
-  <record id="attr_stone_travertine" model="product.attribute.value">
-    <field name="name">Travertine</field>
-    <field name="attribute_id" ref="attr_stone_type"/>
-    <field name="sequence">3</field>
-  </record>
-
-  <!-- =========================
-       CAPACIDADE DE ASSENTO (sofás/cadeiras)
-       ========================= -->
-  <record id="attr_seating_capacity" model="product.attribute">
-    <field name="name">Seating Capacity</field>
-    <field name="display_type">select</field>
-    <field name="sequence">60</field>
-  </record>
-
-  <record id="attr_seating_1" model="product.attribute.value">
-    <field name="name">1-Seater</field>
-    <field name="attribute_id" ref="attr_seating_capacity"/>
-    <field name="sequence">1</field>
-  </record>
-  <record id="attr_seating_2" model="product.attribute.value">
-    <field name="name">2-Seater</field>
-    <field name="attribute_id" ref="attr_seating_capacity"/>
-    <field name="sequence">2</field>
-  </record>
-  <record id="attr_seating_3" model="product.attribute.value">
-    <field name="name">3-Seater</field>
-    <field name="attribute_id" ref="attr_seating_capacity"/>
-    <field name="sequence">3</field>
-  </record>
-  <record id="attr_seating_sectional" model="product.attribute.value">
-    <field name="name">Sectional</field>
-    <field name="attribute_id" ref="attr_seating_capacity"/>
-    <field name="sequence">4</field>
-  </record>
-
-  <!-- =========================
-       TIPO DE SECRETÁRIA (home office)
-       ========================= -->
-  <record id="attr_desk_type" model="product.attribute">
-    <field name="name">Desk Type</field>
-    <field name="display_type">select</field>
-    <field name="sequence">70</field>
-  </record>
-
-  <record id="attr_desk_standing" model="product.attribute.value">
-    <field name="name">Standing</field>
-    <field name="attribute_id" ref="attr_desk_type"/>
-    <field name="sequence">1</field>
-  </record>
-  <record id="attr_desk_writing" model="product.attribute.value">
-    <field name="name">Writing</field>
-    <field name="attribute_id" ref="attr_desk_type"/>
-    <field name="sequence">2</field>
-  </record>
-  <record id="attr_desk_wall" model="product.attribute.value">
-    <field name="name">Wall</field>
-    <field name="attribute_id" ref="attr_desk_type"/>
-    <field name="sequence">3</field>
-  </record>
-  <record id="attr_desk_corner" model="product.attribute.value">
-    <field name="name">Corner</field>
-    <field name="attribute_id" ref="attr_desk_type"/>
-    <field name="sequence">4</field>
   </record>
 
 </odoo>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Living Room Seating products: 10 items, color variants, 3 images each -->
-<odoo noupdate="1">
+<odoo>
 
   <!-- 1) Oslo Minimalist Sofa -->
   <record id="lrs_oslo_sofa" model="product.template">
@@ -234,7 +234,7 @@
     <field name="default_code">LRS-VG-005</field>
     <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_living_room_seating'), ref('ppc_lrs_loveseats')])]"/>
     <field name="description_sale">Luxurious emerald green velvet loveseat with brass legs.</field>
-    <field name="image_1920" type="base64" file="ggraphql_alokai/static/living_room_seating/loveseat/img8.webp"/>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/living_room_seating/loveseat/img8.webp"/>
   </record>
   <record id="img_lrs_velvet_gem_loveseat_1" model="product.image">
     <field name="product_tmpl_id" ref="lrs_velvet_gem_loveseat"/>

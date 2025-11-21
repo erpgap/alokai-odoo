@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Home Office products: 10 items, with prices, variants, and 3 images each -->
-<odoo noupdate="1">
+<odoo>
 
   <!-- 1) Ascend Standing Desk -->
   <record id="off_ascend_standing_desk" model="product.template">
@@ -289,7 +289,7 @@
   <record id="img_off_lean_wall_desk_1" model="product.image">
     <field name="product_tmpl_id" ref="off_lean_wall_desk"/>
     <field name="name">Front</field>
-    <field name="image_1920" type="base64" file="ggraphql_alokai/static/home_office/shelving/img2.webp"/>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/shelving/img2.webp"/>
   </record>
   <record id="img_off_lean_wall_desk_2" model="product.image">
     <field name="product_tmpl_id" ref="off_lean_wall_desk"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
+<odoo>
 
   <!-- 1) Element Concrete Coffee Table — Coffee Tables -->
   <record id="tbl_element_coffee" model="product.template">
@@ -379,6 +379,13 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/tables/dining/img2.webp"/>
   </record>
 
+<record id="tbl_terra_travertine_dining_b" model="product.product">
+    <field name="name">Angle</field>
+  <field name="image_1920" type="base64"
+         file="graphql_alokai/static/tables/dining/img3.webp"/>
+</record>
+
+
   <record id="tbl_terra_travertine_dining_attr_color" model="product.template.attribute.line">
     <field name="product_tmpl_id" ref="tbl_terra_travertine_dining"/>
     <field name="attribute_id" ref="attr_color"/>
@@ -466,7 +473,7 @@
     <field name="default_code">TBL-GRID-012</field>
     <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_coffee')])]"/>
     <field name="description_sale">Industrial square table with black wireframe grid base and ash top.</field>
-    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/grid_metal/img1.webp"/>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img1.webp"/>
   </record>
   <record id="img_tbl_grid_metal_coffee_1" model="product.image">
     <field name="product_tmpl_id" ref="tbl_grid_metal_coffee"/>

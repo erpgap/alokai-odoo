@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Lighting products: 10 items, with prices, color variants, and 3 images each -->
-<odoo noupdate="1">
+<odoo>
 
   <!-- 1) Arc Floor Lamp -->
   <record id="lgt_arc_floor_lamp" model="product.template">
@@ -23,12 +23,12 @@
   <record id="img_lgt_arc_floor_lamp_1" model="product.image">
     <field name="product_tmpl_id" ref="lgt_arc_floor_lamp"/>
     <field name="name">Side View</field>
-    <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img2.png"/>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img2.webp"/>
   </record>
   <record id="img_lgt_arc_floor_lamp_2" model="product.image">
     <field name="product_tmpl_id" ref="lgt_arc_floor_lamp"/>
     <field name="name">Base Detail</field>
-    <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img3.png"/>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img3.webp"/>
   </record>
   <record id="lgt_arc_floor_lamp_attr_color" model="product.template.attribute.line">
     <field name="product_tmpl_id" ref="lgt_arc_floor_lamp"/>

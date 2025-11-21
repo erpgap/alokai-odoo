@@ -3,7 +3,7 @@
     Copyright 2025 ERPGAP
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 -->
-<odoo noupdate="1">
+<odoo>
 
   <!-- =========================
        CATEGORIAS PRINCIPAIS
@@ -65,6 +65,11 @@
     <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
     <field name="name">Futons</field>
     <field name="sequence">16</field>
+  </record>
+    <record id="ppc_lrs_loveseats" model="product.public.category">
+        <field name="parent_id" eval="ref('ppc_living_room_seating')"/>
+    <field name="name">Loveseats</field>
+    <field name="sequence">17</field>
   </record>
  
 
