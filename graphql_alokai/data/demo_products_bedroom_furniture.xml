@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-  <!-- 1) The "Zen" Platform Bed -->
+  <!-- ZEN PLATFORM BED -->
   <record id="bed_zen_platform" model="product.template">
-    <field name="name">The "Zen" Platform Bed</field>
+    <field name="name">The Zen Platform Bed</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">899.00</field>
     <field name="standard_price">539.40</field>
@@ -33,9 +33,10 @@
            file="graphql_alokai/static/bedroom_furniture/beds/img2.webp"/>
   </record>
 
-  <!-- 2) The "Linen" Upholstered Headboard -->
+
+  <!-- LINEN HEADBOARD -->
   <record id="bed_linen_headboard" model="product.template">
-    <field name="name">The "Linen" Upholstered Headboard</field>
+    <field name="name">The Linen Upholstered Headboard</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">199.00</field>
     <field name="standard_price">119.40</field>
@@ -54,7 +55,7 @@
       Queen-size upholstered headboard in natural beige linen with border piping.
     </field>
     <field name="image_1920" type="base64"
-           file="graphql_alokai/static/bedroom_furniture/headboards/img1.webp"/>
+           file="graphql_alokai/static/bedroom_furniture/headboards/img3.webp"/>
   </record>
 
   <record id="img_bed_linen_headboard_1" model="product.image">
@@ -70,12 +71,14 @@
     <field name="name">Headboard 2</field>
     <field name="sequence">2</field>
     <field name="image_1920" type="base64"
-           file="graphql_alokai/static/bedroom_furniture/headboards/img3.webp"/>
+           file="graphql_alokai/static/bedroom_furniture/headboards/img1.webp"/>
   </record>
 
-  <!-- 3) The "Nordic" 6-Drawer Dresser -->
+
+
+  <!-- NORDIC DRESSER -->
   <record id="bed_nordic_dresser" model="product.template">
-    <field name="name">The "Nordic" 6-Drawer Dresser</field>
+    <field name="name">The Nordic 6-Drawer Dresser</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">749.00</field>
     <field name="standard_price">449.40</field>
@@ -97,46 +100,100 @@
            file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img1.webp"/>
   </record>
 
-  <!-- Linha de atributo Color para o Nordic -->
   <record id="bed_nordic_dresser_attr_color" model="product.template.attribute.line">
     <field name="product_tmpl_id" ref="bed_nordic_dresser"/>
     <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids"
-           eval="[(6, 0, [
-             ref('attr_color_white'),
-             ref('attr_color_dark_green'),
-             ref('attr_color_dark_blue')
-           ])]"/>
+    <field name="value_ids" eval="[(6, 0, [
+        ref('attr_color_white'),
+        ref('attr_color_dark_green'),
+        ref('attr_color_dark_blue')
+    ])]"/>
   </record>
 
-  <!-- Imagens genéricas (não ligadas a variantes específicas) -->
-  <record id="img_bed_nordic_main" model="product.image">
-    <field name="product_tmpl_id" ref="bed_nordic_dresser"/>
-    <field name="name">Main</field>
-    <field name="sequence">1</field>
+    <function  model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_nordic_dresser_attr_color_value_1',
+        'record': obj().env.ref('graphql_alokai.bed_nordic_dresser_attr_color').product_template_value_ids[0],
+        'noupdate': True,
+        },
+        {
+        'xml_id': 'graphql_alokai.bed_nordic_dresser_attr_color_value_2',
+        'record': obj().env.ref('graphql_alokai.bed_nordic_dresser_attr_color').product_template_value_ids[1],
+        'noupdate': True,
+        },
+        {
+        'xml_id': 'graphql_alokai.bed_nordic_dresser_attr_color_value_3',
+        'record': obj().env.ref('graphql_alokai.bed_nordic_dresser_attr_color').product_template_value_ids[2],
+        'noupdate': True,
+        }]"/>
+    </function>
+
+
+    <function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_nordic_dresser_white',
+        'record': obj().env.ref('graphql_alokai.bed_nordic_dresser')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_nordic_dresser_attr_color_value_1')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_nordic_dresser_dark_blue',
+        'record': obj().env.ref('graphql_alokai.bed_nordic_dresser')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_nordic_dresser_attr_color_value_2')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_nordic_dresser_dark_green',
+        'record': obj().env.ref('graphql_alokai.bed_nordic_dresser')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_nordic_dresser_attr_color_value_3')
+        ),
+        'noupdate': True,
+    }]"/>
+</function>
+
+    <record id="bed_nordic_dresser_white" model="product.product">
+    <field name="default_code">ND01-01</field>
+    <field name="standard_price">449.40</field>
+    <field name="list_price">749.00</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img1.webp"/>
-  </record>
+</record>
 
-  <record id="img_bed_nordic_angle" model="product.image">
-    <field name="product_tmpl_id" ref="bed_nordic_dresser"/>
+<record id="bed_nordic_dresser_dark_green" model="product.product">
+    <field name="default_code">ND02-01</field>
+    <field name="standard_price">449.40</field>
+    <field name="list_price">749.00</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img7.webp"/>
+</record>
+
+<record id="bed_nordic_dresser_dark_blue" model="product.product">
+    <field name="default_code">ND03-01</field>
+    <field name="standard_price">449.40</field>
+    <field name="list_price">749.00</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img8.webp"/>
+</record>
+
+<record id="bed_nordic_dresser_white_img_angle" model="product.image">
+    <field name="product_variant_id" ref="bed_nordic_dresser_white"/>
     <field name="name">Angle View</field>
-    <field name="sequence">2</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img2.webp"/>
-  </record>
+</record>
 
-  <record id="img_bed_nordic_detail" model="product.image">
-    <field name="product_tmpl_id" ref="bed_nordic_dresser"/>
+<record id="bed_nordic_dresser_white_img_drawer" model="product.image">
+    <field name="product_variant_id" ref="bed_nordic_dresser_white"/>
     <field name="name">Drawer Detail</field>
-    <field name="sequence">3</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img3.webp"/>
-  </record>
+</record>
 
-  <!-- 4) The "Float" Wall-Mounted Nightstand -->
+
+
+  <!-- FLOAT NIGHTSTAND -->
   <record id="bed_float_wall_nightstand" model="product.template">
-    <field name="name">The "Float" Wall-Mounted Nightstand</field>
+    <field name="name">The Float Wall-Mounted Nightstand</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">169.00</field>
     <field name="standard_price">101.40</field>
@@ -174,9 +231,11 @@
            file="graphql_alokai/static/bedroom_furniture/nightstands/img3.webp"/>
   </record>
 
-  <!-- 5) The "Canopy" Four-Poster Bed -->
-  <record id="bed_canopy_four_poster" model="product.template">
-    <field name="name">The "Canopy" Four-Poster Bed</field>
+
+
+<!-- CANOPY FOUR-POSTER BED -->
+<record id="bed_canopy_four_poster" model="product.template">
+    <field name="name">The Canopy Four-Poster Bed</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">999.00</field>
     <field name="standard_price">599.40</field>
@@ -196,45 +255,73 @@
     </field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/beds/img3.webp"/>
-  </record>
+</record>
 
-  <record id="bed_canopy_attr_color" model="product.template.attribute.line">
+<record id="bed_canopy_four_poster_attribute_1" model="product.template.attribute.line">
     <field name="product_tmpl_id" ref="bed_canopy_four_poster"/>
     <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids"
-           eval="[(6, 0, [
-             ref('attr_color_white'),
-             ref('attr_color_black')
-           ])]"/>
-  </record>
+    <field name="value_ids" eval="[(6, 0, [
+        ref('attr_color_black'),
+        ref('attr_color_white')
+    ])]"/>
+</record>
 
-  <record id="img_bed_canopy_main_black" model="product.image">
-    <field name="product_tmpl_id" ref="bed_canopy_four_poster"/>
-    <field name="name">Black - Main</field>
-    <field name="sequence">1</field>
-    <field name="image_1920" type="base64"
-           file="graphql_alokai/static/bedroom_furniture/beds/img3.webp"/>
-  </record>
+<function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_canopy_four_poster_attribute_1_value_1',
+        'record': obj().env.ref('graphql_alokai.bed_canopy_four_poster_attribute_1').product_template_value_ids[0],
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_canopy_four_poster_attribute_1_value_2',
+        'record': obj().env.ref('graphql_alokai.bed_canopy_four_poster_attribute_1').product_template_value_ids[1],
+        'noupdate': True,
+    }]"/>
+</function>
 
-  <record id="img_bed_canopy_black_angle" model="product.image">
-    <field name="product_tmpl_id" ref="bed_canopy_four_poster"/>
-    <field name="name">Black - Angle</field>
-    <field name="sequence">2</field>
+<function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_canopy_black',
+        'record': obj().env.ref('graphql_alokai.bed_canopy_four_poster')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_canopy_four_poster_attribute_1_value_1')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_canopy_white',
+        'record': obj().env.ref('graphql_alokai.bed_canopy_four_poster')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_canopy_four_poster_attribute_1_value_2')
+        ),
+        'noupdate': True,
+    }]"/>
+</function>
+
+    <record id="bed_canopy_black" model="product.product">
+    <field name="default_code">CNP-01-01</field>
+    <field name="standard_price">599.40</field>
+    <field name="list_price">999.00</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/beds/img4.webp"/>
-  </record>
+</record>
 
-  <record id="img_bed_canopy_white_main" model="product.image">
-    <field name="product_tmpl_id" ref="bed_canopy_four_poster"/>
-    <field name="name">White - Main</field>
-    <field name="sequence">3</field>
+
+<record id="bed_canopy_black_img_angle" model="product.image">
+    <field name="product_variant_id" ref="bed_canopy_black"/>
+    <field name="name">Angle View</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/beds/img3.webp"/>
+</record>
+
+<record id="bed_canopy_white" model="product.product">
+    <field name="default_code">CNP-02-01</field>
+    <field name="standard_price">599.40</field>
+    <field name="list_price">999.00</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/beds/img5.webp"/>
-  </record>
+</record>
 
-  <!-- 6) The "Mirror" Wardrobe -->
+
+  <!-- MIRROR WARDROBE -->
   <record id="bed_mirror_wardrobe" model="product.template">
-    <field name="name">The "Mirror" Wardrobe</field>
+    <field name="name">The Mirror Wardrobe</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">799.00</field>
     <field name="standard_price">479.40</field>
@@ -254,10 +341,18 @@
       Two-door wardrobe in white finish with full-length mirror and long handles.
     </field>
     <field name="image_1920" type="base64"
-           file="graphql_alokai/static/bedroom_furniture/wardrobes/img1.webp"/>
+           file="graphql_alokai/static/bedroom_furniture/wardrobes/img3.webp"/>
   </record>
 
   <record id="img_bed_mirror_wardrobe_1" model="product.image">
+    <field name="product_tmpl_id" ref="bed_mirror_wardrobe"/>
+    <field name="name">Angle View</field>
+    <field name="sequence">2</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/wardrobes/img1.webp"/>
+  </record>
+
+ <record id="img_bed_mirror_wardrobe_2" model="product.image">
     <field name="product_tmpl_id" ref="bed_mirror_wardrobe"/>
     <field name="name">Angle View</field>
     <field name="sequence">1</field>
@@ -265,9 +360,11 @@
            file="graphql_alokai/static/bedroom_furniture/wardrobes/img2.webp"/>
   </record>
 
-  <!-- 7) The "Loft" Chest of Drawers -->
+
+  <!-- LOFT CHEST -->
+
   <record id="bed_loft_chest" model="product.template">
-    <field name="name">The "Loft" Chest of Drawers</field>
+    <field name="name">The Loft Chest of Drawers</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">599.00</field>
     <field name="standard_price">359.40</field>
@@ -305,41 +402,100 @@
            file="graphql_alokai/static/bedroom_furniture/chests_of_drawers/img6.webp"/>
   </record>
 
-  <!-- 8) The "End-of-Bed" Storage Bench -->
-  <record id="bed_end_storage_bench" model="product.template">
-    <field name="name">The "End-of-Bed" Storage Bench</field>
-    <field name="categ_id" ref="product.product_category_all"/>
-    <field name="list_price">249.00</field>
-    <field name="standard_price">149.40</field>
-    <field name="type">consu</field>
-    <field name="is_storable" eval="True"/>
-    <field name="is_published" eval="True"/>
-    <field name="taxes_id" eval="False"/>
-    <field name="uom_id" ref="uom.product_uom_unit"/>
-    <field name="uom_po_id" ref="uom.product_uom_unit"/>
-    <field name="invoice_policy">delivery</field>
-    <field name="default_code">BED-BENCH-008</field>
-    <field name="public_categ_ids"
-           eval="[(6, 0, [ref('ppc_bedroom_furniture'),
-                          ref('ppc_bed_benches')])]"/>
-    <field name="description_sale">
-      Modern storage bench with tufted dark grey fabric top; opens for storage.
-    </field>
+  <!-- END-OF-BED STORAGE BENCH -->
+<record id="bed_end_storage_bench" model="product.template">
+  <field name="name">The End-of-Bed Storage Bench</field>
+  <field name="categ_id" ref="product.product_category_all"/>
+  <field name="list_price">249.00</field>
+  <field name="standard_price">149.40</field>
+  <field name="type">consu</field>
+  <field name="is_storable" eval="True"/>
+  <field name="is_published" eval="True"/>
+  <field name="taxes_id" eval="False"/>
+  <field name="uom_id" ref="uom.product_uom_unit"/>
+  <field name="uom_po_id" ref="uom.product_uom_unit"/>
+  <field name="invoice_policy">delivery</field>
+  <field name="default_code">BED-BENCH-008</field>
+  <field name="public_categ_ids"
+         eval="[(6, 0, [ref('ppc_bedroom_furniture'),
+                        ref('ppc_bed_benches')])]"/>
+  <field name="description_sale">
+    Modern storage bench with tufted dark grey fabric top; opens for storage.
+  </field>
+  <field name="image_1920" type="base64"
+         file="graphql_alokai/static/bedroom_furniture/end_of_bed_benches/img1.webp"/>
+</record>
+
+
+<record id="bed_end_storage_bench_attr_color" model="product.template.attribute.line">
+    <field name="product_tmpl_id" ref="bed_end_storage_bench"/>
+    <field name="attribute_id" ref="attr_color"/>
+    <field name="value_ids" eval="[(6, 0, [
+      ref('attr_color_grey'),
+      ref('attr_color_white')
+    ])]"/>
+</record>
+
+ <function  model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_end_storage_bench_attr_color_white',
+        'record': obj().env.ref('graphql_alokai.bed_end_storage_bench_attr_color').product_template_value_ids[0],
+        'noupdate': True,
+        },
+        {
+        'xml_id': 'graphql_alokai.bed_end_storage_bench_attr_color_grey',
+        'record': obj().env.ref('graphql_alokai.bed_end_storage_bench_attr_color').product_template_value_ids[1],
+        'noupdate': True,
+        }]"/>
+  </function>
+
+
+    <function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_end_storage_bench_grey',
+        'record': obj().env.ref('graphql_alokai.bed_end_storage_bench')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_end_storage_bench_attr_color_grey')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_end_storage_bench_white',
+        'record': obj().env.ref('graphql_alokai.bed_end_storage_bench')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_end_storage_bench_attr_color_white')
+        ),
+        'noupdate': True,
+    }]"/>
+</function>
+
+<record id="bed_end_storage_bench_grey" model="product.product">
+    <field name="default_code">ESB01</field>
+    <field name="standard_price">249.00</field>
+    <field name="list_price">149.40</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/end_of_bed_benches/img1.webp"/>
-  </record>
+</record>
 
-  <record id="img_bed_end_storage_bench_1" model="product.image">
-    <field name="product_tmpl_id" ref="bed_end_storage_bench"/>
+<record id="bed_end_storage_bench_white" model="product.product">
+    <field name="default_code">ESB02</field>
+    <field name="standard_price">249.00</field>
+    <field name="list_price">149.40</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/end_of_bed_benches/img3.webp"/>
+</record>
+
+
+<record id="bed_end_storage_bench_grey_img_angle" model="product.image">
+    <field name="product_variant_id" ref="bed_end_storage_bench_grey"/>
     <field name="name">Angle View</field>
-    <field name="sequence">1</field>
+    <field name="sequence">2</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/end_of_bed_benches/img2.webp"/>
-  </record>
+</record>
 
-  <!-- 9) The "Circle" Bedside Table -->
+
+
+  <!-- CIRCLE BEDSIDE TABLE -->
   <record id="bed_circle_bedside" model="product.template">
-    <field name="name">The "Circle" Bedside Table</field>
+    <field name="name">The Circle Bedside Table</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">129.00</field>
     <field name="standard_price">77.40</field>
@@ -369,9 +525,28 @@
            file="graphql_alokai/static/bedroom_furniture/nightstands/img5.webp"/>
   </record>
 
-  <!-- 10) The "Valet" Clothing Stand -->
+  <record id="img_bed_circle_bedside_2" model="product.image">
+    <field name="product_tmpl_id" ref="bed_circle_bedside"/>
+    <field name="name">White Version</field>
+    <field name="sequence">2</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/nightstands/img7.webp"/>
+  </record>
+
+  <record id="img_bed_circle_bedside_3" model="product.image">
+    <field name="product_tmpl_id" ref="bed_circle_bedside"/>
+    <field name="name">Black Version</field>
+    <field name="sequence">3</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/nightstands/img8.webp"/>
+  </record>
+
+
+
+  <!-- VALET CLOTHING STAND -->
+
   <record id="bed_valet_clothing_stand" model="product.template">
-    <field name="name">The "Valet" Clothing Stand</field>
+    <field name="name">The Valet Clothing Stand</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">149.00</field>
     <field name="standard_price">89.40</field>
@@ -408,5 +583,6 @@
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/valet_stands/img3.webp"/>
   </record>
+
 
 </odoo>

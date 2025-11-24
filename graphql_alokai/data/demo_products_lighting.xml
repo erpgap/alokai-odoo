@@ -4,7 +4,7 @@
 
   <!-- 1) Arc Floor Lamp -->
   <record id="lgt_arc_floor_lamp" model="product.template">
-    <field name="name">The "Arc" Floor Lamp</field>
+    <field name="name">The Arc Floor Lamp</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">179.00</field>
     <field name="standard_price">107.40</field>
@@ -30,35 +30,11 @@
     <field name="name">Base Detail</field>
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img3.webp"/>
   </record>
-  <record id="lgt_arc_floor_lamp_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_arc_floor_lamp"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_arc_floor_lamp_ptav_1','record': obj().env.ref('graphql_alokai.lgt_arc_floor_lamp_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_arc_floor_lamp_ptav_2','record': obj().env.ref('graphql_alokai.lgt_arc_floor_lamp_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_arc_floor_lamp_a','record': obj().env.ref('graphql_alokai.lgt_arc_floor_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_arc_floor_lamp_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_arc_floor_lamp_b','record': obj().env.ref('graphql_alokai.lgt_arc_floor_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_arc_floor_lamp_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_arc_floor_lamp_a" model="product.product">
-    <field name="default_code">LGT-ARC-009-W</field>
-    <field name="standard_price">107.40</field>
-  </record>
-  <record id="lgt_arc_floor_lamp_b" model="product.product">
-    <field name="default_code">LGT-ARC-009-B</field>
-    <field name="standard_price">107.40</field>
-  </record>
+
 
   <!-- 2) Tripod Floor Lamp -->
   <record id="lgt_tripod_floor_lamp" model="product.template">
-    <field name="name">The "Tripod" Floor Lamp</field>
+    <field name="name">The Tripod Floor Lamp</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">169.00</field>
     <field name="standard_price">101.40</field>
@@ -76,35 +52,9 @@
   </record>
 
 
-  <record id="lgt_tripod_floor_lamp_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_tripod_floor_lamp"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_tripod_floor_lamp_ptav_1','record': obj().env.ref('graphql_alokai.lgt_tripod_floor_lamp_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_tripod_floor_lamp_ptav_2','record': obj().env.ref('graphql_alokai.lgt_tripod_floor_lamp_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_tripod_floor_lamp_a','record': obj().env.ref('graphql_alokai.lgt_tripod_floor_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_tripod_floor_lamp_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_tripod_floor_lamp_b','record': obj().env.ref('graphql_alokai.lgt_tripod_floor_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_tripod_floor_lamp_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_tripod_floor_lamp_a" model="product.product">
-    <field name="default_code">LGT-TRI-011-W</field>
-    <field name="standard_price">101.40</field>
-  </record>
-  <record id="lgt_tripod_floor_lamp_b" model="product.product">
-    <field name="default_code">LGT-TRI-011-B</field>
-    <field name="standard_price">101.40</field>
-  </record>
-
   <!-- 3) Edison Desk Lamp -->
   <record id="lgt_edison_desk_lamp" model="product.template">
-    <field name="name">The "Edison" Desk Lamp</field>
+    <field name="name">The Edison Desk Lamp</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">89.00</field>
     <field name="standard_price">53.40</field>
@@ -121,35 +71,10 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img4.webp"/>
   </record>
 
-  <record id="lgt_edison_desk_lamp_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_edison_desk_lamp"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_edison_desk_lamp_ptav_1','record': obj().env.ref('graphql_alokai.lgt_edison_desk_lamp_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_edison_desk_lamp_ptav_2','record': obj().env.ref('graphql_alokai.lgt_edison_desk_lamp_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_edison_desk_lamp_a','record': obj().env.ref('graphql_alokai.lgt_edison_desk_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_edison_desk_lamp_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_edison_desk_lamp_b','record': obj().env.ref('graphql_alokai.lgt_edison_desk_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_edison_desk_lamp_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_edison_desk_lamp_a" model="product.product">
-    <field name="default_code">LGT-EDS-012-W</field>
-    <field name="standard_price">53.40</field>
-  </record>
-  <record id="lgt_edison_desk_lamp_b" model="product.product">
-    <field name="default_code">LGT-EDS-012-B</field>
-    <field name="standard_price">53.40</field>
-  </record>
 
   <!-- 4) Globe Pendant Light (já tinhas, agora com imagens) -->
   <record id="lgt_globe_pendant" model="product.template">
-    <field name="name">The "Globe" Pendant Light</field>
+    <field name="name">The Globe Pendant Light</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">139.00</field>
     <field name="standard_price">83.40</field>
@@ -166,35 +91,10 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/pendant_lights/img1.webp"/>
   </record>
 
-  <record id="lgt_globe_pendant_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_globe_pendant"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_globe_pendant_ptav_1','record': obj().env.ref('graphql_alokai.lgt_globe_pendant_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_globe_pendant_ptav_2','record': obj().env.ref('graphql_alokai.lgt_globe_pendant_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_globe_pendant_a','record': obj().env.ref('graphql_alokai.lgt_globe_pendant')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_globe_pendant_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_globe_pendant_b','record': obj().env.ref('graphql_alokai.lgt_globe_pendant')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_globe_pendant_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_globe_pendant_a" model="product.product">
-    <field name="default_code">LGT-GLOB-010-W</field>
-    <field name="standard_price">83.40</field>
-  </record>
-  <record id="lgt_globe_pendant_b" model="product.product">
-    <field name="default_code">LGT-GLOB-010-B</field>
-    <field name="standard_price">83.40</field>
-  </record>
 
   <!-- 5) Ceramic Table Lamp -->
   <record id="lgt_ceramic_table_lamp" model="product.template">
-    <field name="name">The "Ceramic" Table Lamp</field>
+    <field name="name">The Ceramic Table Lamp</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">79.00</field>
     <field name="standard_price">47.40</field>
@@ -212,35 +112,9 @@
   </record>
 
 
-  <record id="lgt_ceramic_table_lamp_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_ceramic_table_lamp"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_ceramic_table_lamp_ptav_1','record': obj().env.ref('graphql_alokai.lgt_ceramic_table_lamp_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_ceramic_table_lamp_ptav_2','record': obj().env.ref('graphql_alokai.lgt_ceramic_table_lamp_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_ceramic_table_lamp_a','record': obj().env.ref('graphql_alokai.lgt_ceramic_table_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_ceramic_table_lamp_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_ceramic_table_lamp_b','record': obj().env.ref('graphql_alokai.lgt_ceramic_table_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_ceramic_table_lamp_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_ceramic_table_lamp_a" model="product.product">
-    <field name="default_code">LGT-CER-013-W</field>
-    <field name="standard_price">47.40</field>
-  </record>
-  <record id="lgt_ceramic_table_lamp_b" model="product.product">
-    <field name="default_code">LGT-CER-013-B</field>
-    <field name="standard_price">47.40</field>
-  </record>
-
   <!-- 6) Spotlight Task Lamp -->
   <record id="lgt_spotlight_task_lamp" model="product.template">
-    <field name="name">The "Spotlight" Task Lamp</field>
+    <field name="name">The Spotlight Task Lamp</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">59.00</field>
     <field name="standard_price">35.40</field>
@@ -262,35 +136,9 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img7.webp"/>
   </record>
 
-  <record id="lgt_spotlight_task_lamp_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_spotlight_task_lamp"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_spotlight_task_lamp_ptav_1','record': obj().env.ref('graphql_alokai.lgt_spotlight_task_lamp_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_spotlight_task_lamp_ptav_2','record': obj().env.ref('graphql_alokai.lgt_spotlight_task_lamp_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_spotlight_task_lamp_a','record': obj().env.ref('graphql_alokai.lgt_spotlight_task_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_spotlight_task_lamp_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_spotlight_task_lamp_b','record': obj().env.ref('graphql_alokai.lgt_spotlight_task_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_spotlight_task_lamp_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_spotlight_task_lamp_a" model="product.product">
-    <field name="default_code">LGT-SPT-014-W</field>
-    <field name="standard_price">35.40</field>
-  </record>
-  <record id="lgt_spotlight_task_lamp_b" model="product.product">
-    <field name="default_code">LGT-SPT-014-B</field>
-    <field name="standard_price">35.40</field>
-  </record>
-
   <!-- 7) Wicker Dome Pendant -->
   <record id="lgt_wicker_dome_pendant" model="product.template">
-    <field name="name">The "Wicker" Dome Pendant</field>
+    <field name="name">The Wicker Dome Pendant</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">149.00</field>
     <field name="standard_price">89.40</field>
@@ -307,35 +155,10 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/pendant_lights/img2.webp"/>
   </record>
 
-  <record id="lgt_wicker_dome_pendant_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_wicker_dome_pendant"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_wicker_dome_pendant_ptav_1','record': obj().env.ref('graphql_alokai.lgt_wicker_dome_pendant_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_wicker_dome_pendant_ptav_2','record': obj().env.ref('graphql_alokai.lgt_wicker_dome_pendant_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_wicker_dome_pendant_a','record': obj().env.ref('graphql_alokai.lgt_wicker_dome_pendant')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_wicker_dome_pendant_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_wicker_dome_pendant_b','record': obj().env.ref('graphql_alokai.lgt_wicker_dome_pendant')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_wicker_dome_pendant_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_wicker_dome_pendant_a" model="product.product">
-    <field name="default_code">LGT-WICK-015-W</field>
-    <field name="standard_price">89.40</field>
-  </record>
-  <record id="lgt_wicker_dome_pendant_b" model="product.product">
-    <field name="default_code">LGT-WICK-015-B</field>
-    <field name="standard_price">89.40</field>
-  </record>
 
   <!-- 8) Crystal Chandelier -->
   <record id="lgt_crystal_chandelier" model="product.template">
-    <field name="name">The "Crystal" Chandelier</field>
+    <field name="name">The Crystal Chandelier</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">399.00</field>
     <field name="standard_price">239.40</field>
@@ -352,35 +175,11 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/chandeliers/img1.webp"/>
   </record>
 
-  <record id="lgt_crystal_chandelier_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_crystal_chandelier"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_crystal_chandelier_ptav_1','record': obj().env.ref('graphql_alokai.lgt_crystal_chandelier_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_crystal_chandelier_ptav_2','record': obj().env.ref('graphql_alokai.lgt_crystal_chandelier_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_crystal_chandelier_a','record': obj().env.ref('graphql_alokai.lgt_crystal_chandelier')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_crystal_chandelier_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_crystal_chandelier_b','record': obj().env.ref('graphql_alokai.lgt_crystal_chandelier')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_crystal_chandelier_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_crystal_chandelier_a" model="product.product">
-    <field name="default_code">LGT-CRYS-016-W</field>
-    <field name="standard_price">239.40</field>
-  </record>
-  <record id="lgt_crystal_chandelier_b" model="product.product">
-    <field name="default_code">LGT-CRYS-016-B</field>
-    <field name="standard_price">239.40</field>
-  </record>
+
 
   <!-- 9) Touch Bedside Lamp -->
   <record id="lgt_touch_bedside_lamp" model="product.template">
-    <field name="name">The "Touch" Bedside Lamp</field>
+    <field name="name">The Touch Bedside Lamp</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">49.00</field>
     <field name="standard_price">29.40</field>
@@ -397,35 +196,10 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/desk_table_lamps/img8.webp"/>
   </record>
 
-  <record id="lgt_touch_bedside_lamp_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_touch_bedside_lamp"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_touch_bedside_lamp_ptav_1','record': obj().env.ref('graphql_alokai.lgt_touch_bedside_lamp_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_touch_bedside_lamp_ptav_2','record': obj().env.ref('graphql_alokai.lgt_touch_bedside_lamp_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_touch_bedside_lamp_a','record': obj().env.ref('graphql_alokai.lgt_touch_bedside_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_touch_bedside_lamp_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_touch_bedside_lamp_b','record': obj().env.ref('graphql_alokai.lgt_touch_bedside_lamp')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_touch_bedside_lamp_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_touch_bedside_lamp_a" model="product.product">
-    <field name="default_code">LGT-TCH-017-W</field>
-    <field name="standard_price">29.40</field>
-  </record>
-  <record id="lgt_touch_bedside_lamp_b" model="product.product">
-    <field name="default_code">LGT-TCH-017-B</field>
-    <field name="standard_price">29.40</field>
-  </record>
 
   <!-- 10) Linear LED Pendant Light -->
   <record id="lgt_linear_led_pendant" model="product.template">
-    <field name="name">The "Linear" LED Pendant Light</field>
+    <field name="name">The Linear LED Pendant Light</field>
     <field name="categ_id" ref="product.product_category_all"/>
     <field name="list_price">199.00</field>
     <field name="standard_price">119.40</field>
@@ -447,30 +221,5 @@
     <field name="image_1920" type="base64" file="graphql_alokai/static/lighting/pendant_lights/img4.webp"/>
   </record>
 
-  <record id="lgt_linear_led_pendant_attr_color" model="product.template.attribute.line">
-    <field name="product_tmpl_id" ref="lgt_linear_led_pendant"/>
-    <field name="attribute_id" ref="attr_color"/>
-    <field name="value_ids" eval="[(6, 0, [ref('attr_color_white'), ref('attr_color_black')])]"/>
-  </record>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_linear_led_pendant_ptav_1','record': obj().env.ref('graphql_alokai.lgt_linear_led_pendant_attr_color').product_template_value_ids[0],'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_linear_led_pendant_ptav_2','record': obj().env.ref('graphql_alokai.lgt_linear_led_pendant_attr_color').product_template_value_ids[1],'noupdate': True},
-    ]"/>
-  </function>
-  <function model="ir.model.data" name="_update_xmlids">
-    <value model="base" eval="[
-      {'xml_id': 'graphql_alokai.lgt_linear_led_pendant_a','record': obj().env.ref('graphql_alokai.lgt_linear_led_pendant')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_linear_led_pendant_ptav_1')),'noupdate': True},
-      {'xml_id': 'graphql_alokai.lgt_linear_led_pendant_b','record': obj().env.ref('graphql_alokai.lgt_linear_led_pendant')._get_variant_for_combination(obj().env.ref('graphql_alokai.lgt_linear_led_pendant_ptav_2')),'noupdate': True},
-    ]"/>
-  </function>
-  <record id="lgt_linear_led_pendant_a" model="product.product">
-    <field name="default_code">LGT-LINE-018-W</field>
-    <field name="standard_price">119.40</field>
-  </record>
-  <record id="lgt_linear_led_pendant_b" model="product.product">
-    <field name="default_code">LGT-LINE-018-B</field>
-    <field name="standard_price">119.40</field>
-  </record>
 
 </odoo>
