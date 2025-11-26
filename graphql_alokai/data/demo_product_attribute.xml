@@ -61,4 +61,11 @@
     <field name="sequence">7</field>
   </record>
 
+<record id="attr_color_beige" model="product.attribute.value">
+    <field name="name">Beige</field>
+    <field name="attribute_id" ref="attr_color"/>
+    <field name="sequence">8</field>
+    <field name="html_color">#f5f5dc</field>
+</record>
+
 </odoo>
