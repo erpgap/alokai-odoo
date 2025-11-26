@@ -151,7 +151,7 @@
     }]"/>
 </function>
 
-    <record id="bed_nordic_dresser_white" model="product.product">
+<record id="bed_nordic_dresser_white" model="product.product">
     <field name="default_code">ND01-01</field>
     <field name="standard_price">449.40</field>
     <field name="list_price">749.00</field>
@@ -493,7 +493,7 @@
 
 
 
-  <!-- CIRCLE BEDSIDE TABLE -->
+   <!-- CIRCLE BEDSIDE TABLE -->
   <record id="bed_circle_bedside" model="product.template">
     <field name="name">The Circle Bedside Table</field>
     <field name="categ_id" ref="product.product_category_all"/>
@@ -517,29 +517,86 @@
            file="graphql_alokai/static/bedroom_furniture/nightstands/img4.webp"/>
   </record>
 
-  <record id="img_bed_circle_bedside_1" model="product.image">
+  <record id="bed_circle_bedside_attr_color" model="product.template.attribute.line">
     <field name="product_tmpl_id" ref="bed_circle_bedside"/>
-    <field name="name">Angle View</field>
-    <field name="sequence">1</field>
-    <field name="image_1920" type="base64"
-           file="graphql_alokai/static/bedroom_furniture/nightstands/img5.webp"/>
+    <field name="attribute_id" ref="attr_color"/>
+    <field name="value_ids" eval="[(6, 0, [
+      ref('attr_color_beige'),
+      ref('attr_color_white'),
+      ref('attr_color_black')
+    ])]"/>
   </record>
 
-  <record id="img_bed_circle_bedside_2" model="product.image">
-    <field name="product_tmpl_id" ref="bed_circle_bedside"/>
-    <field name="name">White Version</field>
-    <field name="sequence">2</field>
+  <function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_circle_bedside_attr_color_value_1',
+        'record': obj().env.ref('graphql_alokai.bed_circle_bedside_attr_color').product_template_value_ids[0],
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_circle_bedside_attr_color_value_2',
+        'record': obj().env.ref('graphql_alokai.bed_circle_bedside_attr_color').product_template_value_ids[1],
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_circle_bedside_attr_color_value_3',
+        'record': obj().env.ref('graphql_alokai.bed_circle_bedside_attr_color').product_template_value_ids[2],
+        'noupdate': True,
+    }]"/>
+  </function>
+
+  <function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.bed_circle_bedside_black',
+        'record': obj().env.ref('graphql_alokai.bed_circle_bedside')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_circle_bedside_attr_color_value_1')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_circle_bedside_white',
+        'record': obj().env.ref('graphql_alokai.bed_circle_bedside')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_circle_bedside_attr_color_value_2')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.bed_circle_bedside_beige',
+        'record': obj().env.ref('graphql_alokai.bed_circle_bedside')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.bed_circle_bedside_attr_color_value_3')
+        ),
+        'noupdate': True,
+    }]"/>
+  </function>
+
+  <record id="bed_circle_bedside_beige" model="product.product">
+    <field name="default_code">CB01</field>
+    <field name="list_price">129.00</field>
+    <field name="standard_price">77.40</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/nightstands/img4.webp"/>
+  </record>
+
+  <record id="bed_circle_bedside_white" model="product.product">
+    <field name="default_code">CB02</field>
+    <field name="list_price">129.00</field>
+    <field name="standard_price">77.40</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/nightstands/img7.webp"/>
   </record>
 
-  <record id="img_bed_circle_bedside_3" model="product.image">
-    <field name="product_tmpl_id" ref="bed_circle_bedside"/>
-    <field name="name">Black Version</field>
-    <field name="sequence">3</field>
+  <record id="bed_circle_bedside_black" model="product.product">
+    <field name="default_code">CB03</field>
+    <field name="list_price">129.00</field>
+    <field name="standard_price">77.40</field>
     <field name="image_1920" type="base64"
            file="graphql_alokai/static/bedroom_furniture/nightstands/img8.webp"/>
   </record>
+
+  <record id="img_bed_circle_bedside_beige_angle" model="product.image">
+    <field name="product_variant_id" ref="bed_circle_bedside_beige"/>
+    <field name="name">Angle View</field>
+    <field name="sequence">2</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/bedroom_furniture/nightstands/img5.webp"/>
+  </record>
+
 
 
 
