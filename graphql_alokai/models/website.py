@@ -42,12 +42,12 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
-        records._update_slug_in_redis()
+        # records._update_slug_in_redis()
         return records
 
     def write(self, vals):
         res = super().write(vals)
-        self._update_slug_in_redis()
+        # self._update_slug_in_redis()
         return res
 
 
@@ -153,8 +153,8 @@ class Website(models.Model):
     @api.model
     def _redis_connect(self):
         ICP = self.env['ir.config_parameter'].sudo()
-        redis_host = ICP.get_param('alokai_redis_host', False)
-        redis_port = ICP.get_param('alokai_redis_port', False)
+        redis_host = ICP.get_param('alokai_redis_host', "redis")
+        redis_port = ICP.get_param('alokai_redis_port', 6379)
 
         if not redis_host or not redis_port:
             raise UserError(_('Please configure Redis.'))
