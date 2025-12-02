@@ -25,12 +25,18 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     else:
         offset = 0
 
-    if 'price' in sort:
+    if 'relevance' in sort and kwargs.get('ids', False):
+        order = None
+    elif 'price' in sort:
         order = Product._graphql_get_search_order(sort=None)
     else:
         order = Product._graphql_get_search_order(sort)
 
     products = Product.search(expression.AND(domain), order=order)
+
+    if 'relevance' in sort and kwargs.get('ids', False):
+        products = products.sorted(lambda p: kwargs['ids'].index(p.id))
+
     attribute_values = env['product.attribute.value'].sudo()
     filter_counts = []
     attribute_value_counts = defaultdict(int)
@@ -235,6 +241,7 @@ class ProductSortInput(graphene.InputObjectType):
     price = SortEnum()
     popular = SortEnum()
     newest = SortEnum()
+    relevance = SortEnum()
 
 
 class ProductVariant(graphene.Interface):
