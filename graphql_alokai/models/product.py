@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import json
-from odoo.osv import expression
+from odoo.fields import Domain
 from collections import defaultdict
 from datetime import datetime, timedelta
 from odoo import models, fields, api, _
@@ -116,7 +116,7 @@ class ProductTemplate(models.Model):
             for key, value in filtered_attributes.items():
                 attributes_domain.append([('attribute_line_ids.value_ids', 'in', value)])
 
-            attributes_domain = expression.AND(attributes_domain)
+            attributes_domain = Domain.AND(attributes_domain)
             domains.append(attributes_domain)
 
         # Min and max price of recordset need to be calculated without the price filter
@@ -295,13 +295,13 @@ class ProductTemplate(models.Model):
             ('date', '>=', date_days_ago),
         ]
 
-        sale_groups = self.env['sale.report'].sudo().read_group(
+        sale_groups = self.env['sale.report'].sudo()._read_group(
             domain,
             ['product_id', 'product_uom_qty'],
-            ['product_id'],
+            ['product_id:sum'],
         )
         # TODO: check why product id is False in sale.report
-        sale_count_map = {group['product_id'][0]: group['product_uom_qty'] for group in sale_groups if group and group.get('product_uom_qty')}
+        sale_count_map = {group[0].id: group[1] for group in sale_groups if group[0]}
 
         for product in self:
             if product.type in ['product', 'consu']:
@@ -405,9 +405,20 @@ class ProductTemplate(models.Model):
     def _get_combination_info(self, combination=False, product_id=False, add_qty=1, parent_combination=False,
                               only_template=False):
         """ Add discount value and percentage based """
-        combination_info = super(ProductTemplate, self)._get_combination_info(
-            combination=combination, product_id=product_id, add_qty=add_qty, parent_combination=parent_combination,
-            only_template=only_template)
+        # Build kwargs dynamically to support different Odoo versions
+        kwargs = {
+            'combination': combination,
+            'product_id': product_id,
+            'add_qty': add_qty,
+            'only_template': only_template
+        }
+        # Only pass parent_combination if the parent method supports it
+        import inspect
+        parent_method = super(ProductTemplate, self)._get_combination_info
+        if 'parent_combination' in inspect.signature(parent_method).parameters:
+            kwargs['parent_combination'] = parent_combination
+
+        combination_info = parent_method(**kwargs)
 
         discount = 0
         discount_perc = 0

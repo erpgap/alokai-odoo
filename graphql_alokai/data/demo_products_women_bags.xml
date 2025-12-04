@@ -15,7 +15,6 @@
         <field name="type">consu</field>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Michael Kors – Clutch “Daria”</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -72,7 +71,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Clutch ”Carol” Liebeskind black</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -130,7 +128,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Clutch “Jet Set Travel” small Michael Kors</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -281,7 +278,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -338,7 +334,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -396,7 +391,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -454,7 +448,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -512,7 +505,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Bag “Jet Set Travel” Michael Kors</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -597,7 +589,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -654,7 +645,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -712,7 +702,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>
@@ -769,7 +758,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">The Karissa V-Neck Tee features a semi-fitted shape that's flattering for every figure. You can hit the gym with confidence while it hugs curves and hides common "problem" areas. Find stunning women's cocktail dresses and party dresses.</field>
         <field name="default_code">578902-00</field>
         <field name="invoice_policy">delivery</field>

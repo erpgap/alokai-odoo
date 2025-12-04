@@ -10,7 +10,7 @@ from odoo import models, fields, api, tools
 from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import get_image_url
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.exceptions import UserError
 from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
 
@@ -407,7 +407,7 @@ class BlogPost(models.Model):
         if filter.get('tag_slug', False):
             domain.append([('tag_ids.website_slug', '=', filter['tag_slug'])])
 
-        return expression.AND(domain)
+        return Domain.AND(domain)
 
     @api.depends('name')
     def _compute_website_slug(self):

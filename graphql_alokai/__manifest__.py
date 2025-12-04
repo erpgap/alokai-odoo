@@ -4,7 +4,7 @@
 
 {
     'name': 'Alokai Api',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'summary': 'Alokai API',
     'description': """Alokai API Integration""",
     'category': 'Website',

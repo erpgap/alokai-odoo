@@ -12,6 +12,7 @@ from odoo import http
 from odoo.addons.web.controllers.binary import Binary
 from odoo.addons.graphql_base import GraphQLControllerMixin
 from odoo.http import request, Response
+from odoo.tools.func import lazy
 from urllib.parse import urlparse
 from werkzeug.exceptions import Forbidden
 
@@ -160,6 +161,12 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 and request.env['res.users'].sudo().browse(request_uid).has_group('base.group_public'):
             request.update_env(user=website_uid)
 
+        # Initialize cart and pricelist for Odoo v19 compatibility
+        if not hasattr(request, 'cart'):
+            request.cart = lazy(website._get_and_cache_current_cart)
+        if not hasattr(request, 'pricelist'):
+            request.pricelist = lazy(website._get_and_cache_current_pricelist)
+
     # The GraphiQL route, providing an IDE for developers
     @http.route(["/graphiql/alokai", "/graphiql/vsf"], auth="public")
     def graphiql(self, **kwargs):
@@ -169,10 +176,8 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         ICP = http.request.env['ir.config_parameter'].sudo()
         alokai_debug_mode = ICP.get_param('alokai_debug_mode', False)
         if not alokai_debug_mode:
-            internal_group_id = request.env.ref('base.group_user').id
-
             # Check if the current user belongs to the internal user group
-            if internal_group_id not in request.env.user.groups_id.ids:
+            if not request.env.user.has_group('base.group_user'):
                 raise Forbidden()
 
         return self._handle_graphiql_request(self._graphql_schema)

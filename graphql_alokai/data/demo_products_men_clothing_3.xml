@@ -16,7 +16,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Coat Aspesi blue</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -96,7 +95,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Casual jacket Stone Island black</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -176,7 +174,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Vest Bully black</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -256,7 +253,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Leather jacket Daniele Alessandrini beige</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -336,7 +332,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Jacket Doubleface “Sol Walk“ Luis Trenker red</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>

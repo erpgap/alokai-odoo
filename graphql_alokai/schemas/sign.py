@@ -13,7 +13,7 @@ from odoo.exceptions import UserError, AccessDenied
 from odoo.addons.auth_signup.models.res_users import SignupError
 from odoo.addons.graphql_alokai.schemas.objects import User, Order, WishlistItem
 from odoo.addons.website_mass_mailing.controllers.main import MassMailController
-from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE,TRUSTED_DEVICE_AGE
+from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE,TRUSTED_DEVICE_AGE_DAYS
 from odoo.addons.graphql_alokai.graphql.registry import mutation_registry
 
 
@@ -279,7 +279,7 @@ class TotpVerification(graphene.Mutation):
         return TwoFactorOutput(user=user,
                                key=TRUSTED_DEVICE_COOKIE,
                                value=key,
-                               max_age=TRUSTED_DEVICE_AGE,
+                               max_age=TRUSTED_DEVICE_AGE_DAYS,
                                httponly=True,
                                samesite='Lax')
 

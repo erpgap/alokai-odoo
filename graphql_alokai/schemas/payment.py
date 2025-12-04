@@ -6,7 +6,7 @@ import graphene
 from graphql import GraphQLError
 from odoo import _
 from odoo.http import request
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.addons.graphql_alokai.graphql.registry import query_registry, mutation_registry
 
 from odoo.addons.graphql_alokai.schemas.objects import PaymentProvider, PaymentTransaction
@@ -53,7 +53,7 @@ class PaymentQuery(graphene.ObjectType):
         website = env['website'].get_current_website()
         order = website.sale_get_order()
 
-        domain = expression.AND([
+        domain = Domain.AND([
             ['&', ('state', 'in', ['enabled', 'test']), ('company_id', '=', order.company_id.id)],
             ['|', ('website_id', '=', False), ('website_id', '=', website.id)],
             ['|', ('available_country_ids', '=', False), ('available_country_ids', 'in', [order.partner_id.country_id.id])]

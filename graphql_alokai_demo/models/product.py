@@ -2,7 +2,7 @@
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo import models, fields, api, _
 from odoo.addons.mail.tools.discuss import Store
 
@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
         # Get the review ids from the mail.message model
         # and set them to the review_ids field
         for record in self:
-            domain = expression.AND([
+            domain = Domain.AND([
                 [('rating_value', '>', 0)],
                 [('model', '=', 'product.template')],
                 [('res_id', '=', record.id), '|', ('body', '!=', ''), ('attachment_ids', '!=', False),

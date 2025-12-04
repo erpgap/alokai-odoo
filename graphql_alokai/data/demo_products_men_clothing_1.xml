@@ -16,7 +16,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Daniele Alessandrini - Vest</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -142,7 +141,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Leather jacket Bully dark blue</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -222,7 +220,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Bomber Daniele Alessandrini blue</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -302,7 +299,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Save the Duck – Casual Jacket</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -426,7 +422,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Vest ”Naples” Moncler red </field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -532,7 +527,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Moncler – Down Jacket “Jacob” </field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -625,7 +619,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Casual jacket Aspesi blue</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -705,7 +698,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Casual jacket “Mahakali“ Peuterey blue</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -785,7 +777,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Casual jacket Invicta blue</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>
@@ -865,7 +856,6 @@
         <field name="is_storable" eval="True"/>
         <field name="taxes_id" eval="False"/>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
         <field name="description_sale">This is the product: Casual jacket ”Lyon” Moncler black</field>
         <field name="invoice_policy">delivery</field>
         <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men'), ref('graphql_alokai.public_category_men_clothing_all'), ref('graphql_alokai.public_category_men_clothing_jackets')])]"/>

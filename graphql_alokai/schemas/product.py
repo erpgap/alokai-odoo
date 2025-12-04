@@ -5,7 +5,7 @@
 import graphene
 from werkzeug import urls
 
-from odoo.osv import expression
+from odoo.fields import Domain
 from graphql import GraphQLError
 from odoo import _
 from collections import defaultdict
@@ -33,7 +33,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     else:
         order = Product._graphql_get_search_order(sort)
 
-    products = Product.search(expression.AND(domain), order=order)
+    products = Product.search(Domain.AND(domain), order=order)
     attribute_values = env['product.attribute.value'].sudo()
     filter_counts = []
     attribute_value_counts = defaultdict(int)
@@ -105,9 +105,9 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
                     continue
                 attributes_domain.append([('attribute_line_ids.value_ids', 'in', f_attribute_value_ids)])
 
-            attributes_domain = expression.AND(attributes_domain)
+            attributes_domain = Domain.AND(attributes_domain)
             new_domain.append(attributes_domain)
-            new_domain = expression.AND(new_domain)
+            new_domain = Domain.AND(new_domain)
 
             partial_products = Product.search(new_domain)
             partial_attribute_values = partial_products.search(new_domain). \
@@ -132,7 +132,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     if domain == prices_partial_domain:
         prices = products.mapped('list_price')
     else:
-        prices = Product.search(expression.AND(prices_partial_domain)).mapped('list_price')
+        prices = Product.search(Domain.AND(prices_partial_domain)).mapped('list_price')
 
     if prices:
         min_price = min(prices)
@@ -196,7 +196,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         domain.append([('id', 'in', product_ids)])
         filter_counts.append({
             'type': 'in_stock',
-            'total': Product.search_count(expression.AND(domain)),
+            'total': Product.search_count(Domain.AND(domain)),
         })
 
     attribute_values = attribute_values.sorted(lambda av: (

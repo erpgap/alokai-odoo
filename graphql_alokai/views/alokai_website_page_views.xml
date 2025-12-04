@@ -68,7 +68,7 @@
                 <filter string="Published" name="published" domain="[('website_published', '=', True)]"/>
                 <filter string="Not published" name="not_published" domain="[('website_published', '=', False)]"/>
                 <separator/>
-                <group expand="1" string="Group By">
+                <group>
                     <filter string="Page Type" name="group_by_page_type" context="{'group_by':'page_type'}"/>
                 </group>
             </search>
