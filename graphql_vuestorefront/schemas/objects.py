@@ -664,6 +664,10 @@ class Product(OdooObjectType):
     # Specific to use in Product Template
     def resolve_combination_info(self, info):
         pricing_info = get_product_pricing_info(self.product_variant_id)
+
+        if not pricing_info:
+            return None
+
         if pricing_info.get('currency', False) and pricing_info['currency'].id:
             pricing_info['currency'] = {
                 'id': pricing_info['currency'].id,
