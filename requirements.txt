@@ -1,4 +1,4 @@
-graphene
-graphql_server
+graphene==3.4.3
+graphql-server==3.0.0b7
 redis
 markdown

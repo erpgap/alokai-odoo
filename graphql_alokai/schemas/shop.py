@@ -169,9 +169,9 @@ class CartRemoveMultipleItems(graphene.Mutation):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website.sale_get_order(force_create=1)
-        for line_id in line_ids:
-            line = order.order_line.filtered(lambda rec: rec.id == line_id)
-            line.unlink()
+        lines_to_delete = order.order_line.filtered(lambda rec: rec.id in line_ids)
+        if lines_to_delete:
+            lines_to_delete.unlink()
         return CartData(order=order)
 
 
