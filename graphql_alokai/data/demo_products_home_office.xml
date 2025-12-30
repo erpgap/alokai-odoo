@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="off_ascend_standing_desk" model="product.template">
+    <field name="name">The Ascend Standing Desk</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">499.00</field>
+    <field name="standard_price">299.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-ASC-011</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_desks')])]"/>
+    <field name="description_sale">Electric height-adjustable standing desk with bamboo top and white frame.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img1.webp"/>
+  </record>
+  <record id="img_off_ascend_standing_desk_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_ascend_standing_desk"/>
+    <field name="name">Side View</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img2.webp"/>
+  </record>
+  <record id="img_off_ascend_standing_desk_2" model="product.image">
+    <field name="product_tmpl_id" ref="off_ascend_standing_desk"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img3.webp"/>
+  </record>
+
+  <record id="off_ergo_mesh_chair" model="product.template">
+    <field name="name">The Ergo Mesh Office Chair</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">259.00</field>
+    <field name="standard_price">155.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-ERGO-012</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_chairs')])]"/>
+    <field name="description_sale">Ergonomic office chair with mesh back and adjustable lumbar support.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img3.webp"/>
+  </record>
+  <record id="img_off_ergo_mesh_chair_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_ergo_mesh_chair"/>
+    <field name="name">Back View</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img2.webp"/>
+  </record>
+  <record id="img_off_ergo_mesh_chair_2" model="product.image">
+    <field name="product_tmpl_id" ref="off_ergo_mesh_chair"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img1.webp"/>
+  </record>
+
+  <record id="off_parson_writing_desk" model="product.template">
+    <field name="name">The Parson Writing Desk</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">199.00</field>
+    <field name="standard_price">119.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-PAR-013</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_desks')])]"/>
+    <field name="description_sale">Simple Parson-style writing desk in clean white finish, no drawers.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img4.webp"/>
+  </record>
+  <record id="img_off_parson_writing_desk_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_parson_writing_desk"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img5.webp"/>
+  </record>
+  <record id="img_off_parson_writing_desk_2" model="product.image">
+    <field name="product_tmpl_id" ref="off_parson_writing_desk"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img6.webp"/>
+  </record>
+
+  <record id="off_architect_drafting_chair" model="product.template">
+    <field name="name">The Architect Drafting Chair</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">229.00</field>
+    <field name="standard_price">137.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-ARCH-014</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_chairs')])]"/>
+    <field name="description_sale">Tall drafting chair with footrest ring, black fabric seat.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img6.webp"/>
+  </record>
+  <record id="img_off_architect_drafting_chair_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_architect_drafting_chair"/>
+    <field name="name">Side</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img5.webp"/>
+  </record>
+  <record id="img_off_architect_drafting_chair_2" model="product.image">
+    <field name="product_tmpl_id" ref="off_architect_drafting_chair"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img4.webp"/>
+  </record>
+
+  <record id="off_monitor_riser_stand" model="product.template">
+    <field name="name">The Monitor Riser Stand</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">39.00</field>
+    <field name="standard_price">23.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-MON-015</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_accessories')])]"/>
+    <field name="description_sale">Minimalist clear acrylic monitor riser stand.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/acessories/img1.webp"/>
+  </record>
+  <record id="img_off_monitor_riser_stand_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_monitor_riser_stand"/>
+    <field name="name">Angle</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/acessories/img2.webp"/>
+  </record>
+
+  <record id="off_lean_wall_desk" model="product.template">
+    <field name="name">The Lean Wall Desk</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">249.00</field>
+    <field name="standard_price">149.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-LEAN-016</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_desks')])]"/>
+    <field name="description_sale">Wall-mounted ladder desk with two shelves, white and natural wood.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/shelving/img1.webp"/>
+  </record>
+  <record id="img_off_lean_wall_desk_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_lean_wall_desk"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/shelving/img2.webp"/>
+  </record>
+  <record id="img_off_lean_wall_desk_2" model="product.image">
+    <field name="product_tmpl_id" ref="off_lean_wall_desk"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/shelving/img3.webp"/>
+  </record>
+
+  <record id="off_executive_leather_chair" model="product.template">
+    <field name="name">The Executive Leather Chair</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">299.00</field>
+    <field name="standard_price">179.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-EXEC-017</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_chairs')])]"/>
+    <field name="description_sale">Classic executive office chair in black leather, padded armrests and high back.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img7.webp"/>
+  </record>
+  <record id="img_off_executive_leather_chair_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_executive_leather_chair"/>
+    <field name="name">Side</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/office_chairs/img8.webp"/>
+  </record>
+
+  <record id="off_paperclip_bookshelf" model="product.template">
+    <field name="name">The Paperclip Bookshelf</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">149.00</field>
+    <field name="standard_price">89.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-PCLIP-018</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_shelving')])]"/>
+    <field name="description_sale">Narrow tall bookshelf in minimalist white metal; ideal for home office.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/shelving/img4.webp"/>
+  </record>
+  <record id="img_off_paperclip_bookshelf_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_paperclip_bookshelf"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/shelving/img5.webp"/>
+  </record>
+
+  <record id="off_mobile_pedestal" model="product.template">
+    <field name="name">The Mobile Pedestal File Cabinet</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">139.00</field>
+    <field name="standard_price">83.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-MOB-019</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_storage')])]"/>
+    <field name="description_sale">3-drawer mobile pedestal file cabinet on wheels, light grey metal.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/storage/img1.webp"/>
+  </record>
+  <record id="img_off_mobile_pedestal_1" model="product.image">
+    <field name="product_tmpl_id" ref="off_mobile_pedestal"/>
+    <field name="name">Angle</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/storage/img2.webp"/>
+  </record>
+  <record id="img_off_mobile_pedestal_2" model="product.image">
+    <field name="product_tmpl_id" ref="off_mobile_pedestal"/>
+    <field name="name">Drawer detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/storage/img3.webp"/>
+  </record>
+
+  <record id="off_corner_l_shaped_desk" model="product.template">
+    <field name="name">The Corner L-Shaped Desk</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">399.00</field>
+    <field name="standard_price">239.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">OFF-CORN-020</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_home_office'), ref('ppc_off_desks')])]"/>
+    <field name="description_sale">Large L-shaped corner desk, dark wood top with black metal frame.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/home_office/desks/img7.webp"/>
+  </record>
+
+</odoo>

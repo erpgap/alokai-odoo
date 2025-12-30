@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- 1) Ladder Bookshelf — Bookshelves -->
+  <record id="stg_ladder_bookshelf" model="product.template">
+    <field name="name">The Ladder Bookshelf</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">219.00</field>
+    <field name="standard_price">131.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-LADD-007</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_bookshelves')])]"/>
+    <field name="description_sale">5-tier leaning ladder bookshelf with black metal frame.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/bookshelves/img1.webp"/>
+  </record>
+  <record id="img_stg_ladder_bookshelf_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_ladder_bookshelf"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/bookshelves/img2.webp"/>
+  </record>
+  <record id="img_stg_ladder_bookshelf_2" model="product.image">
+    <field name="product_tmpl_id" ref="stg_ladder_bookshelf"/>
+    <field name="name">Shelf Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/bookshelves/img3.webp"/>
+  </record>
+
+  <!-- 2) Industrial Pipe Bookcase — Bookshelves -->
+  <record id="stg_industrial_pipe_bookcase" model="product.template">
+    <field name="name">The Industrial Pipe Bookcase</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">259.00</field>
+    <field name="standard_price">155.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-PIPE-005</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_bookshelves')])]"/>
+    <field name="description_sale">Tall bookcase with dark metal pipes and solid wood planks.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/bookshelves/img4.webp"/>
+  </record>
+  <record id="img_stg_industrial_pipe_bookcase_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_industrial_pipe_bookcase"/>
+    <field name="name">Angle</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/bookshelves/img5.webp"/>
+  </record>
+  <record id="img_stg_industrial_pipe_bookcase_2" model="product.image">
+    <field name="product_tmpl_id" ref="stg_industrial_pipe_bookcase"/>
+    <field name="name">Shelf Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/bookshelves/img6.webp"/>
+  </record>
+
+
+  <!-- 3) Modular Cube Shelving Unit — Cube Shelving -->
+  <record id="stg_modular_cube_shelving" model="product.template">
+    <field name="name">The Modular Cube Shelving Unit</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">149.00</field>
+    <field name="standard_price">89.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-CUBE-001</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_cube_shelving')])]"/>
+    <field name="description_sale">White 6-cube modular shelving, clean and geometric.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/cube_shelving/img1.webp"/>
+  </record>
+  <record id="img_stg_modular_cube_shelving_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_modular_cube_shelving"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/cube_shelving/img2.webp"/>
+  </record>
+
+  <!-- 4) Archive Filing Cabinet — Filing Cabinets -->
+  <record id="stg_archive_filing_cabinet" model="product.template">
+    <field name="name">The Archive Filing Cabinet</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">129.00</field>
+    <field name="standard_price">77.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-FILE-002</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_filing_cabinets')])]"/>
+    <field name="description_sale">Modern 2-drawer filing cabinet in sleek white metal.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/filing_cabinets/img1.webp"/>
+  </record>
+  <record id="img_stg_archive_filing_cabinet_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_archive_filing_cabinet"/>
+    <field name="name">Open Drawer</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/filing_cabinets/img2.webp"/>
+  </record>
+
+
+  <!-- 5) Driftwood TV Stand — TV Stands -->
+  <record id="stg_driftwood_tv_stand" model="product.template">
+    <field name="name">The Driftwood TV Stand</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">299.00</field>
+    <field name="standard_price">179.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-TV-003</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_tv_stands')])]"/>
+    <field name="description_sale">Low-profile TV stand in reclaimed driftwood with open shelving.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/tv_stands/img1.webp"/>
+  </record>
+  <record id="img_stg_driftwood_tv_stand_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_driftwood_tv_stand"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/tv_stands/img2.webp"/>
+  </record>
+  <record id="img_stg_driftwood_tv_stand_2" model="product.image">
+    <field name="product_tmpl_id" ref="stg_driftwood_tv_stand"/>
+    <field name="name">Shelf Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/tv_stands/img3.webp"/>
+  </record>
+
+  <!-- 6) Hidden Floating Shelves — Floating Shelves -->
+  <record id="stg_hidden_floating_shelves" model="product.template">
+    <field name="name">The Hidden Floating Shelves</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">89.00</field>
+    <field name="standard_price">53.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-FLOAT-004</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_floating_shelves')])]"/>
+    <field name="description_sale">Set of 3 white floating shelves with hidden brackets.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/floating_shelves/img1.webp"/>
+  </record>
+  <record id="img_stg_hidden_floating_shelves_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_hidden_floating_shelves"/>
+    <field name="name">Installed</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/floating_shelves/img2.webp"/>
+  </record>
+
+  <!-- 7) Mid-Century Sideboard — Sideboards -->
+  <record id="stg_midcentury_sideboard" model="product.template">
+    <field name="name">The Mid-Century Sideboard</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">899.00</field>
+    <field name="standard_price">539.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-MIDC-008</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_sideboards')])]"/>
+    <field name="description_sale">Classic mid-century modern sideboard with sliding doors and tapered legs.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/tv_stands/img4.webp"/>
+  </record>
+  <record id="img_stg_midcentury_sideboard_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_midcentury_sideboard"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/tv_stands/img5.webp"/>
+  </record>
+  <record id="img_stg_midcentury_sideboard_2" model="product.image">
+    <field name="product_tmpl_id" ref="stg_midcentury_sideboard"/>
+    <field name="name">Leg Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/tv_stands/img6.webp"/>
+  </record>
+
+
+  <!-- 8) Woven Toy Basket — Baskets -->
+  <record id="stg_woven_toy_basket" model="product.template">
+    <field name="name">The Woven Toy Basket</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">39.00</field>
+    <field name="standard_price">23.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-BASK-006</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_baskets')])]"/>
+    <field name="description_sale">Large seagrass basket with handles for blankets or toys.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/baskets/img1.webp"/>
+  </record>
+
+
+  <!-- 9) Entryway Shoe Rack Bench — Shoe Storage -->
+  <record id="stg_entryway_shoe_rack_bench" model="product.template">
+    <field name="name">The Entryway Shoe Rack Bench</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">119.00</field>
+    <field name="standard_price">71.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-SHOE-007</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_shoe_storage')])]"/>
+    <field name="description_sale">Bamboo entryway bench with lower shoe shelf.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/shoe_storage/img1.webp"/>
+  </record>
+  <record id="img_stg_entryway_shoe_rack_bench_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_entryway_shoe_rack_bench"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/shoe_storage/img2.webp"/>
+  </record>
+
+  <!-- 10) Vinoteca Wine Rack — Wine Racks -->
+  <record id="stg_vinoteca_wine_rack" model="product.template">
+    <field name="name">The Vinoteca Wine Rack</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">69.00</field>
+    <field name="standard_price">41.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">STG-WINE-008</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_storage_shelving'), ref('ppc_stg_wine_racks')])]"/>
+    <field name="description_sale">Minimal wall-mounted black metal rack for 9 bottles.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/wine_racks/img1.webp"/>
+  </record>
+  <record id="img_stg_vinoteca_wine_rack_1" model="product.image">
+    <field name="product_tmpl_id" ref="stg_vinoteca_wine_rack"/>
+    <field name="name">Mounted</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/wine_racks/img2.webp"/>
+  </record>
+  <record id="img_stg_vinoteca_wine_rack_2" model="product.image">
+    <field name="product_tmpl_id" ref="stg_vinoteca_wine_rack"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/storage_shelving/wine_racks/img3.webp"/>
+  </record>
+</odoo>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- The "Element" Concrete Coffee Table -->
+  <record id="tbl_element_coffee" model="product.template">
+    <field name="name">The Element Concrete Coffee Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">399.00</field>
+    <field name="standard_price">239.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-ELM-003</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_coffee')])]"/>
+    <field name="description_sale">Rectangular minimalist coffee table in smooth light grey concrete.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img1.webp"/>
+  </record>
+
+
+  <record id="img_tbl_element_coffee_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_element_coffee"/>
+    <field name="name">Angle</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img2.webp"/>
+  </record>
+
+    <!-- The "Marble" Round Coffee Table -->
+  <record id="tbl_marble_round_coffee" model="product.template">
+    <field name="name">The Marble Round Coffee Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">589.00</field>
+    <field name="standard_price">353.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-MAR-004</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_coffee')])]"/>
+    <field name="description_sale">Round coffee table with white Carrara marble top and matte black base.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img3.webp"/>
+  </record>
+
+
+  <record id="img_tbl_marble_round_coffee_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_marble_round_coffee"/>
+    <field name="name">Top View</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img4.webp"/>
+  </record>
+
+    <!--The "Aura" Glass Console Table -->
+  <record id="tbl_aura_console" model="product.template">
+    <field name="name">The Aura Glass Console Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">349.00</field>
+    <field name="standard_price">209.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-AURA-005</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_console')])]"/>
+    <field name="description_sale">Clear tempered glass top with polished chrome legs.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/console/img1.webp"/>
+  </record>
+
+  <record id="img_tbl_aura_console_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_aura_console"/>
+    <field name="name">Angle</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/console/img2.webp"/>
+  </record>
+
+    <!-- The "Walnut" Nesting Side Tables -->
+  <record id="tbl_walnut_nesting" model="product.template">
+    <field name="name">The Walnut Nesting Side Tables</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">279.00</field>
+    <field name="standard_price">167.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-WLNT-006</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_side_end')])]"/>
+    <field name="description_sale">Set de duas mesas em nogueira maciça, estilo mid-century.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img1.webp"/>
+  </record>
+
+
+  <record id="img_tbl_walnut_nesting_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_walnut_nesting"/>
+    <field name="name">Conjunto</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img2.webp"/>
+  </record>
+
+    <!-- The "Hexa" End Table -->
+  <record id="tbl_hexa_end" model="product.template">
+    <field name="name">The Hexa End Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">159.00</field>
+    <field name="standard_price">95.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-HEXA-007</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_side_end')])]"/>
+    <field name="description_sale">Mesa lateral hexagonal com tampo de madeira escura.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img3.webp"/>
+  </record>
+
+  <record id="img_tbl_hexa_end_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_hexa_end"/>
+    <field name="name">Front</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img4.webp"/>
+  </record>
+
+    <!-- The Lift-Top Storage Coffee Table -->
+  <record id="tbl_lifttop_coffee" model="product.template">
+    <field name="name">The Lift-Top Storage Coffee Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">269.00</field>
+    <field name="standard_price">161.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-LIFT-008</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_coffee')])]"/>
+    <field name="description_sale">Mesa de centro com tampo elevatório e arrumação.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img5.webp"/>
+  </record>
+
+
+  <record id="img_tbl_lifttop_coffee_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_lifttop_coffee"/>
+    <field name="name">Open</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img6.webp"/>
+  </record>
+  <record id="img_tbl_lifttop_coffee_2" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_lifttop_coffee"/>
+    <field name="name">Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img7.webp"/>
+  </record>
+
+    <!-- The Trace C-Shaped Side Table -->
+  <record id="tbl_trace_c_side" model="product.template">
+    <field name="name">The Trace C-Shaped Side Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">119.00</field>
+    <field name="standard_price">71.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-TRCE-009</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_side_end')])]"/>
+    <field name="description_sale">Mesa lateral em “C” em metal preto, minimalista.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img5.webp"/>
+  </record>
+
+
+  <record id="img_tbl_trace_c_side_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_trace_c_side"/>
+    <field name="name">Side</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img6.webp"/>
+  </record>
+
+  <!-- The "Terra" Travertine Dining Table -->
+<record id="tbl_terra_travertine_dining" model="product.template">
+    <field name="name">The Terra Travertine Dining Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">1599.00</field>
+    <field name="standard_price">959.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-TERRA-010</field>
+    <field name="public_categ_ids"
+           eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_dining')])]"/>
+    <field name="description_sale">
+        Round dining table entirely in creamy travertine stone.
+    </field>
+</record>
+
+<record id="tbl_terra_travertine_dining_attr_color" model="product.template.attribute.line">
+    <field name="product_tmpl_id" ref="tbl_terra_travertine_dining"/>
+    <field name="attribute_id" ref="attr_color"/>
+    <field name="value_ids" eval="[(6, 0, [
+        ref('attr_color_beige'),
+        ref('attr_color_black')
+    ])]"/>
+</record>
+
+<function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.tbl_terra_travertine_dining_attr_color_value_1',
+        'record': obj().env.ref('graphql_alokai.tbl_terra_travertine_dining_attr_color').product_template_value_ids[0],
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.tbl_terra_travertine_dining_attr_color_value_2',
+        'record': obj().env.ref('graphql_alokai.tbl_terra_travertine_dining_attr_color').product_template_value_ids[1],
+        'noupdate': True,
+    }]"/>
+</function>
+
+<function model="ir.model.data" name="_update_xmlids">
+    <value model="base" eval="[{
+        'xml_id': 'graphql_alokai.tbl_terra_travertine_dining_black',
+        'record': obj().env.ref('graphql_alokai.tbl_terra_travertine_dining')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.tbl_terra_travertine_dining_attr_color_value_1')
+        ),
+        'noupdate': True,
+    }, {
+        'xml_id': 'graphql_alokai.tbl_terra_travertine_dining_beige',
+        'record': obj().env.ref('graphql_alokai.tbl_terra_travertine_dining')._get_variant_for_combination(
+            obj().env.ref('graphql_alokai.tbl_terra_travertine_dining_attr_color_value_2')
+        ),
+        'noupdate': True,
+    }]"/>
+</function>
+
+<record id="tbl_terra_travertine_dining_beige" model="product.product">
+    <field name="product_tmpl_id" ref="tbl_terra_travertine_dining"/>
+    <field name="default_code">TBL-TERRA-010-BEI</field>
+    <field name="standard_price">959.40</field>
+    <field name="list_price">1599.00</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/tables/dining/img1.webp"/>
+</record>
+
+<record id="tbl_terra_travertine_dining_black" model="product.product">
+    <field name="product_tmpl_id" ref="tbl_terra_travertine_dining"/>
+    <field name="default_code">TBL-TERRA-010-BLK</field>
+    <field name="standard_price">959.40</field>
+    <field name="list_price">1599.00</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/tables/dining/img3.webp"/>
+</record>
+
+<record id="img_tbl_terra_travertine_dining_1" model="product.image">
+    <field name="product_variant_id" ref="tbl_terra_travertine_dining_beige"/>
+    <field name="name">Angle</field>
+    <field name="image_1920" type="base64"
+           file="graphql_alokai/static/tables/dining/img2.webp"/>
+</record>
+
+
+
+    <!-- The "Spindle" Pedestal Table -->
+  <record id="tbl_spindle_pedestal" model="product.template">
+    <field name="name">The Spindle Pedestal Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">139.00</field>
+    <field name="standard_price">83.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-SPIN-011</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_side_end')])]"/>
+    <field name="description_sale">Small round pedestal side table in matte white.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/side_end/img7.webp"/>
+  </record>
+
+<!-- The "Grid" Metal Coffee Table -->
+  <record id="tbl_grid_metal_coffee" model="product.template">
+    <field name="name">The Grid Metal Coffee Table</field>
+    <field name="categ_id" ref="product.product_category_all"/>
+    <field name="list_price">329.00</field>
+    <field name="standard_price">197.40</field>
+    <field name="type">consu</field>
+    <field name="is_storable" eval="True"/>
+    <field name="is_published" eval="True"/>
+    <field name="taxes_id" eval="False"/>
+    <field name="uom_id" ref="uom.product_uom_unit"/>
+    <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    <field name="invoice_policy">delivery</field>
+    <field name="default_code">TBL-GRID-012</field>
+    <field name="public_categ_ids" eval="[(6, 0, [ref('ppc_tables'), ref('ppc_tbl_coffee')])]"/>
+    <field name="description_sale">Industrial square table with black wireframe grid base and ash top.</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img8.webp"/>
+  </record>
+
+    <record id="img_tbl_grid_metal_coffee_1" model="product.image">
+    <field name="product_tmpl_id" ref="tbl_grid_metal_coffee"/>
+    <field name="name">Top Detail</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/tables/coffee/img9.webp"/>
+  </record>
+
+</odoo>

@@ -29,7 +29,7 @@
 
     <record id="alokai_redis_host" model="ir.config_parameter">
         <field name="key">alokai_redis_host</field>
-        <field name="value">redis</field>
+        <field name="value">localhost</field>
     </record>
     <record id="alokai_redis_port" model="ir.config_parameter">
         <field name="key">alokai_redis_port</field>
