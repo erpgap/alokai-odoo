@@ -6,31 +6,37 @@
 <odoo>
 
   <!-- =========================
-       MAIN CATEGORIES
+       CATEGORIAS PRINCIPAIS
        ========================= -->
   <record id="ppc_living_room_seating" model="product.public.category">
     <field name="name">Living Room Seating</field>
     <field name="sequence">10</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/categories/living-room-seating.webp"/>
   </record>
   <record id="ppc_tables" model="product.public.category">
     <field name="name">Tables</field>
     <field name="sequence">20</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/categories/tables.webp"/>
   </record>
   <record id="ppc_bedroom_furniture" model="product.public.category">
     <field name="name">Bedroom Furniture</field>
     <field name="sequence">30</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/categories/bedroom-furniture.webp"/>
   </record>
   <record id="ppc_storage_shelving" model="product.public.category">
     <field name="name">Storage &amp; Shelving</field>
     <field name="sequence">40</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/categories/storage-and-shelving.webp"/>
   </record>
   <record id="ppc_lighting" model="product.public.category">
     <field name="name">Lighting</field>
     <field name="sequence">50</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/categories/lighting.webp"/>
   </record>
   <record id="ppc_home_office" model="product.public.category">
     <field name="name">Home Office</field>
     <field name="sequence">60</field>
+    <field name="image_1920" type="base64" file="graphql_alokai/static/categories/home-office.webp"/>
   </record>
 
   <!-- =========================
