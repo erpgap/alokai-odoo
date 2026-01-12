@@ -292,6 +292,10 @@ class ProductTemplate(models.Model):
             else:
                 product.published_hours = 0
 
+    def _compute_total_free_qty(self):
+        for product in self:
+            product.total_free_qty = sum(product.product_variant_ids.mapped('free_qty'))
+
     variant_attribute_value_ids = fields.Many2many('product.attribute.value',
                                                    'product_template_variant_product_attribute_value_rel',
                                                    compute='_compute_variant_attribute_value_ids',
@@ -315,6 +319,18 @@ class ProductTemplate(models.Model):
                                      help='Total hours the product has been published', readonly=True)
     has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', search='_search_has_stock',
                                store=False)
+    total_free_qty = fields.Float(
+        'Free To Use Quantity ', compute='_compute_total_free_qty',
+        digits='Product Unit of Measure', compute_sudo=False,
+        help="Forecast quantity (computed as Quantity On Hand "
+             "- reserved quantity)\n"
+             "In a context with a single Stock Location, this includes "
+             "goods stored in this location, or any of its children.\n"
+             "In a context with a single Warehouse, this includes "
+             "goods stored in the Stock Location of this Warehouse, or any "
+             "of its children.\n"
+             "Otherwise, this includes goods stored in any Stock Location "
+             "with 'internal' type.")
 
     def _compute_has_stock(self):
         website = self.env['website'].get_current_website()

@@ -83,6 +83,7 @@
                     </field>
                 </page>
                 <page name="redis_stock" string="Redis Stock">
+                    <field name="total_free_qty"/>
                     <field name="product_tmpl_redis_stock_ids" nolabel="1">
                         <tree>
                             <field name="website_id"/>
