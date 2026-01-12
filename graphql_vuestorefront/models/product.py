@@ -640,7 +640,7 @@ class ProductProductRedisStock(models.Model):
     _name = 'product.product.redis_stock'
     _inherit = 'product.redis_stock'
 
-    product_id = fields.Many2one('product.product', 'Product', required=True)
+    product_id = fields.Many2one('product.product', 'Product', required=True, ondelete='cascade')
 
     _sql_constraints = [
         ('unique_product_website', 'unique(product_id, website_id)', 'Product and Website must be unique!')
@@ -651,7 +651,7 @@ class ProductTemplateRedisStock(models.Model):
     _name = 'product.template.redis_stock'
     _inherit = 'product.redis_stock'
 
-    product_id = fields.Many2one('product.template', 'Product', required=True)
+    product_id = fields.Many2one('product.template', 'Product', required=True, ondelete='cascade')
 
     _sql_constraints = [
         ('unique_template_website', 'unique(product_id, website_id)', 'Template and Website must be unique!')
