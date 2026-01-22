@@ -263,8 +263,29 @@ class StripeControllerInherit(StripeController):
             ('id', 'in', order_ids), ('website_id', '!=', False)
         ], limit=1)
 
-        if order and carrier_id != order.carrier_id.id:
-            order._check_carrier_quotation(force_carrier_id=int(carrier_id))
+        if order:
+            if carrier_id != order.carrier_id.id:
+                order._check_carrier_quotation(force_carrier_id=int(carrier_id))
+
+            transaction.amount = (round(order.amount_total, 2))
+
+            # Update "Partner Info" on the Transaction
+            if transaction.partner_id.id != order.partner_invoice_id.id:
+                partner = order.partner_invoice_id
+                transaction.write({
+                    'partner_id': partner.id,
+                    'partner_name': partner.name or partner.parent_id.name,
+                    'partner_lang': partner.lang,
+                    'partner_email': partner.email,
+                    'partner_address': payment_utils.format_partner_address(
+                        partner.street, partner.street2
+                    ),
+                    'partner_zip': partner.zip,
+                    'partner_city': partner.city,
+                    'partner_state_id': partner.state_id.id,
+                    'partner_country_id': partner.country_id.id,
+                    'partner_phone': partner.phone,
+                })
 
         # Calculate new total
         return {
