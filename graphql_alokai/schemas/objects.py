@@ -280,7 +280,11 @@ class Partner(OdooObjectType):
     def resolve_public_pricelist(self, info):
         website = self.env['website'].get_current_website()
         partner = website.user_id.sudo().partner_id
-        return partner.last_website_so_id.pricelist_id or partner.property_product_pricelist
+
+        # Get current cart if exists
+        cart = website._get_and_cache_current_cart()
+
+        return cart.pricelist_id if cart else partner.property_product_pricelist
 
     def resolve_current_pricelist(self, info):
         website = self.env['website'].get_current_website()
