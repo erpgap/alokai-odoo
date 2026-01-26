@@ -14,6 +14,7 @@
                 <field name="stripe_payment_risk_level" readonly="1" invisible="provider_code != 'stripe' and provider_reference"/>
                 <field name="stripe_payment_risk_score" readonly="1" invisible="provider_code != 'stripe' and provider_reference"/>
                 <field name="stripe_payment_risk_reason" readonly="1" invisible="provider_code != 'stripe' and provider_reference"/>
+                <field name="stripe_payment_intent_id" readonly="1" invisible="1"/>
             </field>
         </field>
     </record>

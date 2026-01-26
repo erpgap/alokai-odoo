@@ -294,3 +294,42 @@ class StripeControllerInherit(StripeController):
                 'amount': round(order.amount_total, 2)
             }
         }
+
+    # --------------------------- #
+    #     Update Payment Intent   #
+    # --------------------------- #
+
+    @http.route('/stripe/update_payment_intent', type='json', auth='public', csrf=False)
+    def stripe_update_payment_intent(self, **post):
+        data = post
+        if not data:
+            data = request.dispatcher.jsonrequest
+        transaction_reference = data.get('transaction_reference')
+        transaction = request.env['payment.transaction'].sudo().search([('reference', '=', transaction_reference)])
+
+        payment_intent_id = transaction.stripe_payment_intent_id
+
+        order_ids = transaction.sale_order_ids.ids
+        order = request.env['sale.order'].sudo().search([
+            ('id', 'in', order_ids), ('website_id', '!=', False)
+        ], limit=1)
+
+        transaction.amount = (round(order.amount_total, 2))
+
+        data = transaction.provider_id._stripe_make_request(
+            f'payment_intents/{payment_intent_id}',  # PaymentIntent ID
+            payload={
+                'amount': payment_utils.to_minor_currency_units(
+                    transaction.amount, transaction.currency_id,
+                ),
+            },
+            method='POST'
+        )
+
+        # Calculate new total
+        return {
+            'newTotal': {
+                'label': order.name,
+                'amount': round(order.amount_total, 2)
+            }
+        }

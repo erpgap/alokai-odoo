@@ -37,6 +37,10 @@ class StripeApplepaySelectShippingMethodResult(graphene.ObjectType):
     stripe_applepay_select_shipping_method = generic.GenericScalar()
 
 
+class StripeUpdatePaymentIntentResult(graphene.ObjectType):
+    stripe_update_payment_intent = generic.GenericScalar()
+
+
 class StripeProviderInfo(graphene.Mutation):
     class Arguments:
         provider_id = graphene.Int(required=True)
@@ -180,6 +184,12 @@ class StripeTransaction(graphene.Mutation):
         # Update the field created_on_vsf
         transaction_id.created_on_vsf = True
 
+        client_secret = transaction['client_secret']
+        payment_intent_id = client_secret.split('_secret')[0]
+
+        # Update the field stripe_payment_intent_id
+        transaction_id.stripe_payment_intent_id = payment_intent_id
+
         return StripeTransactionResult(transaction=transaction)
 
 
@@ -225,9 +235,30 @@ class StripeApplepaySelectShippingMethod(graphene.Mutation):
         return StripeApplepaySelectShippingMethodResult(stripe_applepay_select_shipping_method=stripe_applepay_select_shipping_method)
 
 
+class StripeUpdatePaymentIntent(graphene.Mutation):
+    class Arguments:
+        transaction_reference = graphene.String(required=True)
+
+    Output = StripeUpdatePaymentIntentResult
+
+    @staticmethod
+    def mutate(self, info, transaction_reference):
+        env = info.context["env"]
+        PaymentTransaction = env['payment.transaction'].sudo()
+        transaction = PaymentTransaction.search([('reference', '=', transaction_reference)], limit=1)
+
+        if not transaction:
+            raise GraphQLError(_('Payment Transaction does not exist.'))
+        stripe_update_payment_intent = StripeControllerInherit().stripe_update_payment_intent(
+            transaction_reference=transaction_reference
+        )
+        return StripeUpdatePaymentIntentResult(stripe_update_payment_intent=stripe_update_payment_intent)
+
+
 class StripePaymentMutation(graphene.ObjectType):
     stripe_provider_info = StripeProviderInfo.Field(description='Get Stripe Provider Info.')
     stripe_get_inline_form_values = StripeGetInlineFormValues.Field(description='Get Stripe Inline Form Values')
     stripe_transaction = StripeTransaction.Field(description='Create Stripe Transaction')
     stripe_applepay_get_shipping_options = StripeApplepayGetShippingOptions.Field(description='Get Shipping Options on "Stripe - ApplePay"')
     stripe_applepay_select_shipping_method = StripeApplepaySelectShippingMethod.Field(description='Select Shipping Method on "Stripe - ApplePay"')
+    stripe_update_payment_intent = StripeUpdatePaymentIntent.Field(description='Update Stripe Payment Intent')
