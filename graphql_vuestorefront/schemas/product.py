@@ -202,20 +202,6 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
             'total': Product.search_count(expression.AND(domain)),
         })
 
-    values = env['product.attribute.value'].browse(attribute_values.ids)
-
-    # group by attribute
-    values_by_attribute = {}
-    for val in values:
-        values_by_attribute.setdefault(val.attribute_id.id, env['product.attribute.value'])
-        values_by_attribute[val.attribute_id.id] |= val
-
-    # keep only attributes with more than one value
-    filtered_values = env['product.attribute.value']
-    for vals in values_by_attribute.values():
-        if len(vals) > 1:
-            filtered_values |= vals
-
     attribute_values = attribute_values.sorted(lambda av: (
         av.attribute_id.sequence, av.attribute_id.id, av.sequence, av.id))
 
