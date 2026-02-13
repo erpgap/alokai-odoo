@@ -45,7 +45,7 @@ class ShoppingCartQuery(graphene.ObjectType):
                 order._update_sale_order(website, user)
 
             ICP = request.env['ir.config_parameter'].sudo()
-            fbt_limit = int(ICP.get_param('graphql_vuestorefront.vsf_fbt_limit', 10))
+            fbt_limit = int(ICP.get_param('vsf_fbt_limit', 10))
 
             fbt = order.\
                 mapped('order_line').\
