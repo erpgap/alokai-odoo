@@ -133,11 +133,12 @@ class StripeTransaction(graphene.Mutation):
     class Arguments:
         provider_id = graphene.Int(required=True)
         tokenization_requested = graphene.Boolean(default_value=False)
+        is_applepay_express_transaction = graphene.Boolean(default_value=False)
 
     Output = StripeTransactionResult
 
     @staticmethod
-    def mutate(self, info, provider_id, tokenization_requested):
+    def mutate(self, info, provider_id, tokenization_requested, is_applepay_express_transaction):
         env = info.context["env"]
         PaymentProvider = env['payment.provider'].sudo()
         PaymentTransaction = env['payment.transaction'].sudo()
@@ -181,14 +182,15 @@ class StripeTransaction(graphene.Mutation):
 
         transaction_id = PaymentTransaction.search([('reference', '=', transaction['reference'])], limit=1)
 
-        # Update the field created_on_vsf
-        transaction_id.created_on_vsf = True
-
         client_secret = transaction['client_secret']
         payment_intent_id = client_secret.split('_secret')[0]
 
-        # Update the field stripe_payment_intent_id
-        transaction_id.stripe_payment_intent_id = payment_intent_id
+        # Update the field created_on_vsf
+        transaction_id.write({
+            'created_on_vsf': True,
+            'stripe_payment_intent_id': payment_intent_id,
+            'is_applepay_express_transaction': is_applepay_express_transaction,
+        })
 
         return StripeTransactionResult(transaction=transaction)
 
