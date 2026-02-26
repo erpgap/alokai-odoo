@@ -12,6 +12,10 @@ class PaymentTransactionInherit(models.Model):
     stripe_payment_risk_score = fields.Char(string='Risk Score')
     stripe_payment_risk_reason = fields.Char(string='Risk Reason')
     stripe_payment_intent_id = fields.Char(string='Stripe Payment Intent ID')
+    is_applepay_express_transaction = fields.Boolean(
+        string='Is ApplePay Express Transaction',
+        help="Indicates whether this transaction was made using ApplePay Express."
+    )
 
     def _stripe_prepare_payment_intent_payload(self):
         payment_intent_payload = super()._stripe_prepare_payment_intent_payload()
