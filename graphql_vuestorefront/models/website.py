@@ -163,6 +163,8 @@ class Website(models.Model):
             if cursor == 0:
                 break
 
+        redis_client.close()
+
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',

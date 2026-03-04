@@ -18,6 +18,7 @@ class StockQuant(models.Model):
             pipe.set(product_key, product_id)
 
         pipe.execute()
+        redis_client.close()
 
     def write(self, vals):
         res = super(StockQuant, self).write(vals)

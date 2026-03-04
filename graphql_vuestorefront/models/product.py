@@ -564,11 +564,14 @@ class ProductProduct(models.Model):
         for dirty_key in dirty_keys:
             redis_client.delete(dirty_key)
 
+        redis_client.close()
+
     @api.model
     def _update_all_products_stock_redis(self):
         redis_client = self.env['website']._redis_connect()
         products = self.search([])
         products._update_products_stock_redis(redis_client)
+        redis_client.close()
 
     def _update_products_stock_redis(self, redis_client):
         if not self:
