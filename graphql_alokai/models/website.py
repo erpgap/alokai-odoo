@@ -38,6 +38,7 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
                     pipe.set(f'slug:{encoded_slug}', record._name)
 
         pipe.execute()
+        redis_client.close()
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -204,6 +205,8 @@ class Website(models.Model):
             if cursor == 0:
                 break
 
+        redis_client.close()
+
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
@@ -251,6 +254,8 @@ class Website(models.Model):
         self.env['blog.tag'].search([])._update_slug_in_redis()
         self.env['blog.blog'].search([])._update_slug_in_redis()
         self.env['blog.post'].search([])._update_slug_in_redis()
+
+        redis_client.close()
 
 
 class WebsiteRewrite(models.Model):

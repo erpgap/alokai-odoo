@@ -304,6 +304,7 @@ class CheckoutRedirect(graphene.Mutation):
                     pipe = redis_client.pipeline()
                     pipe.set(access_token, session_id, ex=60)  # 60-second TTL
                     pipe.execute()
+                    redis_client.close()
             except:
                 pass
 

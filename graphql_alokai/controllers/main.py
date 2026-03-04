@@ -279,4 +279,6 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 except:
                     pass
 
+            redis_client.close()
+
         return request.redirect('/shop/checkout')
