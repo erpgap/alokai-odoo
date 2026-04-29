@@ -555,16 +555,21 @@ class ProductProduct(models.Model):
     @api.model
     def _update_dirty_products_stock_redis(self):
         redis_client = self.env['website']._redis_connect()
-        dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
-        product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
-        products = self.search([('id', 'in', product_ids)])
+        try:
+            dirty_keys = list(redis_client.scan_iter('stock:product-is-dirty-*'))
+            if not dirty_keys:
+                return
 
-        products._update_products_stock_redis(redis_client)
+            values = [redis_client.get(k) for k in dirty_keys]
+            product_ids = list({int(v) for v in values if v is not None})
+            if product_ids:
+                products = self.search([('id', 'in', product_ids)])
+                products._update_products_stock_redis(redis_client)
 
-        for dirty_key in dirty_keys:
-            redis_client.delete(dirty_key)
-
-        redis_client.close()
+            for dirty_key in dirty_keys:
+                redis_client.delete(dirty_key)
+        finally:
+            redis_client.close()
 
     @api.model
     def _update_all_products_stock_redis(self):
