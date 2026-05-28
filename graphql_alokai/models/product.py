@@ -403,10 +403,10 @@ class ProductTemplate(models.Model):
         return super(ProductTemplate, self).unlink()
 
     def _get_combination_info(self, combination=False, product_id=False, add_qty=1, parent_combination=False,
-                              only_template=False):
+                              only_template=False, **kwargs):
         """ Add discount value and percentage based """
         # Build kwargs dynamically to support different Odoo versions
-        kwargs = {
+        call_kwargs = {
             'combination': combination,
             'product_id': product_id,
             'add_qty': add_qty,
@@ -416,9 +416,12 @@ class ProductTemplate(models.Model):
         import inspect
         parent_method = super(ProductTemplate, self)._get_combination_info
         if 'parent_combination' in inspect.signature(parent_method).parameters:
-            kwargs['parent_combination'] = parent_combination
+            call_kwargs['parent_combination'] = parent_combination
 
-        combination_info = parent_method(**kwargs)
+        # Pass any additional kwargs (e.g., uom_id from Odoo 19)
+        call_kwargs.update(kwargs)
+
+        combination_info = parent_method(**call_kwargs)
 
         discount = 0
         discount_perc = 0
