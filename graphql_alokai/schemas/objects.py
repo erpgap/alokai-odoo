@@ -537,6 +537,9 @@ class Product(OdooObjectType):
     alokai_pages = graphene.List(graphene.NonNull(lambda: WebsitePage))
     breadcrumb = generic.GenericScalar()
     json_ld_breadcrumb = generic.GenericScalar()
+    # Customer reviews (variants inherit their template's rating)
+    rating_count = graphene.Int(description="Total number of customer reviews")
+    rating_avg = graphene.Float(description="Average customer rating (0-5)")
 
     def resolve_type_id(self, info):
         if self.type == 'consu':
@@ -786,6 +789,18 @@ class Product(OdooObjectType):
 
     def resolve_json_ld_breadcrumb(self, info):
         return self and self.get_json_ld_breadcrumb() or None
+
+    def resolve_rating_count(self, info):
+        """Return the number of customer reviews. Variants share their template's ratings."""
+        tmpl = self.product_tmpl_id if self._name == 'product.product' else self
+        return getattr(tmpl, 'rating_count', 0) or 0
+
+    def resolve_rating_avg(self, info):
+        """Return the average customer rating (0-5). Variants share their template's ratings."""
+        tmpl = self.product_tmpl_id if self._name == 'product.product' else self
+        if not getattr(tmpl, 'rating_count', 0):
+            return 0.0
+        return round(tmpl.sudo().rating_avg, 2)
 
 
 class Payment(OdooObjectType):
