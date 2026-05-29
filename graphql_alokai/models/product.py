@@ -351,7 +351,8 @@ class ProductTemplate(models.Model):
             product.variant_attribute_value_ids = [(6, 0, attribute_values.ids)]
 
     def _compute_recent_sales_count(self):
-        self = self.filtered(lambda p: not isinstance(p.id, models.NewId))
+        # Skip unsaved (NewId) records - only persisted rows have integer ids
+        self = self.filtered(lambda p: isinstance(p.id, int))
 
         lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('alokai_recent_sales_count_days', 30))
         date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
@@ -843,9 +844,10 @@ class ProductProductRedisStock(models.Model):
 
     product_id = fields.Many2one('product.product', 'Product', required=True, ondelete='cascade')
 
-    _sql_constraints = [
-        ('unique_product_website', 'unique(product_id, website_id)', 'Product and Website must be unique!')
-    ]
+    _unique_product_website = models.Constraint(
+        'unique(product_id, website_id)',
+        'Product and Website must be unique!',
+    )
 
 
 class ProductTemplateRedisStock(models.Model):
@@ -854,9 +856,10 @@ class ProductTemplateRedisStock(models.Model):
 
     product_id = fields.Many2one('product.template', 'Product', required=True, ondelete='cascade')
 
-    _sql_constraints = [
-        ('unique_template_website', 'unique(product_id, website_id)', 'Template and Website must be unique!')
-    ]
+    _unique_template_website = models.Constraint(
+        'unique(product_id, website_id)',
+        'Template and Website must be unique!',
+    )
 
 
 class ProductPublicCategory(models.Model):
