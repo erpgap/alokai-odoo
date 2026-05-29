@@ -23,23 +23,26 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
 
     def _update_slug_in_redis(self):
         redis_client = self.env['website']._redis_connect()
-        langs = self.env['res.lang'].search([])
-        pipe = redis_client.pipeline()
+        try:
+            langs = self.env['res.lang'].search([])
+            pipe = redis_client.pipeline()
 
-        for record in self:
-            # Optional: skip unpublished or not relevant records
-            if hasattr(record, 'is_published') and not record.is_published:
-                continue
-            if hasattr(record, 'sale_ok') and not record.sale_ok:
-                continue
+            for record in self:
+                # Optional: skip unpublished or not relevant records
+                if hasattr(record, 'is_published') and not record.is_published:
+                    continue
+                if hasattr(record, 'sale_ok') and not record.sale_ok:
+                    continue
 
-            for lang in langs:
-                slug = record.with_context(lang=lang.code).website_slug
-                if slug:
-                    encoded_slug = urllib.parse.quote(slug, safe='')
-                    pipe.set(f'slug:{encoded_slug}', record._name)
+                for lang in langs:
+                    slug = record.with_context(lang=lang.code).website_slug
+                    if slug:
+                        encoded_slug = urllib.parse.quote(slug, safe='')
+                        pipe.set(f'slug:{encoded_slug}', record._name)
 
-        pipe.execute()
+            pipe.execute()
+        finally:
+            redis_client.close()
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -180,30 +183,38 @@ class Website(models.Model):
 
     def redis_flushdb(self):
         """
-        Deletes all keys from a Redis database except those matching specified patterns.
-        SCAN iterates over keys in batches without blocking Redis.
-        The loop ends when the cursor returned by SCAN is 0, indicating all keys have been scanned.
-        """
-        # Keep cart and stock keys in redis
-        patterns_to_keep = ['cart:*', 'stock:*', 'slug:*']
-        batch_size = 100
+        Delete only keys that have a TTL set. Keys without expiration are
+        treated as persistent data (cart, stock, slug entries, etc.) and kept.
 
+        SCAN iterates keys in batches without blocking Redis. TTL is checked
+        per-batch via a pipeline so we make one round-trip per batch instead
+        of one per key. TTL semantics:
+            -2 = key doesn't exist (race with another deletion)
+            -1 = key exists but has no expire
+            >0 = key has expiration in seconds -> delete
+        """
+        batch_size = 100
         redis_client = self._redis_connect()
 
-        cursor = 0
-        while True:
-            cursor, keys = redis_client.scan(cursor, match='*', count=batch_size)
+        try:
+            cursor = 0
+            while True:
+                cursor, keys = redis_client.scan(cursor, match='*', count=batch_size)
 
-            keys_to_delete = []
-            for key in keys:
-                if not any(key.startswith(pattern[:-1]) for pattern in patterns_to_keep):
-                    keys_to_delete.append(key)
+                if keys:
+                    pipe = redis_client.pipeline()
+                    for key in keys:
+                        pipe.ttl(key)
+                    ttls = pipe.execute()
 
-            if keys_to_delete:
-                redis_client.delete(*keys_to_delete)
+                    keys_to_delete = [key for key, ttl in zip(keys, ttls) if ttl > 0]
+                    if keys_to_delete:
+                        redis_client.delete(*keys_to_delete)
 
-            if cursor == 0:
-                break
+                if cursor == 0:
+                    break
+        finally:
+            redis_client.close()
 
         return {
             'type': 'ir.actions.client',
@@ -241,11 +252,13 @@ class Website(models.Model):
     @api.model
     def _update_all_slugs_redis(self):
         redis_client = self.env['website']._redis_connect()
-
-        # Delet one-by-one to avoid Redis blocking or memory pressure
-        delete_keys = list(redis_client.scan_iter('slug:*'))
-        for delete_key in delete_keys:
-            redis_client.delete(delete_key)
+        try:
+            # Delet one-by-one to avoid Redis blocking or memory pressure
+            delete_keys = list(redis_client.scan_iter('slug:*'))
+            for delete_key in delete_keys:
+                redis_client.delete(delete_key)
+        finally:
+            redis_client.close()
 
         self.env['product.template'].search([])._update_slug_in_redis()
         self.env['product.public.category'].search([])._update_slug_in_redis()

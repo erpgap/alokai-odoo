@@ -14,14 +14,17 @@ class StockQuant(models.Model):
             return 0
 
         redis_client = self.env['website']._redis_connect()
-        pipe = redis_client.pipeline()
+        try:
+            pipe = redis_client.pipeline()
 
-        for quant in self:
-            product_id = quant.product_id.id
-            product_key = f'stock:product-is-dirty-{product_id}'
-            pipe.set(product_key, product_id)
+            for quant in self:
+                product_id = quant.product_id.id
+                product_key = f'stock:product-is-dirty-{product_id}'
+                pipe.set(product_key, product_id)
 
-        pipe.execute()
+            pipe.execute()
+        finally:
+            redis_client.close()
 
     def write(self, vals):
         res = super(StockQuant, self).write(vals)

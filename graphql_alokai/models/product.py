@@ -701,14 +701,17 @@ class ProductProduct(models.Model):
             return 0
 
         redis_client = self.env['website']._redis_connect()
-        dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
-        product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
-        products = self.search([('id', 'in', product_ids)])
+        try:
+            dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
+            product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
+            products = self.search([('id', 'in', product_ids)])
 
-        products._update_products_stock_redis(redis_client)
+            products._update_products_stock_redis(redis_client)
 
-        for dirty_key in dirty_keys:
-            redis_client.delete(dirty_key)
+            for dirty_key in dirty_keys:
+                redis_client.delete(dirty_key)
+        finally:
+            redis_client.close()
 
     @api.model
     def _update_all_products_stock_redis(self):
@@ -716,8 +719,11 @@ class ProductProduct(models.Model):
         if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
             return 0
         redis_client = self.env['website']._redis_connect()
-        products = self.search([])
-        products._update_products_stock_redis(redis_client)
+        try:
+            products = self.search([])
+            products._update_products_stock_redis(redis_client)
+        finally:
+            redis_client.close()
 
     def _update_products_stock_redis(self, redis_client):
         if not self:
