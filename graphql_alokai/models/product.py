@@ -351,6 +351,8 @@ class ProductTemplate(models.Model):
             product.variant_attribute_value_ids = [(6, 0, attribute_values.ids)]
 
     def _compute_recent_sales_count(self):
+        self = self.filtered(lambda p: not isinstance(p.id, models.NewId))
+
         lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('alokai_recent_sales_count_days', 30))
         date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
         done_states = self.env['sale.report'].sudo()._get_done_states()
@@ -367,14 +369,27 @@ class ProductTemplate(models.Model):
         # TODO: check why product id is False in sale.report
         sale_count_map = {group[0].id: group[1] for group in sale_groups if group[0]}
 
+        values = []
+
         for product in self:
             if product.type in ['product', 'consu']:
                 product_id = product.product_variant_id.id
                 sales_count = sale_count_map.get(product_id, 0)
                 sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
-                product.recent_sales_count = sales_count + product.recent_sales_count_increment
+                recent_sales_count = sales_count + product.recent_sales_count_increment
             else:
-                product.recent_sales_count = 0
+                recent_sales_count = 0
+
+            values.append((recent_sales_count, product.id))
+
+        if values:
+            query = f"""
+                UPDATE product_template AS t
+                SET recent_sales_count = v.recent_sales_count
+                FROM (VALUES %s) AS v(recent_sales_count, id)
+                WHERE v.id = t.id
+            """
+            execute_values(self.env.cr, query, values)
 
     @api.depends('published_datetime')
     def _compute_published_hours(self):
