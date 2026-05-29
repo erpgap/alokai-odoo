@@ -529,9 +529,6 @@ class ProductTemplate(models.Model):
 
     @api.model
     def calculate_frequently_bought_together(self):
-        ProductTemplateFBT = self.env['product.template.fbt']
-        ProductTemplateFBT.search([]).unlink()
-
         lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('alokai_recent_sales_count_days', 30))
         date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
         done_states = self.env['sale.report'].sudo()._get_done_states()
@@ -550,7 +547,7 @@ class ProductTemplate(models.Model):
                 order_to_products[order_id].append((product_id, qty))
 
         product_relations = defaultdict(lambda: defaultdict(float))
-        for order, products in order_to_products.items():
+        for _, products in order_to_products.items():
             # For each order, track pairs of products and add their quantities
             for i in range(len(products)):
                 for j in range(i + 1, len(products)):
@@ -560,15 +557,21 @@ class ProductTemplate(models.Model):
                     product_relations[product_a][product_b] += min(qty_a, qty_b)
                     product_relations[product_b][product_a] += min(qty_a, qty_b)
 
+        cr = self.env.cr
+        cr.execute('TRUNCATE TABLE product_template_fbt RESTART IDENTITY CASCADE')
+
+        values = []
         for product_id, related_products in product_relations.items():
             related_product_pairs = sorted(related_products.items(), key=lambda p: -p[1])
-
             for related_product_id, qty in related_product_pairs:
-                ProductTemplateFBT.create({
-                    'product_id': product_id,
-                    'related_product_id': related_product_id,
-                    'qty': qty,
-                })
+                values.append((product_id, related_product_id, qty))
+
+        if values:
+            query = f"""
+                INSERT INTO product_template_fbt (product_id, related_product_id, qty)
+                VALUES %s
+            """
+            execute_values(cr, query, values)
 
     def _has_no_variant_attributes(self):
             """ Overwrite : always return False regardless of product attributes variant creation mode setting
