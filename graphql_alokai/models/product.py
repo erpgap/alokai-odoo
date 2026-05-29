@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_round
 from odoo.exceptions import ValidationError
+from psycopg2.extras import execute_values
 
 
 class ProductTemplate(models.Model):
@@ -758,8 +759,6 @@ class ProductProduct(models.Model):
         if not self:
             return
 
-        ProductProductRedisStock = self.env['product.product.redis_stock']
-        ProductTemplateRedisStock = self.env['product.template.redis_stock']
         StockWarehouse = self.env['stock.warehouse']
         pipe = redis_client.pipeline()
 
@@ -771,22 +770,28 @@ class ProductProduct(models.Model):
             for website in websites
         }
 
+        product_stock_values = []
+        template_stock_values = []
+
         for product in self:
             data = {}
             for website in websites:
                 lot_stock_ids = website_warehouses_map.get(website.id, [])
                 free_qty = product.with_context(location=lot_stock_ids).free_qty
-                ProductProductRedisStock.create_redis_stock(product.id, website.id, free_qty)
                 data[website.id] = free_qty
+                product_stock_values.append((product.id, website.id, free_qty))
             pipe.set(f'stock:product-{product.id}', json.dumps(data))
 
         for product_tmpl in product_tmpls:
             for website in websites:
                 lot_stock_ids = website_warehouses_map.get(website.id, [])
                 free_qty = sum(product_tmpl.product_variant_ids.with_context(location=lot_stock_ids).mapped('free_qty'))
-                ProductTemplateRedisStock.create_redis_stock(product_tmpl.id, website.id, free_qty)
+                template_stock_values.append((product_tmpl.id, website.id, free_qty))
 
         pipe.execute()
+
+        self.env['product.product.redis_stock'].bulk_update_redis_stock(product_stock_values)
+        self.env['product.template.redis_stock'].bulk_update_redis_stock(template_stock_values)
 
 
 class ProductStockRedis(models.AbstractModel):
@@ -796,30 +801,44 @@ class ProductStockRedis(models.AbstractModel):
     quantity = fields.Float('Quantity', digits='Product Unit of Measure', required=True)
 
     @api.model
-    def create_redis_stock(self, product_id, website_id, quantity):
-        line = self.search([('product_id', '=', product_id), ('website_id', '=', website_id)])
-        if line:
-            line.quantity = quantity
-        else:
-            self.create({
-                'product_id': product_id,
-                'website_id': website_id,
-                'quantity': quantity,
-            })
+    def bulk_update_redis_stock(self, values):
+        """Efficiently upsert multiple redis stock records.
+
+        :param values: list of tuples (product_id, website_id, quantity)
+        """
+        if not values:
+            return
+
+        query = f"""
+            INSERT INTO {self._table} (product_id, website_id, quantity)
+            VALUES %s
+            ON CONFLICT (product_id, website_id)
+            DO UPDATE SET quantity = EXCLUDED.quantity
+        """
+
+        execute_values(self.env.cr, query, values, page_size=1000)
 
 
 class ProductProductRedisStock(models.Model):
     _name = 'product.product.redis_stock'
     _inherit = 'product.redis_stock'
 
-    product_id = fields.Many2one('product.product', 'Product', required=True)
+    product_id = fields.Many2one('product.product', 'Product', required=True, ondelete='cascade')
+
+    _sql_constraints = [
+        ('unique_product_website', 'unique(product_id, website_id)', 'Product and Website must be unique!')
+    ]
 
 
 class ProductTemplateRedisStock(models.Model):
     _name = 'product.template.redis_stock'
     _inherit = 'product.redis_stock'
 
-    product_id = fields.Many2one('product.template', 'Product', required=True)
+    product_id = fields.Many2one('product.template', 'Product', required=True, ondelete='cascade')
+
+    _sql_constraints = [
+        ('unique_template_website', 'unique(product_id, website_id)', 'Template and Website must be unique!')
+    ]
 
 
 class ProductPublicCategory(models.Model):
