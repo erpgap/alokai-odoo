@@ -725,11 +725,17 @@ class ProductProduct(models.Model):
 
         redis_client = self.env['website']._redis_connect()
         try:
-            dirty_keys = [key for key in redis_client.scan_iter('stock:product-is-dirty-*')]
-            product_ids = [int(redis_client.get(dirty_key)) for dirty_key in dirty_keys]
-            products = self.search([('id', 'in', product_ids)])
+            dirty_keys = list(redis_client.scan_iter('stock:product-is-dirty-*'))
+            if not dirty_keys:
+                return
 
-            products._update_products_stock_redis(redis_client)
+            # Skip None (key deleted concurrently) and dedupe: multiple keys
+            # per product is now expected (uuid-suffixed flags).
+            values = [redis_client.get(k) for k in dirty_keys]
+            product_ids = list({int(v) for v in values if v is not None})
+            if product_ids:
+                products = self.search([('id', 'in', product_ids)])
+                products._update_products_stock_redis(redis_client)
 
             for dirty_key in dirty_keys:
                 redis_client.delete(dirty_key)
