@@ -142,40 +142,103 @@ class ProductTemplate(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
-        website_domain = website.domain or ''
+        website_domain = website.domain or base_url
         if website_domain and website_domain[-1:] == '/':
             website_domain = website_domain[:-1]
 
+        seller_name = (website and website.display_name) or env.user.company_id.display_name
+
         for product in self:
-            # Get list of images
-            images = list()
+            images = []
             if product.image_1920:
                 images.append(f'{base_url}/web/image/product.template/{product.id}/image_1920')
 
-            json_ld = {
-                "@context": "https://schema.org/",
-                "@type": "Product",
-                "name": product.display_name,
-                "image": images,
-                "offers": {
-                    "@type": "Offer",
-                    "url": f"{website_domain}{product.website_slug}",
+            # Dynamic availability: check actual stock on storable variants
+            if product.is_storable:
+                in_stock = any(v.qty_available > 0 for v in product.product_variant_ids)
+            else:
+                in_stock = True
+            availability = "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"
+
+            # Build offers: AggregateOffer if multiple variants with different prices,
+            # else a single Offer
+            product_url = f"{website_domain}{product.website_slug or ''}"
+            variants = product.product_variant_ids
+            variant_prices = [v.list_price for v in variants if v.list_price]
+            use_aggregate = len(variants) > 1 and len(set(variant_prices)) > 1
+
+            if use_aggregate:
+                offers = {
+                    "@type": "AggregateOffer",
+                    "url": product_url,
                     "priceCurrency": product.currency_id.name,
-                    "price": product.list_price,
+                    "lowPrice": f"{min(variant_prices):.2f}",
+                    "highPrice": f"{max(variant_prices):.2f}",
+                    "offerCount": len(variants),
                     "itemCondition": "https://schema.org/NewCondition",
-                    "availability": "https://schema.org/InStock",
+                    "availability": availability,
                     "seller": {
                         "@type": "Organization",
-                        "name": website and website.display_name or product.env.user.company_id.display_name
-                    }
+                        "name": seller_name,
+                    },
                 }
+            else:
+                offers = {
+                    "@type": "Offer",
+                    "url": product_url,
+                    "priceCurrency": product.currency_id.name,
+                    "price": f"{product.list_price:.2f}",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "availability": availability,
+                    "seller": {
+                        "@type": "Organization",
+                        "name": seller_name,
+                    },
+                }
+
+            json_ld = {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": product.with_context(display_default_code=False).display_name,
+                "image": images,
+                "brand": {
+                    "@type": "Brand",
+                    "name": seller_name,
+                },
+                "offers": offers,
             }
 
             if product.description_sale:
-                json_ld.update({"description": product.description_sale})
+                json_ld["description"] = product.description_sale
 
-            if product.default_code:
-                json_ld.update({"sku": product.default_code})
+            # SKU: prefer template's default_code; fall back to single variant's code.
+            # For multi-variant templates default_code is NULL (Odoo computes it from
+            # variants when there's exactly one), so use variants_default_code.
+            sku = product.default_code or product.variants_default_code
+            if sku:
+                json_ld["sku"] = sku
+
+            # Category: hierarchical path like "Women > Clothing > Dresses"
+            if product.public_categ_ids:
+                deepest = product.public_categ_ids[0]
+                parts = []
+                node = deepest
+                while node:
+                    parts.append(node.name)
+                    node = node.parent_id
+                parts.reverse()
+                json_ld["category"] = ' > '.join(parts)
+
+            # aggregateRating: only include if there are actual reviews.
+            # Google prefers numeric values as strings in structured data.
+            if getattr(product, 'rating_count', 0) > 0:
+                json_ld["aggregateRating"] = {
+                    "@type": "AggregateRating",
+                    "ratingValue": f"{product.sudo().rating_avg:.2f}",
+                    "reviewCount": str(product.rating_count),
+                    "bestRating": "5",
+                    "worstRating": "1",
+                }
 
             product.json_ld = json.dumps(json_ld)
 
@@ -552,40 +615,82 @@ class ProductProduct(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
-        website_domain = website.domain or ''
+        website_domain = website.domain or base_url
         if website_domain and website_domain[-1:] == '/':
             website_domain = website_domain[:-1]
 
+        seller_name = (website and website.display_name) or env.user.company_id.display_name
+
         for product in self:
-            # Get list of images
-            images = list()
+            images = []
             if product.image_1920:
                 images.append(f'{base_url}/web/image/product.product/{product.id}/image_1920')
 
+            # Dynamic availability: variants have qty_available directly
+            if product.is_storable:
+                in_stock = product.qty_available > 0
+            else:
+                in_stock = True
+            availability = "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"
+
             json_ld = {
-                "@context": "https://schema.org/",
+                "@context": "https://schema.org",
                 "@type": "Product",
-                "name": product.display_name,
+                "name": product.with_context(display_default_code=False).display_name,
                 "image": images,
+                "brand": {
+                    "@type": "Brand",
+                    "name": seller_name,
+                },
                 "offers": {
                     "@type": "Offer",
-                    "url": f"{website_domain}{product.website_slug}",
+                    "url": f"{website_domain}{product.website_slug or ''}",
                     "priceCurrency": product.currency_id.name,
-                    "price": product.list_price,
+                    "price": f"{product.list_price:.2f}",
                     "itemCondition": "https://schema.org/NewCondition",
-                    "availability": "https://schema.org/InStock",
+                    "availability": availability,
                     "seller": {
                         "@type": "Organization",
-                        "name": website and website.display_name or product.env.user.company_id.display_name
-                    }
-                }
+                        "name": seller_name,
+                    },
+                },
             }
 
+            # Link variant back to its template
+            if product.product_tmpl_id:
+                json_ld["isVariantOf"] = {
+                    "@type": "ProductGroup",
+                    "name": product.product_tmpl_id.name,
+                }
+
             if product.description_sale:
-                json_ld.update({"description": product.description_sale})
+                json_ld["description"] = product.description_sale
 
             if product.default_code:
-                json_ld.update({"sku": product.default_code})
+                json_ld["sku"] = product.default_code
+
+            # Category from the parent template's public categories
+            tmpl = product.product_tmpl_id
+            if tmpl and tmpl.public_categ_ids:
+                deepest = tmpl.public_categ_ids[0]
+                parts = []
+                node = deepest
+                while node:
+                    parts.append(node.name)
+                    node = node.parent_id
+                parts.reverse()
+                json_ld["category"] = ' > '.join(parts)
+
+            # aggregateRating from template (variants share their template's reviews).
+            # Google prefers numeric values as strings in structured data.
+            if tmpl and getattr(tmpl, 'rating_count', 0) > 0:
+                json_ld["aggregateRating"] = {
+                    "@type": "AggregateRating",
+                    "ratingValue": f"{tmpl.sudo().rating_avg:.2f}",
+                    "reviewCount": str(tmpl.rating_count),
+                    "bestRating": "5",
+                    "worstRating": "1",
+                }
 
             product.json_ld = json.dumps(json_ld)
 
@@ -687,19 +792,81 @@ class ProductPublicCategory(models.Model):
     _inherit = ['product.public.category', 'website.slug.redis.mixin']
 
     def _compute_json_ld(self):
-        website = self.env['website'].get_current_website()
+        env = self.env
+        website = env['website'].get_current_website()
+        base_url = env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        if base_url and base_url[-1:] == '/':
+            base_url = base_url[:-1]
 
-        website_domain = website.domain or ''
+        website_domain = website.domain or base_url
         if website_domain and website_domain[-1:] == '/':
             website_domain = website_domain[:-1]
 
         for category in self:
+            category_url = f'{website_domain}{category.website_slug or ""}'
+
+            # Walk parents (root -> current) for breadcrumb
+            ancestors = []
+            node = category
+            while node:
+                ancestors.append(node)
+                node = node.parent_id
+            ancestors.reverse()
+
+            breadcrumb_items = [
+                {
+                    "@type": "ListItem",
+                    "position": idx,
+                    "name": ancestor.name,
+                    "item": f'{website_domain}{ancestor.website_slug or ""}',
+                }
+                for idx, ancestor in enumerate(ancestors, 1)
+            ]
+
+            # Sample products in this category (capped to keep JSON-LD reasonable)
+            products = env['product.template'].search([
+                ('public_categ_ids', 'in', category.id),
+                ('is_published', '=', True),
+            ], limit=20)
+
+            # Use the proper Schema.org ListItem.item structure with full Product
+            # entity. This is richer than just url+name and lets us add image/price
+            # later if we want.
+            item_list_elements = [
+                {
+                    "@type": "ListItem",
+                    "position": idx,
+                    "item": {
+                        "@type": "Product",
+                        "name": product.with_context(display_default_code=False).display_name,
+                        "url": f'{website_domain}{product.website_slug or ""}',
+                    },
+                }
+                for idx, product in enumerate(products, 1)
+            ]
+
             json_ld = {
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
-                "url": f'{website_domain}{category.website_slug}',
+                "url": category_url,
                 "name": category.display_name,
             }
+
+            if category.website_meta_description:
+                json_ld["description"] = category.website_meta_description
+
+            if breadcrumb_items:
+                json_ld["breadcrumb"] = {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": breadcrumb_items,
+                }
+
+            if item_list_elements:
+                json_ld["mainEntity"] = {
+                    "@type": "ItemList",
+                    "numberOfItems": len(item_list_elements),
+                    "itemListElement": item_list_elements,
+                }
 
             category.json_ld = json.dumps(json_ld)
 

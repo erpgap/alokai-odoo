@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+import re
 import redis
 import pprint
 import json
 import requests
 import urllib.parse
+from html import unescape
 from odoo import models, fields, api, tools
 from odoo.exceptions import ValidationError
 from odoo import _
@@ -81,72 +83,71 @@ class Website(models.Model):
     _inherit = ['website', 'website.seo.metadata']
 
     def _compute_json_ld(self):
+        base_url_param = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        if base_url_param and base_url_param[-1] == '/':
+            base_url_param = base_url_param[:-1]
+
         for website in self:
-            base_url = website.domain or ''
+            base_url = website.domain or base_url_param
             if base_url and base_url[-1] == '/':
                 base_url = base_url[:-1]
 
             company = website.company_id
 
-            social_fields = [
-                'social_twiter',
-                'social_facebook',
-                'social_github',
-                'social_linkedin',
-                'social_youtube',
-                'social_instagram',
-                'social_tiktok',
+            # Discover all social_* fields on the website model and emit any that
+            # have a value. Unwanted channels (facebook, youtube, etc.) get cleared
+            # by the post-init hook so they won't appear here.
+            social = [
+                getattr(website, fname)
+                for fname in website._fields
+                if fname.startswith('social_') and getattr(website, fname, None)
             ]
 
-            social = list()
-            for social_field in social_fields:
-                value = getattr(website, social_field, None)
-                if value:
-                    social.append(value)
-
-            address = {
-                "@type": "PostalAddress",
-            }
+            # Build address only with the fields that actually have values
+            address_fields = {}
             if company.street:
-                address.update({"streetAddress": company.street})
+                address_fields["streetAddress"] = company.street
             if company.street2:
-                if address.get('streetAddress'):
-                    address['streetAddress'] += ', ' + company.street2
+                if address_fields.get('streetAddress'):
+                    address_fields['streetAddress'] += ', ' + company.street2
                 else:
-                    address.update({"streetAddress": company.street2})
+                    address_fields["streetAddress"] = company.street2
             if company.city:
-                address.update({"addressLocality": company.city})
+                address_fields["addressLocality"] = company.city
             if company.state_id:
-                address.update({"addressRegion": company.state_id.name})
+                address_fields["addressRegion"] = company.state_id.name
             if company.zip:
-                address.update({"postalCode": company.zip})
+                address_fields["postalCode"] = company.zip
             if company.country_id:
-                address.update({"addressCountry": company.country_id.name})
+                address_fields["addressCountry"] = company.country_id.name
 
+            # OnlineStore is a more specific schema.org type for e-commerce sites
             json_ld = {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": website.name,
-            "url": website.domain or '',
-            "logo": f'{base_url}/web/image/website/{website.id}/logo',
+                "@context": "https://schema.org",
+                "@type": "OnlineStore",
+                "name": website.name,
+                "url": base_url or '',
             }
+
+            if base_url and website.id:
+                json_ld["logo"] = f'{base_url}/web/image/website/{website.id}/logo'
 
             if social:
-                json_ld.update({
-                    "sameAs": social,
-                })
+                json_ld["sameAs"] = social
 
             if company.phone or company.mobile:
-                json_ld.update({
-                    "contactPoint": {
-                        "@type": "ContactPoint",
-                        "telephone": company.phone or company.mobile,
-                    }
-                })
+                json_ld["contactPoint"] = {
+                    "@type": "ContactPoint",
+                    "telephone": company.phone or company.mobile,
+                    "contactType": "customer service",
+                }
 
-            json_ld.update({
-                "address": address
-            })
+            # Only emit address if at least one field is set
+            if address_fields:
+                json_ld["address"] = {
+                    "@type": "PostalAddress",
+                    **address_fields,
+                }
 
             website.json_ld = json.dumps(json_ld)
 
@@ -409,7 +410,7 @@ class BlogPost(models.Model):
 
         return Domain.AND(domain)
 
-    @api.depends('name')
+    @api.depends('name', 'blog_id.website_slug')
     def _compute_website_slug(self):
         langs = self.env['res.lang'].search([])
 
@@ -421,36 +422,76 @@ class BlogPost(models.Model):
                     blog_post.website_slug = None
                 else:
                     slug_name = self.env['ir.http']._slugify(blog_post.name or '').strip().strip('-')
-                    blog_post.website_slug = f'{blog_post.blog_id.website_slug}/{slug_name}-{blog_post.id}'
+                    # Guard against blog_id.website_slug being False/None - otherwise
+                    # the f-string injects literal "False" into the URL.
+                    blog_slug = blog_post.blog_id.website_slug or ''
+                    blog_post.website_slug = f'{blog_slug}/{slug_name}-{blog_post.id}'
 
     def _compute_json_ld(self):
         website = self.env['website'].get_current_website()
-        base_url = website.domain or ''
+        base_url_param = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        if base_url_param and base_url_param[-1] == '/':
+            base_url_param = base_url_param[:-1]
+        base_url = website.domain or base_url_param
         if base_url and base_url[-1] == '/':
             base_url = base_url[:-1]
 
+        def strip_html(text):
+            """Strip HTML tags and decode entities for plain-text description."""
+            if not text:
+                return ''
+            return unescape(re.sub(r'<[^>]+>', '', text)).strip()
+
+        publisher = {
+            "@type": "Organization",
+            "name": (website and website.display_name) or '',
+        }
+        # Google requires publisher.logo for Article rich results
+        if website and base_url:
+            publisher["logo"] = {
+                "@type": "ImageObject",
+                "url": f"{base_url}/web/image/website/{website.id}/logo",
+            }
+
         for blog in self:
+            # mainEntityOfPage.@id must be the article's URL, not the home page.
+            # Guard against website_slug being False/None which would inject "False" into URL.
+            slug = blog.website_slug or ''
+            article_url = f"{base_url}{slug}" if slug else base_url
+
+            # Clean author name: res.partner.display_name is often "Company, Person"
+            # (e.g. "YourCompany, Mitchell Admin"). Strip the company prefix for
+            # a clean Person entity in the JSON-LD.
+            author_name = (blog.author_name or '').strip()
+            if ',' in author_name:
+                author_name = author_name.split(',', 1)[1].strip()
+
+            # Image must be an absolute URL for Google
+            image_url = get_image_url(blog) or ''
+            if image_url and not image_url.startswith(('http://', 'https://')):
+                image_url = f"{base_url}{image_url}"
+
             json_ld = {
                 "@context": "https://schema.org",
                 "@type": "Article",
                 "mainEntityOfPage": {
                     "@type": "WebPage",
-                    "@id": base_url
+                    "@id": article_url,
                 },
-                "headline": blog.name,
-                "description": blog.teaser_manual or blog.teaser,
+                "headline": (blog.name or '')[:110],  # Google recommends <= 110 chars
+                "description": strip_html(blog.teaser_manual or blog.teaser),
                 "author": {
                     "@type": "Person",
-                    "name": blog.author_name,
+                    "name": author_name,
                 },
-                "publisher": {
-                    "@type": "Organization",
-                    "name": website and website.display_name
-                },
-                "datePublished": blog.published_date.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
-                "dateModified": blog.post_date.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
-                "image": get_image_url(blog)
+                "publisher": publisher,
+                "image": image_url,
             }
+
+            if blog.published_date:
+                json_ld["datePublished"] = blog.published_date.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+            if blog.post_date:
+                json_ld["dateModified"] = blog.post_date.strftime('%Y-%m-%dT%H:%M:%S+00:00')
 
             blog.json_ld = json.dumps(json_ld)
 
