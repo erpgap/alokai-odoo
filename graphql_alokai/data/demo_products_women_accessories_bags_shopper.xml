@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="women_accessories_bags_shopper_template_1" model="product.template">
+        <field name="name">Tote Shopper</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0001</field>
+        <field name="description_sale">Discover the Tote Shopper, designed for those who appreciate quality and style. Crafted from premium materials, this tote shopper offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shopper_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_2" model="product.template">
+        <field name="name">Canvas Shopper</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0002</field>
+        <field name="description_sale">Discover the Canvas Shopper, designed for those who appreciate quality and style. Crafted from premium materials, this canvas shopper offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shopper_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_3" model="product.template">
+        <field name="name">Leather Tote</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0003</field>
+        <field name="description_sale">Discover the Leather Tote, designed for those who appreciate quality and style. Crafted from premium materials, this leather tote offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shopper_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_4" model="product.template">
+        <field name="name">Reversible Tote</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0004</field>
+        <field name="description_sale">Discover the Reversible Tote, designed for those who appreciate quality and style. Crafted from premium materials, this reversible tote offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shopper_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_5" model="product.template">
+        <field name="name">Drawstring Tote</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0005</field>
+        <field name="description_sale">Discover the Drawstring Tote, designed for those who appreciate quality and style. Crafted from premium materials, this drawstring tote offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shopper_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_burgundy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_6" model="product.template">
+        <field name="name">Structured Designer Tote</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0006</field>
+        <field name="description_sale">Discover the Structured Designer Tote, designed for those who appreciate quality and style. Crafted from premium materials, this structured designer tote offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_7" model="product.template">
+        <field name="name">Eco Cotton Tote</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0007</field>
+        <field name="description_sale">Discover the Eco Cotton Tote, designed for those who appreciate quality and style. Crafted from premium materials, this eco cotton tote offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+    <record id="women_accessories_bags_shopper_template_8" model="product.template">
+        <field name="name">Slouchy Premium Tote</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">95.0</field>
+        <field name="standard_price">47.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSHP0008</field>
+        <field name="description_sale">Discover the Slouchy Premium Tote, designed for those who appreciate quality and style. Crafted from premium materials, this slouchy premium tote offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoppers')])]" />
+    </record>
+</odoo>

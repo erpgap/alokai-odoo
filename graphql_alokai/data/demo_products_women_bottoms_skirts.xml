@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="women_bottoms_skirts_template_1" model="product.template">
+        <field name="name">Pencil Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0001</field>
+        <field name="description_sale">Discover the Pencil Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this pencil skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_white'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_1_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_1" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_2" model="product.template">
+        <field name="name">Midi Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0002</field>
+        <field name="description_sale">Discover the Midi Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this midi skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_burgundy'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_2_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_2" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_3" model="product.template">
+        <field name="name">Pleated Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0003</field>
+        <field name="description_sale">Discover the Pleated Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this pleated skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_beige'), ref('product_attribute_color_tan'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_3_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_3" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_4" model="product.template">
+        <field name="name">A-Line Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0004</field>
+        <field name="description_sale">Discover the A-Line Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this a-line skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_pink'), ref('product_attribute_color_cream'), ref('product_attribute_color_white')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_4_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_4" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_5" model="product.template">
+        <field name="name">Mini Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0005</field>
+        <field name="description_sale">Discover the Mini Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this mini skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_charcoal'), ref('product_attribute_color_black'), ref('product_attribute_color_navy')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_5_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_5" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_6" model="product.template">
+        <field name="name">Maxi Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0006</field>
+        <field name="description_sale">Discover the Maxi Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this maxi skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_olive'), ref('product_attribute_color_khaki'), ref('product_attribute_color_camel')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_6_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_6" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_7" model="product.template">
+        <field name="name">Denim Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0007</field>
+        <field name="description_sale">Discover the Denim Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this denim skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_burgundy'), ref('product_attribute_color_black'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_7_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_7" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_8" model="product.template">
+        <field name="name">Leather Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0008</field>
+        <field name="description_sale">Discover the Leather Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this leather skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_white'), ref('product_attribute_color_beige')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_8_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_8" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_9" model="product.template">
+        <field name="name">Wrap Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0009</field>
+        <field name="description_sale">Discover the Wrap Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this wrap skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_red'), ref('product_attribute_color_black'), ref('product_attribute_color_white')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_9_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_9" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_10" model="product.template">
+        <field name="name">Tulle Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0010</field>
+        <field name="description_sale">Discover the Tulle Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this tulle skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_10_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_10" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_cream'), ref('product_attribute_color_beige'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_10_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_10" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_11" model="product.template">
+        <field name="name">Asymmetric Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0011</field>
+        <field name="description_sale">Discover the Asymmetric Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this asymmetric skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_11_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_11" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_white'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_11_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_11" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_12" model="product.template">
+        <field name="name">Tiered Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0012</field>
+        <field name="description_sale">Discover the Tiered Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this tiered skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_12_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_12" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_burgundy'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_12_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_12" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_13" model="product.template">
+        <field name="name">Knit Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0013</field>
+        <field name="description_sale">Discover the Knit Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this knit skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_13_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_13" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_beige'), ref('product_attribute_color_tan'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_13_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_13" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_14" model="product.template">
+        <field name="name">Satin Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0014</field>
+        <field name="description_sale">Discover the Satin Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this satin skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_14_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_14" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_pink'), ref('product_attribute_color_cream'), ref('product_attribute_color_white')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_14_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_bottoms_skirts_template_14" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_xs'), ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl')])]" />
+    </record>
+    <record id="women_bottoms_skirts_template_15" model="product.template">
+        <field name="name">Hand-Beaded Skirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSK0015</field>
+        <field name="description_sale">Discover the Hand-Beaded Skirt, designed for those who appreciate quality and style. Crafted from premium materials, this hand-beaded skirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_clothing_skirts')])]" />
+    </record>
+</odoo>

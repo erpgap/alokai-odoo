@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="men_accessories_bags_template_1" model="product.template">
+        <field name="name">Messenger Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0001</field>
+        <field name="description_sale">Discover the Messenger Bag, designed for those who appreciate quality and style. Crafted from premium materials, this messenger bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="men_accessories_bags_template_2" model="product.template">
+        <field name="name">Backpack</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0002</field>
+        <field name="description_sale">Discover the Backpack, designed for those who appreciate quality and style. Crafted from premium materials, this backpack offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="men_accessories_bags_template_3" model="product.template">
+        <field name="name">Briefcase</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0003</field>
+        <field name="description_sale">Discover the Briefcase, designed for those who appreciate quality and style. Crafted from premium materials, this briefcase offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_brown'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="men_accessories_bags_template_4" model="product.template">
+        <field name="name">Duffle Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0004</field>
+        <field name="description_sale">Discover the Duffle Bag, designed for those who appreciate quality and style. Crafted from premium materials, this duffle bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_navy')])]" />
+    </record>
+    <record id="men_accessories_bags_template_5" model="product.template">
+        <field name="name">Weekender Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0005</field>
+        <field name="description_sale">Discover the Weekender Bag, designed for those who appreciate quality and style. Crafted from premium materials, this weekender bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="men_accessories_bags_template_6" model="product.template">
+        <field name="name">Laptop Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0006</field>
+        <field name="description_sale">Discover the Laptop Bag, designed for those who appreciate quality and style. Crafted from premium materials, this laptop bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="men_accessories_bags_template_7" model="product.template">
+        <field name="name">Crossbody Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0007</field>
+        <field name="description_sale">Discover the Crossbody Bag, designed for those who appreciate quality and style. Crafted from premium materials, this crossbody bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_accessories_bags_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_brown'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="men_accessories_bags_template_8" model="product.template">
+        <field name="name">Designer Travel Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0008</field>
+        <field name="description_sale">Discover the Designer Travel Bag, designed for those who appreciate quality and style. Crafted from premium materials, this designer travel bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_9" model="product.template">
+        <field name="name">Premium Leather Briefcase</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0009</field>
+        <field name="description_sale">Discover the Premium Leather Briefcase, designed for those who appreciate quality and style. Crafted from premium materials, this premium leather briefcase offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+    <record id="men_accessories_bags_template_10" model="product.template">
+        <field name="name">Vintage Leather Backpack</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">145.0</field>
+        <field name="standard_price">72.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MBAG0010</field>
+        <field name="description_sale">Discover the Vintage Leather Backpack, designed for those who appreciate quality and style. Crafted from premium materials, this vintage leather backpack offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_accessories_bags')])]" />
+    </record>
+</odoo>

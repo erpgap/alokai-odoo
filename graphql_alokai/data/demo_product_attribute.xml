@@ -16,6 +16,36 @@
         <field name="attribute_id" ref="product_attribute_size"/>
         <field name="sequence">1</field>
     </record>
+    <record id="product_attribute_size_xs" model="product.attribute.value">
+        <field name="name">XS</field>
+        <field name="attribute_id" ref="product_attribute_size"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="product_attribute_size_s" model="product.attribute.value">
+        <field name="name">S</field>
+        <field name="attribute_id" ref="product_attribute_size"/>
+        <field name="sequence">2</field>
+    </record>
+    <record id="product_attribute_size_m" model="product.attribute.value">
+        <field name="name">M</field>
+        <field name="attribute_id" ref="product_attribute_size"/>
+        <field name="sequence">3</field>
+    </record>
+    <record id="product_attribute_size_l" model="product.attribute.value">
+        <field name="name">L</field>
+        <field name="attribute_id" ref="product_attribute_size"/>
+        <field name="sequence">4</field>
+    </record>
+    <record id="product_attribute_size_xl" model="product.attribute.value">
+        <field name="name">XL</field>
+        <field name="attribute_id" ref="product_attribute_size"/>
+        <field name="sequence">5</field>
+    </record>
+    <record id="product_attribute_size_xxl" model="product.attribute.value">
+        <field name="name">XXL</field>
+        <field name="attribute_id" ref="product_attribute_size"/>
+        <field name="sequence">6</field>
+    </record>
     <record id="product_attribute_size_5" model="product.attribute.value">
         <field name="name">5</field>
         <field name="attribute_id" ref="product_attribute_size"/>
@@ -243,6 +273,192 @@
         <field name="attribute_id" ref="product_attribute_color"/>
         <field name="html_color">#faecdc</field>
         <field name="sequence">10</field>
+    </record>
+    <record id="product_attribute_color_navy" model="product.attribute.value">
+        <field name="name">Navy</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#000080</field>
+        <field name="sequence">11</field>
+    </record>
+    <record id="product_attribute_color_burgundy" model="product.attribute.value">
+        <field name="name">Burgundy</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#800020</field>
+        <field name="sequence">12</field>
+    </record>
+    <record id="product_attribute_color_camel" model="product.attribute.value">
+        <field name="name">Camel</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#c9aa7d</field>
+        <field name="sequence">13</field>
+    </record>
+    <record id="product_attribute_color_tan" model="product.attribute.value">
+        <field name="name">Tan</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#d2b48c</field>
+        <field name="sequence">14</field>
+    </record>
+    <record id="product_attribute_color_cream" model="product.attribute.value">
+        <field name="name">Cream</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#fffdd0</field>
+        <field name="sequence">15</field>
+    </record>
+    <record id="product_attribute_color_charcoal" model="product.attribute.value">
+        <field name="name">Charcoal</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#36454f</field>
+        <field name="sequence">16</field>
+    </record>
+    <record id="product_attribute_color_rust" model="product.attribute.value">
+        <field name="name">Rust</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#b7410e</field>
+        <field name="sequence">17</field>
+    </record>
+    <record id="product_attribute_color_olive" model="product.attribute.value">
+        <field name="name">Olive</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#808000</field>
+        <field name="sequence">18</field>
+    </record>
+    <record id="product_attribute_color_blush" model="product.attribute.value">
+        <field name="name">Blush</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#fe9999</field>
+        <field name="sequence">19</field>
+    </record>
+    <record id="product_attribute_color_champagne" model="product.attribute.value">
+        <field name="name">Champagne</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#f7e7ce</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="product_attribute_color_ivory" model="product.attribute.value">
+        <field name="name">Ivory</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#fffff0</field>
+        <field name="sequence">21</field>
+    </record>
+    <record id="product_attribute_color_cognac" model="product.attribute.value">
+        <field name="name">Cognac</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#8e4a2c</field>
+        <field name="sequence">22</field>
+    </record>
+    <record id="product_attribute_color_khaki" model="product.attribute.value">
+        <field name="name">Khaki</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#bdb76b</field>
+        <field name="sequence">23</field>
+    </record>
+    <record id="product_attribute_color_emerald" model="product.attribute.value">
+        <field name="name">Emerald</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#50c878</field>
+        <field name="sequence">24</field>
+    </record>
+    <record id="product_attribute_color_dark_blue" model="product.attribute.value">
+        <field name="name">Dark Blue</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#00008b</field>
+        <field name="sequence">25</field>
+    </record>
+    <record id="product_attribute_color_deep_blue" model="product.attribute.value">
+        <field name="name">Deep Blue</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#003366</field>
+        <field name="sequence">26</field>
+    </record>
+    <record id="product_attribute_color_light_blue" model="product.attribute.value">
+        <field name="name">Light Blue</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#add8e6</field>
+        <field name="sequence">27</field>
+    </record>
+    <record id="product_attribute_color_medium_blue" model="product.attribute.value">
+        <field name="name">Medium Blue</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#0000cd</field>
+        <field name="sequence">28</field>
+    </record>
+    <record id="product_attribute_color_natural" model="product.attribute.value">
+        <field name="name">Natural</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#dcc8aa</field>
+        <field name="sequence">29</field>
+    </record>
+    <record id="product_attribute_color_nude" model="product.attribute.value">
+        <field name="name">Nude</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#d4a5a5</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="product_attribute_color_gold" model="product.attribute.value">
+        <field name="name">Gold</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#ffd700</field>
+        <field name="sequence">31</field>
+    </record>
+    <record id="product_attribute_color_silver" model="product.attribute.value">
+        <field name="name">Silver</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#c0c0c0</field>
+        <field name="sequence">32</field>
+    </record>
+    <record id="product_attribute_color_floral_multi" model="product.attribute.value">
+        <field name="name">Floral Multi</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#e6b3e6</field>
+        <field name="sequence">33</field>
+    </record>
+    <record id="product_attribute_color_blue_floral" model="product.attribute.value">
+        <field name="name">Blue Floral</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#6495ed</field>
+        <field name="sequence">34</field>
+    </record>
+    <record id="product_attribute_color_pink_floral" model="product.attribute.value">
+        <field name="name">Pink Floral</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#ff69b4</field>
+        <field name="sequence">35</field>
+    </record>
+    <record id="product_attribute_color_black_white" model="product.attribute.value">
+        <field name="name">Black/White</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#808080</field>
+        <field name="sequence">36</field>
+    </record>
+    <record id="product_attribute_color_blue_white" model="product.attribute.value">
+        <field name="name">Blue/White</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#4a7ba7</field>
+        <field name="sequence">37</field>
+    </record>
+    <record id="product_attribute_color_red_white" model="product.attribute.value">
+        <field name="name">Red/White</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#ff6b9d</field>
+        <field name="sequence">38</field>
+    </record>
+    <record id="product_attribute_color_terracotta_mix" model="product.attribute.value">
+        <field name="name">Terracotta Mix</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#e2725b</field>
+        <field name="sequence">39</field>
+    </record>
+    <record id="product_attribute_color_teal_mix" model="product.attribute.value">
+        <field name="name">Teal Mix</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#367588</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="product_attribute_color_cream_mix" model="product.attribute.value">
+        <field name="name">Cream Mix</field>
+        <field name="attribute_id" ref="product_attribute_color"/>
+        <field name="html_color">#e8dcc4</field>
+        <field name="sequence">41</field>
     </record>
 
 </odoo>

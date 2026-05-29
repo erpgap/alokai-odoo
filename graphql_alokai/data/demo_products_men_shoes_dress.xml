@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="men_shoes_dress_template_1" model="product.template">
+        <field name="name">Oxford Shoes</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0001</field>
+        <field name="description_sale">Discover the Oxford Shoes, designed for those who appreciate quality and style. Crafted from premium materials, this oxford shoes offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="men_shoes_dress_template_1_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_1" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_2" model="product.template">
+        <field name="name">Loafers</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0002</field>
+        <field name="description_sale">Discover the Loafers, designed for those who appreciate quality and style. Crafted from premium materials, this loafers offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_white'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shoes_dress_template_2_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_2" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_3" model="product.template">
+        <field name="name">Derby Shoes</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0003</field>
+        <field name="description_sale">Discover the Derby Shoes, designed for those who appreciate quality and style. Crafted from premium materials, this derby shoes offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="men_shoes_dress_template_3_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_3" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_4" model="product.template">
+        <field name="name">Monk Strap</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0004</field>
+        <field name="description_sale">Discover the Monk Strap, designed for those who appreciate quality and style. Crafted from premium materials, this monk strap offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_brown'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="men_shoes_dress_template_4_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_4" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_5" model="product.template">
+        <field name="name">Brogue Shoes</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0005</field>
+        <field name="description_sale">Discover the Brogue Shoes, designed for those who appreciate quality and style. Crafted from premium materials, this brogue shoes offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shoes_dress_template_5_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_5" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_6" model="product.template">
+        <field name="name">Wingtip Shoes</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0006</field>
+        <field name="description_sale">Discover the Wingtip Shoes, designed for those who appreciate quality and style. Crafted from premium materials, this wingtip shoes offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="men_shoes_dress_template_6_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_6" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_7" model="product.template">
+        <field name="name">Penny Loafers</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0007</field>
+        <field name="description_sale">Discover the Penny Loafers, designed for those who appreciate quality and style. Crafted from premium materials, this penny loafers offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="men_shoes_dress_template_7_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_7" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_8" model="product.template">
+        <field name="name">Tassel Loafers</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0008</field>
+        <field name="description_sale">Discover the Tassel Loafers, designed for those who appreciate quality and style. Crafted from premium materials, this tassel loafers offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_white'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shoes_dress_template_8_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_8" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_9" model="product.template">
+        <field name="name">Cap Toe Oxford</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0009</field>
+        <field name="description_sale">Discover the Cap Toe Oxford, designed for those who appreciate quality and style. Crafted from premium materials, this cap toe oxford offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="men_shoes_dress_template_9_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_9" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_10" model="product.template">
+        <field name="name">Plain Toe Derby</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0010</field>
+        <field name="description_sale">Discover the Plain Toe Derby, designed for those who appreciate quality and style. Crafted from premium materials, this plain toe derby offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_10_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_10" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_brown'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="men_shoes_dress_template_10_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shoes_dress_template_10" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10'), ref('product_attribute_size_11'), ref('product_attribute_size_12')])]" />
+    </record>
+    <record id="men_shoes_dress_template_11" model="product.template">
+        <field name="name">Designer Suede Loafers</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0011</field>
+        <field name="description_sale">Discover the Designer Suede Loafers, designed for those who appreciate quality and style. Crafted from premium materials, this designer suede loafers offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+    <record id="men_shoes_dress_template_12" model="product.template">
+        <field name="name">Premium Italian Oxford</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">130.0</field>
+        <field name="standard_price">65.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MDSH0012</field>
+        <field name="description_sale">Discover the Premium Italian Oxford, designed for those who appreciate quality and style. Crafted from premium materials, this premium italian oxford offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_shoes_dress_shoes')])]" />
+    </record>
+</odoo>

@@ -5,243 +5,467 @@
 -->
 <odoo noupdate="1">
 
-    <!-- product.category -->
+    <!-- Internal Product Category (required for products) -->
     <record id="product_category_pants" model="product.category">
-            <field name="name">Pants</field>
+        <field name="name">Products</field>
     </record>
 
-    <!-- product.public.category -->
+    <!-- ============================================== -->
+    <!-- MAIN CATEGORIES                                -->
+    <!-- ============================================== -->
+
     <record id="public_category_women" model="product.public.category">
-      <field name="name">WOMEN</field>
-      <field name="sequence">27</field>
+        <field name="name">Women</field>
+        <field name="sequence">10</field>
+        <field name="website_meta_title">Women's Fashion - Shop Online</field>
+        <field name="website_meta_description">Discover the latest in women's fashion. Shop dresses, tops, shoes, bags and more with free shipping and easy returns.</field>
+        <field name="website_meta_keywords">women's fashion, women clothing, women shoes, women accessories, online shopping</field>
     </record>
+
     <record id="public_category_men" model="product.public.category">
-      <field name="name">MEN</field>
-      <field name="sequence">61</field>
+        <field name="name">Men</field>
+        <field name="sequence">50</field>
+        <field name="website_meta_title">Men's Fashion - Shop Online</field>
+        <field name="website_meta_description">Explore our men's collection. Shop shirts, jackets, jeans, sneakers and more with free shipping and easy returns.</field>
+        <field name="website_meta_keywords">men's fashion, men clothing, men shoes, men accessories, online shopping</field>
     </record>
 
-    <!-- subcategories Women -->
+    <!-- ============================================== -->
+    <!-- WOMEN > CLOTHING                               -->
+    <!-- ============================================== -->
+
     <record id="public_category_women_clothing" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women')"/>
-      <field name="name">Clothing</field>
-      <field name="sequence">28</field>
-    </record>
-    <record id="public_category_women_shoes" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women')"/>
-      <field name="name">Shoes</field>
-      <field name="sequence">40</field>
-    </record>
-    <record id="public_category_women_bags" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women')"/>
-      <field name="name">bags</field>
-      <field name="sequence">51</field>
+        <field name="parent_id" eval="ref('public_category_women')"/>
+        <field name="name">Clothing</field>
+        <field name="sequence">11</field>
+        <field name="website_meta_title">Women's Clothing - Dresses, Tops, Jeans &amp; More</field>
+        <field name="website_meta_description">Shop women's clothing online. From everyday basics to standout pieces - dresses, tops, jeans, blazers and more.</field>
+        <field name="website_meta_keywords">women's clothing, women's apparel, dresses, tops, jeans, blazers</field>
     </record>
 
-    <!-- sub-subcategories Women-Clothing -->
-    <record id="public_category_women_clothing_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">All</field>
-      <field name="sequence">29</field>
-    </record>
-    <record id="public_category_women_clothing_jackets" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Jackets</field>
-      <field name="sequence">30</field>
-    </record>
-    <record id="public_category_women_clothing_blazer" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Blazer</field>
-      <field name="sequence">31</field>
-    </record>
-    <record id="public_category_women_clothing_tops" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Tops</field>
-      <field name="sequence">32</field>
-    </record>
-    <record id="public_category_women_clothing_shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Shirts</field>
-      <field name="sequence">33</field>
-    </record>
-    <record id="public_category_women_clothing_t-shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">T-shirts</field>
-      <field name="sequence">33</field>
-    </record>
-    <record id="public_category_women_clothing_jeans" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Jeans</field>
-      <field name="sequence">35</field>
-    </record>
-    <record id="public_category_women_clothing_trouser" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Trouser</field>
-      <field name="sequence">36</field>
-    </record>
-    <record id="public_category_women_clothing_skirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Skirts</field>
-      <field name="sequence">37</field>
-    </record>
     <record id="public_category_women_clothing_dresses" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_clothing')"/>
-      <field name="name">Dresses</field>
-      <field name="sequence">38</field>
+        <field name="parent_id" eval="ref('public_category_women_clothing')"/>
+        <field name="name">Dresses</field>
+        <field name="sequence">12</field>
+        <field name="website_meta_title">Women's Dresses - Midi, Maxi, Cocktail &amp; More</field>
+        <field name="website_meta_description">Find the perfect dress for any occasion. Shop midi, maxi, cocktail and evening dresses with free shipping.</field>
+        <field name="website_meta_keywords">women's dresses, midi dress, maxi dress, cocktail dress, evening dress, summer dress</field>
     </record>
 
-    <!-- sub-subcategories Women-Shoes -->
-    <record id="public_category_women_shoes_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">All</field>
-      <field name="sequence">41</field>
+    <record id="public_category_women_clothing_tops" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing')"/>
+        <field name="name">Tops &amp; Blouses</field>
+        <field name="sequence">13</field>
+        <field name="website_meta_title">Women's Tops &amp; Blouses - Silk, Cotton &amp; More</field>
+        <field name="website_meta_description">Shop women's tops and blouses. From silk blouses to casual tank tops, find your perfect everyday and going-out look.</field>
+        <field name="website_meta_keywords">women's tops, blouses, silk blouse, tank top, crop top, peplum top</field>
     </record>
+
+    <record id="public_category_women_clothing_shirts" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing')"/>
+        <field name="name">Shirts</field>
+        <field name="sequence">14</field>
+        <field name="website_meta_title">Women's Shirts - Oxford, Denim, Linen</field>
+        <field name="website_meta_description">Explore women's shirts in classic and modern styles. Oxford, denim, linen and more - timeless wardrobe essentials.</field>
+        <field name="website_meta_keywords">women's shirts, oxford shirt, denim shirt, linen shirt, button-down shirt</field>
+    </record>
+
+    <record id="public_category_women_clothing_tshirts" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing')"/>
+        <field name="name">T-Shirts</field>
+        <field name="sequence">15</field>
+        <field name="website_meta_title">Women's T-Shirts - Cotton, Graphic, Oversized</field>
+        <field name="website_meta_description">Discover women's t-shirts in every style. Classic cotton tees, graphic prints, oversized fits and more.</field>
+        <field name="website_meta_keywords">women's t-shirts, cotton t-shirt, graphic tee, oversized t-shirt, v-neck</field>
+    </record>
+
+    <record id="public_category_women_clothing_outerwear" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing')"/>
+        <field name="name">Outerwear</field>
+        <field name="sequence">16</field>
+        <field name="website_meta_title">Women's Outerwear - Jackets, Coats &amp; Blazers</field>
+        <field name="website_meta_description">Shop women's outerwear for every season. Jackets, coats, blazers and more to layer your look.</field>
+        <field name="website_meta_keywords">women's outerwear, jackets, coats, blazers, winter coat</field>
+    </record>
+
+    <record id="public_category_women_clothing_jackets" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing_outerwear')"/>
+        <field name="name">Jackets</field>
+        <field name="sequence">17</field>
+        <field name="website_meta_title">Women's Jackets - Leather, Denim, Bomber</field>
+        <field name="website_meta_description">Shop women's jackets. Leather, denim, bomber, trench and more - find your perfect statement piece.</field>
+        <field name="website_meta_keywords">women's jackets, leather jacket, denim jacket, bomber jacket, trench coat</field>
+    </record>
+
+    <record id="public_category_women_clothing_blazers" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing_outerwear')"/>
+        <field name="name">Blazers</field>
+        <field name="sequence">18</field>
+        <field name="website_meta_title">Women's Blazers - Tailored, Oversized &amp; Cropped</field>
+        <field name="website_meta_description">Discover women's blazers for work and beyond. Tailored, oversized, cropped and more - elevate every outfit.</field>
+        <field name="website_meta_keywords">women's blazers, tailored blazer, oversized blazer, cropped blazer, wool blazer</field>
+    </record>
+
+    <record id="public_category_women_clothing_bottoms" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing')"/>
+        <field name="name">Bottoms</field>
+        <field name="sequence">19</field>
+        <field name="website_meta_title">Women's Bottoms - Jeans, Trousers &amp; Skirts</field>
+        <field name="website_meta_description">Shop women's bottoms. From skinny jeans to wide-leg trousers and pleated skirts, find your perfect fit.</field>
+        <field name="website_meta_keywords">women's bottoms, jeans, trousers, skirts, pants</field>
+    </record>
+
+    <record id="public_category_women_clothing_jeans" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing_bottoms')"/>
+        <field name="name">Jeans</field>
+        <field name="sequence">20</field>
+        <field name="website_meta_title">Women's Jeans - Skinny, Straight, Flare &amp; Wide Leg</field>
+        <field name="website_meta_description">Find your perfect pair of women's jeans. Skinny, straight, flare, wide leg and high waist - every fit, every style.</field>
+        <field name="website_meta_keywords">women's jeans, skinny jeans, straight leg jeans, flare jeans, high waist jeans</field>
+    </record>
+
+    <record id="public_category_women_clothing_trousers" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing_bottoms')"/>
+        <field name="name">Trousers</field>
+        <field name="sequence">21</field>
+        <field name="website_meta_title">Women's Trousers - Tailored, Wide Leg &amp; Cropped</field>
+        <field name="website_meta_description">Shop women's trousers in every cut. Tailored, wide leg, cropped, linen - effortless style for work and weekends.</field>
+        <field name="website_meta_keywords">women's trousers, tailored trousers, wide leg pants, cropped trousers</field>
+    </record>
+
+    <record id="public_category_women_clothing_skirts" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_clothing_bottoms')"/>
+        <field name="name">Skirts</field>
+        <field name="sequence">22</field>
+        <field name="website_meta_title">Women's Skirts - Pencil, Midi, Pleated &amp; A-Line</field>
+        <field name="website_meta_description">Explore women's skirts in every silhouette. Pencil, midi, mini, pleated, A-line - find your favourite cut.</field>
+        <field name="website_meta_keywords">women's skirts, pencil skirt, midi skirt, pleated skirt, A-line skirt</field>
+    </record>
+
+    <!-- ============================================== -->
+    <!-- WOMEN > SHOES                                  -->
+    <!-- ============================================== -->
+
+    <record id="public_category_women_shoes" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women')"/>
+        <field name="name">Shoes</field>
+        <field name="sequence">30</field>
+        <field name="website_meta_title">Women's Shoes - Sneakers, Boots, Heels &amp; More</field>
+        <field name="website_meta_description">Step into style with our women's shoe collection. Sneakers, boots, heels, flats and sandals for every occasion.</field>
+        <field name="website_meta_keywords">women's shoes, sneakers, boots, heels, flats, sandals</field>
+    </record>
+
     <record id="public_category_women_shoes_sneakers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Sneakers</field>
-      <field name="sequence">42</field>
+        <field name="parent_id" eval="ref('public_category_women_shoes')"/>
+        <field name="name">Sneakers</field>
+        <field name="sequence">31</field>
+        <field name="website_meta_title">Women's Sneakers - Leather, Canvas &amp; Platform</field>
+        <field name="website_meta_description">Shop women's sneakers. White leather, canvas, high-top, platform - the comfortable, on-trend staples you'll live in.</field>
+        <field name="website_meta_keywords">women's sneakers, white sneakers, leather sneakers, canvas sneakers, platform sneakers</field>
     </record>
+
     <record id="public_category_women_shoes_boots" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Boots</field>
-      <field name="sequence">43</field>
+        <field name="parent_id" eval="ref('public_category_women_shoes')"/>
+        <field name="name">Boots &amp; Ankle Boots</field>
+        <field name="sequence">32</field>
+        <field name="website_meta_title">Women's Boots - Ankle, Knee-High, Chelsea &amp; Combat</field>
+        <field name="website_meta_description">Shop women's boots and ankle boots. Chelsea, combat, knee-high, riding - every silhouette for every season.</field>
+        <field name="website_meta_keywords">women's boots, ankle boots, chelsea boots, knee-high boots, combat boots</field>
     </record>
-    <record id="public_category_women_shoes_ankle_boots" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Ankle boots</field>
-      <field name="sequence">44</field>
+
+    <record id="public_category_women_shoes_heels" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_shoes')"/>
+        <field name="name">Heels</field>
+        <field name="sequence">33</field>
+        <field name="website_meta_title">Women's Heels - Pumps, Stilettos &amp; Block Heels</field>
+        <field name="website_meta_description">Find women's heels for every occasion. Pumps, stilettos, block heels, kitten heels - dress up any look.</field>
+        <field name="website_meta_keywords">women's heels, pumps, stilettos, block heels, kitten heels</field>
     </record>
-    <record id="public_category_women_shoes_pumps" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Pumps</field>
-      <field name="sequence">45</field>
+
+    <record id="public_category_women_shoes_flats" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_shoes')"/>
+        <field name="name">Flats</field>
+        <field name="sequence">34</field>
+        <field name="website_meta_title">Women's Flats - Ballet Flats, Loafers &amp; Slip-Ons</field>
+        <field name="website_meta_description">Shop women's flats for all-day comfort. Ballet flats, loafers, slip-ons - effortless style with no compromise.</field>
+        <field name="website_meta_keywords">women's flats, ballet flats, loafers, slip-on shoes, pointed flats</field>
     </record>
+
     <record id="public_category_women_shoes_ballerinas" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Ballerinas</field>
-      <field name="sequence">46</field>
+        <field name="parent_id" eval="ref('public_category_women_shoes_flats')"/>
+        <field name="name">Ballerinas</field>
+        <field name="sequence">35</field>
+        <field name="website_meta_title">Women's Ballet Flats &amp; Ballerinas - Classic Comfort</field>
+        <field name="website_meta_description">Shop classic ballet flats and ballerinas. Timeless, comfortable and easy to style - a wardrobe essential.</field>
+        <field name="website_meta_keywords">ballet flats, ballerinas, women's ballet shoes, flat shoes</field>
     </record>
+
     <record id="public_category_women_shoes_loafers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Loafers</field>
-      <field name="sequence">48</field>
+        <field name="parent_id" eval="ref('public_category_women_shoes_flats')"/>
+        <field name="name">Loafers</field>
+        <field name="sequence">36</field>
+        <field name="website_meta_title">Women's Loafers - Penny, Tassel &amp; Slip-On</field>
+        <field name="website_meta_description">Discover women's loafers. Penny, tassel, slip-on - the smart-casual staple that goes with everything.</field>
+        <field name="website_meta_keywords">women's loafers, penny loafers, tassel loafers, slip-on loafers</field>
     </record>
+
     <record id="public_category_women_shoes_sandals" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_shoes')"/>
-      <field name="name">Sandals</field>
-      <field name="sequence">49</field>
+        <field name="parent_id" eval="ref('public_category_women_shoes')"/>
+        <field name="name">Sandals</field>
+        <field name="sequence">37</field>
+        <field name="website_meta_title">Women's Sandals - Strappy, Slide &amp; Gladiator</field>
+        <field name="website_meta_description">Shop women's sandals for summer. Strappy, slide, gladiator and wedge styles - your warm-weather essentials.</field>
+        <field name="website_meta_keywords">women's sandals, strappy sandals, slide sandals, gladiator sandals, wedge sandals</field>
     </record>
 
-    <!-- sub-subcategories Women-Bags -->
-    <record id="public_category_women_bags_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">All</field>
-      <field name="sequence">52</field>
-    </record>
-    <record id="public_category_women_bags_clutches" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Clutches</field>
-      <field name="sequence">53</field>
-    </record>
-    <record id="public_category_women_bags_shoulder_bags" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Shoulder Bags</field>
-      <field name="sequence">54</field>
-    </record>
-    <record id="public_category_women_bags_shopper" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Shopper</field>
-      <field name="sequence">55</field>
-    </record>
-    <record id="public_category_women_bags_handbag" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Handbag</field>
-      <field name="sequence">56</field>
-    </record>
-    <record id="public_category_women_bags_wallets" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_women_bags')"/>
-      <field name="name">Wallets</field>
-      <field name="sequence">57</field>
+    <!-- ============================================== -->
+    <!-- WOMEN > ACCESSORIES                            -->
+    <!-- ============================================== -->
+
+    <record id="public_category_women_accessories" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women')"/>
+        <field name="name">Accessories</field>
+        <field name="sequence">40</field>
+        <field name="website_meta_title">Women's Accessories - Bags, Wallets &amp; More</field>
+        <field name="website_meta_description">Complete your look with women's accessories. Bags, wallets, clutches and more to elevate every outfit.</field>
+        <field name="website_meta_keywords">women's accessories, handbags, wallets, clutches, shoulder bags</field>
     </record>
 
-    <!-- subcategories Man -->
+    <record id="public_category_women_accessories_bags" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_accessories')"/>
+        <field name="name">Bags</field>
+        <field name="sequence">41</field>
+        <field name="website_meta_title">Women's Bags - Shoulder, Crossbody, Tote &amp; Handbags</field>
+        <field name="website_meta_description">Shop women's bags. Shoulder, crossbody, tote, clutch and handbags - in leather, canvas and more.</field>
+        <field name="website_meta_keywords">women's bags, handbags, shoulder bags, crossbody bags, tote bags</field>
+    </record>
+
+    <record id="public_category_women_accessories_shoulder_bags" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_accessories_bags')"/>
+        <field name="name">Shoulder Bags</field>
+        <field name="sequence">42</field>
+        <field name="website_meta_title">Women's Shoulder Bags - Leather, Canvas &amp; Quilted</field>
+        <field name="website_meta_description">Shop women's shoulder bags. Leather, canvas, quilted and chain straps - the everyday-to-evening essential.</field>
+        <field name="website_meta_keywords">shoulder bags, leather shoulder bag, quilted bag, crossbody bag</field>
+    </record>
+
+    <record id="public_category_women_accessories_clutches" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_accessories_bags')"/>
+        <field name="name">Clutches</field>
+        <field name="sequence">43</field>
+        <field name="website_meta_title">Women's Clutches - Evening, Envelope &amp; Beaded</field>
+        <field name="website_meta_description">Shop women's clutches for special occasions. Evening, envelope, beaded and box clutches to complete your look.</field>
+        <field name="website_meta_keywords">clutches, evening clutch, envelope clutch, beaded clutch</field>
+    </record>
+
+    <record id="public_category_women_accessories_shoppers" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_accessories_bags')"/>
+        <field name="name">Shoppers</field>
+        <field name="sequence">44</field>
+        <field name="website_meta_title">Women's Shopper Bags &amp; Totes - Roomy &amp; Stylish</field>
+        <field name="website_meta_description">Shop women's shopper bags and totes. Roomy, reversible and structured options for every day - in leather and canvas.</field>
+        <field name="website_meta_keywords">shopper bags, tote bags, canvas tote, leather tote</field>
+    </record>
+
+    <record id="public_category_women_accessories_handbags" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_accessories_bags')"/>
+        <field name="name">Handbags</field>
+        <field name="sequence">45</field>
+        <field name="website_meta_title">Women's Handbags - Top Handle, Structured &amp; Mini</field>
+        <field name="website_meta_description">Discover women's handbags. Top handle, structured, mini, doctor and frame bags - statement pieces for every wardrobe.</field>
+        <field name="website_meta_keywords">handbags, top handle bag, structured handbag, mini bag, doctor bag</field>
+    </record>
+
+    <record id="public_category_women_accessories_wallets" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_women_accessories')"/>
+        <field name="name">Wallets</field>
+        <field name="sequence">46</field>
+        <field name="website_meta_title">Women's Wallets - Leather, RFID &amp; Card Holders</field>
+        <field name="website_meta_description">Shop women's wallets. Leather, RFID, bifold and card holders - timeless designs that organize and elevate.</field>
+        <field name="website_meta_keywords">women's wallets, leather wallet, RFID wallet, card holder, bifold wallet</field>
+    </record>
+
+    <!-- ============================================== -->
+    <!-- MEN > CLOTHING                                 -->
+    <!-- ============================================== -->
+
     <record id="public_category_men_clothing" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men')"/>
-      <field name="name">Clothing</field>
-      <field name="sequence">62</field>
-    </record>
-    <record id="public_category_men_shoes" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men')"/>
-      <field name="name">Shoes</field>
-      <field name="sequence">72</field>
+        <field name="parent_id" eval="ref('public_category_men')"/>
+        <field name="name">Clothing</field>
+        <field name="sequence">51</field>
+        <field name="website_meta_title">Men's Clothing - Shirts, Jeans, Jackets &amp; More</field>
+        <field name="website_meta_description">Shop men's clothing online. Shirts, t-shirts, jeans, blazers and suits - from everyday basics to tailored pieces.</field>
+        <field name="website_meta_keywords">men's clothing, men's apparel, shirts, jeans, jackets, suits</field>
     </record>
 
-    <!-- sub-subcategories Men-Clothing -->
-    <record id="public_category_men_clothing_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">All</field>
-      <field name="sequence">63</field>
-    </record>
-    <record id="public_category_men_clothing_jackets" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Jackets</field>
-      <field name="sequence">64</field>
-    </record>
     <record id="public_category_men_clothing_tops" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Tops</field>
-      <field name="sequence">65</field>
-    </record>
-    <record id="public_category_men_clothing_shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Shirts</field>
-      <field name="sequence">66</field>
-    </record>
-    <record id="public_category_men_clothing_trousers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Trousers</field>
-      <field name="sequence">67</field>
-    </record>
-    <record id="public_category_men_clothing_jeans" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Jeans</field>
-      <field name="sequence">68</field>
-    </record>
-    <record id="public_category_men_clothing_blazer" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Blazer</field>
-      <field name="sequence">69</field>
-    </record>
-    <record id="public_category_men_clothing_suits" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">Suits</field>
-      <field name="sequence">70</field>
-    </record>
-    <record id="public_category_men_clothing_t-shirts" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_clothing')"/>
-      <field name="name">T-shirts</field>
-      <field name="sequence">71</field>
+        <field name="parent_id" eval="ref('public_category_men_clothing')"/>
+        <field name="name">Tops</field>
+        <field name="sequence">52</field>
+        <field name="website_meta_title">Men's Tops - Shirts &amp; T-Shirts</field>
+        <field name="website_meta_description">Shop men's tops. From dress shirts to casual t-shirts - the essentials and statement pieces for your wardrobe.</field>
+        <field name="website_meta_keywords">men's tops, men's shirts, men's t-shirts, polos</field>
     </record>
 
-    <!-- sub-subcategories Men-Shoes -->
-    <record id="public_category_men_shoes_all" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">All</field>
-      <field name="sequence">73</field>
+    <record id="public_category_men_clothing_shirts" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing_tops')"/>
+        <field name="name">Shirts</field>
+        <field name="sequence">53</field>
+        <field name="website_meta_title">Men's Shirts - Oxford, Dress, Casual &amp; Linen</field>
+        <field name="website_meta_description">Shop men's shirts. Oxford, dress, casual, linen, flannel and more - quality fabrics, classic cuts and modern fits.</field>
+        <field name="website_meta_keywords">men's shirts, oxford shirt, dress shirt, casual shirt, linen shirt</field>
     </record>
+
+    <record id="public_category_men_clothing_tshirts" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing_tops')"/>
+        <field name="name">T-Shirts</field>
+        <field name="sequence">54</field>
+        <field name="website_meta_title">Men's T-Shirts - Cotton, V-Neck, Graphic &amp; Polo</field>
+        <field name="website_meta_description">Discover men's t-shirts. Classic cotton, v-neck, graphic, polo, henley - your everyday essentials, done right.</field>
+        <field name="website_meta_keywords">men's t-shirts, cotton t-shirt, v-neck, graphic tee, polo shirt</field>
+    </record>
+
+    <record id="public_category_men_clothing_outerwear" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing')"/>
+        <field name="name">Outerwear</field>
+        <field name="sequence">55</field>
+        <field name="website_meta_title">Men's Outerwear - Jackets, Coats &amp; Blazers</field>
+        <field name="website_meta_description">Shop men's outerwear. Leather jackets, bomber jackets, wool coats, blazers - find your statement layer.</field>
+        <field name="website_meta_keywords">men's outerwear, jackets, coats, blazers, leather jacket</field>
+    </record>
+
+    <record id="public_category_men_clothing_jackets" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing_outerwear')"/>
+        <field name="name">Jackets</field>
+        <field name="sequence">56</field>
+        <field name="website_meta_title">Men's Jackets - Leather, Bomber, Denim &amp; Parka</field>
+        <field name="website_meta_description">Shop men's jackets. Leather, bomber, denim, trench, parka, windbreaker - the essential layer for every season.</field>
+        <field name="website_meta_keywords">men's jackets, leather jacket, bomber jacket, denim jacket, parka</field>
+    </record>
+
+    <record id="public_category_men_clothing_blazers" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing_outerwear')"/>
+        <field name="name">Blazers</field>
+        <field name="sequence">57</field>
+        <field name="website_meta_title">Men's Blazers - Tailored, Linen, Tweed &amp; Velvet</field>
+        <field name="website_meta_description">Discover men's blazers and sport coats. Tailored, linen, tweed, velvet - the smart-casual pieces that work overtime.</field>
+        <field name="website_meta_keywords">men's blazers, sport coat, tailored blazer, linen blazer, tweed blazer</field>
+    </record>
+
+    <record id="public_category_men_clothing_bottoms" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing')"/>
+        <field name="name">Bottoms</field>
+        <field name="sequence">58</field>
+        <field name="website_meta_title">Men's Bottoms - Jeans, Trousers &amp; Chinos</field>
+        <field name="website_meta_description">Shop men's bottoms. Jeans, chinos, dress trousers, joggers - every fit and style for work, weekends and beyond.</field>
+        <field name="website_meta_keywords">men's bottoms, jeans, trousers, chinos, dress pants</field>
+    </record>
+
+    <record id="public_category_men_clothing_jeans" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing_bottoms')"/>
+        <field name="name">Jeans</field>
+        <field name="sequence">59</field>
+        <field name="website_meta_title">Men's Jeans - Slim, Straight, Tapered &amp; Skinny</field>
+        <field name="website_meta_description">Find your perfect men's jeans. Slim fit, straight leg, tapered, skinny, bootcut - every wash, every fit.</field>
+        <field name="website_meta_keywords">men's jeans, slim fit jeans, straight leg jeans, tapered jeans, skinny jeans</field>
+    </record>
+
+    <record id="public_category_men_clothing_trousers" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing_bottoms')"/>
+        <field name="name">Trousers</field>
+        <field name="sequence">60</field>
+        <field name="website_meta_title">Men's Trousers - Tailored, Chinos, Wool &amp; Linen</field>
+        <field name="website_meta_description">Shop men's trousers. Tailored, chinos, wool, linen, pleated - the right pair for every occasion.</field>
+        <field name="website_meta_keywords">men's trousers, tailored trousers, chinos, wool trousers, dress trousers</field>
+    </record>
+
+    <record id="public_category_men_clothing_suits" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_clothing')"/>
+        <field name="name">Suits</field>
+        <field name="sequence">61</field>
+        <field name="website_meta_title">Men's Suits - Classic, Slim, Wool &amp; Pinstripe</field>
+        <field name="website_meta_description">Shop men's suits. Classic, slim, two-piece, three-piece and tuxedos - tailored for impact, made for occasions.</field>
+        <field name="website_meta_keywords">men's suits, slim suit, classic suit, wool suit, tuxedo, pinstripe suit</field>
+    </record>
+
+    <!-- ============================================== -->
+    <!-- MEN > SHOES                                    -->
+    <!-- ============================================== -->
+
+    <record id="public_category_men_shoes" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men')"/>
+        <field name="name">Shoes</field>
+        <field name="sequence">70</field>
+        <field name="website_meta_title">Men's Shoes - Sneakers, Dress Shoes, Loafers</field>
+        <field name="website_meta_description">Shop men's shoes. Sneakers, dress shoes, loafers, oxfords - quality footwear for every occasion.</field>
+        <field name="website_meta_keywords">men's shoes, sneakers, dress shoes, loafers, oxford shoes</field>
+    </record>
+
     <record id="public_category_men_shoes_sneakers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">Sneakers</field>
-      <field name="sequence">74</field>
+        <field name="parent_id" eval="ref('public_category_men_shoes')"/>
+        <field name="name">Sneakers</field>
+        <field name="sequence">71</field>
+        <field name="website_meta_title">Men's Sneakers - Leather, Canvas, High-Top &amp; More</field>
+        <field name="website_meta_description">Shop men's sneakers. White leather, canvas, high-top, low-top, retro - the comfortable everyday staple.</field>
+        <field name="website_meta_keywords">men's sneakers, white sneakers, leather sneakers, canvas sneakers, retro sneakers</field>
     </record>
-    <record id="public_category_men_shoes_lace-up_shoes" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">Lace-up shoes</field>
-      <field name="sequence">76</field>
+
+    <record id="public_category_men_shoes_dress_shoes" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_shoes')"/>
+        <field name="name">Dress Shoes</field>
+        <field name="sequence">72</field>
+        <field name="website_meta_title">Men's Dress Shoes - Oxfords, Derbies &amp; Loafers</field>
+        <field name="website_meta_description">Shop men's dress shoes. Oxfords, derbies, brogues, monk straps and loafers - the foundation of formal style.</field>
+        <field name="website_meta_keywords">men's dress shoes, oxford shoes, derby shoes, brogues, monk strap</field>
     </record>
+
+    <record id="public_category_men_shoes_laceup" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_shoes_dress_shoes')"/>
+        <field name="name">Lace-Up Shoes</field>
+        <field name="sequence">73</field>
+        <field name="website_meta_title">Men's Lace-Up Shoes - Oxford &amp; Derby Styles</field>
+        <field name="website_meta_description">Shop men's lace-up dress shoes. Oxford, derby, brogue and wingtip styles in leather - sharp finishes for any suit.</field>
+        <field name="website_meta_keywords">lace-up shoes, oxford shoes, derby shoes, brogues, wingtip</field>
+    </record>
+
     <record id="public_category_men_shoes_loafers" model="product.public.category">
-      <field name="parent_id" eval="ref('public_category_men_shoes')"/>
-      <field name="name">Loafers</field>
-      <field name="sequence">77</field>
+        <field name="parent_id" eval="ref('public_category_men_shoes_dress_shoes')"/>
+        <field name="name">Loafers</field>
+        <field name="sequence">74</field>
+        <field name="website_meta_title">Men's Loafers - Penny, Tassel &amp; Slip-On</field>
+        <field name="website_meta_description">Shop men's loafers. Penny, tassel, slip-on and suede styles - effortless smart-casual footwear.</field>
+        <field name="website_meta_keywords">men's loafers, penny loafers, tassel loafers, suede loafers, slip-on</field>
+    </record>
+
+    <!-- ============================================== -->
+    <!-- MEN > ACCESSORIES                              -->
+    <!-- ============================================== -->
+
+    <record id="public_category_men_accessories" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men')"/>
+        <field name="name">Accessories</field>
+        <field name="sequence">80</field>
+        <field name="website_meta_title">Men's Accessories - Bags, Wallets &amp; More</field>
+        <field name="website_meta_description">Shop men's accessories. Bags, wallets, briefcases - everyday essentials and travel-ready pieces in leather and canvas.</field>
+        <field name="website_meta_keywords">men's accessories, bags, wallets, briefcase, leather goods</field>
+    </record>
+
+    <record id="public_category_men_accessories_bags" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_accessories')"/>
+        <field name="name">Bags</field>
+        <field name="sequence">81</field>
+        <field name="website_meta_title">Men's Bags - Messenger, Backpack &amp; Briefcase</field>
+        <field name="website_meta_description">Shop men's bags. Messenger, backpack, briefcase, duffle, weekender - quality leather and canvas for work and travel.</field>
+        <field name="website_meta_keywords">men's bags, messenger bag, backpack, briefcase, duffle bag</field>
+    </record>
+
+    <record id="public_category_men_accessories_wallets" model="product.public.category">
+        <field name="parent_id" eval="ref('public_category_men_accessories')"/>
+        <field name="name">Wallets</field>
+        <field name="sequence">82</field>
+        <field name="website_meta_title">Men's Wallets - Leather, Bifold, Trifold &amp; Card Holder</field>
+        <field name="website_meta_description">Shop men's wallets. Leather, bifold, trifold, slim, card holders and money clips - classic designs built to last.</field>
+        <field name="website_meta_keywords">men's wallets, leather wallet, bifold wallet, trifold wallet, card holder, money clip</field>
     </record>
 
 </odoo>

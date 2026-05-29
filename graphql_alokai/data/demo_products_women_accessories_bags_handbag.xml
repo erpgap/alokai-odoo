@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="women_accessories_bags_handbag_template_1" model="product.template">
+        <field name="name">Top Handle Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0001</field>
+        <field name="description_sale">Discover the Top Handle Bag, designed for those who appreciate quality and style. Crafted from premium materials, this top handle bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_2" model="product.template">
+        <field name="name">Structured Handbag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0002</field>
+        <field name="description_sale">Discover the Structured Handbag, designed for those who appreciate quality and style. Crafted from premium materials, this structured handbag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_3" model="product.template">
+        <field name="name">Doctor Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0003</field>
+        <field name="description_sale">Discover the Doctor Bag, designed for those who appreciate quality and style. Crafted from premium materials, this doctor bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_4" model="product.template">
+        <field name="name">Trapeze Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0004</field>
+        <field name="description_sale">Discover the Trapeze Bag, designed for those who appreciate quality and style. Crafted from premium materials, this trapeze bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_5" model="product.template">
+        <field name="name">Frame Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0005</field>
+        <field name="description_sale">Discover the Frame Bag, designed for those who appreciate quality and style. Crafted from premium materials, this frame bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_burgundy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_6" model="product.template">
+        <field name="name">Top Handle Satchel</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0006</field>
+        <field name="description_sale">Discover the Top Handle Satchel, designed for those who appreciate quality and style. Crafted from premium materials, this top handle satchel offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_cream'), ref('product_attribute_color_beige')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_7" model="product.template">
+        <field name="name">Mini Handbag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0007</field>
+        <field name="description_sale">Discover the Mini Handbag, designed for those who appreciate quality and style. Crafted from premium materials, this mini handbag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_8" model="product.template">
+        <field name="name">Box Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0008</field>
+        <field name="description_sale">Discover the Box Bag, designed for those who appreciate quality and style. Crafted from premium materials, this box bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_handbag_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_9" model="product.template">
+        <field name="name">Designer Limited Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0009</field>
+        <field name="description_sale">Discover the Designer Limited Bag, designed for those who appreciate quality and style. Crafted from premium materials, this designer limited bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+    <record id="women_accessories_bags_handbag_template_10" model="product.template">
+        <field name="name">Hand-Stitched Premium Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">150.0</field>
+        <field name="standard_price">75.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WHBG0010</field>
+        <field name="description_sale">Discover the Hand-Stitched Premium Bag, designed for those who appreciate quality and style. Crafted from premium materials, this hand-stitched premium bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_handbags')])]" />
+    </record>
+</odoo>

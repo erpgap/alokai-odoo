@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="women_shoes_boots_template_1" model="product.template">
+        <field name="name">Ankle Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0001</field>
+        <field name="description_sale">Discover the Ankle Boot, designed for those who appreciate quality and style. Crafted from premium materials, this ankle boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="women_shoes_boots_template_1_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_1" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_2" model="product.template">
+        <field name="name">Knee-High Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0002</field>
+        <field name="description_sale">Discover the Knee-High Boot, designed for those who appreciate quality and style. Crafted from premium materials, this knee-high boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_white'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_boots_template_2_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_2" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_3" model="product.template">
+        <field name="name">Combat Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0003</field>
+        <field name="description_sale">Discover the Combat Boot, designed for those who appreciate quality and style. Crafted from premium materials, this combat boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_beige'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="women_shoes_boots_template_3_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_3" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_4" model="product.template">
+        <field name="name">Chelsea Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0004</field>
+        <field name="description_sale">Discover the Chelsea Boot, designed for those who appreciate quality and style. Crafted from premium materials, this chelsea boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_shoes_boots_template_4_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_4" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_5" model="product.template">
+        <field name="name">Cowboy Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0005</field>
+        <field name="description_sale">Discover the Cowboy Boot, designed for those who appreciate quality and style. Crafted from premium materials, this cowboy boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_shoes_boots_template_5_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_5" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_6" model="product.template">
+        <field name="name">Over-the-Knee Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0006</field>
+        <field name="description_sale">Discover the Over-the-Knee Boot, designed for those who appreciate quality and style. Crafted from premium materials, this over-the-knee boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_shoes_boots_template_6_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_6" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_7" model="product.template">
+        <field name="name">Riding Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0007</field>
+        <field name="description_sale">Discover the Riding Boot, designed for those who appreciate quality and style. Crafted from premium materials, this riding boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_boots_template_7_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_7" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_8" model="product.template">
+        <field name="name">Lace-Up Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0008</field>
+        <field name="description_sale">Discover the Lace-Up Boot, designed for those who appreciate quality and style. Crafted from premium materials, this lace-up boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="women_shoes_boots_template_8_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_8" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_9" model="product.template">
+        <field name="name">Heeled Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0009</field>
+        <field name="description_sale">Discover the Heeled Boot, designed for those who appreciate quality and style. Crafted from premium materials, this heeled boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_white'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_boots_template_9_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_9" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_10" model="product.template">
+        <field name="name">Western Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0010</field>
+        <field name="description_sale">Discover the Western Boot, designed for those who appreciate quality and style. Crafted from premium materials, this western boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_10_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_10" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_beige'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="women_shoes_boots_template_10_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_10" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_11" model="product.template">
+        <field name="name">Hiking Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0011</field>
+        <field name="description_sale">Discover the Hiking Boot, designed for those who appreciate quality and style. Crafted from premium materials, this hiking boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_11_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_11" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_shoes_boots_template_11_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_11" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_12" model="product.template">
+        <field name="name">Rain Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0012</field>
+        <field name="description_sale">Discover the Rain Boot, designed for those who appreciate quality and style. Crafted from premium materials, this rain boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_12_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_12" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_shoes_boots_template_12_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_12" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_13" model="product.template">
+        <field name="name">Suede Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0013</field>
+        <field name="description_sale">Discover the Suede Boot, designed for those who appreciate quality and style. Crafted from premium materials, this suede boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_13_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_13" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_shoes_boots_template_13_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_13" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_14" model="product.template">
+        <field name="name">Slouchy Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0014</field>
+        <field name="description_sale">Discover the Slouchy Boot, designed for those who appreciate quality and style. Crafted from premium materials, this slouchy boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+    <record id="women_shoes_boots_template_14_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_14" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_boots_template_14_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_boots_template_14" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_boots_template_15" model="product.template">
+        <field name="name">Designer Leather Boot</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">110.0</field>
+        <field name="standard_price">55.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WBOT0015</field>
+        <field name="description_sale">Discover the Designer Leather Boot, designed for those who appreciate quality and style. Crafted from premium materials, this designer leather boot offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_boots')])]" />
+    </record>
+</odoo>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="women_accessories_bags_shoulder_template_1" model="product.template">
+        <field name="name">Leather Shoulder Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0001</field>
+        <field name="description_sale">Discover the Leather Shoulder Bag, designed for those who appreciate quality and style. Crafted from premium materials, this leather shoulder bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_2" model="product.template">
+        <field name="name">Canvas Shoulder Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0002</field>
+        <field name="description_sale">Discover the Canvas Shoulder Bag, designed for those who appreciate quality and style. Crafted from premium materials, this canvas shoulder bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_3" model="product.template">
+        <field name="name">Quilted Shoulder Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0003</field>
+        <field name="description_sale">Discover the Quilted Shoulder Bag, designed for those who appreciate quality and style. Crafted from premium materials, this quilted shoulder bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_4" model="product.template">
+        <field name="name">Chain Shoulder Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0004</field>
+        <field name="description_sale">Discover the Chain Shoulder Bag, designed for those who appreciate quality and style. Crafted from premium materials, this chain shoulder bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_5" model="product.template">
+        <field name="name">Hobo Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0005</field>
+        <field name="description_sale">Discover the Hobo Bag, designed for those who appreciate quality and style. Crafted from premium materials, this hobo bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_burgundy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_6" model="product.template">
+        <field name="name">Saddle Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0006</field>
+        <field name="description_sale">Discover the Saddle Bag, designed for those who appreciate quality and style. Crafted from premium materials, this saddle bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_cream'), ref('product_attribute_color_beige')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_7" model="product.template">
+        <field name="name">Bucket Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0007</field>
+        <field name="description_sale">Discover the Bucket Bag, designed for those who appreciate quality and style. Crafted from premium materials, this bucket bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cognac')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_8" model="product.template">
+        <field name="name">Crossbody Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0008</field>
+        <field name="description_sale">Discover the Crossbody Bag, designed for those who appreciate quality and style. Crafted from premium materials, this crossbody bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_9" model="product.template">
+        <field name="name">Mini Shoulder Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0009</field>
+        <field name="description_sale">Discover the Mini Shoulder Bag, designed for those who appreciate quality and style. Crafted from premium materials, this mini shoulder bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_accessories_bags_shoulder_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_accessories_bags_shoulder_template_10" model="product.template">
+        <field name="name">Designer Structured Shoulder Bag</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">125.0</field>
+        <field name="standard_price">62.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WSBG0010</field>
+        <field name="description_sale">Discover the Designer Structured Shoulder Bag, designed for those who appreciate quality and style. Crafted from premium materials, this designer structured shoulder bag offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_accessories_shoulder_bags')])]" />
+    </record>
+</odoo>

@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="men_shirts_template_1" model="product.template">
+        <field name="name">Oxford Dress Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0001</field>
+        <field name="description_sale">Discover the Oxford Dress Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this oxford dress shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_white'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_shirts_template_1_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_1" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_2" model="product.template">
+        <field name="name">Casual Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0002</field>
+        <field name="description_sale">Discover the Casual Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this casual shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_charcoal'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shirts_template_2_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_2" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_3" model="product.template">
+        <field name="name">Linen Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0003</field>
+        <field name="description_sale">Discover the Linen Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this linen shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_white'), ref('product_attribute_color_navy')])]" />
+    </record>
+    <record id="men_shirts_template_3_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_3" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_4" model="product.template">
+        <field name="name">Denim Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0004</field>
+        <field name="description_sale">Discover the Denim Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this denim shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_khaki'), ref('product_attribute_color_brown'), ref('product_attribute_color_beige')])]" />
+    </record>
+    <record id="men_shirts_template_4_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_4" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_5" model="product.template">
+        <field name="name">Flannel Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0005</field>
+        <field name="description_sale">Discover the Flannel Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this flannel shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_navy'), ref('product_attribute_color_charcoal')])]" />
+    </record>
+    <record id="men_shirts_template_5_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_5" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_6" model="product.template">
+        <field name="name">Plaid Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0006</field>
+        <field name="description_sale">Discover the Plaid Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this plaid shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_olive'), ref('product_attribute_color_khaki'), ref('product_attribute_color_camel')])]" />
+    </record>
+    <record id="men_shirts_template_6_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_6" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_7" model="product.template">
+        <field name="name">Striped Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0007</field>
+        <field name="description_sale">Discover the Striped Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this striped shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_burgundy'), ref('product_attribute_color_navy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shirts_template_7_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_7" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_8" model="product.template">
+        <field name="name">White Dress Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0008</field>
+        <field name="description_sale">Discover the White Dress Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this white dress shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_white'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_shirts_template_8_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_8" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_9" model="product.template">
+        <field name="name">Button-Down Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0009</field>
+        <field name="description_sale">Discover the Button-Down Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this button-down shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_brown'), ref('product_attribute_color_tan'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="men_shirts_template_9_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_9" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_10" model="product.template">
+        <field name="name">Chambray Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0010</field>
+        <field name="description_sale">Discover the Chambray Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this chambray shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_10_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_10" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_pink'), ref('product_attribute_color_white'), ref('product_attribute_color_light_blue')])]" />
+    </record>
+    <record id="men_shirts_template_10_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_10" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_11" model="product.template">
+        <field name="name">Slim Fit Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0011</field>
+        <field name="description_sale">Discover the Slim Fit Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this slim fit shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_11_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_11" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_white'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_shirts_template_11_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_11" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_12" model="product.template">
+        <field name="name">Regular Fit Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0012</field>
+        <field name="description_sale">Discover the Regular Fit Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this regular fit shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_12_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_12" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_charcoal'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shirts_template_12_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_12" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_13" model="product.template">
+        <field name="name">Pinpoint Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0013</field>
+        <field name="description_sale">Discover the Pinpoint Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this pinpoint shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_13_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_13" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_white'), ref('product_attribute_color_navy')])]" />
+    </record>
+    <record id="men_shirts_template_13_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_13" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_14" model="product.template">
+        <field name="name">Twill Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0014</field>
+        <field name="description_sale">Discover the Twill Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this twill shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_14_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_14" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_khaki'), ref('product_attribute_color_brown'), ref('product_attribute_color_beige')])]" />
+    </record>
+    <record id="men_shirts_template_14_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_14" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_15" model="product.template">
+        <field name="name">Poplin Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0015</field>
+        <field name="description_sale">Discover the Poplin Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this poplin shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_15_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_15" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_navy'), ref('product_attribute_color_charcoal')])]" />
+    </record>
+    <record id="men_shirts_template_15_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_15" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_16" model="product.template">
+        <field name="name">Cotton Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0016</field>
+        <field name="description_sale">Discover the Cotton Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this cotton shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_16_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_16" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_olive'), ref('product_attribute_color_khaki'), ref('product_attribute_color_camel')])]" />
+    </record>
+    <record id="men_shirts_template_16_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_16" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_17" model="product.template">
+        <field name="name">Mandarin Collar Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0017</field>
+        <field name="description_sale">Discover the Mandarin Collar Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this mandarin collar shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_17_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_17" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_burgundy'), ref('product_attribute_color_navy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_shirts_template_17_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_shirts_template_17" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_s'), ref('product_attribute_size_m'), ref('product_attribute_size_l'), ref('product_attribute_size_xl'), ref('product_attribute_size_xxl')])]" />
+    </record>
+    <record id="men_shirts_template_18" model="product.template">
+        <field name="name">French Cuff Dress Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0018</field>
+        <field name="description_sale">Discover the French Cuff Dress Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this french cuff dress shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_19" model="product.template">
+        <field name="name">Tuxedo Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0019</field>
+        <field name="description_sale">Discover the Tuxedo Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this tuxedo shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+    <record id="men_shirts_template_20" model="product.template">
+        <field name="name">Premium Sea Island Cotton Shirt</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">65.0</field>
+        <field name="standard_price">32.5</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MSHI0020</field>
+        <field name="description_sale">Discover the Premium Sea Island Cotton Shirt, designed for those who appreciate quality and style. Crafted from premium materials, this premium sea island cotton shirt offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_shirts')])]" />
+    </record>
+</odoo>

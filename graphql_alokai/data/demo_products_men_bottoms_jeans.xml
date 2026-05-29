@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="men_bottoms_jeans_template_1" model="product.template">
+        <field name="name">Slim Fit Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0001</field>
+        <field name="description_sale">Discover the Slim Fit Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this slim fit jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_1_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_1" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_2" model="product.template">
+        <field name="name">Straight Leg Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0002</field>
+        <field name="description_sale">Discover the Straight Leg Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this straight leg jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_black'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_2_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_2" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_3" model="product.template">
+        <field name="name">Tapered Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0003</field>
+        <field name="description_sale">Discover the Tapered Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this tapered jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_cream'), ref('product_attribute_color_white')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_3_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_3" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_4" model="product.template">
+        <field name="name">Classic Blue Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0004</field>
+        <field name="description_sale">Discover the Classic Blue Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this classic blue jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_grey'), ref('product_attribute_color_charcoal')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_4_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_4" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_5" model="product.template">
+        <field name="name">Bootcut Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0005</field>
+        <field name="description_sale">Discover the Bootcut Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this bootcut jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_5_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_5" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_6" model="product.template">
+        <field name="name">Skinny Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0006</field>
+        <field name="description_sale">Discover the Skinny Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this skinny jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_6_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_6" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_7" model="product.template">
+        <field name="name">Relaxed Fit Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0007</field>
+        <field name="description_sale">Discover the Relaxed Fit Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this relaxed fit jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_black'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_7_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_7" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_8" model="product.template">
+        <field name="name">Regular Fit Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0008</field>
+        <field name="description_sale">Discover the Regular Fit Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this regular fit jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_cream'), ref('product_attribute_color_white')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_8_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_8" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_9" model="product.template">
+        <field name="name">Dark Wash Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0009</field>
+        <field name="description_sale">Discover the Dark Wash Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this dark wash jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_grey'), ref('product_attribute_color_charcoal')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_9_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_9" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_10" model="product.template">
+        <field name="name">Light Wash Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0010</field>
+        <field name="description_sale">Discover the Light Wash Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this light wash jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_10_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_10" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_10_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_10" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_11" model="product.template">
+        <field name="name">Distressed Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0011</field>
+        <field name="description_sale">Discover the Distressed Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this distressed jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_11_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_11" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_11_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_11" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_12" model="product.template">
+        <field name="name">Black Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0012</field>
+        <field name="description_sale">Discover the Black Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this black jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_12_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_12" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_black'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_12_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_12" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_13" model="product.template">
+        <field name="name">Stretch Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0013</field>
+        <field name="description_sale">Discover the Stretch Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this stretch jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_13_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_13" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_light_blue'), ref('product_attribute_color_cream'), ref('product_attribute_color_white')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_13_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_13" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_14" model="product.template">
+        <field name="name">Athletic Fit Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0014</field>
+        <field name="description_sale">Discover the Athletic Fit Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this athletic fit jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_14_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_14" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_grey'), ref('product_attribute_color_charcoal')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_14_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_14" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_15" model="product.template">
+        <field name="name">Loose Fit Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0015</field>
+        <field name="description_sale">Discover the Loose Fit Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this loose fit jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_15_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_15" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_grey')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_15_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_15" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_16" model="product.template">
+        <field name="name">Vintage Wash Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0016</field>
+        <field name="description_sale">Discover the Vintage Wash Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this vintage wash jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_16_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_16" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_dark_blue'), ref('product_attribute_color_light_blue'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_16_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="men_bottoms_jeans_template_16" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_34'), ref('product_attribute_size_36'), ref('product_attribute_size_38'), ref('product_attribute_size_40'), ref('product_attribute_size_42')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_17" model="product.template">
+        <field name="name">Premium Selvedge Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0017</field>
+        <field name="description_sale">Discover the Premium Selvedge Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this premium selvedge jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+    <record id="men_bottoms_jeans_template_18" model="product.template">
+        <field name="name">Raw Denim Jeans</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">80.0</field>
+        <field name="standard_price">40.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">MJN0018</field>
+        <field name="description_sale">Discover the Raw Denim Jeans, designed for those who appreciate quality and style. Crafted from premium materials, this raw denim jeans offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_men_clothing_jeans')])]" />
+    </record>
+</odoo>

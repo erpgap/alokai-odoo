@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+    <record id="women_shoes_flats_template_1" model="product.template">
+        <field name="name">Ballet Flat</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0001</field>
+        <field name="description_sale">Discover the Ballet Flat, designed for those who appreciate quality and style. Crafted from premium materials, this ballet flat offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_1_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_1" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="women_shoes_flats_template_1_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_1" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_2" model="product.template">
+        <field name="name">Loafer</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0002</field>
+        <field name="description_sale">Discover the Loafer, designed for those who appreciate quality and style. Crafted from premium materials, this loafer offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_2_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_2" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_white'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_flats_template_2_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_2" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_3" model="product.template">
+        <field name="name">Slip-On Flat</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0003</field>
+        <field name="description_sale">Discover the Slip-On Flat, designed for those who appreciate quality and style. Crafted from premium materials, this slip-on flat offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_3_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_3" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_beige'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="women_shoes_flats_template_3_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_3" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_4" model="product.template">
+        <field name="name">Pointed Flat</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0004</field>
+        <field name="description_sale">Discover the Pointed Flat, designed for those who appreciate quality and style. Crafted from premium materials, this pointed flat offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_4_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_4" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_shoes_flats_template_4_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_4" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_5" model="product.template">
+        <field name="name">Espadrille</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0005</field>
+        <field name="description_sale">Discover the Espadrille, designed for those who appreciate quality and style. Crafted from premium materials, this espadrille offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_5_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_5" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_tan'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_shoes_flats_template_5_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_5" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_6" model="product.template">
+        <field name="name">Moccasin</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0006</field>
+        <field name="description_sale">Discover the Moccasin, designed for those who appreciate quality and style. Crafted from premium materials, this moccasin offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_6_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_6" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_cream')])]" />
+    </record>
+    <record id="women_shoes_flats_template_6_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_6" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_7" model="product.template">
+        <field name="name">Driving Shoe</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0007</field>
+        <field name="description_sale">Discover the Driving Shoe, designed for those who appreciate quality and style. Crafted from premium materials, this driving shoe offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_7_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_7" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_navy'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_flats_template_7_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_7" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_8" model="product.template">
+        <field name="name">Penny Loafer</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0008</field>
+        <field name="description_sale">Discover the Penny Loafer, designed for those who appreciate quality and style. Crafted from premium materials, this penny loafer offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_8_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_8" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_tan')])]" />
+    </record>
+    <record id="women_shoes_flats_template_8_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_8" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_9" model="product.template">
+        <field name="name">Tassel Loafer</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0009</field>
+        <field name="description_sale">Discover the Tassel Loafer, designed for those who appreciate quality and style. Crafted from premium materials, this tassel loafer offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_9_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_9" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_white'), ref('product_attribute_color_black')])]" />
+    </record>
+    <record id="women_shoes_flats_template_9_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_9" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_10" model="product.template">
+        <field name="name">Bow Flat</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0010</field>
+        <field name="description_sale">Discover the Bow Flat, designed for those who appreciate quality and style. Crafted from premium materials, this bow flat offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_10_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_10" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_beige'), ref('product_attribute_color_brown')])]" />
+    </record>
+    <record id="women_shoes_flats_template_10_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_10" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_11" model="product.template">
+        <field name="name">Pointed Toe Flat</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0011</field>
+        <field name="description_sale">Discover the Pointed Toe Flat, designed for those who appreciate quality and style. Crafted from premium materials, this pointed toe flat offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+    <record id="women_shoes_flats_template_11_attr_color" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_11" />
+        <field name="attribute_id" ref="product_attribute_color" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_color_black'), ref('product_attribute_color_burgundy')])]" />
+    </record>
+    <record id="women_shoes_flats_template_11_attr_size" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="women_shoes_flats_template_11" />
+        <field name="attribute_id" ref="product_attribute_size" />
+        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_size_6'), ref('product_attribute_size_7'), ref('product_attribute_size_8'), ref('product_attribute_size_9'), ref('product_attribute_size_10')])]" />
+    </record>
+    <record id="women_shoes_flats_template_12" model="product.template">
+        <field name="name">Designer Hand-Stitched Flat</field>
+        <field name="categ_id" ref="graphql_alokai.product_category_pants" />
+        <field name="list_price">60.0</field>
+        <field name="standard_price">30.0</field>
+        <field name="is_published" eval="True" />
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True" />
+        <field name="taxes_id" eval="False" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="invoice_policy">delivery</field>
+        <field name="default_code">WFLT0012</field>
+        <field name="description_sale">Discover the Designer Hand-Stitched Flat, designed for those who appreciate quality and style. Crafted from premium materials, this designer hand-stitched flat offers a perfect balance of comfort and elegance. The thoughtful design ensures a flattering silhouette that complements any look. Versatile enough for both day and evening wear, it pairs effortlessly with your existing wardrobe. Built to last with attention to every detail, this is a timeless addition to your collection.</field>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('graphql_alokai.public_category_women_shoes_flats')])]" />
+    </record>
+</odoo>

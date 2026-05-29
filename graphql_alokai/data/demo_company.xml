@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+
+    <!-- Main company: ERPGAP, headquartered in Viseu.
+         Social channels we don't use are cleared by the post-init hook
+         (_clear_unwanted_social_fields) since Odoo's own demo populates them. -->
+    <record id="base.main_company" model="res.company">
+        <field name="name">ERPGAP</field>
+        <field name="street">Avn Alberto Sampaio 27 2D</field>
+        <field name="city">Viseu</field>
+        <field name="zip">3510-050</field>
+        <field name="state_id" ref="base.state_pt_pt-18"/>
+        <field name="country_id" ref="base.pt"/>
+        <field name="phone">+351 917848501</field>
+        <field name="email">dduarte@erpgap.com</field>
+        <field name="website">https://www.erpgap.com</field>
+        <field name="logo" type="base64" file="graphql_alokai/static/description/erpgap_logo.svg"/>
+        <field name="social_twitter">https://x.com/erpGap</field>
+        <field name="social_linkedin">https://www.linkedin.com/company/erpgap/posts/?feedView=all</field>
+        <field name="social_github">https://github.com/odoogap</field>
+    </record>
+
+    <!-- Secondary office: Ílhavo. Created as a child contact of the main partner. -->
+    <record id="company_address_ilhavo" model="res.partner">
+        <field name="name">ERPGAP - Ílhavo Office</field>
+        <field name="parent_id" ref="base.main_partner"/>
+        <field name="type">other</field>
+        <field name="street">Via do Conhecimento, Building 3 room 1A</field>
+        <field name="city">Ílhavo</field>
+        <field name="zip">3830-352</field>
+        <field name="country_id" ref="base.pt"/>
+    </record>
+
+    <!-- Alokai website branding + social.
+         Unused social channels are cleared by the post-init hook
+         (_clear_unwanted_social_fields) since Odoo's own demo populates them. -->
+    <record id="website.default_website" model="website">
+        <field name="name">Alokai</field>
+        <field name="domain">https://alokai.erpgap.com</field>
+        <field name="logo" type="base64" file="graphql_alokai/static/description/icon.png"/>
+
+        <field name="alokai_payment_success_return_url">https://alokai.erpgap.com/checkout/thank-you</field>
+        <field name="alokai_payment_error_return_url">https://alokai.erpgap.com/payment-fail</field>
+
+        <field name="website_meta_title">Alokai - Modern Fashion &amp; Lifestyle Online Store</field>
+        <field name="website_meta_description">Shop the latest fashion at Alokai. Discover curated collections of women's and men's clothing, shoes and accessories, with free shipping and easy returns.</field>
+        <field name="website_meta_keywords">fashion online, women's fashion, men's fashion, online clothing, shoes, accessories, fashion store, alokai</field>
+
+        <field name="social_twitter">https://x.com/erpGap</field>
+        <field name="social_linkedin">https://www.linkedin.com/company/erpgap/posts/?feedView=all</field>
+        <field name="social_github">https://github.com/odoogap</field>
+    </record>
+
+</odoo>
