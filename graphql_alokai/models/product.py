@@ -442,6 +442,29 @@ class ProductTemplate(models.Model):
             # has_stock = False
             return [('id', 'not in', product_ids)]
 
+    def _get_product_placeholder_filename(self):
+        """Override Odoo's default product placeholder with our branded one.
+        product.product._get_product_placeholder_filename delegates to the
+        template, so this single override covers both templates and variants.
+        """
+        return 'graphql_alokai/static/img/placeholder.jpg'
+
+    def action_open_storefront(self):
+        """Smart-button action: open this product on the configured website domain
+        (i.e. the Nuxt storefront, not Odoo's built-in /shop)."""
+        self.ensure_one()
+        website = self.env['website'].get_current_website()
+        base_url = (
+            website.domain
+            or self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        ).rstrip('/')
+        url = f"{base_url}{self.website_slug or ''}" if self.website_slug else base_url
+        return {
+            'type': 'ir.actions.act_url',
+            'url': url,
+            'target': 'new',
+        }
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -796,6 +819,22 @@ class ProductTemplateRedisStock(models.Model):
 class ProductPublicCategory(models.Model):
     _name = 'product.public.category'
     _inherit = ['product.public.category', 'website.slug.redis.mixin']
+
+    def action_open_storefront(self):
+        """Smart-button action: open this category on the configured website
+        domain (the Nuxt storefront, not Odoo's built-in /shop)."""
+        self.ensure_one()
+        website = self.env['website'].get_current_website()
+        base_url = (
+            website.domain
+            or self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        ).rstrip('/')
+        url = f"{base_url}{self.website_slug or ''}" if self.website_slug else base_url
+        return {
+            'type': 'ir.actions.act_url',
+            'url': url,
+            'target': 'new',
+        }
 
     def _compute_json_ld(self):
         env = self.env
