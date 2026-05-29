@@ -24,7 +24,7 @@ class ResConfigSettings(models.TransientModel):
     alokai_cache_invalidation_key = fields.Char('Cache Invalidation Key', required=True)
     alokai_cache_invalidation_url = fields.Char('Cache Invalidation Url', required=True)
     alokai_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)],
-                                          related='website_id.alokai_mailing_list_id', readonly=False, required=True)
+                                          related='website_id.alokai_mailing_list_id', readonly=False)
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password',
                                                        related='website_id.reset_password_email_template_id', readonly=False, required=True)
     order_confirmation_email_template_id = fields.Many2one('mail.template', string='Order confirmation',
