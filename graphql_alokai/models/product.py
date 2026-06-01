@@ -417,7 +417,7 @@ class ProductTemplate(models.Model):
     recent_sales_count_increment = fields.Integer('Recent Sales Count Increment', default=0, required=True)
     frequently_bought_together_ids = fields.One2many('product.template.fbt', 'product_id', 'Frequently Bought Together',
                                                      readonly=True)
-    product_tmpl_redis_stock_ids = fields.One2many('product.template.redis_stock', 'product_id', 'Redis Stock',
+    product_tmpl_redis_stock_ids = fields.One2many('product.template.redis_stock', 'product_id', 'Template Redis Stock',
                                                    readonly=True)
     published_datetime = fields.Datetime('Published On', help='Datetime when the product was published', readonly=True,
                                          copy=False)
@@ -618,7 +618,7 @@ class ProductTemplateFBT(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    product_redis_stock_ids = fields.One2many('product.product.redis_stock', 'product_id', 'Redis Stock', readonly=True)
+    product_redis_stock_ids = fields.One2many('product.product.redis_stock', 'product_id', 'Variant Redis Stock', readonly=True)
     has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', search='_search_has_stock',
                                store=False)
 
