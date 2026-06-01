@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import json
+import itertools
 from odoo.fields import Domain
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -745,7 +746,10 @@ class ProductProduct(models.Model):
 
         redis_client = self.env['website']._redis_connect()
         try:
-            dirty_keys = list(redis_client.scan_iter('stock:product-is-dirty-*'))
+            # Cap work per run; leftover keys roll to the next tick since we
+            # only delete the keys we scanned. At current scale this never
+            # fires (catalog < 5000), it's just a safety valve for growth.
+            dirty_keys = list(itertools.islice(redis_client.scan_iter('stock:product-is-dirty-*'), 5000))
             if not dirty_keys:
                 return
 
@@ -767,12 +771,12 @@ class ProductProduct(models.Model):
         # In some situations, like running tests, skip redis
         if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
             return 0
-        redis_client = self.env['website']._redis_connect()
-        try:
-            products = self.search([])
-            products._update_products_stock_redis(redis_client)
-        finally:
-            redis_client.close()
+        # Don't write the redis_stock tables directly here. Instead flag every
+        # product dirty and let the dirty cron sync them. That keeps a single
+        # writer to those tables, avoiding REPEATABLE READ serialization errors
+        # when this full resync would otherwise overlap the dirty cron.
+        product_ids = self.search([]).ids
+        self.env['stock.quant']._write_dirty_keys_redis(product_ids)
 
     def _update_products_stock_redis(self, redis_client):
         if not self:
