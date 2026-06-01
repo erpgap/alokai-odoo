@@ -3,14 +3,35 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Alokai Api',
+    'name': 'Alokai',
     'version': '19.0.1.0.0',
-    'summary': 'Alokai API',
-    'description': """Alokai API Integration""",
-    'category': 'Website',
+    'summary': 'GraphQL API connecting Odoo to the Alokai (Vue Storefront) headless frontend',
+    'description': """
+Alokai
+======
+
+Headless eCommerce backend that exposes Odoo through a GraphQL API for the
+Alokai (Vue Storefront) frontend.
+
+Features
+--------
+* GraphQL endpoint (``/graphql/alokai``) with a GraphiQL IDE for development.
+* Storefront queries & mutations: products, categories, blog, cart, checkout,
+  wishlist, addresses, orders and user account.
+* Redis-backed stock cache kept in sync by lightweight crons (incremental
+  "dirty" updates plus a daily full resync).
+* Redis slug sync providing a dynamic-route fallback for records created after
+  a storefront build.
+* Build-time helper routes for the storefront (``/alokai/products``,
+  ``/alokai/categories``, ``/alokai/redirects``).
+* On-demand frontend cache invalidation when records change.
+* Merchandising: frequently-bought-together and product popularity.
+""",
+    'category': 'Website/eCommerce',
+    'application': True,
     'license': 'LGPL-3',
     'author': 'ERPGAP',
-    'website': 'https://www.erpgap.com/',
+    'website': 'https://www.erpgap.com/alokai/',
     'depends': [
         'graphql_base',
         'website',
