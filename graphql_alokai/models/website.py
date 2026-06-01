@@ -510,25 +510,3 @@ class BlogPost(models.Model):
 
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
-
-
-class WebsiteQueryHash(models.Model):
-    _name = 'website.graphql.hash'
-    _description = 'GraphQL Unique Query Hash'
-
-    hash = fields.Char(required=True, index=True, unique=True)
-
-
-class WebsiteQueryNotCached(models.Model):
-    _name = 'website.graphql.not_cached'
-    _description = 'GraphQL Not Cached Queries'
-
-    hash = fields.Char(required=True, index=True)
-    query = fields.Char(required=True)
-    variables = fields.Char(required=True)
-    count = fields.Integer(default=1)
-
-    @api.model
-    def clean(self):
-        self.env.cr.execute("TRUNCATE TABLE website_graphql_hash RESTART IDENTITY CASCADE")
-        self.env.cr.execute("TRUNCATE TABLE website_graphql_not_cached RESTART IDENTITY CASCADE")

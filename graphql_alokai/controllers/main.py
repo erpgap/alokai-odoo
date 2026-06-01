@@ -96,27 +96,6 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
 
             query_hash = hashlib.sha256((query + variables).encode('utf-8')).hexdigest()
 
-            WebsiteGraphqlHash = env['website.graphql.hash'].sudo()
-            if not WebsiteGraphqlHash.search([('hash', '=', query_hash)], limit=1):
-                # First time seeing this hash
-                WebsiteGraphqlHash.create({'hash': query_hash})
-            else:
-                WebsiteQueryNotCached = env['website.graphql.not_cached'].sudo()
-
-                # Seen before, log not cached
-                not_cached_hash = WebsiteQueryNotCached.search([('hash', '=', query_hash)], limit=1)
-                if not_cached_hash:
-                    not_cached_hash.write({
-                        'count': not_cached_hash.count + 1,
-                    })
-                else:
-                    WebsiteQueryNotCached.create({
-                        'hash': query_hash,
-                        'query': query,
-                        'variables': variables,
-                        'count': 1,
-                    })
-
             try:
                 def log_section(title, content):
                     separator = '-' * 100
