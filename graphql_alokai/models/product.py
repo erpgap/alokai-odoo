@@ -819,6 +819,7 @@ class ProductProduct(models.Model):
 
 class ProductStockRedis(models.AbstractModel):
     _name = 'product.redis_stock'
+    _description = 'Redis Stock (base)'
 
     website_id = fields.Many2one('website', 'Website', required=True)
     quantity = fields.Float('Quantity', digits='Product Unit of Measure', required=True)
@@ -845,6 +846,7 @@ class ProductStockRedis(models.AbstractModel):
 class ProductProductRedisStock(models.Model):
     _name = 'product.product.redis_stock'
     _inherit = 'product.redis_stock'
+    _description = 'Product Variant Redis Stock'
 
     product_id = fields.Many2one('product.product', 'Product', required=True, ondelete='cascade')
 
@@ -857,6 +859,7 @@ class ProductProductRedisStock(models.Model):
 class ProductTemplateRedisStock(models.Model):
     _name = 'product.template.redis_stock'
     _inherit = 'product.redis_stock'
+    _description = 'Product Template Redis Stock'
 
     product_id = fields.Many2one('product.template', 'Product', required=True, ondelete='cascade')
 
