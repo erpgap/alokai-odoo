@@ -138,10 +138,10 @@ class Website(models.Model):
             if social:
                 json_ld["sameAs"] = social
 
-            if company.phone or company.mobile:
+            if company.phone:
                 json_ld["contactPoint"] = {
                     "@type": "ContactPoint",
-                    "telephone": company.phone or company.mobile,
+                    "telephone": company.phone,
                     "contactType": "customer service",
                 }
 
