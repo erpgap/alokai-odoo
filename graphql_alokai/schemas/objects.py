@@ -111,6 +111,24 @@ def get_image_filename(object, name='name'):
 def get_image_url(object, field_name='image'):
     return f'/web/image/{object._name}/{object.id}/{field_name}'
 
+
+def get_image_url_template(object, field_name='image'):
+    """
+    Returns a templated image URL with {width}/{height} placeholders that the
+    frontend swaps for the size it needs, e.g.:
+        /web/image/product.template/17/image_1920/{width}x{height}/69b4146c_shop-hobby-plus
+
+    The Nuxt site replaces the tokens before rendering:
+        url.replace('{width}', w).replace('{height}', h)
+
+    The filename suffix is kept in the path so CDNs (Cloudflare, CloudFront, ...)
+    cache each variant correctly. This combines `image` + `image_filename` into a
+    single field so the website team can't forget to add the size or the filename.
+    """
+    base = get_image_url(object, field_name=field_name)
+    filename = get_image_filename(object)
+    return f'{base}/{{width}}x{{height}}/{filename}'
+
 def get_parent_company(partner):
     if partner.parent_id:
         return get_parent_company(partner.parent_id)
@@ -159,7 +177,6 @@ class Country(OdooObjectType):
     name = graphene.String(required=True)
     code = graphene.String(required=True)
     states = graphene.List(graphene.NonNull(lambda: State))
-    image_url = graphene.String()
 
     def resolve_states(self, info):
         return self.state_ids.sorted('name') or None
@@ -179,6 +196,7 @@ class Company(OdooObjectType):
     mobile = graphene.String()
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     vat = graphene.String()
     social_twitter = graphene.String()
     social_facebook = graphene.String()
@@ -198,6 +216,9 @@ class Company(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self, field_name='image_1920')
 
 
 class Pricelist(OdooObjectType):
@@ -232,6 +253,7 @@ class Partner(OdooObjectType):
     parent_id = graphene.Field(lambda: Partner)
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     vat = graphene.String()
     public_pricelist = graphene.Field(lambda: Pricelist)
     current_pricelist = graphene.Field(lambda: Pricelist)
@@ -276,6 +298,9 @@ class Partner(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self, field_name='image_1920')
 
     def resolve_public_pricelist(self, info):
         website = self.env['website'].get_current_website()
@@ -357,6 +382,7 @@ class Category(OdooObjectType):
     name = graphene.String()
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     parent = graphene.Field(lambda: Category)
     childs = graphene.List(graphene.NonNull(lambda: Category))
     slug = graphene.String()
@@ -373,6 +399,9 @@ class Category(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self, field_name='image_1920')
 
     def resolve_parent(self, info):
         return self.parent_id or None
@@ -443,6 +472,7 @@ class ProductImage(OdooObjectType):
     name = graphene.String()
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     video = graphene.String()
 
     def resolve_id(self, info):
@@ -453,6 +483,9 @@ class ProductImage(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self, field_name='image_1920')
 
     def resolve_video(self, info):
         return self.video_url or None
@@ -474,12 +507,16 @@ class ProductTag(OdooObjectType):
     visible_on_ecommerce = graphene.Boolean()
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
 
     def resolve_image(self, info):
         return get_image_url(self, field_name='image')
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self)
 
 
 class Product(OdooObjectType):
@@ -502,6 +539,7 @@ class Product(OdooObjectType):
     image = graphene.String()
     small_image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     thumbnail = graphene.String()
     categories = graphene.List(graphene.NonNull(lambda: Category))
     allow_out_of_stock = graphene.Boolean()
@@ -590,6 +628,9 @@ class Product(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self, field_name='image_1920')
 
     def resolve_thumbnail(self, info):
         return get_image_url(self, field_name='image_512')
@@ -1069,6 +1110,7 @@ class PaymentMethod(OdooObjectType):
     image = graphene.String()
     image_payment_form = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
 
     def resolve_providers(self, info):
         return self.provider_ids or None
@@ -1084,6 +1126,9 @@ class PaymentMethod(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self)
 
 
 class PaymentProvider(OdooObjectType):
@@ -1165,6 +1210,7 @@ class WebsiteMenuImage(OdooObjectType):
     id = graphene.Int(required=True)
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     tag = graphene.String()
     title = graphene.String()
     subtitle = graphene.String()
@@ -1178,6 +1224,9 @@ class WebsiteMenuImage(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self, name='title')
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self)
 
 # ----------------------------- #
 #         Website Page          #
@@ -1223,6 +1272,7 @@ class BlogPost(OdooObjectType):
     id = graphene.Int()
     image = graphene.String()
     image_filename = graphene.String()
+    image_url = graphene.String()
     name = graphene.String()
     published_date = graphene.String()
     author_id = graphene.Field(lambda: Partner)
@@ -1237,6 +1287,9 @@ class BlogPost(OdooObjectType):
 
     def resolve_image_filename(self, info):
         return get_image_filename(self)
+
+    def resolve_image_url(self, info):
+        return get_image_url_template(self)
 
     def resolve_teaser(self, info):
         if self.teaser_manual:
