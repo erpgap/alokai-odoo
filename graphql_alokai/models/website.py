@@ -23,6 +23,8 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
 
     def _update_slug_in_redis(self):
         redis_client = self.env['website']._redis_connect()
+        if not redis_client:
+            return
         try:
             langs = self.env['res.lang'].search([])
             pipe = redis_client.pipeline()
@@ -155,7 +157,17 @@ class Website(models.Model):
             website.json_ld = json.dumps(json_ld)
 
     @api.model
+    def _redis_enabled(self):
+        """Redis is opt-in and disabled by default. Every Redis code path
+        checks this and no-ops when it's off."""
+        return self.env['ir.config_parameter'].sudo().get_param('alokai_redis_enabled') == 'True'
+
+    @api.model
     def _redis_connect(self):
+        # Single gate: when Redis is disabled, return None so callers skip.
+        if not self._redis_enabled():
+            return None
+
         ICP = self.env['ir.config_parameter'].sudo()
         redis_host = ICP.get_param('alokai_redis_host', False)
         redis_port = ICP.get_param('alokai_redis_port', False)
@@ -195,6 +207,8 @@ class Website(models.Model):
         """
         batch_size = 100
         redis_client = self._redis_connect()
+        if not redis_client:
+            return
 
         try:
             cursor = 0
@@ -252,6 +266,8 @@ class Website(models.Model):
     @api.model
     def _update_all_slugs_redis(self):
         redis_client = self.env['website']._redis_connect()
+        if not redis_client:
+            return
         try:
             # Delet one-by-one to avoid Redis blocking or memory pressure
             delete_keys = list(redis_client.scan_iter('slug:*'))

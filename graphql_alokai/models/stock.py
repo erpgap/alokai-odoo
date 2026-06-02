@@ -10,9 +10,9 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     def _create_stock_is_dirty_redis(self):
-        # In some situations, like running tests, skip redis
-        if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
-            return 0
+        # Redis is opt-in; skip entirely when disabled (also covers tests).
+        if not self.env['website']._redis_enabled():
+            return
 
         product_ids = list({q.product_id.id for q in self})
         if not product_ids:
@@ -24,6 +24,8 @@ class StockQuant(models.Model):
     @api.model
     def _write_dirty_keys_redis(self, product_ids):
         redis_client = self.env['website']._redis_connect()
+        if not redis_client:
+            return
         try:
             # uuid suffix so the cron only deletes the keys it scanned;
             # flags created mid-run survive for the next cycle.

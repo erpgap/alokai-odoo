@@ -301,9 +301,10 @@ class CheckoutRedirect(graphene.Mutation):
                 session = http.root.session_store.get(session_id)
                 if session and session.get('sale_order_id'):
                     redis_client = info.context['env']['website']._redis_connect()
-                    pipe = redis_client.pipeline()
-                    pipe.set(access_token, session_id, ex=60)  # 60-second TTL
-                    pipe.execute()
+                    if redis_client:
+                        pipe = redis_client.pipeline()
+                        pipe.set(access_token, session_id, ex=60)  # 60-second TTL
+                        pipe.execute()
             except:
                 pass
 

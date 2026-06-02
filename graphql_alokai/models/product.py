@@ -740,9 +740,9 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_dirty_products_stock_redis(self):
-        # In some situations, like running tests, skip redis
-        if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
-            return 0
+        # Redis is opt-in; skip entirely when disabled (also covers tests).
+        if not self.env['website']._redis_enabled():
+            return
 
         redis_client = self.env['website']._redis_connect()
         try:
@@ -768,9 +768,9 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_all_products_stock_redis(self):
-        # In some situations, like running tests, skip redis
-        if self.env['ir.config_parameter'].sudo().get_param('alokai_disable_redis_stock', False):
-            return 0
+        # Redis is opt-in; skip entirely when disabled (also covers tests).
+        if not self.env['website']._redis_enabled():
+            return
         # Don't write the redis_stock tables directly here. Instead flag every
         # product dirty and let the dirty cron sync them. That keeps a single
         # writer to those tables, avoiding REPEATABLE READ serialization errors

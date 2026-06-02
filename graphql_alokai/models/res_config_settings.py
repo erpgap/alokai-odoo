@@ -37,6 +37,7 @@ class ResConfigSettings(models.TransientModel):
     alokai_recent_sales_count_days = fields.Integer('Recent Sales Count (days)', required=True)
 
     # Redis
+    alokai_redis_enabled = fields.Boolean('Enable Redis')
     alokai_redis_host = fields.Char('Redis Host', default='localhost')
     alokai_redis_port = fields.Integer('Redis Port', default=6379)
 
@@ -52,6 +53,7 @@ class ResConfigSettings(models.TransientModel):
             alokai_image_background_rgba=ICP.get_param('alokai_image_background_rgba', '(255, 255, 255, 255)'),
             alokai_image_resize_limit=int(ICP.get_param('alokai_image_resize_limit', 1920)),
             alokai_recent_sales_count_days=int(ICP.get_param('alokai_recent_sales_count_days', 30)),
+            alokai_redis_enabled=ICP.get_param('alokai_redis_enabled'),
             alokai_redis_host=ICP.get_param('alokai_redis_host', 'localhost'),
             alokai_redis_port=int(ICP.get_param('alokai_redis_port', 6379)),
         )
@@ -74,6 +76,7 @@ class ResConfigSettings(models.TransientModel):
         ICP.set_param('alokai_image_background_rgba', self.alokai_image_background_rgba)
         ICP.set_param('alokai_image_resize_limit', self.alokai_image_resize_limit)
         ICP.set_param('alokai_recent_sales_count_days', self.alokai_recent_sales_count_days)
+        ICP.set_param('alokai_redis_enabled', self.alokai_redis_enabled)
         ICP.set_param('alokai_redis_host', self.alokai_redis_host)
         ICP.set_param('alokai_redis_port', self.alokai_redis_port)
 

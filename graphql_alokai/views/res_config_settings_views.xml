@@ -46,10 +46,13 @@
                 </block>
 
                 <block title="Alokai Redis" id="alokai_redis_settings">
-                    <setting id="alokai_redis_host">
+                    <setting id="alokai_redis_enabled" title="Enable Redis-backed features (stock cache, slug routing, cache invalidation).">
+                        <field name="alokai_redis_enabled"/>
+                    </setting>
+                    <setting id="alokai_redis_host" invisible="not alokai_redis_enabled">
                         <field name="alokai_redis_host"/>
                     </setting>
-                    <setting id="alokai_redis_port">
+                    <setting id="alokai_redis_port" invisible="not alokai_redis_enabled">
                         <field name="alokai_redis_port"/>
                     </setting>
                 </block>

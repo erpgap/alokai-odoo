@@ -237,6 +237,8 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         """Replace the Odoo session ID with the provided one, used to redirect Alokai to Odoo checkout"""
         if access_token:
             redis_client = request.env['website']._redis_connect()
+            if not redis_client:
+                return request.redirect('/shop/checkout')
             session_id = redis_client.get(access_token)
             if session_id:
                 try:
