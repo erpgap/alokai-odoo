@@ -18,7 +18,7 @@
                 </group>
             </xpath>
             <xpath expr="//page[@name='page_custom_code']" position="before">
-                <page name="seo" string="Homepage SEO" groups="base.group_no_one">
+                <page name="seo" string="Homepage SEO">
                     <group name="default_opengraph">
                         <field name="website_meta_title" string="Meta Title"/>
                         <field name="website_meta_description" string="Meta Description"/>
