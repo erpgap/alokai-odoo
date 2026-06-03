@@ -155,9 +155,10 @@ class ProductTemplate(models.Model):
             if product.image_1920:
                 images.append(f'{base_url}/web/image/product.template/{product.id}/image_1920')
 
-            # Dynamic availability: check actual stock on storable variants
+            # Dynamic availability: check actual stock on storable variants.
+            # sudo() because the storefront's public user can't read stock.
             if product.is_storable:
-                in_stock = any(v.qty_available > 0 for v in product.product_variant_ids)
+                in_stock = any(v.qty_available > 0 for v in product.sudo().product_variant_ids)
             else:
                 in_stock = True
             availability = "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"
@@ -670,9 +671,10 @@ class ProductProduct(models.Model):
             if product.image_1920:
                 images.append(f'{base_url}/web/image/product.product/{product.id}/image_1920')
 
-            # Dynamic availability: variants have qty_available directly
+            # Dynamic availability: variants have qty_available directly.
+            # sudo() because the storefront's public user can't read stock.
             if product.is_storable:
-                in_stock = product.qty_available > 0
+                in_stock = product.sudo().qty_available > 0
             else:
                 in_stock = True
             availability = "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"

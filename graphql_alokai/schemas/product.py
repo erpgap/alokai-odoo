@@ -369,7 +369,7 @@ class ProductQuery(graphene.ObjectType):
             product=product,
             product_template_id=variant_info['product_template_id'],
             display_name=variant_info['display_name'],
-            display_image=variant_info['display_image'],
+            display_image=bool(product.image_1920),
             price=variant_info['price'],
             list_price=variant_info['list_price'],
             has_discounted_price=variant_info['has_discounted_price'],
