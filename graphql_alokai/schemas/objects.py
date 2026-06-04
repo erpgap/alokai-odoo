@@ -929,7 +929,7 @@ class ShippingMethod(OdooObjectType):
 
     def resolve_price(self, info):
         website = self.env['website'].get_current_website()
-        order = website.sale_get_order(force_create=True)
+        order = website._get_and_cache_current_cart() or website._create_cart()
         return self.rate_shipment(order)['price'] if self.free_over else self.fixed_price
 
     def resolve_product(self, info):

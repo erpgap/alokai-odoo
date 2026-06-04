@@ -64,7 +64,7 @@ class AddressQuery(graphene.ObjectType):
         env = info.context["env"]
         ResPartner = env['res.partner'].with_context(show_address=1).sudo()
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
 
         if order:
             # Is public user
@@ -143,7 +143,7 @@ class AddAddress(graphene.Mutation):
         env = info.context["env"]
         ResPartner = env['res.partner'].sudo().with_context(tracking_disable=True)
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
 
         if order:
             partner = order.partner_id
@@ -205,7 +205,7 @@ class UpdateAddress(graphene.Mutation):
     def mutate(self, info, address):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
 
         websites = env['website'].sudo().search([])
         if address['id'] in websites.mapped('user_id.partner_id.id'):
@@ -254,7 +254,7 @@ class DeleteAddress(graphene.Mutation):
     def mutate(self, info, address):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
 
         websites = env['website'].sudo().search([])
         if address['id'] in websites.mapped('user_id.partner_id.id'):
@@ -292,7 +292,7 @@ class SelectAddress(graphene.Mutation):
     def mutate(self, info, type, address):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
 
         partner = get_partner(env, address['id'], order, website)
 

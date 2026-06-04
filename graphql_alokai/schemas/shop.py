@@ -31,12 +31,12 @@ class ShoppingCartQuery(graphene.ObjectType):
     def resolve_cart(self, info):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
         fbt = None
 
         if order and order.state != 'draft':
             request.session['sale_order_id'] = None
-            order = website.sale_get_order()
+            order = website._get_and_cache_current_cart()
         if order:
             order.order_line.filtered(lambda l: not l.product_id.active).unlink()
 
@@ -66,7 +66,7 @@ class CartClear(graphene.Mutation):
     def mutate(self, info):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
         order.order_line.sudo().unlink()
         return order
 
@@ -81,7 +81,7 @@ class SetShippingMethod(graphene.Mutation):
     def mutate(self, info, shipping_method_id):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
 
         delivery_method = env['delivery.carrier'].sudo().search([
             ('id', '=', shipping_method_id),
@@ -119,7 +119,7 @@ class CartAddMultipleItems(graphene.Mutation):
     def mutate(self, info, products):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
         # Forcing the website_id to be passed to the Order
         order.write({'website_id': website.id})
         for product in products:
@@ -147,7 +147,7 @@ class CartUpdateMultipleItems(graphene.Mutation):
     def mutate(self, info, lines):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
         for line in lines:
             line_id = line['id']
             quantity = line['quantity']
@@ -168,7 +168,7 @@ class CartRemoveMultipleItems(graphene.Mutation):
     def mutate(self, info, line_ids):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
         for line_id in line_ids:
             line = order.order_line.filtered(lambda rec: rec.id == line_id)
             line.unlink()
@@ -189,7 +189,7 @@ class CreateUpdatePartner(graphene.Mutation):
     def mutate(self, info, name, email, subscribe_newsletter, phone=False, mobile=False):
         env = info.context['env']
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
 
         data = {
             'name': name,

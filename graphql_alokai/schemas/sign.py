@@ -70,7 +70,7 @@ class Login(graphene.Mutation):
             order = user.partner_id.last_website_so_id
             if not order or order.state != 'draft':
                 request.session['sale_order_id'] = None
-                order = website.sale_get_order()
+                order = website._get_and_cache_current_cart()
                 if order:
                     order._update_sale_order(website, user)
 

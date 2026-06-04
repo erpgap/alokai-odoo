@@ -51,7 +51,7 @@ class PaymentQuery(graphene.ObjectType):
         env = info.context["env"]
 
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
 
         domain = Domain.AND([
             ['&', ('state', 'in', ['enabled', 'test']), ('company_id', '=', order.company_id.id)],
@@ -108,7 +108,7 @@ class MakeGiftCardPayment(graphene.Mutation):
     def mutate(self, info):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
         tx = order.get_portal_last_transaction()
 
         if order and not order.amount_total and not tx:

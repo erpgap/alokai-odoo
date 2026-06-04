@@ -117,7 +117,7 @@ class OrderQuery(graphene.ObjectType):
         """ Get all shipping/delivery methods """
         env = info.context['env']
         website = env['website'].get_current_website()
-        order = website.sale_get_order()
+        order = website._get_and_cache_current_cart()
         if order:
             return order._get_delivery_methods()
         return env['delivery.carrier']
@@ -143,7 +143,7 @@ class ApplyCoupon(graphene.Mutation):
     def mutate(self, info, promo):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
 
         status = order._try_apply_code(promo)
         error = status.get('error')
@@ -184,7 +184,7 @@ class ApplyGiftCard(graphene.Mutation):
     def mutate(self, info, promo):
         env = info.context["env"]
         website = env['website'].get_current_website()
-        order = website.sale_get_order(force_create=1)
+        order = website._get_and_cache_current_cart() or website._create_cart()
 
         status = order._try_apply_code(promo)
         error = status.get('error')
