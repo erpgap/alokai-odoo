@@ -131,9 +131,13 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 and request.env['res.users'].sudo().browse(request_uid).has_group('base.group_public'):
             request.update_env(user=website_uid)
 
-        # Initialize cart and pricelist for Odoo v19 compatibility
+        # Initialize cart, fiscal position and pricelist for Odoo v19
+        # compatibility (mirrors website_sale's ir_http request setup, which
+        # the GraphQL routes bypass).
         if not hasattr(request, 'cart'):
             request.cart = lazy(website._get_and_cache_current_cart)
+        if not hasattr(request, 'fiscal_position'):
+            request.fiscal_position = lazy(website._get_and_cache_current_fiscal_position)
         if not hasattr(request, 'pricelist'):
             request.pricelist = lazy(website._get_and_cache_current_pricelist)
 
