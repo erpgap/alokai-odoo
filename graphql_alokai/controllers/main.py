@@ -114,18 +114,9 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         return super(GraphQLController, self)._process_request(schema, data)
 
     def _set_website_context(self):
-        """Set website context based on http_request_host header."""
-        website = None
-        try:
-            request_host = request.httprequest.headers.environ.get('HTTP_REQUEST_HOST')
-            if not request_host.startswith(('http://', 'https://')):
-                request_host = f'https://{request_host}'
-            website = request.env['website'].search([('domain', '=', request_host)], limit=1)
-        except:
-            pass
-
-        if not website:
-            website = request.env['website'].search([], limit=1)
+        """Set website context from the storefront request host."""
+        host = request.httprequest.headers.environ.get('HTTP_REQUEST_HOST')
+        website = request.env['website']._alokai_resolve_by_host(host)
 
         request.update_context(
             website_id=website.id,

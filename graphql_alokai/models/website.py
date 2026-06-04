@@ -2,6 +2,7 @@
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import re
+import logging
 import redis
 import pprint
 import json
@@ -15,6 +16,8 @@ from odoo.addons.graphql_alokai.schemas.objects import get_image_url
 from odoo.fields import Domain
 from odoo.exceptions import UserError
 from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
+
+_logger = logging.getLogger(__name__)
 
 
 class WebsiteSlugRedisMixin(models.AbstractModel):
@@ -88,14 +91,8 @@ class Website(models.Model):
     _inherit = ['website', 'website.seo.metadata']
 
     def _compute_json_ld(self):
-        base_url_param = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
-        if base_url_param and base_url_param[-1] == '/':
-            base_url_param = base_url_param[:-1]
-
         for website in self:
-            base_url = website.domain or base_url_param
-            if base_url and base_url[-1] == '/':
-                base_url = base_url[:-1]
+            base_url = website._alokai_domain()
 
             company = website.company_id
 
@@ -155,6 +152,42 @@ class Website(models.Model):
                 }
 
             website.json_ld = json.dumps(json_ld)
+
+    @api.model
+    def _alokai_resolve_by_host(self, host):
+        """Resolve which website a storefront/GraphQL request belongs to by
+        matching the request host against each website's Domain.
+
+        Matching ignores scheme, path/trailing slash and case, so e.g.
+        'https://shop.example.com/' matches a stored 'shop.example.com'.
+
+        Zero-config friendly: with a single website it always returns it, so
+        a fresh install works with no setup. With several websites and no
+        match it still returns one (a request is never broken) but logs a
+        warning - that's the only case where it could otherwise silently
+        serve the wrong store's data.
+        """
+        def _norm(value):
+            value = (value or '').strip().lower()
+            value = value.split('://', 1)[-1]   # drop scheme
+            value = value.split('/', 1)[0]      # drop path / trailing slash
+            return value
+
+        websites = self.search([])
+        target = _norm(host)
+        if target:
+            for website in websites:
+                if _norm(website._alokai_domain()) == target:
+                    return website
+
+        if len(websites) > 1:
+            _logger.warning(
+                "Alokai: no website Domain matched request host %r; falling "
+                "back to %r. Set each website's Domain to its storefront host "
+                "to route requests correctly.",
+                host, websites[:1].display_name,
+            )
+        return websites[:1]
 
     @api.model
     def _redis_enabled(self):
@@ -251,6 +284,20 @@ class Website(models.Model):
     alokai_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)])
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password')
     order_confirmation_email_template_id = fields.Many2one('mail.template', string='Order confirmation')
+    alokai_domain = fields.Char(
+        'Alokai Domain',
+        help="Public storefront host used to route GraphQL requests to this "
+             "website and to build storefront links. Falls back to the "
+             "website's Domain when empty."
+    )
+
+    def _alokai_domain(self):
+        """Storefront base URL: the dedicated Alokai Domain, else the website's
+        Domain, else the system base URL. Trailing slash stripped, ready to
+        prefix a slug."""
+        self.ensure_one()
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        return (self.alokai_domain or self.domain or base_url).rstrip('/')
 
     @api.model
     def enable_b2c_reset_password(self):
@@ -458,12 +505,7 @@ class BlogPost(models.Model):
 
     def _compute_json_ld(self):
         website = self.env['website'].get_current_website()
-        base_url_param = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
-        if base_url_param and base_url_param[-1] == '/':
-            base_url_param = base_url_param[:-1]
-        base_url = website.domain or base_url_param
-        if base_url and base_url[-1] == '/':
-            base_url = base_url[:-1]
+        base_url = website._alokai_domain()
 
         def strip_html(text):
             """Strip HTML tags and decode entities for plain-text description."""

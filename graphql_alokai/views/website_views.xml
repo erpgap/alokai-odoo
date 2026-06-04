@@ -12,6 +12,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='domain']" position="after">
                 <group class="mt-5" name="alokai_info">
+                    <field name="alokai_domain" placeholder="e.g. shop.example.com"/>
                     <field name="alokai_mailing_list_id"/>
                     <field name="alokai_payment_success_return_url"/>
                     <field name="alokai_payment_error_return_url"/>

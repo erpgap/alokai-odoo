@@ -144,9 +144,7 @@ class ProductTemplate(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
-        website_domain = website.domain or base_url
-        if website_domain and website_domain[-1:] == '/':
-            website_domain = website_domain[:-1]
+        website_domain = website._alokai_domain()
 
         seller_name = (website and website.display_name) or env.user.company_id.display_name
 
@@ -267,9 +265,7 @@ class ProductTemplate(models.Model):
 
         if self.public_categ_ids:
             website = self.env['website'].get_current_website()
-            domain = website.domain or ''
-            if domain and domain[-1] == '/':
-                domain = domain[:-1]
+            domain = website._alokai_domain()
 
             categories = self._get_breadcrumb_category([], self.public_categ_ids[0])
             categories.reverse()
@@ -473,10 +469,7 @@ class ProductTemplate(models.Model):
         (i.e. the Nuxt storefront, not Odoo's built-in /shop)."""
         self.ensure_one()
         website = self.env['website'].get_current_website()
-        base_url = (
-            website.domain
-            or self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
-        ).rstrip('/')
+        base_url = website._alokai_domain()
         url = f"{base_url}{self.website_slug or ''}" if self.website_slug else base_url
         return {
             'type': 'ir.actions.act_url',
@@ -660,9 +653,7 @@ class ProductProduct(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
-        website_domain = website.domain or base_url
-        if website_domain and website_domain[-1:] == '/':
-            website_domain = website_domain[:-1]
+        website_domain = website._alokai_domain()
 
         seller_name = (website and website.display_name) or env.user.company_id.display_name
 
@@ -880,10 +871,7 @@ class ProductPublicCategory(models.Model):
         domain (the Nuxt storefront, not Odoo's built-in /shop)."""
         self.ensure_one()
         website = self.env['website'].get_current_website()
-        base_url = (
-            website.domain
-            or self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
-        ).rstrip('/')
+        base_url = website._alokai_domain()
         url = f"{base_url}{self.website_slug or ''}" if self.website_slug else base_url
         return {
             'type': 'ir.actions.act_url',
@@ -898,9 +886,7 @@ class ProductPublicCategory(models.Model):
         if base_url and base_url[-1:] == '/':
             base_url = base_url[:-1]
 
-        website_domain = website.domain or base_url
-        if website_domain and website_domain[-1:] == '/':
-            website_domain = website_domain[:-1]
+        website_domain = website._alokai_domain()
 
         for category in self:
             category_url = f'{website_domain}{category.website_slug or ""}'

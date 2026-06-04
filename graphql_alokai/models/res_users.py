@@ -43,9 +43,7 @@ class ResUsers(models.Model):
         assert template._name == 'mail.template'
 
         website = request.env['website'].get_current_website()
-        domain = website.domain or ''
-        if domain and domain[-1] == '/':
-            domain = domain[:-1]
+        domain = website._alokai_domain()
 
         email_values = {
             'email_cc': False,
