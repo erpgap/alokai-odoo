@@ -40,7 +40,7 @@
          (_clear_unwanted_social_fields) since Odoo's own demo populates them. -->
     <record id="website.default_website" model="website">
         <field name="name">Alokai</field>
-        <field name="domain">https://alokai.erpgap.com</field>
+        <field name="alokai_domain">https://alokai.erpgap.com</field>
         <field name="logo" type="base64" file="graphql_alokai/static/description/icon.png"/>
 
         <field name="alokai_payment_success_return_url">https://alokai.erpgap.com/checkout/thank-you</field>
