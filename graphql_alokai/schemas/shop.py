@@ -125,7 +125,7 @@ class CartAddMultipleItems(graphene.Mutation):
         for product in products:
             product_id = product['id']
             quantity = product['quantity']
-            order._cart_update(product_id=product_id, add_qty=quantity)
+            order._cart_add(product_id=product_id, quantity=quantity)
 
         fbt = order.\
             mapped('order_line').\
@@ -154,7 +154,7 @@ class CartUpdateMultipleItems(graphene.Mutation):
             line = order.order_line.filtered(lambda rec: rec.id == line_id)
             # Reset Warning Stock Message always before a new update
             line.shop_warning = ""
-            order._cart_update(product_id=line.product_id.id, line_id=line.id, set_qty=quantity)
+            order._cart_update_line_quantity(line_id=line.id, quantity=quantity)
         return CartData(order=order)
 
 
