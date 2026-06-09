@@ -390,8 +390,8 @@ class BlogPost(models.Model):
                     "@type": "Organization",
                     "name": website and website.display_name
                 },
-                "datePublished": blog.published_date.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
-                "dateModified": blog.post_date.strftime('%Y-%m-%dT%H:%M:%S+00:00'),
+                "datePublished": blog.published_date and blog.published_date.strftime('%Y-%m-%dT%H:%M:%S+00:00') or '',
+                "dateModified": blog.post_date and blog.post_date.strftime('%Y-%m-%dT%H:%M:%S+00:00') or '',
                 "image": get_image_url(blog)
             }
 
