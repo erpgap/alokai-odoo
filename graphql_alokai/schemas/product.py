@@ -152,7 +152,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     # Sort price
     if 'price' in sort:
         website = env['website'].get_current_website()
-        pricelist = website._get_current_pricelist()
+        pricelist = website._get_and_cache_current_pricelist()
 
         # Create a list of tuples (product, computed_price)
         products_with_price = [

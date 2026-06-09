@@ -313,7 +313,7 @@ class Partner(OdooObjectType):
 
     def resolve_current_pricelist(self, info):
         website = self.env['website'].get_current_website()
-        return website._get_current_pricelist()
+        return website._get_and_cache_current_pricelist()
 
     def resolve_is_public(self, info):
         return not self or self.is_public_user
