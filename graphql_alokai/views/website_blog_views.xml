@@ -32,6 +32,9 @@
                     <field name="content"/>
                 </page>
             </notebook>
+            <xpath expr="//page[@name='seo']/group[@name='default_opengraph']" position="inside">
+                <field name="pprint_json_ld"/>
+            </xpath>
         </field>
     </record>
 </odoo>
