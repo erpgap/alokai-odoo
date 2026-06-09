@@ -156,7 +156,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
 
         # Create a list of tuples (product, computed_price)
         products_with_price = [
-            (product, pricelist._get_product_price(product.product_variant_id, 1.0, env.user.partner_id))
+            (product, pricelist._get_product_price(product.product_variant_id, 1.0))
             for product in products
         ]
 
