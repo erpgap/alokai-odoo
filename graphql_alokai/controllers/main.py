@@ -164,69 +164,6 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         self._set_website_context()
         return self._handle_graphql_request(self._graphql_schema)
 
-    @http.route(['/alokai/categories', '/vsf/categories'], type='http', auth='public', csrf=False)
-    def alokai_categories(self):
-        self._set_website_context()
-        website = request.env['website'].get_current_website()
-
-        categories = []
-
-        if website.default_lang_id:
-            lang_code = website.default_lang_id.code
-            domain = [('website_slug', '!=', False)]
-
-            for category in request.env['product.public.category'].sudo().search(domain):
-                category = category.with_context(lang=lang_code)
-                categories.append(category.website_slug)
-
-        return Response(
-            json.dumps(categories),
-            headers={'Content-Type': 'application/json'},
-        )
-
-    @http.route(['/alokai/products', '/vsf/products'], type='http', auth='public', csrf=False)
-    def alokai_products(self):
-        self._set_website_context()
-        website = request.env['website'].get_current_website()
-
-        products = []
-
-        if website.default_lang_id:
-            lang_code = website.default_lang_id.code
-            domain = [('is_published', '=', True), ('website_slug', '!=', False)]
-
-            for product in request.env['product.template'].sudo().search(domain):
-                product = product.with_context(lang=lang_code)
-
-                url_parsed = urlparse(product.website_slug)
-                name = os.path.basename(url_parsed.path)
-                path = product.website_slug.replace(name, '')
-
-                products.append({
-                    'name': name,
-                    'path': '{}:slug'.format(path),
-                })
-
-        return Response(
-            json.dumps(products),
-            headers={'Content-Type': 'application/json'},
-        )
-
-    @http.route(['/alokai/redirects', '/vsf/redirects'], type='http', auth='public', csrf=False)
-    def alokai_redirects(self):
-        redirects = []
-
-        for redirect in request.env['website.rewrite'].sudo().search([]):
-            redirects.append({
-                'from': redirect.url_from,
-                'to': redirect.url_to,
-            })
-
-        return Response(
-            json.dumps(redirects),
-            headers={'Content-Type': 'application/json'},
-        )
-
     @http.route('/checkout-redirect', type='http', auth='none', csrf=False)
     def checkout_redirect(self, access_token=None, **kwargs):
         """Replace the Odoo session ID with the provided one, used to redirect Alokai to Odoo checkout"""
