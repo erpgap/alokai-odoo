@@ -4,6 +4,8 @@
 
 import graphene
 
+from odoo.tools.mail import plaintext2html
+
 from odoo.addons.graphql_alokai.schemas.objects import Lead
 from odoo.addons.graphql_alokai.graphql.registry import mutation_registry
 
@@ -16,7 +18,7 @@ class ContactusAttachmentInput(graphene.InputObjectType):
 class ContactUsParams(graphene.InputObjectType):
     name = graphene.String(required=True)
     email = graphene.String(required=True)
-    phone = graphene.String()
+    phone = graphene.String(required=True)
     company = graphene.String()
     subject = graphene.String(required=True)
     message = graphene.String(required=True)
@@ -37,7 +39,7 @@ class ContactUs(graphene.Mutation):
             'email_from': contactus['email'],
             'phone': contactus['phone'],
             'name': contactus['subject'],
-            'description': contactus['message'],
+            'description': plaintext2html(contactus['message']),
         }
 
         # If Contact Us have one Company Name
