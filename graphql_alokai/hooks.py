@@ -69,6 +69,7 @@ def post_init_hook_login_convert(env):
     _load_demo_product_images(env)
     _stock_demo_variants(env)
     _add_demo_product_reviews(env)
+    _generate_demo_sales(env)
     _clear_unwanted_social_fields(env)
 
 
@@ -384,6 +385,125 @@ def _add_demo_product_reviews(env, min_reviews=3, max_reviews=8):
         "Demo reviews added: %s ratings across %s templates (%s already had reviews)",
         created_count, len(templates) - skipped_count, skipped_count,
     )
+
+
+def _generate_demo_sales(env, n_orders=3000, lookback_days=3650):
+    """Generate believable demo sales history so the popularity and
+    frequently-bought-together crons compute real, stable data.
+
+    Both metrics derive from sale.report (confirmed orders) and only look back
+    `alokai_recent_sales_count_days`. We:
+      - widen that window so the static demo orders keep counting (otherwise the
+        data would fade ~30 days after install),
+      - create ~n_orders orders in state 'sale' (no action_confirm, so no stock
+        pickings) with category-themed baskets and weighted product picks (a few
+        clear bestsellers -> long-tail popularity, repeated co-occurrence ->
+        meaningful FBT), dated over the past ~6 months,
+      - run both crons so popularity + FBT are populated immediately.
+
+    Deterministic (fixed seed); idempotent (skips if demo orders already exist).
+    """
+    SaleOrder = env['sale.order']
+    if SaleOrder.search_count([('client_order_ref', '=', 'ALOKAI_DEMO')]):
+        _logger.info("Demo sales already generated; skipping")
+        return
+
+    imd = env['ir.model.data'].search([
+        ('module', '=', 'graphql_alokai'),
+        ('model', '=', 'product.template'),
+    ])
+    templates = env['product.template'].browse(imd.mapped('res_id')).exists()
+    templates = templates.filtered(
+        lambda t: t.sale_ok and t.product_variant_ids
+    ).sorted('id')
+    if len(templates) < 5:
+        _logger.info("Not enough demo products for sales history; skipping")
+        return
+
+    try:
+        # Keep the static demo data counting: widen the recent-sales window.
+        env['ir.config_parameter'].sudo().set_param(
+            'alokai_recent_sales_count_days', str(lookback_days))
+
+        rng = random.Random(2024)  # fixed seed -> identical demo every install
+
+        # Per-product popularity weight: cubic skew -> few bestsellers, long tail
+        weight = {t.id: rng.random() ** 3 for t in templates}
+
+        # Group by first public category for themed (co-occurring) baskets
+        by_cat = {}
+        for t in templates:
+            cat = t.public_categ_ids[:1].id or 0
+            by_cat.setdefault(cat, []).append(t)
+        cats = list(by_cat.keys())
+
+        # Demo customers (search-or-create)
+        Partner = env['res.partner']
+        names = REVIEW_NAMES + [
+            "Liam Walsh", "Nora Pereira", "Hugo Almeida", "Clara Nunes",
+            "Marc Dubois", "Sofia Rossi", "Jonas Berg", "Aisha Khan",
+            "Diego Castro", "Lena Fischer", "Tomas Silva", "Maya Patel",
+            "Erik Larsen", "Chloe Martin", "Ravi Menon", "Greta Hoffmann",
+            "Pablo Ortega", "Yuki Tanaka", "Sara Costa", "Noah Bauer",
+        ]
+        partners = []
+        for name in names:
+            p = Partner.search([('name', '=', name)], limit=1) or Partner.create({
+                'name': name, 'company_type': 'person', 'customer_rank': 1,
+            })
+            partners.append(p)
+
+        def weighted_sample(pool, k):
+            pool = list(pool)
+            chosen = []
+            for _ in range(min(k, len(pool))):
+                ws = [weight[t.id] + 0.01 for t in pool]
+                t = rng.choices(pool, weights=ws, k=1)[0]
+                chosen.append(t)
+                pool.remove(t)
+            return chosen
+
+        now = datetime.now()
+        batch, created, BATCH = [], 0, 500
+        for _ in range(n_orders):
+            cat = rng.choice(cats)
+            picks = weighted_sample(by_cat[cat], rng.randint(1, 4))
+            # occasional complementary item from another category
+            if rng.random() < 0.35 and len(cats) > 1:
+                other = rng.choice([c for c in cats if c != cat])
+                picks += weighted_sample(by_cat[other], 1)
+
+            lines = []
+            for t in picks:
+                lines.append((0, 0, {
+                    'product_id': rng.choice(t.product_variant_ids).id,
+                    'product_uom_qty': rng.randint(1, 3),
+                }))
+            if not lines:
+                continue
+            batch.append({
+                'partner_id': rng.choice(partners).id,
+                'date_order': now - timedelta(days=rng.randint(1, 180)),
+                'state': 'sale',
+                'client_order_ref': 'ALOKAI_DEMO',
+                'order_line': lines,
+            })
+            if len(batch) >= BATCH:
+                SaleOrder.create(batch)
+                created += len(batch)
+                batch = []
+        if batch:
+            SaleOrder.create(batch)
+            created += len(batch)
+
+        # Compute popularity + FBT from the new history
+        env['product.template'].calculate_products_popularity()
+        env['product.template'].calculate_frequently_bought_together()
+
+        _logger.info(
+            "Demo sales generated: %s orders; popularity + FBT computed", created)
+    except Exception:
+        _logger.exception("Demo sales generation failed; continuing install")
 
 
 def _clear_unwanted_social_fields(env):
