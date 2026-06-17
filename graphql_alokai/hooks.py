@@ -45,6 +45,8 @@ def post_init_hook_login_convert(env):
       - Load product images from image_manifest.json
       - Stock all variants with a default quantity
       - Generate fake customer reviews on every product
+      - Generate demo sales history (popularity + frequently-bought-together)
+      - Set alternative products (upsell) on each product
     """
     # ---- Production tasks ------------------------------------------------
     users = env['res.users'].search([])
@@ -70,22 +72,26 @@ def post_init_hook_login_convert(env):
     _stock_demo_variants(env)
     _add_demo_product_reviews(env)
     _generate_demo_sales(env)
+    _generate_demo_alternatives(env)
     _clear_unwanted_social_fields(env)
 
 
 def _load_demo_product_images(env):
     """
-    Read addons/alokai-odoo/image_manifest.json and assign images to product
+    Read graphql_alokai/data/image_manifest.json and assign images to product
     templates and variants based on SKU + color attribute matching.
 
     Template image_1920: the first 'done' image of the product
     Variant image_variant_1920: matched by color attribute name
     """
     # Module dir: .../addons/alokai-odoo/graphql_alokai
-    # Manifest:    .../addons/alokai-odoo/image_manifest.json
+    # Manifest:    .../addons/alokai-odoo/graphql_alokai/data/image_manifest.json
+    # The manifest lives inside the module so it is always deployed with the
+    # addon. Image local_path values are repo-relative (graphql_alokai/static/
+    # ...), so they still resolve against addon_dir (the module's parent).
     module_dir = os.path.dirname(os.path.abspath(__file__))
     addon_dir = os.path.dirname(module_dir)
-    manifest_path = os.path.join(addon_dir, 'image_manifest.json')
+    manifest_path = os.path.join(module_dir, 'data', 'image_manifest.json')
 
     if not os.path.exists(manifest_path):
         _logger.info("No image_manifest.json found at %s; skipping image loading", manifest_path)
@@ -504,6 +510,63 @@ def _generate_demo_sales(env, n_orders=3000, lookback_days=3650):
             "Demo sales generated: %s orders; popularity + FBT computed", created)
     except Exception:
         _logger.exception("Demo sales generation failed; continuing install")
+
+
+def _generate_demo_alternatives(env):
+    """Populate alternative_product_ids on demo products (upsell strategy).
+
+    For each demo product we pick a handful of *other* products from the same
+    public category. To avoid a robotic, uniform look we vary both who and how
+    many: the count per product is drawn from a non-uniform distribution (most
+    get 2-4, a few get just 1 or as many as 6, some get none) and the picks are
+    a random sample of category peers, so no two products share the same set.
+
+    Deterministic (fixed seed); idempotent (skips if any demo product already
+    has alternatives set).
+    """
+    imd = env['ir.model.data'].search([
+        ('module', '=', 'graphql_alokai'),
+        ('model', '=', 'product.template'),
+    ])
+    templates = env['product.template'].browse(imd.mapped('res_id')).exists()
+    templates = templates.filtered(lambda t: t.sale_ok).sorted('id')
+    if len(templates) < 3:
+        _logger.info("Not enough demo products for alternatives; skipping")
+        return
+    if any(templates.mapped('alternative_product_ids')):
+        _logger.info("Demo alternatives already set; skipping")
+        return
+
+    try:
+        rng = random.Random(1337)  # fixed seed -> identical demo every install
+
+        # Group by first public category; only peers within the same category
+        # are sensible alternatives.
+        by_cat = {}
+        for t in templates:
+            cat = t.public_categ_ids[:1].id or 0
+            by_cat.setdefault(cat, []).append(t)
+
+        # Non-uniform basket sizes: weighted toward 2-4, occasional 0/1/5/6.
+        sizes = [0, 1, 2, 3, 4, 5, 6]
+        size_weights = [3, 8, 22, 26, 22, 12, 7]
+
+        updated = 0
+        for t in templates:
+            peers = [p for p in by_cat[t.public_categ_ids[:1].id or 0]
+                     if p.id != t.id]
+            if not peers:
+                continue
+            k = min(rng.choices(sizes, weights=size_weights, k=1)[0], len(peers))
+            if not k:
+                continue
+            picks = rng.sample(peers, k)
+            t.alternative_product_ids = [(6, 0, [p.id for p in picks])]
+            updated += 1
+
+        _logger.info("Demo alternatives set on %s products", updated)
+    except Exception:
+        _logger.exception("Demo alternatives generation failed; continuing install")
 
 
 def _clear_unwanted_social_fields(env):

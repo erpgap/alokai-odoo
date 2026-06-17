@@ -10,7 +10,6 @@ import requests
 import urllib.parse
 from html import unescape
 from odoo import models, fields, api, tools
-from odoo.exceptions import ValidationError
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import get_image_url
 from odoo.fields import Domain
@@ -415,32 +414,25 @@ class BlogBlog(models.Model):
     _name = 'blog.blog'
     _inherit = ['blog.blog', 'website.slug.redis.mixin']
 
-    def _validate_website_slug(self):
-        for blog in self.filtered(lambda c: c.website_slug):
-            if blog.website_slug[0] != '/':
-                raise ValidationError(_('Slug should start with /'))
+    @api.depends('name')
+    def _compute_website_slug(self):
+        langs = self.env['res.lang'].search([])
 
-            if self.search([('website_slug', '=', blog.website_slug), ('id', '!=', blog.id)], limit=1):
-                raise ValidationError(_('Slug is already in use: {}'.format(blog.website_slug)))
+        for blog in self:
+            for lang in langs:
+                blog = blog.with_context(lang=lang.code)
 
-    website_slug = fields.Char('Website Slug', translate=True, copy=False)
+                if not blog.id:
+                    blog.website_slug = None
+                else:
+                    slug_name = self.env['ir.http']._slugify(blog.name or '').strip().strip('-')
+                    blog.website_slug = f'/blog/{slug_name}'
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        res = super(BlogBlog, self).create(vals_list)
-
-        for rec in res:
-            if rec.website_slug:
-                rec._validate_website_slug()
-            else:
-                rec.website_slug = f'/blog/{rec.id}'
-
-        return res
+    website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
+                               translate=True)
 
     def write(self, vals):
         res = super(BlogBlog, self).write(vals)
-        if vals.get('website_slug', False):
-            self._validate_website_slug()
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
         return res
 

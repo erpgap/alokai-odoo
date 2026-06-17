@@ -32,7 +32,7 @@ class ShoppingCartQuery(graphene.ObjectType):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website._get_and_cache_current_cart()
-        fbt = None
+        fbt = None        
 
         if order and order.state != 'draft':
             request.session['sale_order_id'] = None
