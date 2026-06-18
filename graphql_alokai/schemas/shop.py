@@ -57,7 +57,8 @@ class ShoppingCartQuery(graphene.ObjectType):
                 sorted(key=lambda r: r.qty, reverse=True)
             fbt = fbt.mapped('related_product_id')
 
-        return CartData(order=order, frequently_bought_together=fbt)
+        # None when empty so the non-nullable Order.id isn't resolved on it.
+        return CartData(order=order or None, frequently_bought_together=fbt)
 
 
 class CartClear(graphene.Mutation):
@@ -198,7 +199,7 @@ class CreateUpdatePartner(graphene.Mutation):
         }
         if phone:
             data['phone'] = phone
-        if mobile:
+        if mobile and 'mobile' in env['res.partner']._fields:
             data['mobile'] = mobile
 
         partner = order.partner_id

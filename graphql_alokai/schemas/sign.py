@@ -54,7 +54,7 @@ class Login(graphene.Mutation):
 
         try:
             credential = {'login': email, 'password': password, 'type': 'password'}
-            auth_info = request.session.authenticate(request.session.db, credential)
+            auth_info = request.session.authenticate(request.env, credential)
             user = env['res.users'].sudo().browse(auth_info['uid'])
 
             if bool(user._mfa_type()):
@@ -67,7 +67,7 @@ class Login(graphene.Mutation):
                         request.session.finalize(request.env)
 
             # Update SO
-            order = user.partner_id.last_website_so_id
+            order = getattr(user.partner_id, 'last_website_so_id', False)
             if not order or order.state != 'draft':
                 request.session['sale_order_id'] = None
                 order = website._get_and_cache_current_cart()
@@ -90,7 +90,8 @@ class Login(graphene.Mutation):
 
             return LoginOutput(
                 user=user,
-                cart=order,
+                # None when empty so the non-nullable Order.id isn't resolved on it.
+                cart=order or None,
                 wishlist_items=wishlist_items,
             )
 
@@ -224,11 +225,11 @@ class UpdatePassword(graphene.Mutation):
                 raise GraphQLError(_('Partner cannot be updated.'))
             try:
                 credential = {'login': user.login, 'password': current_password, 'type': 'password'}
-                user._check_credentials(credential, env)
+                user._check_credentials(credential, {'interactive': True})
                 user.change_password(current_password, new_password)
                 env.cr.commit()
                 new_credential = {'login': user.login, 'password': new_password, 'type': 'password'}
-                request.session.authenticate(request.session.db, new_credential)
+                request.session.authenticate(request.env, new_credential)
                 if bool(user._mfa_type()):
                     request.session.finalize(request.env)
                 return user

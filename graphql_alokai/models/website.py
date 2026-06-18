@@ -179,7 +179,8 @@ class Website(models.Model):
                 if _norm(website._alokai_domain()) == target:
                     return website
 
-        if len(websites) > 1:
+        # Only warn when a host was provided but matched nothing.
+        if target and len(websites) > 1:
             _logger.warning(
                 "Alokai: no website Domain matched request host %r; falling "
                 "back to %r. Set each website's Domain to its storefront host "

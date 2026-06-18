@@ -50,11 +50,11 @@ class AlokaiBinary(Binary):
         try:
             ICP = request.env['ir.config_parameter'].sudo()
             alokai_image_resize_limit = int(ICP.get_param('alokai_image_resize_limit', 1920))
-            
-            if width > alokai_image_resize_limit or height > alokai_image_resize_limit:
-                return request.not_found()
         except Exception:
-            return request.not_found()
+            raise request.not_found()
+
+        if width > alokai_image_resize_limit or height > alokai_image_resize_limit:
+            raise request.not_found()
 
         return super(AlokaiBinary, self).content_image(
             xmlid=xmlid, model=model, id=id, field=field, filename_field=filename_field, filename=filename,

@@ -3,4 +3,6 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-from . import test_graphql_1
+from . import test_queries
+from . import test_mutations
+from . import test_controllers

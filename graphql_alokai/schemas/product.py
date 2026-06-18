@@ -302,7 +302,9 @@ class ProductQuery(graphene.ObjectType):
             if not product.can_access_from_current_website():
                 product = Product
 
-        return product
+        # None when empty so the nullable field resolves to null instead of
+        # erroring on the non-nullable Product.id.
+        return product or None
 
     @staticmethod
     def resolve_products(self, info, filter, current_page, page_size, search, sort):

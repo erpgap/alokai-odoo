@@ -62,8 +62,7 @@ def get_document_with_check_access(model, domain=[], order=None, limit=20, offse
     if document and not document_sudo:
         raise GraphQLError(_(error_msg))
     try:
-        document.check_access_rights('read')
-        document.check_access_rule('read')
+        document.check_access('read')
     except AccessError:
         return []
     return document_sudo
@@ -71,8 +70,7 @@ def get_document_with_check_access(model, domain=[], order=None, limit=20, offse
 
 def get_document_count_with_check_access(model, domain):
     try:
-        model.check_access_rights('read')
-        model.check_access_rule('read')
+        model.check_access('read')
     except AccessError:
         return 0
     return model.search_count(domain)
@@ -220,6 +218,9 @@ class Company(OdooObjectType):
     def resolve_image_url(self, info):
         return get_image_url_template(self, field_name='image_1920')
 
+    def resolve_mobile(self, info):
+        return getattr(self, 'mobile', None)
+
 
 class Pricelist(OdooObjectType):
     id = graphene.Int()
@@ -269,6 +270,9 @@ class Partner(OdooObjectType):
 
     def resolve_address_type(self, info):
         return self.type or None
+
+    def resolve_mobile(self, info):
+        return getattr(self, 'mobile', None)
 
     def resolve_billing_address(self, info):
         billing_address = self.child_ids.filtered(lambda a: a.type and a.type == 'invoice')
@@ -444,6 +448,9 @@ class AttributeValue(OdooObjectType):
         attribute_id = self.attribute_id.id
         attribute_value_id = self.id
         return '{}-{}'.format(attribute_id, attribute_value_id) or None
+
+    def resolve_price_extra(self, info):
+        return getattr(self, 'price_extra', None)
 
     def resolve_attribute(self, info):
         return self.attribute_id or None
@@ -873,7 +880,8 @@ class PaymentTransaction(OdooObjectType):
         return self.provider_id.name or None
 
     def resolve_company(self, info):
-        return self.company_id or None
+        # Field is typed as Partner: return the company's partner record.
+        return self.company_id.partner_id or None
 
     def resolve_customer(self, info):
         return self.partner_id or None
