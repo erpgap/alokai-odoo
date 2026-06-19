@@ -76,6 +76,21 @@ def post_init_hook_login_convert(env):
     _clear_unwanted_social_fields(env)
 
 
+def _resolve_image_path(addon_dir, local_path):
+    """Return the resolved absolute path for an image, trying .png fallback for .jpg paths."""
+    path = os.path.join(addon_dir, local_path)
+    if os.path.exists(path):
+        return path
+    # Try the other extension as fallback
+    if local_path.endswith('.jpg'):
+        alt = os.path.join(addon_dir, local_path[:-4] + '.png')
+    elif local_path.endswith('.png'):
+        alt = os.path.join(addon_dir, local_path[:-4] + '.jpg')
+    else:
+        return None
+    return alt if os.path.exists(alt) else None
+
+
 def _load_demo_product_images(env):
     """
     Read graphql_alokai/data/image_manifest.json and assign images to product
@@ -118,13 +133,13 @@ def _load_demo_product_images(env):
             continue
 
         # Set template image from the first done image
-        first_img_path = os.path.join(addon_dir, done_images[0]['local_path'])
-        if os.path.exists(first_img_path):
+        first_img_path = _resolve_image_path(addon_dir, done_images[0]['local_path'])
+        if first_img_path:
             with open(first_img_path, 'rb') as f:
                 template.image_1920 = base64.b64encode(f.read())
             total_templates += 1
         else:
-            _logger.warning("Image file missing: %s", first_img_path)
+            _logger.warning("Image file missing: %s", os.path.join(addon_dir, done_images[0]['local_path']))
             missing_files += 1
 
         # For variant products, assign per-color images
@@ -133,9 +148,9 @@ def _load_demo_product_images(env):
                 color_name = img.get('color')
                 if not color_name:
                     continue
-                img_path = os.path.join(addon_dir, img['local_path'])
-                if not os.path.exists(img_path):
-                    _logger.warning("Variant image missing: %s", img_path)
+                img_path = _resolve_image_path(addon_dir, img['local_path'])
+                if not img_path:
+                    _logger.warning("Variant image missing: %s", os.path.join(addon_dir, img['local_path']))
                     missing_files += 1
                     continue
 

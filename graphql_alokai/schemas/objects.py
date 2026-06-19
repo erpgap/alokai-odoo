@@ -1283,7 +1283,7 @@ class BlogPost(OdooObjectType):
     image_url = graphene.String()
     name = graphene.String()
     published_date = graphene.String()
-    author_id = graphene.Field(lambda: Partner)
+    author = graphene.Field(lambda: Partner)
     content = graphene.String()
     teaser = graphene.String()
     tag_ids = graphene.List(graphene.NonNull(lambda: BlogTag))
@@ -1306,6 +1306,9 @@ class BlogPost(OdooObjectType):
 
     def resolve_slug(self, info):
         return self.website_slug
+
+    def resolve_author(self, info):
+        return self.author_id
 
 
 type_registry.extend([
