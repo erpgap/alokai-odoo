@@ -1441,21 +1441,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mtr0001_bla.jpg",
+          "filename": "mtr0001_bla.png",
           "prompt": "Professional e-commerce product photography of a black tailored trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0001_bla.png"
         },
         {
           "color": "White",
-          "filename": "mtr0001_whi.jpg",
+          "filename": "mtr0001_whi.png",
           "prompt": "Professional e-commerce product photography of a white tailored trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0001_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mtr0001_gry.jpg",
+          "filename": "mtr0001_gry.png",
           "prompt": "Professional e-commerce product photography of a grey tailored trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0001_gry.png"
         }
       ]
     },
@@ -1480,21 +1483,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "mtr0002_nav.jpg",
+          "filename": "mtr0002_nav.png",
           "prompt": "Professional e-commerce product photography of a navy chinos, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0002_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mtr0002_chr.jpg",
+          "filename": "mtr0002_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal chinos, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0002_chr.png"
         },
         {
           "color": "Black",
-          "filename": "mtr0002_bla.jpg",
+          "filename": "mtr0002_bla.png",
           "prompt": "Professional e-commerce product photography of a black chinos, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0002_bla.png"
         }
       ]
     },
@@ -1519,21 +1525,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mtr0003_lbl.jpg",
+          "filename": "mtr0003_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue wool trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0003_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mtr0003_whi.jpg",
+          "filename": "mtr0003_whi.png",
           "prompt": "Professional e-commerce product photography of a white wool trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0003_whi.png"
         },
         {
           "color": "Navy",
-          "filename": "mtr0003_nav.jpg",
+          "filename": "mtr0003_nav.png",
           "prompt": "Professional e-commerce product photography of a navy wool trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0003_nav.png"
         }
       ]
     },
@@ -1558,21 +1567,24 @@
       "images": [
         {
           "color": "Khaki",
-          "filename": "mtr0004_khk.jpg",
+          "filename": "mtr0004_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki linen trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0004_khk.png"
         },
         {
           "color": "Brown",
-          "filename": "mtr0004_brn.jpg",
+          "filename": "mtr0004_brn.png",
           "prompt": "Professional e-commerce product photography of a brown linen trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0004_brn.png"
         },
         {
           "color": "Beige",
-          "filename": "mtr0004_bei.jpg",
+          "filename": "mtr0004_bei.png",
           "prompt": "Professional e-commerce product photography of a beige linen trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0004_bei.png"
         }
       ]
     },
@@ -1597,21 +1609,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mtr0005_bla.jpg",
+          "filename": "mtr0005_bla.png",
           "prompt": "Professional e-commerce product photography of a black pleated trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0005_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "mtr0005_nav.jpg",
+          "filename": "mtr0005_nav.png",
           "prompt": "Professional e-commerce product photography of a navy pleated trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0005_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mtr0005_chr.jpg",
+          "filename": "mtr0005_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal pleated trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0005_chr.png"
         }
       ]
     },
@@ -1636,21 +1651,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "mtr0006_oli.jpg",
+          "filename": "mtr0006_oli.png",
           "prompt": "Professional e-commerce product photography of a olive flat front trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0006_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "mtr0006_khk.jpg",
+          "filename": "mtr0006_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki flat front trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0006_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "mtr0006_cam.jpg",
+          "filename": "mtr0006_cam.png",
           "prompt": "Professional e-commerce product photography of a camel flat front trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0006_cam.png"
         }
       ]
     },
@@ -1675,21 +1693,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "mtr0007_bur.jpg",
+          "filename": "mtr0007_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy slim trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0007_bur.png"
         },
         {
           "color": "Navy",
-          "filename": "mtr0007_nav.jpg",
+          "filename": "mtr0007_nav.png",
           "prompt": "Professional e-commerce product photography of a navy slim trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0007_nav.png"
         },
         {
           "color": "Black",
-          "filename": "mtr0007_bla.jpg",
+          "filename": "mtr0007_bla.png",
           "prompt": "Professional e-commerce product photography of a black slim trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0007_bla.png"
         }
       ]
     },
@@ -1714,21 +1735,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mtr0008_lbl.jpg",
+          "filename": "mtr0008_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue cargo trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0008_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mtr0008_whi.jpg",
+          "filename": "mtr0008_whi.png",
           "prompt": "Professional e-commerce product photography of a white cargo trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0008_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mtr0008_gry.jpg",
+          "filename": "mtr0008_gry.png",
           "prompt": "Professional e-commerce product photography of a grey cargo trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0008_gry.png"
         }
       ]
     },
@@ -1753,21 +1777,24 @@
       "images": [
         {
           "color": "Brown",
-          "filename": "mtr0009_brn.jpg",
+          "filename": "mtr0009_brn.png",
           "prompt": "Professional e-commerce product photography of a brown cotton trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0009_brn.png"
         },
         {
           "color": "Tan",
-          "filename": "mtr0009_tan.jpg",
+          "filename": "mtr0009_tan.png",
           "prompt": "Professional e-commerce product photography of a tan cotton trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0009_tan.png"
         },
         {
           "color": "Cream",
-          "filename": "mtr0009_crm.jpg",
+          "filename": "mtr0009_crm.png",
           "prompt": "Professional e-commerce product photography of a cream cotton trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0009_crm.png"
         }
       ]
     },
@@ -1792,21 +1819,24 @@
       "images": [
         {
           "color": "Pink",
-          "filename": "mtr0010_pnk.jpg",
+          "filename": "mtr0010_pnk.png",
           "prompt": "Professional e-commerce product photography of a pink dress trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0010_pnk.png"
         },
         {
           "color": "White",
-          "filename": "mtr0010_whi.jpg",
+          "filename": "mtr0010_whi.png",
           "prompt": "Professional e-commerce product photography of a white dress trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0010_whi.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mtr0010_lbl.jpg",
+          "filename": "mtr0010_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue dress trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0010_lbl.png"
         }
       ]
     },
@@ -1831,21 +1861,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mtr0011_bla.jpg",
+          "filename": "mtr0011_bla.png",
           "prompt": "Professional e-commerce product photography of a black casual trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0011_bla.png"
         },
         {
           "color": "White",
-          "filename": "mtr0011_whi.jpg",
+          "filename": "mtr0011_whi.png",
           "prompt": "Professional e-commerce product photography of a white casual trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0011_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mtr0011_gry.jpg",
+          "filename": "mtr0011_gry.png",
           "prompt": "Professional e-commerce product photography of a grey casual trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0011_gry.png"
         }
       ]
     },
@@ -1870,21 +1903,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "mtr0012_nav.jpg",
+          "filename": "mtr0012_nav.png",
           "prompt": "Professional e-commerce product photography of a navy pinstripe trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0012_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mtr0012_chr.jpg",
+          "filename": "mtr0012_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal pinstripe trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0012_chr.png"
         },
         {
           "color": "Black",
-          "filename": "mtr0012_bla.jpg",
+          "filename": "mtr0012_bla.png",
           "prompt": "Professional e-commerce product photography of a black pinstripe trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0012_bla.png"
         }
       ]
     },
@@ -1909,21 +1945,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mtr0013_lbl.jpg",
+          "filename": "mtr0013_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue cropped trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0013_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mtr0013_whi.jpg",
+          "filename": "mtr0013_whi.png",
           "prompt": "Professional e-commerce product photography of a white cropped trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0013_whi.png"
         },
         {
           "color": "Navy",
-          "filename": "mtr0013_nav.jpg",
+          "filename": "mtr0013_nav.png",
           "prompt": "Professional e-commerce product photography of a navy cropped trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0013_nav.png"
         }
       ]
     },
@@ -1948,21 +1987,24 @@
       "images": [
         {
           "color": "Khaki",
-          "filename": "mtr0014_khk.jpg",
+          "filename": "mtr0014_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki smart trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0014_khk.png"
         },
         {
           "color": "Brown",
-          "filename": "mtr0014_brn.jpg",
+          "filename": "mtr0014_brn.png",
           "prompt": "Professional e-commerce product photography of a brown smart trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0014_brn.png"
         },
         {
           "color": "Beige",
-          "filename": "mtr0014_bei.jpg",
+          "filename": "mtr0014_bei.png",
           "prompt": "Professional e-commerce product photography of a beige smart trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0014_bei.png"
         }
       ]
     },
@@ -1987,21 +2029,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mtr0015_bla.jpg",
+          "filename": "mtr0015_bla.png",
           "prompt": "Professional e-commerce product photography of a black performance trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0015_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "mtr0015_nav.jpg",
+          "filename": "mtr0015_nav.png",
           "prompt": "Professional e-commerce product photography of a navy performance trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0015_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mtr0015_chr.jpg",
+          "filename": "mtr0015_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal performance trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0015_chr.png"
         }
       ]
     },
@@ -2016,9 +2061,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mtr0016.jpg",
+          "filename": "mtr0016.png",
           "prompt": "Professional e-commerce product photography of joggers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0016.png"
         }
       ]
     },
@@ -2033,9 +2079,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mtr0017.jpg",
+          "filename": "mtr0017.png",
           "prompt": "Professional e-commerce product photography of premium wool trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0017.png"
         }
       ]
     },
@@ -2050,9 +2097,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mtr0018.jpg",
+          "filename": "mtr0018.png",
           "prompt": "Professional e-commerce product photography of designer drawstring trousers, flat lay product photography, trousers laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_trousers/mtr0018.png"
         }
       ]
     },
