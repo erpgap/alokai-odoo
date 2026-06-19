@@ -5250,21 +5250,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mts0001_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black classic cotton t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0001_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black classic cotton t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0001_bla.png"
         },
         {
           "color": "White",
-          "filename": "mts0001_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white classic cotton t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0001_whi.png",
+          "prompt": "Professional e-commerce product photography of a White classic cotton t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0001_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mts0001_gry.jpg",
-          "prompt": "Professional e-commerce product photography of a grey classic cotton t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0001_gry.png",
+          "prompt": "Professional e-commerce product photography of a Grey classic cotton t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0001_gry.png"
         }
       ]
     },
@@ -5289,21 +5292,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "mts0002_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy v-neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0002_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy v-neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0002_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mts0002_chr.jpg",
-          "prompt": "Professional e-commerce product photography of a charcoal v-neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0002_chr.png",
+          "prompt": "Professional e-commerce product photography of a Charcoal v-neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0002_chr.png"
         },
         {
           "color": "Black",
-          "filename": "mts0002_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black v-neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0002_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black v-neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0002_bla.png"
         }
       ]
     },
@@ -5328,21 +5334,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mts0003_lbl.jpg",
-          "prompt": "Professional e-commerce product photography of a light blue graphic t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0003_lbl.png",
+          "prompt": "Professional e-commerce product photography of a Light Blue graphic t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0003_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mts0003_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white graphic t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0003_whi.png",
+          "prompt": "Professional e-commerce product photography of a White graphic t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0003_whi.png"
         },
         {
           "color": "Navy",
-          "filename": "mts0003_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy graphic t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0003_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy graphic t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0003_nav.png"
         }
       ]
     },
@@ -5367,21 +5376,24 @@
       "images": [
         {
           "color": "Khaki",
-          "filename": "mts0004_khk.jpg",
-          "prompt": "Professional e-commerce product photography of a khaki henley shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0004_khk.png",
+          "prompt": "Professional e-commerce product photography of a Khaki henley shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0004_khk.png"
         },
         {
           "color": "Brown",
-          "filename": "mts0004_brn.jpg",
-          "prompt": "Professional e-commerce product photography of a brown henley shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0004_brn.png",
+          "prompt": "Professional e-commerce product photography of a Brown henley shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0004_brn.png"
         },
         {
           "color": "Beige",
-          "filename": "mts0004_bei.jpg",
-          "prompt": "Professional e-commerce product photography of a beige henley shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0004_bei.png",
+          "prompt": "Professional e-commerce product photography of a Beige henley shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0004_bei.png"
         }
       ]
     },
@@ -5406,21 +5418,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mts0005_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black crew neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0005_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black crew neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0005_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "mts0005_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy crew neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0005_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy crew neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0005_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mts0005_chr.jpg",
-          "prompt": "Professional e-commerce product photography of a charcoal crew neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0005_chr.png",
+          "prompt": "Professional e-commerce product photography of a Charcoal crew neck t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0005_chr.png"
         }
       ]
     },
@@ -5445,21 +5460,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "mts0006_oli.jpg",
-          "prompt": "Professional e-commerce product photography of a olive polo shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0006_oli.png",
+          "prompt": "Professional e-commerce product photography of a Olive polo shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, polo collar with button placket, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0006_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "mts0006_khk.jpg",
-          "prompt": "Professional e-commerce product photography of a khaki polo shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0006_khk.png",
+          "prompt": "Professional e-commerce product photography of a Khaki polo shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, polo collar with button placket, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0006_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "mts0006_cam.jpg",
-          "prompt": "Professional e-commerce product photography of a camel polo shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0006_cam.png",
+          "prompt": "Professional e-commerce product photography of a Camel polo shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, polo collar with button placket, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0006_cam.png"
         }
       ]
     },
@@ -5484,21 +5502,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "mts0007_bur.jpg",
-          "prompt": "Professional e-commerce product photography of a burgundy long sleeve t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0007_bur.png",
+          "prompt": "Professional e-commerce product photography of a Burgundy long sleeve t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0007_bur.png"
         },
         {
           "color": "Navy",
-          "filename": "mts0007_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy long sleeve t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0007_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy long sleeve t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0007_nav.png"
         },
         {
           "color": "Black",
-          "filename": "mts0007_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black long sleeve t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0007_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black long sleeve t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0007_bla.png"
         }
       ]
     },
@@ -5523,21 +5544,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mts0008_lbl.jpg",
-          "prompt": "Professional e-commerce product photography of a light blue pocket t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0008_lbl.png",
+          "prompt": "Professional e-commerce product photography of a Light Blue pocket t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0008_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mts0008_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white pocket t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0008_whi.png",
+          "prompt": "Professional e-commerce product photography of a White pocket t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0008_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mts0008_gry.jpg",
-          "prompt": "Professional e-commerce product photography of a grey pocket t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0008_gry.png",
+          "prompt": "Professional e-commerce product photography of a Grey pocket t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0008_gry.png"
         }
       ]
     },
@@ -5562,21 +5586,24 @@
       "images": [
         {
           "color": "Brown",
-          "filename": "mts0009_brn.jpg",
-          "prompt": "Professional e-commerce product photography of a brown striped t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0009_brn.png",
+          "prompt": "Professional e-commerce product photography of a Brown striped t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0009_brn.png"
         },
         {
           "color": "Tan",
-          "filename": "mts0009_tan.jpg",
-          "prompt": "Professional e-commerce product photography of a tan striped t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0009_tan.png",
+          "prompt": "Professional e-commerce product photography of a Tan striped t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0009_tan.png"
         },
         {
           "color": "Cream",
-          "filename": "mts0009_crm.jpg",
-          "prompt": "Professional e-commerce product photography of a cream striped t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0009_crm.png",
+          "prompt": "Professional e-commerce product photography of a Cream striped t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0009_crm.png"
         }
       ]
     },
@@ -5601,21 +5628,24 @@
       "images": [
         {
           "color": "Pink",
-          "filename": "mts0010_pnk.jpg",
-          "prompt": "Professional e-commerce product photography of a pink pique polo, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0010_pnk.png",
+          "prompt": "Professional e-commerce product photography of a Pink pique polo, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, polo collar with button placket, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0010_pnk.png"
         },
         {
           "color": "White",
-          "filename": "mts0010_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white pique polo, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0010_whi.png",
+          "prompt": "Professional e-commerce product photography of a White pique polo, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, polo collar with button placket, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0010_whi.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mts0010_lbl.jpg",
-          "prompt": "Professional e-commerce product photography of a light blue pique polo, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0010_lbl.png",
+          "prompt": "Professional e-commerce product photography of a Light Blue pique polo, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, polo collar with button placket, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0010_lbl.png"
         }
       ]
     },
@@ -5640,21 +5670,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mts0011_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black slim fit tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0011_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black slim fit tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0011_bla.png"
         },
         {
           "color": "White",
-          "filename": "mts0011_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white slim fit tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0011_whi.png",
+          "prompt": "Professional e-commerce product photography of a White slim fit tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0011_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mts0011_gry.jpg",
-          "prompt": "Professional e-commerce product photography of a grey slim fit tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0011_gry.png",
+          "prompt": "Professional e-commerce product photography of a Grey slim fit tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0011_gry.png"
         }
       ]
     },
@@ -5679,21 +5712,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "mts0012_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy oversized t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0012_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy oversized t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0012_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mts0012_chr.jpg",
-          "prompt": "Professional e-commerce product photography of a charcoal oversized t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0012_chr.png",
+          "prompt": "Professional e-commerce product photography of a Charcoal oversized t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0012_chr.png"
         },
         {
           "color": "Black",
-          "filename": "mts0012_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black oversized t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0012_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black oversized t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0012_bla.png"
         }
       ]
     },
@@ -5718,21 +5754,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mts0013_lbl.jpg",
-          "prompt": "Professional e-commerce product photography of a light blue ringer tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0013_lbl.png",
+          "prompt": "Professional e-commerce product photography of a Light Blue ringer tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0013_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mts0013_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white ringer tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0013_whi.png",
+          "prompt": "Professional e-commerce product photography of a White ringer tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0013_whi.png"
         },
         {
           "color": "Navy",
-          "filename": "mts0013_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy ringer tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0013_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy ringer tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0013_nav.png"
         }
       ]
     },
@@ -5757,21 +5796,24 @@
       "images": [
         {
           "color": "Khaki",
-          "filename": "mts0014_khk.jpg",
-          "prompt": "Professional e-commerce product photography of a khaki heather tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0014_khk.png",
+          "prompt": "Professional e-commerce product photography of a Khaki heather tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0014_khk.png"
         },
         {
           "color": "Brown",
-          "filename": "mts0014_brn.jpg",
-          "prompt": "Professional e-commerce product photography of a brown heather tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0014_brn.png",
+          "prompt": "Professional e-commerce product photography of a Brown heather tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0014_brn.png"
         },
         {
           "color": "Beige",
-          "filename": "mts0014_bei.jpg",
-          "prompt": "Professional e-commerce product photography of a beige heather tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0014_bei.png",
+          "prompt": "Professional e-commerce product photography of a Beige heather tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0014_bei.png"
         }
       ]
     },
@@ -5796,21 +5838,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mts0015_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black plain tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0015_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black plain tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0015_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "mts0015_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy plain tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0015_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy plain tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0015_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mts0015_chr.jpg",
-          "prompt": "Professional e-commerce product photography of a charcoal plain tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0015_chr.png",
+          "prompt": "Professional e-commerce product photography of a Charcoal plain tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0015_chr.png"
         }
       ]
     },
@@ -5835,21 +5880,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "mts0016_oli.jpg",
-          "prompt": "Professional e-commerce product photography of a olive linen tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0016_oli.png",
+          "prompt": "Professional e-commerce product photography of a Olive linen tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0016_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "mts0016_khk.jpg",
-          "prompt": "Professional e-commerce product photography of a khaki linen tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0016_khk.png",
+          "prompt": "Professional e-commerce product photography of a Khaki linen tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0016_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "mts0016_cam.jpg",
-          "prompt": "Professional e-commerce product photography of a camel linen tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0016_cam.png",
+          "prompt": "Professional e-commerce product photography of a Camel linen tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0016_cam.png"
         }
       ]
     },
@@ -5874,21 +5922,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "mts0017_bur.jpg",
-          "prompt": "Professional e-commerce product photography of a burgundy performance tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0017_bur.png",
+          "prompt": "Professional e-commerce product photography of a Burgundy performance tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0017_bur.png"
         },
         {
           "color": "Navy",
-          "filename": "mts0017_nav.jpg",
-          "prompt": "Professional e-commerce product photography of a navy performance tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0017_nav.png",
+          "prompt": "Professional e-commerce product photography of a Navy performance tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0017_nav.png"
         },
         {
           "color": "Black",
-          "filename": "mts0017_bla.jpg",
-          "prompt": "Professional e-commerce product photography of a black performance tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0017_bla.png",
+          "prompt": "Professional e-commerce product photography of a Black performance tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0017_bla.png"
         }
       ]
     },
@@ -5913,21 +5964,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mts0018_lbl.jpg",
-          "prompt": "Professional e-commerce product photography of a light blue marled t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0018_lbl.png",
+          "prompt": "Professional e-commerce product photography of a Light Blue marled t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0018_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mts0018_whi.jpg",
-          "prompt": "Professional e-commerce product photography of a white marled t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0018_whi.png",
+          "prompt": "Professional e-commerce product photography of a White marled t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0018_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mts0018_gry.jpg",
-          "prompt": "Professional e-commerce product photography of a grey marled t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0018_gry.png",
+          "prompt": "Professional e-commerce product photography of a Grey marled t-shirt, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0018_gry.png"
         }
       ]
     },
@@ -5942,9 +5996,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mts0019.jpg",
-          "prompt": "Professional e-commerce product photography of limited edition graphic tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0019.png",
+          "prompt": "Professional e-commerce product photography of a limited edition graphic tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0019.png"
         }
       ]
     },
@@ -5959,9 +6014,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mts0020.jpg",
-          "prompt": "Professional e-commerce product photography of designer logo tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "filename": "mts0020.png",
+          "prompt": "Professional e-commerce product photography of a designer logo tee, flat lay product photography, t-shirt laid out flat on a pure #FFFFFF white seamless background, short sleeves, NO long sleeves, NO collar, NO buttons, NO polo style, completely white background, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution",
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_t-shirts/mts0020.png"
         }
       ]
     },
