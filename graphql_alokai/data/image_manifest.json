@@ -2581,21 +2581,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjk0001_bla.jpg",
+          "filename": "mjk0001_bla.png",
           "prompt": "Professional e-commerce product photography of a black leather jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0001_bla.png"
         },
         {
           "color": "White",
-          "filename": "mjk0001_whi.jpg",
+          "filename": "mjk0001_whi.png",
           "prompt": "Professional e-commerce product photography of a white leather jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0001_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mjk0001_gry.jpg",
+          "filename": "mjk0001_gry.png",
           "prompt": "Professional e-commerce product photography of a grey leather jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0001_gry.png"
         }
       ]
     },
@@ -2620,21 +2623,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "mjk0002_nav.jpg",
+          "filename": "mjk0002_nav.png",
           "prompt": "Professional e-commerce product photography of a navy bomber jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0002_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjk0002_chr.jpg",
+          "filename": "mjk0002_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal bomber jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0002_chr.png"
         },
         {
           "color": "Black",
-          "filename": "mjk0002_bla.jpg",
+          "filename": "mjk0002_bla.png",
           "prompt": "Professional e-commerce product photography of a black bomber jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0002_bla.png"
         }
       ]
     },
@@ -2659,21 +2665,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjk0003_lbl.jpg",
+          "filename": "mjk0003_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue denim jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0003_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mjk0003_whi.jpg",
+          "filename": "mjk0003_whi.png",
           "prompt": "Professional e-commerce product photography of a white denim jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0003_whi.png"
         },
         {
           "color": "Navy",
-          "filename": "mjk0003_nav.jpg",
+          "filename": "mjk0003_nav.png",
           "prompt": "Professional e-commerce product photography of a navy denim jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0003_nav.png"
         }
       ]
     },
@@ -2698,21 +2707,24 @@
       "images": [
         {
           "color": "Khaki",
-          "filename": "mjk0004_khk.jpg",
+          "filename": "mjk0004_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki windbreaker, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0004_khk.png"
         },
         {
           "color": "Brown",
-          "filename": "mjk0004_brn.jpg",
+          "filename": "mjk0004_brn.png",
           "prompt": "Professional e-commerce product photography of a brown windbreaker, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0004_brn.png"
         },
         {
           "color": "Beige",
-          "filename": "mjk0004_bei.jpg",
+          "filename": "mjk0004_bei.png",
           "prompt": "Professional e-commerce product photography of a beige windbreaker, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0004_bei.png"
         }
       ]
     },
@@ -2737,21 +2749,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjk0005_bla.jpg",
+          "filename": "mjk0005_bla.png",
           "prompt": "Professional e-commerce product photography of a black trench coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0005_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "mjk0005_nav.jpg",
+          "filename": "mjk0005_nav.png",
           "prompt": "Professional e-commerce product photography of a navy trench coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0005_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjk0005_chr.jpg",
+          "filename": "mjk0005_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal trench coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0005_chr.png"
         }
       ]
     },
@@ -2776,21 +2791,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "mjk0006_oli.jpg",
+          "filename": "mjk0006_oli.png",
           "prompt": "Professional e-commerce product photography of a olive pea coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0006_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "mjk0006_khk.jpg",
+          "filename": "mjk0006_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki pea coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0006_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "mjk0006_cam.jpg",
+          "filename": "mjk0006_cam.png",
           "prompt": "Professional e-commerce product photography of a camel pea coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0006_cam.png"
         }
       ]
     },
@@ -2815,21 +2833,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "mjk0007_bur.jpg",
+          "filename": "mjk0007_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy wool coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0007_bur.png"
         },
         {
           "color": "Navy",
-          "filename": "mjk0007_nav.jpg",
+          "filename": "mjk0007_nav.png",
           "prompt": "Professional e-commerce product photography of a navy wool coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0007_nav.png"
         },
         {
           "color": "Black",
-          "filename": "mjk0007_bla.jpg",
+          "filename": "mjk0007_bla.png",
           "prompt": "Professional e-commerce product photography of a black wool coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0007_bla.png"
         }
       ]
     },
@@ -2854,21 +2875,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjk0008_lbl.jpg",
+          "filename": "mjk0008_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue parka, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0008_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mjk0008_whi.jpg",
+          "filename": "mjk0008_whi.png",
           "prompt": "Professional e-commerce product photography of a white parka, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0008_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mjk0008_gry.jpg",
+          "filename": "mjk0008_gry.png",
           "prompt": "Professional e-commerce product photography of a grey parka, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0008_gry.png"
         }
       ]
     },
@@ -2893,21 +2917,24 @@
       "images": [
         {
           "color": "Brown",
-          "filename": "mjk0009_brn.jpg",
+          "filename": "mjk0009_brn.png",
           "prompt": "Professional e-commerce product photography of a brown puffer jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0009_brn.png"
         },
         {
           "color": "Tan",
-          "filename": "mjk0009_tan.jpg",
+          "filename": "mjk0009_tan.png",
           "prompt": "Professional e-commerce product photography of a tan puffer jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0009_tan.png"
         },
         {
           "color": "Cream",
-          "filename": "mjk0009_crm.jpg",
+          "filename": "mjk0009_crm.png",
           "prompt": "Professional e-commerce product photography of a cream puffer jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0009_crm.png"
         }
       ]
     },
@@ -2932,21 +2959,24 @@
       "images": [
         {
           "color": "Pink",
-          "filename": "mjk0010_pnk.jpg",
+          "filename": "mjk0010_pnk.png",
           "prompt": "Professional e-commerce product photography of a pink field jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0010_pnk.png"
         },
         {
           "color": "White",
-          "filename": "mjk0010_whi.jpg",
+          "filename": "mjk0010_whi.png",
           "prompt": "Professional e-commerce product photography of a white field jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0010_whi.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjk0010_lbl.jpg",
+          "filename": "mjk0010_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue field jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0010_lbl.png"
         }
       ]
     },
@@ -2971,21 +3001,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjk0011_bla.jpg",
+          "filename": "mjk0011_bla.png",
           "prompt": "Professional e-commerce product photography of a black quilted jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0011_bla.png"
         },
         {
           "color": "White",
-          "filename": "mjk0011_whi.jpg",
+          "filename": "mjk0011_whi.png",
           "prompt": "Professional e-commerce product photography of a white quilted jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0011_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mjk0011_gry.jpg",
+          "filename": "mjk0011_gry.png",
           "prompt": "Professional e-commerce product photography of a grey quilted jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0011_gry.png"
         }
       ]
     },
@@ -3010,21 +3043,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "mjk0012_nav.jpg",
+          "filename": "mjk0012_nav.png",
           "prompt": "Professional e-commerce product photography of a navy harrington jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0012_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjk0012_chr.jpg",
+          "filename": "mjk0012_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal harrington jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0012_chr.png"
         },
         {
           "color": "Black",
-          "filename": "mjk0012_bla.jpg",
+          "filename": "mjk0012_bla.png",
           "prompt": "Professional e-commerce product photography of a black harrington jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0012_bla.png"
         }
       ]
     },
@@ -3049,21 +3085,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjk0013_lbl.jpg",
+          "filename": "mjk0013_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue biker jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0013_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mjk0013_whi.jpg",
+          "filename": "mjk0013_whi.png",
           "prompt": "Professional e-commerce product photography of a white biker jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0013_whi.png"
         },
         {
           "color": "Navy",
-          "filename": "mjk0013_nav.jpg",
+          "filename": "mjk0013_nav.png",
           "prompt": "Professional e-commerce product photography of a navy biker jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0013_nav.png"
         }
       ]
     },
@@ -3088,21 +3127,24 @@
       "images": [
         {
           "color": "Khaki",
-          "filename": "mjk0014_khk.jpg",
+          "filename": "mjk0014_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki suede jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0014_khk.png"
         },
         {
           "color": "Brown",
-          "filename": "mjk0014_brn.jpg",
+          "filename": "mjk0014_brn.png",
           "prompt": "Professional e-commerce product photography of a brown suede jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0014_brn.png"
         },
         {
           "color": "Beige",
-          "filename": "mjk0014_bei.jpg",
+          "filename": "mjk0014_bei.png",
           "prompt": "Professional e-commerce product photography of a beige suede jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0014_bei.png"
         }
       ]
     },
@@ -3127,21 +3169,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjk0015_bla.jpg",
+          "filename": "mjk0015_bla.png",
           "prompt": "Professional e-commerce product photography of a black anorak, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0015_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "mjk0015_nav.jpg",
+          "filename": "mjk0015_nav.png",
           "prompt": "Professional e-commerce product photography of a navy anorak, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0015_nav.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjk0015_chr.jpg",
+          "filename": "mjk0015_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal anorak, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0015_chr.png"
         }
       ]
     },
@@ -3166,21 +3211,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "mjk0016_oli.jpg",
+          "filename": "mjk0016_oli.png",
           "prompt": "Professional e-commerce product photography of a olive overcoat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0016_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "mjk0016_khk.jpg",
+          "filename": "mjk0016_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki overcoat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0016_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "mjk0016_cam.jpg",
+          "filename": "mjk0016_cam.png",
           "prompt": "Professional e-commerce product photography of a camel overcoat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0016_cam.png"
         }
       ]
     },
@@ -3205,21 +3253,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "mjk0017_bur.jpg",
+          "filename": "mjk0017_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy hooded jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0017_bur.png"
         },
         {
           "color": "Navy",
-          "filename": "mjk0017_nav.jpg",
+          "filename": "mjk0017_nav.png",
           "prompt": "Professional e-commerce product photography of a navy hooded jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0017_nav.png"
         },
         {
           "color": "Black",
-          "filename": "mjk0017_bla.jpg",
+          "filename": "mjk0017_bla.png",
           "prompt": "Professional e-commerce product photography of a black hooded jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0017_bla.png"
         }
       ]
     },
@@ -3244,21 +3295,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjk0018_lbl.jpg",
+          "filename": "mjk0018_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue lightweight jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0018_lbl.png"
         },
         {
           "color": "White",
-          "filename": "mjk0018_whi.jpg",
+          "filename": "mjk0018_whi.png",
           "prompt": "Professional e-commerce product photography of a white lightweight jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0018_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "mjk0018_gry.jpg",
+          "filename": "mjk0018_gry.png",
           "prompt": "Professional e-commerce product photography of a grey lightweight jacket, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0018_gry.png"
         }
       ]
     },
@@ -3273,9 +3327,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mjk0019.jpg",
+          "filename": "mjk0019.png",
           "prompt": "Professional e-commerce product photography of designer wool overcoat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0019.png"
         }
       ]
     },
@@ -3290,9 +3345,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mjk0020.jpg",
+          "filename": "mjk0020.png",
           "prompt": "Professional e-commerce product photography of premium duffle coat, flat lay product photography, jacket laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_outerwear_jackets/mjk0020.png"
         }
       ]
     },
