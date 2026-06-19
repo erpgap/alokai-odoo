@@ -8984,21 +8984,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "wdre0001_bla.jpg",
+          "filename": "wdre0001_bla.png",
           "prompt": "Professional e-commerce product photography of a black classic midi dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0001_bla.png"
         },
         {
           "color": "White",
-          "filename": "wdre0001_whi.jpg",
+          "filename": "wdre0001_whi.png",
           "prompt": "Professional e-commerce product photography of a white classic midi dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0001_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "wdre0001_gry.jpg",
+          "filename": "wdre0001_gry.png",
           "prompt": "Professional e-commerce product photography of a grey classic midi dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0001_gry.png"
         }
       ]
     },
@@ -9023,21 +9026,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "wdre0002_nav.jpg",
+          "filename": "wdre0002_nav.png",
           "prompt": "Professional e-commerce product photography of a navy floral summer dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0002_nav.png"
         },
         {
           "color": "Burgundy",
-          "filename": "wdre0002_bur.jpg",
+          "filename": "wdre0002_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy floral summer dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0002_bur.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0002_crm.jpg",
+          "filename": "wdre0002_crm.png",
           "prompt": "Professional e-commerce product photography of a cream floral summer dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0002_crm.png"
         }
       ]
     },
@@ -9062,21 +9068,24 @@
       "images": [
         {
           "color": "Beige",
-          "filename": "wdre0003_bei.jpg",
+          "filename": "wdre0003_bei.png",
           "prompt": "Professional e-commerce product photography of a beige little black dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0003_bei.png"
         },
         {
           "color": "Tan",
-          "filename": "wdre0003_tan.jpg",
+          "filename": "wdre0003_tan.png",
           "prompt": "Professional e-commerce product photography of a tan little black dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0003_tan.png"
         },
         {
           "color": "Brown",
-          "filename": "wdre0003_brn.jpg",
+          "filename": "wdre0003_brn.png",
           "prompt": "Professional e-commerce product photography of a brown little black dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0003_brn.png"
         }
       ]
     },
@@ -9101,21 +9110,24 @@
       "images": [
         {
           "color": "Pink",
-          "filename": "wdre0004_pnk.jpg",
+          "filename": "wdre0004_pnk.png",
           "prompt": "Professional e-commerce product photography of a pink maxi dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0004_pnk.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0004_crm.jpg",
+          "filename": "wdre0004_crm.png",
           "prompt": "Professional e-commerce product photography of a cream maxi dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0004_crm.png"
         },
         {
           "color": "White",
-          "filename": "wdre0004_whi.jpg",
+          "filename": "wdre0004_whi.png",
           "prompt": "Professional e-commerce product photography of a white maxi dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0004_whi.png"
         }
       ]
     },
@@ -9140,21 +9152,24 @@
       "images": [
         {
           "color": "Charcoal",
-          "filename": "wdre0005_chr.jpg",
+          "filename": "wdre0005_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal wrap dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0005_chr.png"
         },
         {
           "color": "Black",
-          "filename": "wdre0005_bla.jpg",
+          "filename": "wdre0005_bla.png",
           "prompt": "Professional e-commerce product photography of a black wrap dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0005_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "wdre0005_nav.jpg",
+          "filename": "wdre0005_nav.png",
           "prompt": "Professional e-commerce product photography of a navy wrap dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0005_nav.png"
         }
       ]
     },
@@ -9179,21 +9194,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "wdre0006_oli.jpg",
+          "filename": "wdre0006_oli.png",
           "prompt": "Professional e-commerce product photography of a olive sheath dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0006_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "wdre0006_khk.jpg",
+          "filename": "wdre0006_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki sheath dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0006_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "wdre0006_cam.jpg",
+          "filename": "wdre0006_cam.png",
           "prompt": "Professional e-commerce product photography of a camel sheath dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0006_cam.png"
         }
       ]
     },
@@ -9218,21 +9236,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "wdre0007_bur.jpg",
+          "filename": "wdre0007_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy a-line dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0007_bur.png"
         },
         {
           "color": "Black",
-          "filename": "wdre0007_bla.jpg",
+          "filename": "wdre0007_bla.png",
           "prompt": "Professional e-commerce product photography of a black a-line dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0007_bla.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0007_crm.jpg",
+          "filename": "wdre0007_crm.png",
           "prompt": "Professional e-commerce product photography of a cream a-line dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0007_crm.png"
         }
       ]
     },
@@ -9257,21 +9278,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "wdre0008_lbl.jpg",
+          "filename": "wdre0008_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue slip dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0008_lbl.png"
         },
         {
           "color": "White",
-          "filename": "wdre0008_whi.jpg",
+          "filename": "wdre0008_whi.png",
           "prompt": "Professional e-commerce product photography of a white slip dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0008_whi.png"
         },
         {
           "color": "Beige",
-          "filename": "wdre0008_bei.jpg",
+          "filename": "wdre0008_bei.png",
           "prompt": "Professional e-commerce product photography of a beige slip dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0008_bei.png"
         }
       ]
     },
@@ -9296,21 +9320,24 @@
       "images": [
         {
           "color": "Red",
-          "filename": "wdre0009_red.jpg",
+          "filename": "wdre0009_red.png",
           "prompt": "Professional e-commerce product photography of a red cocktail dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0009_red.png"
         },
         {
           "color": "Black",
-          "filename": "wdre0009_bla.jpg",
+          "filename": "wdre0009_bla.png",
           "prompt": "Professional e-commerce product photography of a black cocktail dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0009_bla.png"
         },
         {
           "color": "White",
-          "filename": "wdre0009_whi.jpg",
+          "filename": "wdre0009_whi.png",
           "prompt": "Professional e-commerce product photography of a white cocktail dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0009_whi.png"
         }
       ]
     },
@@ -9335,21 +9362,24 @@
       "images": [
         {
           "color": "Cream",
-          "filename": "wdre0010_crm.jpg",
+          "filename": "wdre0010_crm.png",
           "prompt": "Professional e-commerce product photography of a cream evening gown, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0010_crm.png"
         },
         {
           "color": "Beige",
-          "filename": "wdre0010_bei.jpg",
+          "filename": "wdre0010_bei.png",
           "prompt": "Professional e-commerce product photography of a beige evening gown, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0010_bei.png"
         },
         {
           "color": "Tan",
-          "filename": "wdre0010_tan.jpg",
+          "filename": "wdre0010_tan.png",
           "prompt": "Professional e-commerce product photography of a tan evening gown, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0010_tan.png"
         }
       ]
     },
@@ -9374,21 +9404,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "wdre0011_bla.jpg",
+          "filename": "wdre0011_bla.png",
           "prompt": "Professional e-commerce product photography of a black shift dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0011_bla.png"
         },
         {
           "color": "White",
-          "filename": "wdre0011_whi.jpg",
+          "filename": "wdre0011_whi.png",
           "prompt": "Professional e-commerce product photography of a white shift dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0011_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "wdre0011_gry.jpg",
+          "filename": "wdre0011_gry.png",
           "prompt": "Professional e-commerce product photography of a grey shift dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0011_gry.png"
         }
       ]
     },
@@ -9413,21 +9446,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "wdre0012_nav.jpg",
+          "filename": "wdre0012_nav.png",
           "prompt": "Professional e-commerce product photography of a navy sundress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0012_nav.png"
         },
         {
           "color": "Burgundy",
-          "filename": "wdre0012_bur.jpg",
+          "filename": "wdre0012_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy sundress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0012_bur.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0012_crm.jpg",
+          "filename": "wdre0012_crm.png",
           "prompt": "Professional e-commerce product photography of a cream sundress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0012_crm.png"
         }
       ]
     },
@@ -9452,21 +9488,24 @@
       "images": [
         {
           "color": "Beige",
-          "filename": "wdre0013_bei.jpg",
+          "filename": "wdre0013_bei.png",
           "prompt": "Professional e-commerce product photography of a beige tea dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0013_bei.png"
         },
         {
           "color": "Tan",
-          "filename": "wdre0013_tan.jpg",
+          "filename": "wdre0013_tan.png",
           "prompt": "Professional e-commerce product photography of a tan tea dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0013_tan.png"
         },
         {
           "color": "Brown",
-          "filename": "wdre0013_brn.jpg",
+          "filename": "wdre0013_brn.png",
           "prompt": "Professional e-commerce product photography of a brown tea dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0013_brn.png"
         }
       ]
     },
@@ -9491,21 +9530,24 @@
       "images": [
         {
           "color": "Pink",
-          "filename": "wdre0014_pnk.jpg",
+          "filename": "wdre0014_pnk.png",
           "prompt": "Professional e-commerce product photography of a pink bodycon dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0014_pnk.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0014_crm.jpg",
+          "filename": "wdre0014_crm.png",
           "prompt": "Professional e-commerce product photography of a cream bodycon dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0014_crm.png"
         },
         {
           "color": "White",
-          "filename": "wdre0014_whi.jpg",
+          "filename": "wdre0014_whi.png",
           "prompt": "Professional e-commerce product photography of a white bodycon dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0014_whi.png"
         }
       ]
     },
@@ -9530,21 +9572,24 @@
       "images": [
         {
           "color": "Charcoal",
-          "filename": "wdre0015_chr.jpg",
+          "filename": "wdre0015_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal empire waist dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0015_chr.png"
         },
         {
           "color": "Black",
-          "filename": "wdre0015_bla.jpg",
+          "filename": "wdre0015_bla.png",
           "prompt": "Professional e-commerce product photography of a black empire waist dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0015_bla.png"
         },
         {
           "color": "Navy",
-          "filename": "wdre0015_nav.jpg",
+          "filename": "wdre0015_nav.png",
           "prompt": "Professional e-commerce product photography of a navy empire waist dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0015_nav.png"
         }
       ]
     },
@@ -9569,21 +9614,24 @@
       "images": [
         {
           "color": "Olive",
-          "filename": "wdre0016_oli.jpg",
+          "filename": "wdre0016_oli.png",
           "prompt": "Professional e-commerce product photography of a olive lace dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0016_oli.png"
         },
         {
           "color": "Khaki",
-          "filename": "wdre0016_khk.jpg",
+          "filename": "wdre0016_khk.png",
           "prompt": "Professional e-commerce product photography of a khaki lace dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0016_khk.png"
         },
         {
           "color": "Camel",
-          "filename": "wdre0016_cam.jpg",
+          "filename": "wdre0016_cam.png",
           "prompt": "Professional e-commerce product photography of a camel lace dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0016_cam.png"
         }
       ]
     },
@@ -9608,21 +9656,24 @@
       "images": [
         {
           "color": "Burgundy",
-          "filename": "wdre0017_bur.jpg",
+          "filename": "wdre0017_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy velvet dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0017_bur.png"
         },
         {
           "color": "Black",
-          "filename": "wdre0017_bla.jpg",
+          "filename": "wdre0017_bla.png",
           "prompt": "Professional e-commerce product photography of a black velvet dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0017_bla.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0017_crm.jpg",
+          "filename": "wdre0017_crm.png",
           "prompt": "Professional e-commerce product photography of a cream velvet dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0017_crm.png"
         }
       ]
     },
@@ -9647,21 +9698,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "wdre0018_lbl.jpg",
+          "filename": "wdre0018_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue silk dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0018_lbl.png"
         },
         {
           "color": "White",
-          "filename": "wdre0018_whi.jpg",
+          "filename": "wdre0018_whi.png",
           "prompt": "Professional e-commerce product photography of a white silk dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0018_whi.png"
         },
         {
           "color": "Beige",
-          "filename": "wdre0018_bei.jpg",
+          "filename": "wdre0018_bei.png",
           "prompt": "Professional e-commerce product photography of a beige silk dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0018_bei.png"
         }
       ]
     },
@@ -9686,21 +9740,24 @@
       "images": [
         {
           "color": "Red",
-          "filename": "wdre0019_red.jpg",
+          "filename": "wdre0019_red.png",
           "prompt": "Professional e-commerce product photography of a red pleated dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0019_red.png"
         },
         {
           "color": "Black",
-          "filename": "wdre0019_bla.jpg",
+          "filename": "wdre0019_bla.png",
           "prompt": "Professional e-commerce product photography of a black pleated dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0019_bla.png"
         },
         {
           "color": "White",
-          "filename": "wdre0019_whi.jpg",
+          "filename": "wdre0019_whi.png",
           "prompt": "Professional e-commerce product photography of a white pleated dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0019_whi.png"
         }
       ]
     },
@@ -9725,21 +9782,24 @@
       "images": [
         {
           "color": "Cream",
-          "filename": "wdre0020_crm.jpg",
+          "filename": "wdre0020_crm.png",
           "prompt": "Professional e-commerce product photography of a cream off-shoulder dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0020_crm.png"
         },
         {
           "color": "Beige",
-          "filename": "wdre0020_bei.jpg",
+          "filename": "wdre0020_bei.png",
           "prompt": "Professional e-commerce product photography of a beige off-shoulder dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0020_bei.png"
         },
         {
           "color": "Tan",
-          "filename": "wdre0020_tan.jpg",
+          "filename": "wdre0020_tan.png",
           "prompt": "Professional e-commerce product photography of a tan off-shoulder dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0020_tan.png"
         }
       ]
     },
@@ -9764,21 +9824,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "wdre0021_bla.jpg",
+          "filename": "wdre0021_bla.png",
           "prompt": "Professional e-commerce product photography of a black halter neck dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0021_bla.png"
         },
         {
           "color": "White",
-          "filename": "wdre0021_whi.jpg",
+          "filename": "wdre0021_whi.png",
           "prompt": "Professional e-commerce product photography of a white halter neck dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0021_whi.png"
         },
         {
           "color": "Grey",
-          "filename": "wdre0021_gry.jpg",
+          "filename": "wdre0021_gry.png",
           "prompt": "Professional e-commerce product photography of a grey halter neck dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0021_gry.png"
         }
       ]
     },
@@ -9803,21 +9866,24 @@
       "images": [
         {
           "color": "Navy",
-          "filename": "wdre0022_nav.jpg",
+          "filename": "wdre0022_nav.png",
           "prompt": "Professional e-commerce product photography of a navy long sleeve dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0022_nav.png"
         },
         {
           "color": "Burgundy",
-          "filename": "wdre0022_bur.jpg",
+          "filename": "wdre0022_bur.png",
           "prompt": "Professional e-commerce product photography of a burgundy long sleeve dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0022_bur.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0022_crm.jpg",
+          "filename": "wdre0022_crm.png",
           "prompt": "Professional e-commerce product photography of a cream long sleeve dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0022_crm.png"
         }
       ]
     },
@@ -9842,21 +9908,24 @@
       "images": [
         {
           "color": "Beige",
-          "filename": "wdre0023_bei.jpg",
+          "filename": "wdre0023_bei.png",
           "prompt": "Professional e-commerce product photography of a beige knit dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0023_bei.png"
         },
         {
           "color": "Tan",
-          "filename": "wdre0023_tan.jpg",
+          "filename": "wdre0023_tan.png",
           "prompt": "Professional e-commerce product photography of a tan knit dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0023_tan.png"
         },
         {
           "color": "Brown",
-          "filename": "wdre0023_brn.jpg",
+          "filename": "wdre0023_brn.png",
           "prompt": "Professional e-commerce product photography of a brown knit dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0023_brn.png"
         }
       ]
     },
@@ -9881,21 +9950,24 @@
       "images": [
         {
           "color": "Pink",
-          "filename": "wdre0024_pnk.jpg",
+          "filename": "wdre0024_pnk.png",
           "prompt": "Professional e-commerce product photography of a pink striped dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0024_pnk.png"
         },
         {
           "color": "Cream",
-          "filename": "wdre0024_crm.jpg",
+          "filename": "wdre0024_crm.png",
           "prompt": "Professional e-commerce product photography of a cream striped dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0024_crm.png"
         },
         {
           "color": "White",
-          "filename": "wdre0024_whi.jpg",
+          "filename": "wdre0024_whi.png",
           "prompt": "Professional e-commerce product photography of a white striped dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0024_whi.png"
         }
       ]
     },
@@ -9910,9 +9982,10 @@
       "images": [
         {
           "color": null,
-          "filename": "wdre0025.jpg",
+          "filename": "wdre0025.png",
           "prompt": "Professional e-commerce product photography of limited edition gala dress, flat lay product photography, dress carefully laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/women_dresses/wdre0025.png"
         }
       ]
     },
