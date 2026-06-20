@@ -462,7 +462,7 @@ class ProductTemplate(models.Model):
         product.product._get_product_placeholder_filename delegates to the
         template, so this single override covers both templates and variants.
         """
-        return 'graphql_alokai/static/img/placeholder.jpg'
+        return 'graphql_alokai/static/img/placeholder.png'
 
     def action_open_storefront(self):
         """Smart-button action: open this product on the configured website domain
