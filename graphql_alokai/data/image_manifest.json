@@ -783,21 +783,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0001_dbl.jpg",
+          "filename": "mjn0001_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue slim fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0001_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0001_lbl.jpg",
+          "filename": "mjn0001_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue slim fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0001_lbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0001_bla.jpg",
+          "filename": "mjn0001_bla.png",
           "prompt": "Professional e-commerce product photography of a black slim fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0001_bla.png"
         }
       ]
     },
@@ -822,21 +825,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0002_dbl.jpg",
+          "filename": "mjn0002_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue straight leg jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0002_dbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0002_bla.jpg",
+          "filename": "mjn0002_bla.png",
           "prompt": "Professional e-commerce product photography of a black straight leg jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0002_bla.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0002_gry.jpg",
+          "filename": "mjn0002_gry.png",
           "prompt": "Professional e-commerce product photography of a grey straight leg jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0002_gry.png"
         }
       ]
     },
@@ -861,21 +867,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjn0003_lbl.jpg",
+          "filename": "mjn0003_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue tapered jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0003_lbl.png"
         },
         {
           "color": "Cream",
-          "filename": "mjn0003_crm.jpg",
+          "filename": "mjn0003_crm.png",
           "prompt": "Professional e-commerce product photography of a cream tapered jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0003_crm.png"
         },
         {
           "color": "White",
-          "filename": "mjn0003_whi.jpg",
+          "filename": "mjn0003_whi.png",
           "prompt": "Professional e-commerce product photography of a white tapered jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0003_whi.png"
         }
       ]
     },
@@ -900,21 +909,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjn0004_bla.jpg",
+          "filename": "mjn0004_bla.png",
           "prompt": "Professional e-commerce product photography of a black classic blue jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0004_bla.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0004_gry.jpg",
+          "filename": "mjn0004_gry.png",
           "prompt": "Professional e-commerce product photography of a grey classic blue jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0004_gry.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjn0004_chr.jpg",
+          "filename": "mjn0004_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal classic blue jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0004_chr.png"
         }
       ]
     },
@@ -939,21 +951,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0005_dbl.jpg",
+          "filename": "mjn0005_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue bootcut jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0005_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0005_lbl.jpg",
+          "filename": "mjn0005_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue bootcut jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0005_lbl.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0005_gry.jpg",
+          "filename": "mjn0005_gry.png",
           "prompt": "Professional e-commerce product photography of a grey bootcut jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0005_gry.png"
         }
       ]
     },
@@ -978,21 +993,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0006_dbl.jpg",
+          "filename": "mjn0006_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue skinny jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0006_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0006_lbl.jpg",
+          "filename": "mjn0006_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue skinny jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0006_lbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0006_bla.jpg",
+          "filename": "mjn0006_bla.png",
           "prompt": "Professional e-commerce product photography of a black skinny jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0006_bla.png"
         }
       ]
     },
@@ -1017,21 +1035,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0007_dbl.jpg",
+          "filename": "mjn0007_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue relaxed fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0007_dbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0007_bla.jpg",
+          "filename": "mjn0007_bla.png",
           "prompt": "Professional e-commerce product photography of a black relaxed fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0007_bla.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0007_gry.jpg",
+          "filename": "mjn0007_gry.png",
           "prompt": "Professional e-commerce product photography of a grey relaxed fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0007_gry.png"
         }
       ]
     },
@@ -1056,21 +1077,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjn0008_lbl.jpg",
+          "filename": "mjn0008_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue regular fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0008_lbl.png"
         },
         {
           "color": "Cream",
-          "filename": "mjn0008_crm.jpg",
+          "filename": "mjn0008_crm.png",
           "prompt": "Professional e-commerce product photography of a cream regular fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0008_crm.png"
         },
         {
           "color": "White",
-          "filename": "mjn0008_whi.jpg",
+          "filename": "mjn0008_whi.png",
           "prompt": "Professional e-commerce product photography of a white regular fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0008_whi.png"
         }
       ]
     },
@@ -1095,21 +1119,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjn0009_bla.jpg",
+          "filename": "mjn0009_bla.png",
           "prompt": "Professional e-commerce product photography of a black dark wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0009_bla.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0009_gry.jpg",
+          "filename": "mjn0009_gry.png",
           "prompt": "Professional e-commerce product photography of a grey dark wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0009_gry.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjn0009_chr.jpg",
+          "filename": "mjn0009_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal dark wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0009_chr.png"
         }
       ]
     },
@@ -1134,21 +1161,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0010_dbl.jpg",
+          "filename": "mjn0010_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue light wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0010_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0010_lbl.jpg",
+          "filename": "mjn0010_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue light wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0010_lbl.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0010_gry.jpg",
+          "filename": "mjn0010_gry.png",
           "prompt": "Professional e-commerce product photography of a grey light wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0010_gry.png"
         }
       ]
     },
@@ -1173,21 +1203,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0011_dbl.jpg",
+          "filename": "mjn0011_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue distressed jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0011_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0011_lbl.jpg",
+          "filename": "mjn0011_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue distressed jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0011_lbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0011_bla.jpg",
+          "filename": "mjn0011_bla.png",
           "prompt": "Professional e-commerce product photography of a black distressed jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0011_bla.png"
         }
       ]
     },
@@ -1212,21 +1245,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0012_dbl.jpg",
+          "filename": "mjn0012_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue black jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0012_dbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0012_bla.jpg",
+          "filename": "mjn0012_bla.png",
           "prompt": "Professional e-commerce product photography of a black black jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0012_bla.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0012_gry.jpg",
+          "filename": "mjn0012_gry.png",
           "prompt": "Professional e-commerce product photography of a grey black jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0012_gry.png"
         }
       ]
     },
@@ -1251,21 +1287,24 @@
       "images": [
         {
           "color": "Light Blue",
-          "filename": "mjn0013_lbl.jpg",
+          "filename": "mjn0013_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue stretch jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0013_lbl.png"
         },
         {
           "color": "Cream",
-          "filename": "mjn0013_crm.jpg",
+          "filename": "mjn0013_crm.png",
           "prompt": "Professional e-commerce product photography of a cream stretch jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0013_crm.png"
         },
         {
           "color": "White",
-          "filename": "mjn0013_whi.jpg",
+          "filename": "mjn0013_whi.png",
           "prompt": "Professional e-commerce product photography of a white stretch jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0013_whi.png"
         }
       ]
     },
@@ -1290,21 +1329,24 @@
       "images": [
         {
           "color": "Black",
-          "filename": "mjn0014_bla.jpg",
+          "filename": "mjn0014_bla.png",
           "prompt": "Professional e-commerce product photography of a black athletic fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0014_bla.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0014_gry.jpg",
+          "filename": "mjn0014_gry.png",
           "prompt": "Professional e-commerce product photography of a grey athletic fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0014_gry.png"
         },
         {
           "color": "Charcoal",
-          "filename": "mjn0014_chr.jpg",
+          "filename": "mjn0014_chr.png",
           "prompt": "Professional e-commerce product photography of a charcoal athletic fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0014_chr.png"
         }
       ]
     },
@@ -1329,21 +1371,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0015_dbl.jpg",
+          "filename": "mjn0015_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue loose fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0015_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0015_lbl.jpg",
+          "filename": "mjn0015_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue loose fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0015_lbl.png"
         },
         {
           "color": "Grey",
-          "filename": "mjn0015_gry.jpg",
+          "filename": "mjn0015_gry.png",
           "prompt": "Professional e-commerce product photography of a grey loose fit jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0015_gry.png"
         }
       ]
     },
@@ -1368,21 +1413,24 @@
       "images": [
         {
           "color": "Dark Blue",
-          "filename": "mjn0016_dbl.jpg",
+          "filename": "mjn0016_dbl.png",
           "prompt": "Professional e-commerce product photography of a dark blue vintage wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0016_dbl.png"
         },
         {
           "color": "Light Blue",
-          "filename": "mjn0016_lbl.jpg",
+          "filename": "mjn0016_lbl.png",
           "prompt": "Professional e-commerce product photography of a light blue vintage wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0016_lbl.png"
         },
         {
           "color": "Black",
-          "filename": "mjn0016_bla.jpg",
+          "filename": "mjn0016_bla.png",
           "prompt": "Professional e-commerce product photography of a black vintage wash jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0016_bla.png"
         }
       ]
     },
@@ -1397,9 +1445,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mjn0017.jpg",
+          "filename": "mjn0017.png",
           "prompt": "Professional e-commerce product photography of premium selvedge jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0017.png"
         }
       ]
     },
@@ -1414,9 +1463,10 @@
       "images": [
         {
           "color": null,
-          "filename": "mjn0018.jpg",
+          "filename": "mjn0018.png",
           "prompt": "Professional e-commerce product photography of raw denim jeans, flat lay product photography, jeans laid out flat on a pure #FFFFFF white seamless background, completely white, no off-white, no cream, no gradient, full garment visible, no model, no person, no mannequin, top-down view, isolated product shot, soft natural lighting, minimalist style, high resolution, pure #FFFFFF white background, completely white, no off-white, no cream tint, no gradient",
-          "status": "pending"
+          "status": "done",
+          "local_path": "graphql_alokai/static/img/products/men_bottoms_jeans/mjn0018.png"
         }
       ]
     },
