@@ -323,6 +323,8 @@ class ProductQuery(graphene.ObjectType):
                         continue
                     attribute_id = int(val[0])
                     attribute = ProductAttribute.search([('id', '=', attribute_id)])
+                    if not attribute:
+                        continue
                     attribute_name = attribute.name.lower()
                 except ValueError:
                     continue
