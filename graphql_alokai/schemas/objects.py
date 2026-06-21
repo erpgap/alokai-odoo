@@ -110,6 +110,16 @@ def get_image_url(object, field_name='image'):
     return f'/web/image/{object._name}/{object.id}/{field_name}'
 
 
+def get_first_variant_with_image(product):
+    """Return the first variant with a variant-specific image for a template,
+    so listing thumbnails match the product page default. Returns None otherwise."""
+    if product._name == 'product.template':
+        first = product.product_variant_ids[:1]
+        if first and first.image_variant_1920:
+            return first
+    return None
+
+
 def get_image_url_template(object, field_name='image'):
     """
     Returns a templated image URL with {width}/{height} placeholders that the
@@ -628,6 +638,9 @@ class Product(OdooObjectType):
         return get_image_url(self, field_name='website_meta_img')
 
     def resolve_image(self, info):
+        first = get_first_variant_with_image(self)
+        if first:
+            return get_image_url(first, field_name='image_variant_1920')
         return get_image_url(self, field_name='image_1920')
 
     def resolve_small_image(self, info):
@@ -637,9 +650,15 @@ class Product(OdooObjectType):
         return get_image_filename(self)
 
     def resolve_image_url(self, info):
+        first = get_first_variant_with_image(self)
+        if first:
+            return get_image_url_template(first, field_name='image_variant_1920')
         return get_image_url_template(self, field_name='image_1920')
 
     def resolve_thumbnail(self, info):
+        first = get_first_variant_with_image(self)
+        if first:
+            return get_image_url(first, field_name='image_variant_1920')
         return get_image_url(self, field_name='image_512')
 
     def resolve_categories(self, info):

@@ -142,7 +142,9 @@ def _load_demo_product_images(env):
             _logger.warning("Image file missing: %s", os.path.join(addon_dir, done_images[0]['local_path']))
             missing_files += 1
 
-        # For variant products, assign per-color images
+        # For variant products, assign per-color images then align the template
+        # image with the first variant so the listing thumbnail is consistent
+        # with the product page default (which auto-selects the first variant).
         if entry.get('has_variants'):
             for img in done_images:
                 color_name = img.get('color')
@@ -173,6 +175,12 @@ def _load_demo_product_images(env):
                     _logger.warning(
                         "No variant matched color %s for SKU %s", color_name, entry['sku_base']
                     )
+
+            # Align template image with first variant so listing thumbnail
+            # matches the product page default.
+            first_variant = template.product_variant_ids[:1]
+            if first_variant and first_variant.image_variant_1920:
+                template.image_1920 = first_variant.image_variant_1920
 
     _logger.info(
         "Demo images loaded: %s templates, %s variants, %s missing files",
