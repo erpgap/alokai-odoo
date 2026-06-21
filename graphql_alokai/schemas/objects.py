@@ -710,7 +710,7 @@ class Product(OdooObjectType):
     def resolve_frequently_bought_together(self, info):
         if self.frequently_bought_together_ids:
             fbt = self.frequently_bought_together_ids.sorted(key=lambda r: r.qty, reverse=True)
-            return fbt.mapped('related_product_id')
+            return fbt.mapped('related_product_id')[:12]
         return None
 
     # Specific to use in Product Variant
