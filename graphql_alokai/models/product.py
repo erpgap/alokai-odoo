@@ -368,7 +368,7 @@ class ProductTemplate(models.Model):
         # TODO: check why product id is False in sale.report
         sale_count_map = {group[0].id: group[1] for group in sale_groups if group[0]}
 
-        values = []
+        raw = []
 
         for product in self:
             if product.type in ['product', 'consu']:
@@ -379,7 +379,25 @@ class ProductTemplate(models.Model):
             else:
                 recent_sales_count = 0
 
-            values.append((recent_sales_count, product.id))
+            cat_id = product.public_categ_ids[:1].id or 0
+            raw.append((recent_sales_count, product.id, cat_id))
+
+        # Normalize per category so no single category dominates the popular sort.
+        # Each product's score is scaled to [0, 1] within its category, then
+        # multiplied by 100 to keep readable values.
+        cat_max = {}
+        for score, _pid, cat_id in raw:
+            if score > cat_max.get(cat_id, 0):
+                cat_max[cat_id] = score
+
+        values = []
+        for score, pid, cat_id in raw:
+            max_in_cat = cat_max.get(cat_id, 0)
+            if max_in_cat > 0:
+                normalized = (score / max_in_cat) * 100
+            else:
+                normalized = 0
+            values.append((normalized, pid))
 
         if values:
             query = f"""
