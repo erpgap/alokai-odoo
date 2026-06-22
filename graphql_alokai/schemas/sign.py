@@ -224,17 +224,19 @@ class UpdatePassword(graphene.Mutation):
             if user and user.is_public_user:
                 raise GraphQLError(_('Partner cannot be updated.'))
             try:
-                credential = {'login': user.login, 'password': current_password, 'type': 'password'}
-                user._check_credentials(credential, {'interactive': True})
+                # change_password() already re-verifies current_password
+                # internally via _check_credentials.
                 user.change_password(current_password, new_password)
-                env.cr.commit()
-                new_credential = {'login': user.login, 'password': new_password, 'type': 'password'}
-                request.session.authenticate(request.env, new_credential)
-                if bool(user._mfa_type()):
-                    request.session.finalize(request.env)
-                return user
-            except Exception as e:
+            except Exception:
                 raise GraphQLError(_('Incorrect password.'))
+
+            # password is part of the session token (see res.users
+            # _get_session_token_fields), so changing it invalidates the
+            # current session unless we refresh the token in place (same
+            # pattern Odoo's own /my/security password change uses).
+            new_token = user._compute_session_token(request.session.sid)
+            request.session.session_token = new_token
+            return user
         else:
             raise GraphQLError(_('You must be logged in.'))
 
