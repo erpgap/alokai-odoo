@@ -41,7 +41,7 @@ PRICELIST_FIELDS = f"id name currency {{ {CURRENCY_FIELDS} }}"
 PARTNER_MIN = "id name email phone isCompany"
 
 PARTNER_FIELDS = f"""
-    id name street street2 city zip email phone mobile addressType isCompany
+    id name street street2 city zip email phone addressType isCompany
     signupToken signupValid image imageFilename imageUrl vat isPublic
     companyName companyRegNo
     country {{ {COUNTRY_FIELDS} }}
@@ -56,7 +56,7 @@ PARTNER_FIELDS = f"""
 """
 
 COMPANY_FIELDS = f"""
-    id name street street2 city zip email phone mobile image imageFilename
+    id name street street2 city zip email phone image imageFilename
     imageUrl vat socialTwitter socialFacebook socialGithub socialLinkedin
     socialYoutube socialInstagram
     country {{ {COUNTRY_FIELDS} }}

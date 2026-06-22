@@ -358,8 +358,7 @@ class TestAlokaiMutations(AlokaiGraphQLCommon):
         mutation = """
             mutation ($name: String!, $email: String!) {
               createUpdatePartner(name: $name, email: $email,
-                                  subscribeNewsletter: true, phone: "555-1234",
-                                  mobile: "555-4321") { %s }
+                                  subscribeNewsletter: true, phone: "555-1234") { %s }
             }
         """ % PARTNER_FIELDS
         body = self._gql(mutation, {'name': 'Guest Buyer', 'email': 'guest@example.com'})

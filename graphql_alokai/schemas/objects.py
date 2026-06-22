@@ -201,7 +201,6 @@ class Company(OdooObjectType):
     zip = graphene.String()
     email = graphene.String()
     phone = graphene.String()
-    mobile = graphene.String()
     image = graphene.String()
     image_filename = graphene.String()
     image_url = graphene.String()
@@ -228,9 +227,6 @@ class Company(OdooObjectType):
     def resolve_image_url(self, info):
         return get_image_url_template(self, field_name='image_1920')
 
-    def resolve_mobile(self, info):
-        return getattr(self, 'mobile', None)
-
 
 class Pricelist(OdooObjectType):
     id = graphene.Int()
@@ -252,7 +248,6 @@ class Partner(OdooObjectType):
     zip = graphene.String()
     email = graphene.String()
     phone = graphene.String()
-    mobile = graphene.String()
     address_type = AddressType()
     billing_address = graphene.Field(lambda: Partner)
     shipping_address = graphene.Field(lambda: Partner)
@@ -280,9 +275,6 @@ class Partner(OdooObjectType):
 
     def resolve_address_type(self, info):
         return self.type or None
-
-    def resolve_mobile(self, info):
-        return getattr(self, 'mobile', None)
 
     def resolve_billing_address(self, info):
         billing_address = self.child_ids.filtered(lambda a: a.type and a.type == 'invoice')
