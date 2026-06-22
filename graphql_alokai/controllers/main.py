@@ -13,6 +13,7 @@ from odoo.addons.web.controllers.binary import Binary
 from odoo.addons.graphql_base import GraphQLControllerMixin
 from odoo.http import request, Response
 from odoo.tools.func import lazy
+from odoo.tools.image import image_guess_size_from_field_name, image_process
 from urllib.parse import urlparse
 from werkzeug.exceptions import Forbidden
 
@@ -21,6 +22,12 @@ _logger = logging.getLogger(__name__)
 
 
 from ..graphql.registry import build_alokai_schema
+
+
+# Models with their own branded placeholder, used instead of Odoo's generic
+# web.image_placeholder when the requested record doesn't exist (e.g. stale
+# IDs from search engines, deleted products, ...).
+PRODUCT_PLACEHOLDER_MODELS = ('product.template', 'product.product')
 
 
 class AlokaiBinary(Binary):
@@ -55,6 +62,26 @@ class AlokaiBinary(Binary):
 
         if width > alokai_image_resize_limit or height > alokai_image_resize_limit:
             raise request.not_found()
+
+        # Core falls back to the generic web.image_placeholder for ANY missing
+        # record, regardless of model. Short-circuit just that case so a
+        # deleted/unknown product shows our branded placeholder instead;
+        # everything else (existing records, other models, downloads) is left
+        # to the original behavior.
+        if model in PRODUCT_PLACEHOLDER_MODELS and id and not download \
+                and not request.env[model].sudo().browse(int(id)).exists():
+            if (int(width), int(height)) == (0, 0):
+                width, height = image_guess_size_from_field_name(field)
+            placeholder_path = request.env[model]._get_product_placeholder_filename()
+            stream = request.env['ir.binary']._get_placeholder_stream(placeholder_path)
+            if width or height or crop:
+                raw = stream.read()
+                stream.type = 'data'
+                stream.path = None
+                stream.data = image_process(raw, size=(int(width), int(height)), crop=crop)
+                stream.size = len(stream.data)
+            stream.public = False
+            return stream.get_response(as_attachment=False)
 
         return super(AlokaiBinary, self).content_image(
             xmlid=xmlid, model=model, id=id, field=field, filename_field=filename_field, filename=filename,

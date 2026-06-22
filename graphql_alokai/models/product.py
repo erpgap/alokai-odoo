@@ -634,6 +634,13 @@ class ProductProduct(models.Model):
     has_stock = fields.Boolean(string='Has Stock', compute='_compute_has_stock', search='_search_has_stock',
                                store=False)
 
+    def _get_placeholder_filename(self, field):
+        # Core only special-cases image_1920/1024/512/256/128; variant-specific
+        # image_variant_* fields fall through to Odoo's default placeholder otherwise.
+        if field in ('image_variant_%s' % size for size in (1920, 1024, 512, 256, 128)):
+            return self._get_product_placeholder_filename()
+        return super()._get_placeholder_filename(field)
+
     def _compute_has_stock(self):
         website = self.env['website'].get_current_website()
         self.env.cr.execute("""
