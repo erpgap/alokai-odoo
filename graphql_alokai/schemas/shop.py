@@ -213,6 +213,21 @@ class CreateUpdatePartner(graphene.Mutation):
         else:
             partner.write(data)
 
+            # Keep the logged-in user's login in sync with their email.
+            # Login is part of the session token (see res.users
+            # _get_session_token_fields), so changing it invalidates the
+            # current session unless we refresh the token in place
+            # (same pattern Odoo's own /my/security password change uses).
+            user = env.user
+            if not user._is_public() and user.partner_id == partner and email and user.login != email:
+                existing = env['res.users'].sudo().search([('login', '=', email), ('id', '!=', user.id)], limit=1)
+                if existing:
+                    raise GraphQLError(_('This email is already used by another account.'))
+                user.sudo().write({'login': email})
+                if request:
+                    new_token = user._compute_session_token(request.session.sid)
+                    request.session.session_token = new_token
+
         # Subscribe to newsletter
         if subscribe_newsletter:
             if website.alokai_mailing_list_id:
