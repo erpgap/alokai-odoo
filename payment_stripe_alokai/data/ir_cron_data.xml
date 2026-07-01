@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo>
+    <data noupdate="1">
+
+        <!-- Run Odoo's payment post-processing more often so a confirmed
+             transaction whose order-confirmation step was deferred is
+             finalised quickly. -->
+        <record model="ir.cron" id="payment.cron_post_process_payment_tx">
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+        </record>
+
+        <!-- Safety net: recover storefront Stripe payments that succeeded at
+             Stripe but whose webhook and return redirect both failed to reach
+             Odoo. -->
+        <record model="ir.cron" id="cron_alokai_stripe_reconcile">
+            <field name="name">Alokai: reconcile Stripe payments</field>
+            <field name="model_id" ref="payment.model_payment_transaction"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_alokai_stripe_reconcile()</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

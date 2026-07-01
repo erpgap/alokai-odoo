@@ -10,7 +10,7 @@
 
     <record id="website.default_website" model="website">
         <field name="alokai_payment_success_return_url">http://localhost:3000/checkout/thank-you</field>
-        <field name="alokai_payment_error_return_url">http://localhost:3000/payment-fail</field>
+        <field name="alokai_payment_error_return_url">http://localhost:3000/checkout/payment-fail</field>
         <field name="alokai_mailing_list_id" eval="ref('mass_mailing.mailing_list_data')"/>
         <field name="reset_password_email_template_id" eval="ref('graphql_alokai.website_reset_password_email')"/>
         <field name="order_confirmation_email_template_id" eval="ref('sale.mail_template_sale_confirmation')"/>

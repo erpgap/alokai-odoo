@@ -44,7 +44,7 @@
         <field name="logo" type="base64" file="graphql_alokai/static/description/icon.png"/>
 
         <field name="alokai_payment_success_return_url">https://alokai.erpgap.com/checkout/thank-you</field>
-        <field name="alokai_payment_error_return_url">https://alokai.erpgap.com/payment-fail</field>
+        <field name="alokai_payment_error_return_url">https://alokai.erpgap.com/checkout/payment-fail</field>
 
         <field name="website_meta_title">Alokai - Modern Fashion &amp; Lifestyle Online Store</field>
         <field name="website_meta_description">Shop the latest fashion at Alokai. Discover curated collections of women's and men's clothing, shoes and accessories, with free shipping and easy returns.</field>
