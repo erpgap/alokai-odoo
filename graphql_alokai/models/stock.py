@@ -38,9 +38,9 @@ class StockQuant(models.Model):
             redis_client.close()
 
     def _trigger_dirty_stock_cron(self):
-        # A reservation just dropped free_qty (a sale). Ask the dirty-stock cron
-        # to run as soon as possible instead of waiting for its next tick, so
-        # the storefront's Redis stock reflects the sale within seconds.
+        # A quant change just altered free_qty. Ask the dirty-stock cron to run
+        # as soon as possible instead of waiting for its next tick, so the
+        # storefront's Redis stock reflects the change within seconds.
         #
         # We only trigger the existing cron (never write the redis_stock tables
         # here) to keep it the single writer to those tables and avoid the
@@ -52,27 +52,30 @@ class StockQuant(models.Model):
             raise_if_not_found=False,
         )
         if cron:
-            # Queued after the dirty flag's postcommit (same queue, ordered), so
-            # the flag exists in Redis before the cron wakes.
-            self.env.cr.postcommit.add(cron._trigger)
+            # Called inline (not via postcommit): the ir.cron.trigger row must
+            # commit with this transaction — postcommit runs after the final
+            # COMMIT, so a row created there is rolled back on cursor close.
+            # Redundant triggers in one transaction are fine: the worker
+            # consumes all pending triggers in a single run.
+            cron._trigger()
 
     def write(self, vals):
         res = super(StockQuant, self).write(vals)
         quantity_fields = {'quantity', 'reserved_quantity', 'inventory_quantity'}
         if quantity_fields.intersection(vals.keys()):
             self._create_stock_is_dirty_redis()
-            # A reservation (sale) is the overselling-critical event: run the
-            # sync now rather than on the next minute's tick.
-            if 'reserved_quantity' in vals:
-                self._trigger_dirty_stock_cron()
+            # Run the sync now rather than on the next minute's tick.
+            self._trigger_dirty_stock_cron()
         return res
 
     @api.model_create_multi
     def create(self, vals_list):
         quants = super(StockQuant, self).create(vals_list)
         quants._create_stock_is_dirty_redis()
+        quants._trigger_dirty_stock_cron()
         return quants
 
     def unlink(self):
         self._create_stock_is_dirty_redis()
+        self._trigger_dirty_stock_cron()
         return super(StockQuant, self).unlink()

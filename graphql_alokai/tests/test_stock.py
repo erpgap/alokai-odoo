@@ -95,12 +95,12 @@ class TestAlokaiStockTrigger(TransactionCase):
             self.quant.write({'reserved_quantity': 2.0})
         trigger.assert_called_once()
 
-    def test_non_reservation_change_does_not_trigger(self):
-        """A plain quantity change (receipt, inventory) uses the normal tick."""
+    def test_quantity_change_triggers_immediate_sync(self):
+        """A plain quantity change (receipt, inventory) also syncs ASAP."""
         cls = type(self.env['stock.quant'])
         with patch.object(cls, '_trigger_dirty_stock_cron') as trigger:
             self.quant.write({'quantity': 20.0})
-        trigger.assert_not_called()
+        trigger.assert_called_once()
 
     def _dirty_cron_trigger_count(self):
         return self.env['ir.cron.trigger'].search_count(
@@ -112,16 +112,22 @@ class TestAlokaiStockTrigger(TransactionCase):
         website_cls = type(self.env['website'])
         with patch.object(website_cls, '_redis_enabled', return_value=False):
             self.env['stock.quant']._trigger_dirty_stock_cron()
-            self.env.cr.postcommit.run()
         self.assertEqual(self._dirty_cron_trigger_count(), before)
 
     def test_trigger_schedules_cron_when_redis_enabled(self):
-        """With Redis on, the dirty-stock cron is triggered ASAP."""
+        """With Redis on, the dirty-stock cron is triggered ASAP.
+
+        The trigger must be created inline, within the writing transaction:
+        a row created in a postcommit callback runs after the final COMMIT
+        and is rolled back when the request cursor closes.
+        """
+        # _trigger silently skips inactive crons; make the test independent
+        # of the database's cron state (rolled back with the transaction).
+        self.dirty_cron.sudo().active = True
         before = self._dirty_cron_trigger_count()
         website_cls = type(self.env['website'])
         with patch.object(website_cls, '_redis_enabled', return_value=True):
             self.env['stock.quant']._trigger_dirty_stock_cron()
-            self.env.cr.postcommit.run()
         self.assertEqual(self._dirty_cron_trigger_count(), before + 1)
 
     # ------------------------------------------------------------------ #
