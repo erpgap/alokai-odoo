@@ -6,3 +6,4 @@
 from . import test_queries
 from . import test_mutations
 from . import test_controllers
+from . import test_stock

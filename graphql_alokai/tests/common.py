@@ -222,7 +222,7 @@ BLOG_TAG_FIELDS = "id name slug"
 BLOG_POST_FIELDS = f"""
     id image imageFilename imageUrl name publishedDate content teaser slug
     jsonLd
-    authorId {{ {PARTNER_MIN} }}
+    author {{ {PARTNER_MIN} }}
     tagIds {{ {BLOG_TAG_FIELDS} }}
 """
 

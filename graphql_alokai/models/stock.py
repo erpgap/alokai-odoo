@@ -37,11 +37,34 @@ class StockQuant(models.Model):
         finally:
             redis_client.close()
 
+    def _trigger_dirty_stock_cron(self):
+        # A reservation just dropped free_qty (a sale). Ask the dirty-stock cron
+        # to run as soon as possible instead of waiting for its next tick, so
+        # the storefront's Redis stock reflects the sale within seconds.
+        #
+        # We only trigger the existing cron (never write the redis_stock tables
+        # here) to keep it the single writer to those tables and avoid the
+        # serialization errors that concurrent writers would cause.
+        if not self.env['website']._redis_enabled():
+            return
+        cron = self.env.ref(
+            'graphql_alokai.ir_cron_update_dirty_products_stock_redis',
+            raise_if_not_found=False,
+        )
+        if cron:
+            # Queued after the dirty flag's postcommit (same queue, ordered), so
+            # the flag exists in Redis before the cron wakes.
+            self.env.cr.postcommit.add(cron._trigger)
+
     def write(self, vals):
         res = super(StockQuant, self).write(vals)
         quantity_fields = {'quantity', 'reserved_quantity', 'inventory_quantity'}
         if quantity_fields.intersection(vals.keys()):
             self._create_stock_is_dirty_redis()
+            # A reservation (sale) is the overselling-critical event: run the
+            # sync now rather than on the next minute's tick.
+            if 'reserved_quantity' in vals:
+                self._trigger_dirty_stock_cron()
         return res
 
     @api.model_create_multi
