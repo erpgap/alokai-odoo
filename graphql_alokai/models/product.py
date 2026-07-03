@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import json
+import logging
 import itertools
 from odoo.fields import Domain
 from collections import defaultdict
@@ -11,6 +12,8 @@ from odoo import models, fields, api, _
 from odoo.tools.float_utils import float_round
 from odoo.exceptions import ValidationError
 from psycopg2.extras import execute_values
+
+_logger = logging.getLogger(__name__)
 
 
 class ProductTemplate(models.Model):
@@ -763,6 +766,8 @@ class ProductProduct(models.Model):
             return
 
         redis_client = self.env['website']._redis_connect()
+        if not redis_client:
+            return
         try:
             # Cap work per run; leftover keys roll to the next tick since we
             # only delete the keys we scanned. At current scale this never
@@ -770,15 +775,32 @@ class ProductProduct(models.Model):
             dirty_keys = list(itertools.islice(redis_client.scan_iter('stock:product-is-dirty-*'), 5000))
             if not dirty_keys:
                 return
+            if len(dirty_keys) >= 5000:
+                _logger.warning(
+                    "Alokai stock: dirty-key batch capped at 5000; the rest will "
+                    "sync on the next run.")
 
             # Skip None (key deleted concurrently) and dedupe: multiple keys
             # per product is now expected (uuid-suffixed flags).
             values = [redis_client.get(k) for k in dirty_keys]
             product_ids = list({int(v) for v in values if v is not None})
             if product_ids:
+                # The scan above can observe flags for changes that committed
+                # AFTER this cron's REPEATABLE READ snapshot began. Reset the
+                # snapshot before reading free_qty so every scanned flag's change
+                # is reflected; otherwise we could compute a stale value and then
+                # delete its flag, leaving Redis permanently out of sync until
+                # the next change to that product or the daily resync. Safe: the
+                # dirty cron is the single writer and nothing is written above.
+                self.env.cr.commit()
+                self.env.invalidate_all()
+
                 products = self.search([('id', 'in', product_ids)])
                 products._update_products_stock_redis(redis_client)
 
+            # Delete the scanned flags only after the update above succeeded: if
+            # it raised, we never get here, the flags survive and the products
+            # are retried on the next run.
             for dirty_key in dirty_keys:
                 redis_client.delete(dirty_key)
         finally:
@@ -829,6 +851,10 @@ class ProductProduct(models.Model):
                 free_qty = sum(product_tmpl.product_variant_ids.with_context(location=lot_stock_ids).mapped('free_qty'))
                 template_stock_values.append((product_tmpl.id, website.id, free_qty))
 
+        # Redis is the store the storefront actually reads for stock, so write it
+        # first: even if the (secondary) Postgres tables fail afterwards, Redis
+        # already reflects the sale. A Postgres failure raises, so the caller
+        # skips deleting the flags and the row is retried on the next run.
         pipe.execute()
 
         self.env['product.product.redis_stock'].bulk_update_redis_stock(product_stock_values)
