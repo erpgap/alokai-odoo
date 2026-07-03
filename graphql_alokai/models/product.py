@@ -66,7 +66,14 @@ class ProductTemplate(models.Model):
 
         # Filter with Category Slug
         if kwargs.get('category_slug', False):
-            domains.append([('public_categ_slug_ids.website_slug', '=', kwargs['category_slug'])])
+            # Resolve the slug against the current website first (same domain
+            # the category resolver uses): a category restricted to another
+            # website must not expose its products here. No match returns an
+            # empty product list, consistent with the category page itself.
+            category_domain = website.website_domain()
+            category_domain += [('website_slug', '=', kwargs['category_slug'])]
+            categories = env['product.public.category'].sudo().search(category_domain)
+            domains.append([('public_categ_slug_ids', 'in', categories.ids)])
 
         # Filter With Name
         if kwargs.get('name', False):
