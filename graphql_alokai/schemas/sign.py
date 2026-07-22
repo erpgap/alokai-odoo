@@ -82,11 +82,13 @@ class Login(graphene.Mutation):
 
             wishlist_items = env['product.wishlist'].sudo().search([
                 ('partner_id', '=', user.partner_id.id), ('website_id', '=', website.id)])
+            # Evaluate publishability once per distinct template (on the shared
+            # prefetched recordset) instead of re-sudoing and recomputing per
+            # wishlist item.
+            valid_templates = wishlist_items.product_id.product_tmpl_id.filtered(
+                lambda t: t.is_published and t._can_be_added_to_cart())
             wishlist_items = wishlist_items.filtered(
-                lambda wish:
-                wish.sudo().product_id.product_tmpl_id.is_published
-                and wish.sudo().product_id.product_tmpl_id._can_be_added_to_cart()
-            )
+                lambda wish: wish.product_id.product_tmpl_id in valid_templates)
 
             return LoginOutput(
                 user=user,

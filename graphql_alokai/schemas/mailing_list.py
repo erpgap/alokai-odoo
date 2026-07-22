@@ -213,11 +213,18 @@ class UserAddMultipleMailing(graphene.Mutation):
 
         mailing_contact = env['mailing.contact'].sudo().search([('email', '=', user.email)], limit=1)
 
+        # Load every requested mailing list once instead of one search per item.
+        lists_by_id = {
+            ml.id: ml
+            for ml in env['mailing.list'].sudo().browse(
+                [m['mailinglistId'] for m in mailings]).exists()
+        }
+
         for mailing in mailings:
             maillist_id = mailing['mailinglistId']
             optout = mailing['optout']
 
-            mailing_list = env['mailing.list'].sudo().search([('id', '=', maillist_id)], limit=1)
+            mailing_list = lists_by_id.get(maillist_id)
             if not mailing_list:
                 raise GraphQLError(_('Maillist does not exist.'))
 
