@@ -112,7 +112,6 @@ CATEGORY_FIELDS = f"""
     metaDescription metaImage breadcrumb
     parent {{ {CATEGORY_MIN} }}
     childs {{ {CATEGORY_MIN} }}
-    products {{ {PRODUCT_MIN} }}
 """
 
 PAYMENT_FIELDS = "id name amount paymentReference"
@@ -215,7 +214,6 @@ WEBSITE_MENU_FIELDS = f"""
 WEBSITE_PAGE_FIELDS = f"""
     id pageType name websiteUrl isPublished publishingDate content
     website {{ {WEBSITE_FIELDS} }}
-    products {{ {PRODUCT_MIN} }}
 """
 
 BLOG_TAG_FIELDS = "id name slug"
@@ -223,7 +221,7 @@ BLOG_POST_FIELDS = f"""
     id image imageFilename imageUrl name publishedDate content teaser slug
     jsonLd
     author {{ {PARTNER_MIN} }}
-    tagIds {{ {BLOG_TAG_FIELDS} }}
+    tags {{ {BLOG_TAG_FIELDS} }}
 """
 
 LEAD_FIELDS = "id name email phone company subject message"

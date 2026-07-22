@@ -375,7 +375,6 @@ class Category(OdooObjectType):
     parent = graphene.Field(lambda: Category)
     childs = graphene.List(graphene.NonNull(lambda: Category))
     slug = graphene.String()
-    products = graphene.List(graphene.NonNull(lambda: Product))
     json_ld = generic.GenericScalar()
     meta_title = graphene.String()
     meta_keyword = graphene.String()
@@ -400,9 +399,6 @@ class Category(OdooObjectType):
 
     def resolve_slug(self, info):
         return self.website_slug
-
-    def resolve_products(self, info):
-        return self.product_tmpl_ids or None
 
     def resolve_meta_title(self, info):
         return self.website_meta_title or None
@@ -1232,7 +1228,6 @@ class WebsitePage(OdooObjectType):
     publishing_date = graphene.String()
     website = graphene.Field(lambda: Website)
     content = graphene.String()
-    products = graphene.List(graphene.NonNull(lambda: Product))
 
     def resolve_page_type(self, info):
         return self.page_type or None
@@ -1245,9 +1240,6 @@ class WebsitePage(OdooObjectType):
 
     def resolve_website(self, info):
         return self.website_id or None
-
-    def resolve_products(self, info):
-        return self.product_tmpl_ids or None
 
 
 class BlogTag(OdooObjectType):
@@ -1269,7 +1261,7 @@ class BlogPost(OdooObjectType):
     author = graphene.Field(lambda: Partner)
     content = graphene.String()
     teaser = graphene.String()
-    tag_ids = graphene.List(graphene.NonNull(lambda: BlogTag))
+    tags = graphene.List(graphene.NonNull(lambda: BlogTag))
     slug = graphene.String()
     json_ld = generic.GenericScalar()
 
@@ -1289,6 +1281,9 @@ class BlogPost(OdooObjectType):
 
     def resolve_slug(self, info):
         return self.website_slug
+
+    def resolve_tags(self, info):
+        return self.tag_ids or None
 
     def resolve_author(self, info):
         return self.author_id

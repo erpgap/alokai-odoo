@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import graphene
+from odoo.exceptions import AccessError
 from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import (
@@ -7,7 +8,28 @@ from odoo.addons.graphql_alokai.schemas.objects import (
     BlogTag,
     SortEnum,
     get_document_with_check_access,
+    get_document_count_with_check_access,
 )
+
+
+def blog_tags_for_domain(env, domain):
+    """Distinct tags across every post matching ``domain`` (the full tag cloud).
+
+    Computed with a grouped query so we never materialise the whole post table
+    just to collect its tags. Access is checked the same way the count helper
+    does, so an unauthorised user gets an empty set rather than leaked tags.
+    """
+    BlogPost = env['blog.post']
+    try:
+        BlogPost.check_access('read')
+    except AccessError:
+        return env['blog.tag'].sudo().browse()
+    tags = env['blog.tag'].sudo()
+    for group in BlogPost.sudo()._read_group(domain, groupby=['tag_ids']):
+        tag = group[0]
+        if tag:
+            tags |= tag
+    return tags.sorted(key=lambda t: (t.name, t.id))
 
 
 class BlogTags(graphene.Interface):
@@ -64,13 +86,9 @@ class BlogPostQuery(graphene.ObjectType):
     @staticmethod
     def resolve_blog_tags(self, info):
         env = info.context['env']
-        BlogPost = env['blog.post']
-        blog_domain = BlogPost._graphql_get_search_domain({}, None)
-        blog_posts = get_document_with_check_access(BlogPost, blog_domain, limit=0)
-        blog_posts=blog_posts and blog_posts.sudo() or blog_posts
-        blog_tags = blog_posts.mapped('tag_ids').sorted(key=lambda b: (b.name, b.id))
-        total_count = len(blog_tags)
-        return BlogTagList(blog_tags=blog_tags, total_count=total_count)
+        blog_domain = env['blog.post']._graphql_get_search_domain({}, None)
+        blog_tags = blog_tags_for_domain(env, blog_domain)
+        return BlogTagList(blog_tags=blog_tags, total_count=len(blog_tags))
 
     @staticmethod
     def resolve_blog_post(self, info, id=None, slug=None):
@@ -96,17 +114,14 @@ class BlogPostQuery(graphene.ObjectType):
         sort_order = BlogPost._graphql_get_search_order(sort)
 
         # First offset is 0 but first page is 1
-        if current_page > 1:
-            offset = (current_page - 1) * page_size
-        else:
-            offset = 0
+        offset = (current_page - 1) * page_size if current_page > 1 else 0
 
-        BlogPost = env['blog.post']
-        blog_posts = get_document_with_check_access(BlogPost, domain, sort_order, limit=0)
-        blog_posts=blog_posts and blog_posts.sudo() or blog_posts
-        total_count = len(blog_posts)
-        blog_tags = blog_posts.mapped('tag_ids').sorted(key=lambda b: (b.name, b.id))
-        blog_posts = blog_posts[offset:offset + page_size]
+        # Fetch only the requested page; count and tag cloud are computed
+        # separately so we never load the whole post table into memory.
+        total_count = get_document_count_with_check_access(BlogPost, domain)
+        blog_posts = get_document_with_check_access(
+            BlogPost, domain, sort_order, limit=page_size, offset=offset)
+        blog_tags = blog_tags_for_domain(env, domain)
         return BlogPostList(blog_posts=blog_posts, blog_tags=blog_tags, total_count=total_count)
 
 query_registry.append(BlogPostQuery)
