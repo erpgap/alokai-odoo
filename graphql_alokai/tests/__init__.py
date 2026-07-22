@@ -12,3 +12,4 @@ from . import test_request_cache
 from . import test_blog
 from . import test_address
 from . import test_cart
+from . import test_website

@@ -166,6 +166,14 @@ class Website(models.Model):
         warning - that's the only case where it could otherwise silently
         serve the wrong store's data.
         """
+        # Resolution runs on every GraphQL request, so cache host -> id (see
+        # _alokai_website_id_by_host). Website.write()/create() clear the
+        # registry caches, so a Domain change invalidates this automatically.
+        return self.browse(self._alokai_website_id_by_host(host))
+
+    @tools.ormcache('host')
+    def _alokai_website_id_by_host(self, host):
+        """Cached host -> website id used by :meth:`_alokai_resolve_by_host`."""
         def _norm(value):
             value = (value or '').strip().lower()
             value = value.split('://', 1)[-1]   # drop scheme
@@ -177,7 +185,7 @@ class Website(models.Model):
         if target:
             for website in websites:
                 if _norm(website._alokai_domain()) == target:
-                    return website
+                    return website.id
 
         # Only warn when a host was provided but matched nothing.
         if target and len(websites) > 1:
@@ -187,7 +195,7 @@ class Website(models.Model):
                 "to route requests correctly.",
                 host, websites[:1].display_name,
             )
-        return websites[:1]
+        return websites[:1].id
 
     @api.model
     def _redis_enabled(self):
