@@ -80,6 +80,59 @@ def get_pricing_info(info, product):
     return cache[key]
 
 
+_REDIS_STOCK_TABLE = {
+    'product.template': 'product_template_redis_stock',
+    'product.product': 'product_product_redis_stock',
+}
+
+
+def redis_stock_qty(info, product):
+    """Return the (cached) Redis stock quantity for ``product``, scoped to the
+    current website.
+
+    The whole website's redis-stock table is read once per request (per model),
+    replacing a live ``free_qty`` aggregation run once per product. Consistent
+    with the ``has_stock`` field the storefront already reads.
+    """
+    if not product:
+        return 0.0
+    table = _REDIS_STOCK_TABLE.get(product._name)
+    if not table:
+        return 0.0
+    bucket = _cache(info).setdefault('redis_stock_qty', {})
+    if table not in bucket:
+        env = info.context['env']
+        website = current_website(info)
+        # ``table`` is a fixed value from the whitelist above, not user input.
+        env.cr.execute(
+            "SELECT product_id, quantity FROM {} WHERE website_id = %s".format(table),
+            (website.id,))
+        bucket[table] = dict(env.cr.fetchall())
+    return bucket[table].get(product.id, 0.0)
+
+
+def rating_stats(info, product):
+    """Return the (cached) ``(count, avg)`` customer-rating stats for a
+    product's template.
+
+    ``rating_avg`` is restricted to internal users, so it must be read sudo;
+    ``rating_count`` and ``rating_avg`` are computed together by Odoo. Read both
+    from one sudo recordset and cache per template, instead of reading the count
+    in the caller's environment and the average in a fresh sudo environment
+    (which computed the same stats twice and defeated prefetch batching).
+    """
+    if not product:
+        return (0, 0.0)
+    tmpl = product.product_tmpl_id if product._name == 'product.product' else product
+    bucket = _cache(info).setdefault('rating', {})
+    if tmpl.id not in bucket:
+        record = tmpl.sudo()
+        count = record.rating_count or 0
+        avg = round(record.rating_avg, 2) if count else 0.0
+        bucket[tmpl.id] = (count, avg)
+    return bucket[tmpl.id]
+
+
 def is_in_wishlist(info, product):
     """Whether ``product`` (a template or a variant) is in the current wishlist.
 

@@ -13,7 +13,8 @@ from odoo.http import request
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE
 from odoo.addons.graphql_alokai.graphql.registry import type_registry
 from odoo.addons.graphql_alokai.schemas.request_cache import (
-    current_website, first_variant_with_image, get_pricing_info, is_in_wishlist)
+    current_website, first_variant_with_image, get_pricing_info, is_in_wishlist,
+    rating_stats, redis_stock_qty)
 
 # --------------------- #
 #       ENUMS           #
@@ -580,15 +581,9 @@ class Product(OdooObjectType):
         return int(self.is_published)
 
     def resolve_status(self, info):
-        free_qty = 0
-        if self._name == 'product.template':
-            free_qty = sum(self.product_variant_ids.mapped('free_qty'))
-        else:
-            free_qty = self.free_qty
-        if free_qty > 0:
-            return 1
-        else:
-            return 0
+        # Serve the website-scoped, Redis-backed stock flag (same source as
+        # is_in_stock) instead of a live free_qty aggregation per product.
+        return 1 if self.has_stock else 0
 
     def resolve_sku(self, info):
         return self.default_code or None
@@ -665,10 +660,9 @@ class Product(OdooObjectType):
             return self.product_template_image_ids + self.product_variant_image_ids or None
 
     def resolve_qty(self, info):
-        if self._name == 'product.template':
-            return sum(self.product_variant_ids.mapped('free_qty'))
-        else:
-            return self.free_qty
+        # Website-scoped Redis stock quantity, read once per request, instead of
+        # a live free_qty aggregation per product.
+        return redis_stock_qty(info, self)
 
     def resolve_slug(self, info):
         return self.website_slug
@@ -833,15 +827,11 @@ class Product(OdooObjectType):
 
     def resolve_rating_count(self, info):
         """Return the number of customer reviews. Variants share their template's ratings."""
-        tmpl = self.product_tmpl_id if self._name == 'product.product' else self
-        return getattr(tmpl, 'rating_count', 0) or 0
+        return rating_stats(info, self)[0]
 
     def resolve_rating_avg(self, info):
         """Return the average customer rating (0-5). Variants share their template's ratings."""
-        tmpl = self.product_tmpl_id if self._name == 'product.product' else self
-        if not getattr(tmpl, 'rating_count', 0):
-            return 0.0
-        return round(tmpl.sudo().rating_avg, 2)
+        return rating_stats(info, self)[1]
 
 
 class Payment(OdooObjectType):

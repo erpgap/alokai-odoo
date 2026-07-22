@@ -18,10 +18,8 @@ from odoo.tests.common import TransactionCase, tagged
 from odoo.addons.website_sale.tests.common import MockRequest
 from odoo.addons.graphql_alokai.schemas import request_cache
 
-# A minimal valid 1x1 PNG (already base64-encoded), for a variant image.
-_ONE_PX_PNG = (
-    b'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhf'
-    b'DwAChwGA60e6kgAAAABJRU5ErkJggg==')
+# A minimal valid 1x1 GIF (base64), the image Odoo's own tests use.
+_ONE_PX_GIF = b'R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs='
 
 
 class _Info:
@@ -54,7 +52,27 @@ class TestRequestCache(TransactionCase):
             'name': 'RC Variant Image', 'list_price': 5.0,
             'is_published': True, 'sale_ok': True,
         })
-        cls.product_with_variant_image.product_variant_id.image_variant_1920 = _ONE_PX_PNG
+        cls.product_with_variant_image.product_variant_id.image_variant_1920 = _ONE_PX_GIF
+
+        # Redis stock rows are the storefront's stock source. Redis sync is off
+        # in tests, but the backing Postgres tables can be populated directly.
+        # cls.product has stock (5); cls.other has none.
+        env['product.template.redis_stock'].create({
+            'product_id': cls.product.id,
+            'website_id': cls.website.id, 'quantity': 5.0,
+        })
+        env['product.product.redis_stock'].create({
+            'product_id': cls.product.product_variant_id.id,
+            'website_id': cls.website.id, 'quantity': 5.0,
+        })
+
+        # A consumed customer rating on cls.product (value 4) -> count 1, avg 4.
+        env['rating.rating'].create({
+            'res_model_id': env['ir.model']._get('product.template').id,
+            'res_id': cls.product.id,
+            'rating': 4.0,
+            'consumed': True,
+        })
         # A wishlist entry owned by the current (internal) user's partner, so
         # product.wishlist.current() picks it up under MockRequest.
         cls.wishlist = env['product.wishlist'].create({
@@ -167,3 +185,41 @@ class TestRequestCache(TransactionCase):
         self.assertIs(first, again, "must reuse the cached result")
         self.assertEqual(self.env.cr.sql_log_count, q0,
                          "a cached image lookup must not hit the database")
+
+    # ------------------------------------------------------------------ #
+    #  Redis stock quantity                                              #
+    # ------------------------------------------------------------------ #
+    def test_redis_stock_qty_is_correct(self):
+        self.assertEqual(
+            request_cache.redis_stock_qty(self.info, self.product), 5.0,
+            "template stock must come from the redis-stock table")
+        self.assertEqual(
+            request_cache.redis_stock_qty(self.info, self.product.product_variant_id), 5.0,
+            "variant stock must come from the variant redis-stock table")
+        self.assertEqual(
+            request_cache.redis_stock_qty(self.info, self.other), 0.0,
+            "a product with no redis-stock row reads as 0")
+
+    def test_redis_stock_qty_loaded_once(self):
+        request_cache.redis_stock_qty(self.info, self.product)   # warm the cache
+        q0 = self.env.cr.sql_log_count
+        for _ in range(10):
+            request_cache.redis_stock_qty(self.info, self.product)
+            request_cache.redis_stock_qty(self.info, self.other)
+        self.assertEqual(self.env.cr.sql_log_count, q0,
+                         "redis stock must be read once per model per request")
+
+    # ------------------------------------------------------------------ #
+    #  Ratings                                                           #
+    # ------------------------------------------------------------------ #
+    def test_rating_stats_is_correct(self):
+        self.assertEqual(request_cache.rating_stats(self.info, self.product), (1, 4.0))
+        self.assertEqual(request_cache.rating_stats(self.info, self.other), (0, 0.0))
+
+    def test_rating_stats_computed_once(self):
+        first = request_cache.rating_stats(self.info, self.product)
+        q0 = self.env.cr.sql_log_count
+        again = request_cache.rating_stats(self.info, self.product)
+        self.assertIs(first, again, "count and avg must share one cached computation")
+        self.assertEqual(self.env.cr.sql_log_count, q0,
+                         "a cached rating lookup must not hit the database")
