@@ -5,15 +5,17 @@
 import logging
 from datetime import timedelta
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.addons.payment_stripe import const
 from odoo.addons.payment_stripe.controllers.main import StripeController
 
 _logger = logging.getLogger(__name__)
 
-# A storefront payment that is still unconfirmed in Odoo this long after it was
-# opened is re-checked against Stripe. Older than the upper bound is treated as
-# abandoned and no longer polled.
+# Poll window for the reconcile safety net. A payment younger than MIN is left
+# to the webhook/return (the normal, instant channels) and not polled yet; older
+# than MAX is no longer polled. This is our own window and is unrelated to Odoo
+# core's `_cron_post_process` (which only finalises already-known transactions
+# locally and never re-queries Stripe).
 _RECONCILE_MIN_AGE = timedelta(minutes=10)
 _RECONCILE_MAX_AGE = timedelta(days=2)
 _RECONCILED_INTENT_STATUSES = ('succeeded', 'requires_capture')
@@ -67,10 +69,21 @@ class PaymentTransaction(models.Model):
                         data = {'reference': tx.reference}
                         StripeController._include_payment_intent_in_payment_data(intent, data)
                         tx._process('stripe', data)
-                        _logger.info(
-                            "Alokai Stripe reconcile: recovered payment for tx %s.",
-                            tx.reference,
-                        )
+                        # Reaching here means the webhook AND the return redirect
+                        # both missed this payment. Surface the late recovery in
+                        # the log and on the order chatter for manual review.
+                        _logger.warning(
+                            "Alokai Stripe reconcile: recovered payment for tx %s "
+                            "that the webhook and return both missed; verify the "
+                            "order and invoice.", tx.reference)
+                        for order in tx.sale_order_ids:
+                            order.message_post(
+                                body=_(
+                                    "Alokai: this order's Stripe payment was confirmed "
+                                    "late by the reconciliation safety net (the webhook "
+                                    "and return redirect were both missed). Please verify "
+                                    "the order and its invoice."),
+                                message_type='comment', subtype_xmlid='mail.mt_note')
             except Exception:  # noqa: BLE001 - never let one tx block the rest
                 _logger.exception(
                     "Alokai Stripe reconcile failed for tx %s.", tx.reference)

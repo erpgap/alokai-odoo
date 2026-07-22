@@ -65,7 +65,11 @@ class TestAlokaiStripeReconcile(StripeCommon):
         processed = []
 
         def fake_send(tx_self, method, endpoint, **kwargs):
-            return intents[endpoint.split('/')[-1]]
+            # Unknown intents (e.g. unrelated transactions already in the DB the
+            # aged-out sweep may pick up) look like an abandoned payment, so the
+            # test only exercises the intents it explicitly sets up.
+            return intents.get(
+                endpoint.split('/')[-1], {'status': 'requires_payment_method'})
 
         def fake_process(tx_self, provider_code, payment_data):
             processed.append(
@@ -119,6 +123,19 @@ class TestAlokaiStripeReconcile(StripeCommon):
         processed = self._run_cron({'pi_DONE': {
             'id': 'pi_DONE', 'status': 'succeeded', 'payment_method': {'id': 'pm_1'}}})
         self.assertNotIn(tx.id, [p[0] for p in processed])
+
+    def test_recovery_posts_note_on_order(self):
+        """When the safety net recovers a payment the webhook/return missed, it
+        posts an internal note on the linked order for manual review."""
+        order = self.env['sale.order'].create({'partner_id': self.partner.id})
+        tx = self._make_tx('LATE', sale_order_ids=[(6, 0, order.ids)])
+        self._backdate(tx, minutes=30)
+        processed = self._run_cron({'pi_LATE': {
+            'id': 'pi_LATE', 'status': 'succeeded', 'payment_method': {'id': 'pm_1'}}})
+        self.assertIn((tx.id, 'succeeded'), processed)
+        self.assertTrue(
+            any('reconciliation safety net' in (m.body or '') for m in order.message_ids),
+            "a recovered payment must be flagged on the order chatter")
 
     # ------------------------------------------------------------------ #
     #  PaymentIntent payload                                              #
