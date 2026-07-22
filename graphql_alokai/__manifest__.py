@@ -22,8 +22,6 @@ Features
   "dirty" updates plus a daily full resync).
 * Redis slug sync providing a dynamic-route fallback for records created after
   a storefront build.
-* Build-time helper routes for the storefront (``/alokai/products``,
-  ``/alokai/categories``, ``/alokai/redirects``).
 * On-demand frontend cache invalidation when records change.
 * Merchandising: frequently-bought-together and product popularity.
 """,
