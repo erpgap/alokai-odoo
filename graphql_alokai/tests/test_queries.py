@@ -251,6 +251,7 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
     def test_payment_transaction(self):
         if not self.transaction:
             self.skipTest("No payment.transaction available")
+        self._login()
         query = """
             query ($id: Int) { paymentTransaction(id: $id) { %s } }
         """ % PAYMENT_TRANSACTION_FIELDS
@@ -259,6 +260,15 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
         self.assertEqual(tx['id'], self.transaction.id)
         self.assertEqual(tx['reference'], self.transaction.reference)
         self.assertAlmostEqual(tx['amount'], self.transaction.amount, places=2)
+
+    def test_payment_transaction_denied_to_public(self):
+        """A guest must NOT be able to read another customer's transaction by
+        id (no session/ownership) — guards against enumerating all payments."""
+        if not self.transaction:
+            self.skipTest("No payment.transaction available")
+        query = "query ($id: Int) { paymentTransaction(id: $id) { id reference } }"
+        body = self._gql(query, {'id': self.transaction.id}, expect_errors=True)
+        self.assertIsNone((body.get('data') or {}).get('paymentTransaction'))
 
     def test_payment_confirmation(self):
         # paymentConfirmation reads the order from the session; create a cart
@@ -287,6 +297,12 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
             } }
         """ % MAILING_CONTACT_FIELDS
         self._gql(query)
+
+    def test_mailing_contacts_empty_for_public(self):
+        """A guest (blank email) must not receive every email-less contact."""
+        query = "query { mailingContacts { mailingContacts { id } totalCount } }"
+        body = self._gql(query)
+        self.assertEqual(body['data']['mailingContacts']['totalCount'], 0)
 
     def test_mailing_list(self):
         query = "query ($id: Int) { mailingList(id: $id) { %s } }" % MAILING_LIST_FIELDS

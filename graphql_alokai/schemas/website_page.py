@@ -61,7 +61,10 @@ class WebsitePageQuery(graphene.ObjectType):
     def resolve_website_page(self, info, id=None, page_slug=None):
         env = info.context['env']
         WebsitePage = env['alokai.website.page'].sudo()
+        # Only expose published pages (mirrors the list query); otherwise a
+        # guest could read an unpublished/draft page by guessing its id.
         domain = env['website'].get_current_website().website_domain()
+        domain += [('is_published', '=', True)]
 
         if id:
             domain += [('id', '=', id)]

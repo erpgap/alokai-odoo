@@ -63,16 +63,27 @@ class PaymentQuery(graphene.ObjectType):
     @staticmethod
     def resolve_payment_transaction(self, info, id, reference):
         env = info.context["env"]
-        PaymentTransaction = env['payment.transaction']
+        PaymentTransaction = env['payment.transaction'].sudo()
 
         if id:
-            payment_transaction = PaymentTransaction.sudo().search([('id', '=', id)], limit=1)
+            payment_transaction = PaymentTransaction.search([('id', '=', id)], limit=1)
         elif reference:
-            payment_transaction = PaymentTransaction.sudo().search([('reference', '=', reference)], limit=1)
+            payment_transaction = PaymentTransaction.search([('reference', '=', reference)], limit=1)
         else:
-            payment_transaction = None
+            payment_transaction = PaymentTransaction.browse()
 
-        if not payment_transaction:
+        # A transaction carries payment + customer PII, so only expose it to its
+        # owner: the logged-in customer's own transaction, or the one monitored
+        # in the caller's session (guest checkout). Never by bare id/reference,
+        # which would let anyone walk the table and dump every customer's data.
+        session_tx_id = request.session.get('__payment_monitored_tx_id__')
+        partner = env.user.partner_id.commercial_partner_id
+        owned = bool(payment_transaction) and (
+            (session_tx_id and payment_transaction.id == session_tx_id)
+            or (not env.user._is_public()
+                and payment_transaction.partner_id.commercial_partner_id == partner)
+        )
+        if not owned:
             raise GraphQLError(_('Payment Transaction does not exist.'))
         return payment_transaction
 

@@ -65,10 +65,12 @@ class WishlistRemoveItem(graphene.Mutation):
     @staticmethod
     def mutate(self, info, wish_id):
         env = info.context['env']
-        Wishlist = env['product.wishlist'].sudo()
 
-        wish_id = Wishlist.search([('id', '=', wish_id)], limit=1)
-        wish_id.unlink()
+        # Only remove a row that belongs to the caller. current() is scoped to
+        # the partner/session, so a foreign wish_id resolves to nothing rather
+        # than letting anyone delete another customer's wishlist entry.
+        wish = env['product.wishlist'].current().filtered(lambda w: w.id == wish_id)
+        wish.sudo().unlink()
 
         wishlist_items = env['product.wishlist'].current()
 

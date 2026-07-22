@@ -304,6 +304,20 @@ class TestAlokaiMutations(AlokaiGraphQLCommon):
         remaining = self._gql(remove, {'wid': wish_id})['data']['wishlistRemoveItem']['wishlistItems']
         self.assertNotIn(variant_id, [w['product']['id'] for w in remaining if w['product']])
 
+    def test_wishlist_remove_foreign_denied(self):
+        """A guest must not be able to delete another customer's wishlist row
+        by guessing its id (the fixture wishlist belongs to the portal user)."""
+        victim_wish_id = self.wishlist.id
+        remove = """
+            mutation ($wid: Int!) {
+              wishlistRemoveItem(wishId: $wid) { totalCount }
+            }
+        """
+        self._gql(remove, {'wid': victim_wish_id})  # as an unauthenticated guest
+        self.assertTrue(
+            self.wishlist.exists(),
+            "a guest must not be able to delete another user's wishlist item")
+
     # ------------------------------------------------------------------ #
     #  cart                                                               #
     # ------------------------------------------------------------------ #

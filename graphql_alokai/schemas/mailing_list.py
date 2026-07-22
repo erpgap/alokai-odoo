@@ -66,6 +66,11 @@ class MailingContactQuery(graphene.ObjectType):
         env = info.context['env']
         order = get_search_order(sort)
 
+        # A blank email (the public/guest user) would match every contact that
+        # has no email, leaking their names; scope to a real logged-in email.
+        if env.user._is_public() or not env.user.email:
+            return MailingContactList(mailing_contacts=env['mailing.contact'].browse(), total_count=0)
+
         domain = [('email', '=', env.user.email)]
 
         if search:
@@ -186,6 +191,11 @@ class UserAddMultipleMailing(graphene.Mutation):
     def mutate(self, info, mailings):
         env = info.context['env']
         user = request.env.user
+
+        # A blank email (the public/guest user) would match/mutate a stranger's
+        # email-less contact; require a real logged-in email.
+        if user._is_public() or not user.email:
+            raise GraphQLError(_('You must be logged in to manage subscriptions.'))
 
         # Company name
         if user.partner_id.parent_id:
