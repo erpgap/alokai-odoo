@@ -18,6 +18,11 @@ from odoo.tests.common import TransactionCase, tagged
 from odoo.addons.website_sale.tests.common import MockRequest
 from odoo.addons.graphql_alokai.schemas import request_cache
 
+# A minimal valid 1x1 PNG (already base64-encoded), for a variant image.
+_ONE_PX_PNG = (
+    b'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhf'
+    b'DwAChwGA60e6kgAAAABJRU5ErkJggg==')
+
 
 class _Info:
     """Minimal stand-in for graphene's ResolveInfo: resolvers only touch
@@ -43,6 +48,13 @@ class TestRequestCache(TransactionCase):
             'name': 'RC Not Wishlisted', 'list_price': 7.0,
             'is_published': True, 'sale_ok': True,
         })
+        # A product whose default variant carries a variant-specific image, and
+        # one without (self.product), to exercise first_variant_with_image.
+        cls.product_with_variant_image = env['product.template'].create({
+            'name': 'RC Variant Image', 'list_price': 5.0,
+            'is_published': True, 'sale_ok': True,
+        })
+        cls.product_with_variant_image.product_variant_id.image_variant_1920 = _ONE_PX_PNG
         # A wishlist entry owned by the current (internal) user's partner, so
         # product.wishlist.current() picks it up under MockRequest.
         cls.wishlist = env['product.wishlist'].create({
@@ -60,7 +72,7 @@ class TestRequestCache(TransactionCase):
         self.info = _Info(self.env)
 
     # ------------------------------------------------------------------ #
-    #  Pricing                                                            #
+    #  Pricing                                                           #
     # ------------------------------------------------------------------ #
     def test_pricing_info_matches_direct_computation(self):
         """The cached price is exactly what Odoo computes directly."""
@@ -101,7 +113,7 @@ class TestRequestCache(TransactionCase):
         self.assertNotEqual(again.get('currency'), {'id': 1, 'name': 'X', 'symbol': 'X'})
 
     # ------------------------------------------------------------------ #
-    #  Wishlist                                                           #
+    #  Wishlist                                                          #
     # ------------------------------------------------------------------ #
     def test_wishlist_membership_is_correct(self):
         self.assertTrue(
@@ -123,3 +135,35 @@ class TestRequestCache(TransactionCase):
             request_cache.is_in_wishlist(self.info, self.other)
         self.assertEqual(self.env.cr.sql_log_count, q0,
                          "wishlist membership checks must not re-query")
+
+    # ------------------------------------------------------------------ #
+    #  Current website                                                   #
+    # ------------------------------------------------------------------ #
+    def test_current_website_is_correct_and_cached(self):
+        website = request_cache.current_website(self.info)
+        self.assertEqual(website, self.website)
+        q0 = self.env.cr.sql_log_count
+        again = request_cache.current_website(self.info)
+        self.assertIs(website, again, "the website must be the cached instance")
+        self.assertEqual(self.env.cr.sql_log_count, q0,
+                         "a cached website lookup must not hit the database")
+
+    # ------------------------------------------------------------------ #
+    #  First variant with image                                          #
+    # ------------------------------------------------------------------ #
+    def test_first_variant_with_image_is_correct(self):
+        self.assertEqual(
+            request_cache.first_variant_with_image(self.info, self.product_with_variant_image),
+            self.product_with_variant_image.product_variant_id,
+            "must return the variant that carries the image")
+        self.assertIsNone(
+            request_cache.first_variant_with_image(self.info, self.product),
+            "a product without a variant image must return None")
+
+    def test_first_variant_with_image_computed_once(self):
+        first = request_cache.first_variant_with_image(self.info, self.product_with_variant_image)
+        q0 = self.env.cr.sql_log_count
+        again = request_cache.first_variant_with_image(self.info, self.product_with_variant_image)
+        self.assertIs(first, again, "must reuse the cached result")
+        self.assertEqual(self.env.cr.sql_log_count, q0,
+                         "a cached image lookup must not hit the database")

@@ -22,6 +22,41 @@ def _cache(info):
     return info.context.setdefault(CACHE_KEY, {})
 
 
+def current_website(info):
+    """Return the current website, resolved once per request.
+
+    ``get_current_website()`` is called from several resolvers, some of which
+    run once per product in a listing, yet the answer is the same for the whole
+    request.
+    """
+    cache = _cache(info)
+    if 'website' not in cache:
+        cache['website'] = info.context['env']['website'].get_current_website()
+    return cache['website']
+
+
+def first_variant_with_image(info, product):
+    """Return (cached) the product's first variant carrying a variant-specific
+    image, or ``None`` — used by the image / imageUrl / thumbnail resolvers.
+
+    Those three sibling resolvers each ask the same question, so a product-grid
+    card would compute it three times per product; here it is computed once per
+    product per request.
+    """
+    if not product:
+        return None
+    cache = _cache(info).setdefault('first_variant_image', {})
+    key = (product._name, product.id)
+    if key not in cache:
+        variant = None
+        if product._name == 'product.template':
+            first = product.product_variant_ids[:1]
+            if first and first.image_variant_1920:
+                variant = first
+        cache[key] = variant
+    return cache[key]
+
+
 def get_pricing_info(info, product):
     """Return the (cached) pricelist/tax combination info for ``product``.
 
