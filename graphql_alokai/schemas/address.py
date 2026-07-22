@@ -231,15 +231,19 @@ class UpdateAddress(graphene.Mutation):
         if address.get('country_id'):
             values.update({'country_id': address['country_id']})
 
-        if order:
-            # Trigger the change of fiscal position when the shipping address is modified
-            order._compute_fiscal_position_id()
-
         if address.get('email'):
             values.update({'email': address['email']})
 
         if values:
             partner.write(values)
+
+        # Recompute the fiscal position (and therefore the taxes) only AFTER the
+        # new address is persisted -- computing it first derives it from the old
+        # address -- and only when a field that affects it changed on the order's
+        # shipping address.
+        fiscal_fields = {'country_id', 'state_id', 'zip'}
+        if order and partner == order.partner_shipping_id and fiscal_fields & values.keys():
+            order._compute_fiscal_position_id()
 
         return partner
 
