@@ -190,10 +190,8 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         })
     else:
         website = env['website'].get_current_website()
-        # TODO:
-        # Possible index to improve performance
-        # CREATE INDEX idx_redis_stock_website_quantity
-        # ON product_template_redis_stock (website_id, quantity, product_id);
+        # Backed by the (website_id, quantity, product_id) index created in
+        # product.redis_stock.init().
         env.cr.execute("""
             SELECT DISTINCT product_id
             FROM product_template_redis_stock

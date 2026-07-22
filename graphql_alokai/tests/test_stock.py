@@ -88,6 +88,21 @@ class TestAlokaiStockTrigger(TransactionCase):
         with patch.object(type(self.env['website']), '_redis_enabled', return_value=False):
             self.env.cr.postcommit.run()
 
+    def test_redis_stock_lookup_indexes_exist(self):
+        """The (website_id, quantity, product_id) index backing the in-stock
+        lookup must be created on both redis-stock tables (init hook)."""
+        self.env.cr.execute("""
+            SELECT indexname FROM pg_indexes
+            WHERE indexname IN (
+                'product_template_redis_stock_website_qty_idx',
+                'product_product_redis_stock_website_qty_idx')
+        """)
+        found = {row[0] for row in self.env.cr.fetchall()}
+        self.assertEqual(found, {
+            'product_template_redis_stock_website_qty_idx',
+            'product_product_redis_stock_website_qty_idx',
+        }, "both redis-stock lookup indexes must exist")
+
     def test_reservation_triggers_immediate_sync(self):
         """Writing reserved_quantity triggers the immediate cron path."""
         cls = type(self.env['stock.quant'])

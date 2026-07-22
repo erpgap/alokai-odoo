@@ -83,10 +83,8 @@ class ProductTemplate(models.Model):
 
         # Stock
         if kwargs.get('in_stock', False):
-            # TODO:
-            # Possible index to improve performance
-            # CREATE INDEX idx_redis_stock_website_quantity
-            # ON product_template_redis_stock (website_id, quantity, product_id);
+            # Backed by the (website_id, quantity, product_id) index created in
+            # product.redis_stock.init().
             self.env.cr.execute("""
                 SELECT DISTINCT product_id
                 FROM product_template_redis_stock
@@ -876,6 +874,21 @@ class ProductStockRedis(models.AbstractModel):
 
     website_id = fields.Many2one('website', 'Website', required=True)
     quantity = fields.Float('Quantity', digits='Product Unit of Measure', required=True)
+
+    def init(self):
+        super().init()
+        # Index the in-stock lookup (WHERE website_id = %s AND quantity > 0,
+        # returning product_id) run on every product listing. Created for each
+        # concrete table (template + variant) via the shared self._table; the
+        # abstract base has no table, so skip it.
+        if self._abstract:
+            return
+        self.env.cr.execute(
+            "CREATE INDEX IF NOT EXISTS %(name)s ON %(table)s "
+            "(website_id, quantity, product_id)" % {
+                'name': '%s_website_qty_idx' % self._table,
+                'table': self._table,
+            })
 
     @api.model
     def bulk_update_redis_stock(self, values):
