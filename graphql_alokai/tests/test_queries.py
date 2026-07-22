@@ -140,13 +140,20 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
             } }
         """ % ORDER_FIELDS
         body = self._gql(query)
-        self.assertGreaterEqual(body['data']['orders']['totalCount'], 1)
+        data = body['data']['orders']
+        self.assertGreaterEqual(data['totalCount'], 1)
+        self.assertIn(self.sale_order.id, [o['id'] for o in data['orders']],
+                      "the portal user's order must appear in their order list")
 
     def test_order(self):
         self._login()
         query = "query ($id: Int) { order(id: $id) { %s } }" % ORDER_FIELDS
         body = self._gql(query, {'id': self.sale_order.id})
-        self.assertEqual(body['data']['order']['id'], self.sale_order.id)
+        order = body['data']['order']
+        self.assertEqual(order['id'], self.sale_order.id)
+        self.assertEqual(order['name'], self.sale_order.name)
+        self.assertEqual(len(order['orderLines']), len(self.sale_order.order_line))
+        self.assertAlmostEqual(order['amountTotal'], self.sale_order.amount_total, places=2)
 
     def test_order_amounts_consistent(self):
         """amountTotal must equal untaxed + tax (arithmetic sanity)."""
@@ -180,7 +187,11 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
         self._login()
         query = "query ($id: Int) { invoice(id: $id) { %s } }" % INVOICE_FIELDS
         body = self._gql(query, {'id': self.invoice.id})
-        self.assertEqual(body['data']['invoice']['id'], self.invoice.id)
+        invoice = body['data']['invoice']
+        self.assertEqual(invoice['id'], self.invoice.id)
+        # state is returned as a display label ("Posted"); the invoice is posted.
+        self.assertEqual(invoice['state'].lower(), self.invoice.state)
+        self.assertAlmostEqual(invoice['amountTotal'], self.invoice.amount_total, places=2)
 
     # ---------------------- user / addresses ----------------------- #
     def test_partner(self):
@@ -192,7 +203,10 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
     def test_addresses(self):
         self._login()
         query = "query { addresses { %s } }" % PARTNER_FIELDS
-        self._gql(query)
+        body = self._gql(query)
+        ids = [a['id'] for a in body['data']['addresses']]
+        self.assertIn(self.shipping_address.id, ids, "delivery address must be listed")
+        self.assertIn(self.invoice_address.id, ids, "invoice address must be listed")
 
     def test_addresses_filtered(self):
         self._login()
@@ -206,7 +220,9 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
         query = """
             query { cart { order { %s } frequentlyBoughtTogether { id name } } }
         """ % ORDER_FIELDS
-        self._gql(query)
+        body = self._gql(query)
+        self.assertIsNone(body['data']['cart']['order'],
+                          "a session with no cart must resolve to a null order")
 
     def test_cart_with_items(self):
         self._add_to_cart()
@@ -214,7 +230,10 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
             query { cart { order { %s } frequentlyBoughtTogether { id name } } }
         """ % ORDER_FIELDS
         body = self._gql(query)
-        self.assertTrue(body['data']['cart']['order'])
+        order = body['data']['cart']['order']
+        self.assertTrue(order)
+        self.assertEqual(len(order['orderLines']), 1, "the added item is in the cart")
+        self.assertEqual(order['orderLines'][0]['quantity'], 1)
 
     # ---------------------- payment -------------------------------- #
     def test_payment_provider(self):
@@ -235,7 +254,11 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
         query = """
             query ($id: Int) { paymentTransaction(id: $id) { %s } }
         """ % PAYMENT_TRANSACTION_FIELDS
-        self._gql(query, {'id': self.transaction.id})
+        body = self._gql(query, {'id': self.transaction.id})
+        tx = body['data']['paymentTransaction']
+        self.assertEqual(tx['id'], self.transaction.id)
+        self.assertEqual(tx['reference'], self.transaction.reference)
+        self.assertAlmostEqual(tx['amount'], self.transaction.amount, places=2)
 
     def test_payment_confirmation(self):
         # paymentConfirmation reads the order from the session; create a cart
@@ -250,7 +273,10 @@ class TestAlokaiQueries(AlokaiGraphQLCommon):
         query = """
             query { wishlistItems { wishlistItems { %s } totalCount } }
         """ % WISHLIST_ITEM_FIELDS
-        self._gql(query)
+        body = self._gql(query)
+        data = body['data']['wishlistItems']
+        self.assertGreaterEqual(data['totalCount'], 1)
+        self.assertTrue(data['wishlistItems'], "the wishlisted item must be listed")
 
     # ---------------------- mailing -------------------------------- #
     def test_mailing_contacts(self):
