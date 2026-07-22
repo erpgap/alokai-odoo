@@ -12,6 +12,8 @@ from odoo.exceptions import AccessError
 from odoo.http import request
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE
 from odoo.addons.graphql_alokai.graphql.registry import type_registry
+from odoo.addons.graphql_alokai.schemas.request_cache import (
+    get_pricing_info, is_in_wishlist)
 
 # --------------------- #
 #       ENUMS           #
@@ -74,16 +76,6 @@ def get_document_count_with_check_access(model, domain):
     except AccessError:
         return 0
     return model.search_count(domain)
-
-
-def get_product_pricing_info(product):
-    if product and product._name == 'product.template':
-        return product and product._get_combination_info() or None
-    return product and product._get_combination_info_variant() or None
-
-
-def product_is_in_wishlist(env, product):
-    return product._is_in_wishlist()
 
 
 def get_image_filename(object, name='name'):
@@ -674,9 +666,7 @@ class Product(OdooObjectType):
 
     # TODO: check request object does not contain website
     def resolve_is_in_wishlist(self, info):
-        env = info.context["env"]
-        is_in_wishlist = product_is_in_wishlist(env, self)
-        return bool(is_in_wishlist)
+        return is_in_wishlist(info, self)
 
     def resolve_media_gallery(self, info):
         if self._name == 'product.template':
@@ -707,7 +697,8 @@ class Product(OdooObjectType):
 
     # Specific to use in Product Variant
     def resolve_combination_info_variant(self, info):
-        pricing_info = get_product_pricing_info(self)
+        # Copy the cached dict: this resolver rewrites keys for serialisation.
+        pricing_info = dict(get_pricing_info(info, self))
         if pricing_info.get('currency', False) and pricing_info['currency'].id:
             pricing_info['currency'] = {
                 'id': pricing_info['currency'].id,
@@ -754,15 +745,15 @@ class Product(OdooObjectType):
         return pricing_info or None
 
     def resolve_variant_price(self, info):
-        pricing_info = get_product_pricing_info(self)
+        pricing_info = get_pricing_info(info, self)
         return pricing_info['list_price'] or None
 
     def resolve_variant_price_after_discount(self, info):
-        pricing_info = get_product_pricing_info(self)
+        pricing_info = get_pricing_info(info, self)
         return pricing_info['price'] or None
 
     def resolve_variant_has_discounted_price(self, info):
-        pricing_info = get_product_pricing_info(self)
+        pricing_info = get_pricing_info(info, self)
         return pricing_info['has_discounted_price']
 
     def resolve_is_variant_possible(self, info):
@@ -782,7 +773,8 @@ class Product(OdooObjectType):
 
     # Specific to use in Product Template
     def resolve_combination_info(self, info):
-        pricing_info = get_product_pricing_info(self.product_variant_id)
+        # Copy the cached dict: this resolver rewrites keys for serialisation.
+        pricing_info = dict(get_pricing_info(info, self.product_variant_id))
         if pricing_info.get('currency', False) and pricing_info['currency'].id:
             pricing_info['currency'] = {
                 'id': pricing_info['currency'].id,

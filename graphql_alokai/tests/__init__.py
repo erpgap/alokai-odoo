@@ -8,3 +8,4 @@ from . import test_mutations
 from . import test_controllers
 from . import test_stock
 from . import test_product_list
+from . import test_request_cache
