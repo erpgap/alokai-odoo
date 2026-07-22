@@ -352,7 +352,10 @@ class TestAlokaiMutations(AlokaiGraphQLCommon):
               }
             }
         """
-        self._gql(mutation, {'id': self.carrier.id})
+        order = self._gql(mutation, {'id': self.carrier.id})['data']['setShippingMethod']['order']
+        # The chosen carrier is actually set on the order (not just "no error").
+        self.assertEqual(order['shippingMethod']['id'], self.carrier.id)
+        self.assertEqual(order['shippingMethod']['name'], self.carrier.name)
 
     def test_create_update_partner(self):
         mutation = """
@@ -362,7 +365,11 @@ class TestAlokaiMutations(AlokaiGraphQLCommon):
             }
         """ % PARTNER_FIELDS
         body = self._gql(mutation, {'name': 'Guest Buyer', 'email': 'guest@example.com'})
-        self.assertEqual(body['data']['createUpdatePartner']['name'], 'Guest Buyer')
+        partner = body['data']['createUpdatePartner']
+        # The mutation returns the created/updated partner with the given data.
+        self.assertEqual(partner['name'], 'Guest Buyer')
+        self.assertEqual(partner['email'], 'guest@example.com')
+        self.assertEqual(partner['phone'], '555-1234')
 
     # ------------------------------------------------------------------ #
     #  coupons / gift cards / payment                                     #
@@ -422,10 +429,11 @@ class TestAlokaiMutations(AlokaiGraphQLCommon):
         self.assertTrue(body['data']['applyGiftCard']['error'])
 
     def test_make_gift_card_payment(self):
-        # Cart has a priced product, so this returns done:false (no error).
+        # Cart has a priced product and no gift card applied, so payment is
+        # not completed: done must be False (not merely present).
         self._add_to_cart()
         body = self._gql("mutation { makeGiftCardPayment { done } }")
-        self.assertIn('done', body['data']['makeGiftCardPayment'])
+        self.assertFalse(body['data']['makeGiftCardPayment']['done'])
 
     # ------------------------------------------------------------------ #
     #  mailing                                                            #
