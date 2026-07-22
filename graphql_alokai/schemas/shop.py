@@ -122,12 +122,16 @@ class CartAddMultipleItems(graphene.Mutation):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website._get_and_cache_current_cart() or website._create_cart()
-        # Forcing the website_id to be passed to the Order
-        order.write({'website_id': website.id})
+        # Bind the cart to the current website (it usually already is).
+        if order.website_id != website:
+            order.website_id = website.id
+
+        # Add every line first, then run the cart-wide verification (delivery
+        # rate recompute, ...) once, instead of re-verifying on every product.
+        cart = order.with_context(skip_cart_verification=True)
         for product in products:
-            product_id = product['id']
-            quantity = product['quantity']
-            order._cart_add(product_id=product_id, quantity=quantity)
+            cart._cart_add(product_id=product['id'], quantity=product['quantity'])
+        order._verify_cart_after_update()
 
         fbt = order.\
             mapped('order_line').\
@@ -150,13 +154,16 @@ class CartUpdateMultipleItems(graphene.Mutation):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website._get_and_cache_current_cart() or website._create_cart()
+
+        # Clear any stale stock warnings on the affected lines in one write,
+        # then update each line, running the cart-wide verification once.
+        target_ids = {line['id'] for line in lines}
+        order.order_line.filtered(
+            lambda l: l.id in target_ids and l.shop_warning).shop_warning = ""
+        cart = order.with_context(skip_cart_verification=True)
         for line in lines:
-            line_id = line['id']
-            quantity = line['quantity']
-            line = order.order_line.filtered(lambda rec: rec.id == line_id)
-            # Reset Warning Stock Message always before a new update
-            line.shop_warning = ""
-            order._cart_update_line_quantity(line_id=line.id, quantity=quantity)
+            cart._cart_update_line_quantity(line_id=line['id'], quantity=line['quantity'])
+        order._verify_cart_after_update()
         return CartData(order=order)
 
 
@@ -171,9 +178,10 @@ class CartRemoveMultipleItems(graphene.Mutation):
         env = info.context["env"]
         website = env['website'].get_current_website()
         order = website._get_and_cache_current_cart() or website._create_cart()
-        for line_id in line_ids:
-            line = order.order_line.filtered(lambda rec: rec.id == line_id)
-            line.unlink()
+        # Remove all requested lines in a single unlink (one order recompute
+        # instead of one per line, and no O(n*m) per-line scan).
+        remove = set(line_ids)
+        order.order_line.filtered(lambda l: l.id in remove).unlink()
         return CartData(order=order)
 
 

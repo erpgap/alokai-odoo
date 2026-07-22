@@ -10,3 +10,5 @@ from . import test_stock
 from . import test_product_list
 from . import test_request_cache
 from . import test_blog
+from . import test_address
+from . import test_cart

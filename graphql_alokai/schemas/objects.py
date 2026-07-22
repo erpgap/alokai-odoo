@@ -237,8 +237,6 @@ class Partner(OdooObjectType):
     is_company = graphene.Boolean(required=True)
     company = graphene.Field(lambda: Partner)
     contacts = graphene.List(graphene.NonNull(lambda: Partner))
-    signup_token = graphene.String()
-    signup_valid = graphene.String()
     parent_id = graphene.Field(lambda: Partner)
     image = graphene.String()
     image_filename = graphene.String()
@@ -272,12 +270,6 @@ class Partner(OdooObjectType):
 
     def resolve_contacts(self, info):
         return self.child_ids or None
-
-    def resolve_signup_token(self, info):
-        return self._generate_signup_token()
-    
-    def resolve_signup_valid(self, info):
-        return not self.user_ids
 
     def resolve_parent_id(self, info):
         return self.parent_id or None

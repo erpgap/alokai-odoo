@@ -42,7 +42,7 @@ PARTNER_MIN = "id name email phone isCompany"
 
 PARTNER_FIELDS = f"""
     id name street street2 city zip email phone addressType isCompany
-    signupToken signupValid image imageFilename imageUrl vat isPublic
+    image imageFilename imageUrl vat isPublic
     companyName companyRegNo
     country {{ {COUNTRY_FIELDS} }}
     state {{ {STATE_FIELDS} }}
