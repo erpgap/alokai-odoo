@@ -269,6 +269,8 @@ class Partner(OdooObjectType):
 
     def resolve_current_pricelist(self, info):
         website = self.env['website'].get_current_website()
+        if not self.is_public_user and self.property_product_pricelist:
+            request.session['website_sale_current_pl'] = self.property_product_pricelist.id
         return website._get_current_pricelist()
 
     def resolve_is_public(self, info):
