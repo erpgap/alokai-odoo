@@ -15,7 +15,9 @@ from odoo.addons.graphql_alokai.graphql.registry import type_registry
 from odoo.addons.graphql_alokai.schemas.request_cache import (
     current_website, first_variant_with_image, get_pricing_info, is_in_wishlist,
     rating_stats, redis_stock_qty)
-
+from odoo.addons.website_sale.models.website import (
+    PRICELIST_SESSION_CACHE_KEY,
+)
 # --------------------- #
 #       ENUMS           #
 # --------------------- #
@@ -294,6 +296,8 @@ class Partner(OdooObjectType):
 
     def resolve_current_pricelist(self, info):
         website = current_website(info)
+        if not self.is_public_user and self.property_product_pricelist:
+            request.session[PRICELIST_SESSION_CACHE_KEY] = self.property_product_pricelist.id
         return website._get_and_cache_current_pricelist()
 
     def resolve_is_public(self, info):
