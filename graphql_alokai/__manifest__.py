@@ -58,6 +58,7 @@ Features
         'views/menu.xml'
     ],
     'demo': [
+        'data/demo_ir_config_parameter.xml',
         'data/demo_company.xml',
         'data/demo_product_attribute.xml',
         'data/demo_product_public_category.xml',

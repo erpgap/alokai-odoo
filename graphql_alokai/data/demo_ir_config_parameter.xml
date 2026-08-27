@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2024 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo noupdate="1">
+
+    <!-- The branded (fashion) placeholder only makes sense next to the fashion
+         demo catalogue, so it is opted into here instead of in the module data.
+         Real databases keep Odoo's own generic product placeholder unless they
+         set this parameter to a module path of their own. -->
+    <record id="alokai_product_placeholder_image" model="ir.config_parameter">
+        <field name="key">alokai_product_placeholder_image</field>
+        <field name="value">graphql_alokai/static/img/placeholder.png</field>
+    </record>
+
+</odoo>

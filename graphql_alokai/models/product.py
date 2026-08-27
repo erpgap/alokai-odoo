@@ -485,11 +485,17 @@ class ProductTemplate(models.Model):
             return [('id', 'not in', product_ids)]
 
     def _get_product_placeholder_filename(self):
-        """Override Odoo's default product placeholder with our branded one.
+        """Return the placeholder shown for products without an image.
+
+        Only used when the ``alokai_product_placeholder_image`` system parameter
+        points to a module path (our fashion demo data sets it to the branded
+        image); otherwise Odoo's own generic product placeholder is kept, so a
+        real customer catalogue never gets a themed image it did not ask for.
         product.product._get_product_placeholder_filename delegates to the
         template, so this single override covers both templates and variants.
         """
-        return 'graphql_alokai/static/img/placeholder.png'
+        placeholder = self.env['ir.config_parameter'].sudo().get_param('alokai_product_placeholder_image')
+        return placeholder or super()._get_product_placeholder_filename()
 
     def action_open_storefront(self):
         """Smart-button action: open this product on the configured website domain
