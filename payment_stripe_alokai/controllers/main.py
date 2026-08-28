@@ -69,4 +69,7 @@ class StripeControllerAlokai(StripeController):
             website.alokai_payment_success_return_url if success
             else website.alokai_payment_error_return_url
         ) or '/payment/status'
-        return request.redirect(target)
+        # local=False: these are absolute storefront (Alokai) URLs. request.redirect
+        # defaults to local=True, which strips scheme+netloc and would send the
+        # shopper to the same path on the Odoo domain instead.
+        return request.redirect(target, local=False)
