@@ -69,7 +69,12 @@ class ProductTemplate(models.Model):
 
         # Filter with Category ID
         if kwargs.get('category_id', False):
-            domains.append([('public_categ_ids', 'child_of', kwargs['category_id'])])
+            # Resolve the subtree once instead of leaving a 'child_of' in the
+            # domain: get_product_list evaluates this domain several times, and
+            # each evaluation would otherwise re-walk the category tree.
+            categories = env['product.public.category'].sudo().search(
+                [('id', 'child_of', kwargs['category_id'])])
+            domains.append([('public_categ_ids', 'in', categories.ids)])
 
         # Filter with Category Slug
         if kwargs.get('category_slug', False):
