@@ -42,6 +42,17 @@ class ProductTemplate(models.Model):
         return sorting
 
     @api.model
+    def _graphql_get_price_order_field(self, pricelist):
+        """Name of a stored column holding ``pricelist``'s price, or False.
+
+        When a column is available the product list can order and paginate by
+        price directly in SQL instead of pricing the whole matching catalogue
+        in Python. No such column is maintained here; overrides that cache
+        pricelist prices on the template can return one.
+        """
+        return False
+
+    @api.model
     def _graphql_get_search_domain(self, search, **kwargs):
         env = self.env
         website = env['website'].get_current_website()
