@@ -72,7 +72,9 @@ class Login(graphene.Mutation):
                 request.session['sale_order_id'] = None
                 order = website.sale_get_order()
                 if order:
-                    order._update_sale_order(website, user)
+                    # Claim the cart for the logged-in partner (recomputes
+                    # addresses, pricelist, fiscal position, taxes and prices).
+                    order._update_address(user.partner_id.id, ['partner_id'])
 
             # Subscribe Newsletter
             if website and website.alokai_mailing_list_id and subscribe_newsletter:
