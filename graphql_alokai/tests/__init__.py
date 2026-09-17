@@ -13,3 +13,4 @@ from . import test_blog
 from . import test_address
 from . import test_cart
 from . import test_website
+from . import test_website_company

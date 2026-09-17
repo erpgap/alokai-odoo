@@ -158,6 +158,13 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                 and request.env['res.users'].sudo().browse(request_uid).has_group('base.group_public'):
             request.update_env(user=website_uid)
 
+        # env.company otherwise falls back to the user's default company, and
+        # prices (taxes), stock and currency rates depend on it. Pin it to the
+        # website's company, as website's ir_http does for its own routes, and
+        # before the cart/fiscal position/pricelist below are resolved.
+        if website.company_id.id in request.env.user._get_company_ids():
+            request.update_context(allowed_company_ids=website.company_id.ids)
+
         # Initialize cart, fiscal position and pricelist for Odoo v19
         # compatibility (mirrors website_sale's ir_http request setup, which
         # the GraphQL routes bypass).
