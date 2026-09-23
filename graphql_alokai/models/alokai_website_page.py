@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 from .alokai_page_revision import validate_blocks_structure
 
@@ -75,3 +76,129 @@ class AlokaiWebsitePage(models.Model):
         # schema before it ever gets here - Odoo does not know what a block is.
         for page in self:
             validate_blocks_structure(page.draft_blocks)
+
+    # --- publishing ------------------------------------------------------
+
+    def save_draft(self, blocks, expected_write_date=None):
+        """Replace the whole draft document.
+
+        Whole-document drafts mean two editors on one page would silently
+        clobber each other, so the caller passes the write_date it last saw and
+        gets told to reload rather than losing someone's work.
+        """
+        self.ensure_one()
+
+        if expected_write_date and self.write_date:
+            seen = fields.Datetime.to_datetime(expected_write_date)
+            # Second precision: the client round-trips this through JSON, and
+            # microseconds do not survive the trip intact.
+            if seen and abs((self.write_date - seen).total_seconds()) >= 1:
+                raise UserError(_(
+                    'Someone else changed this page while you were editing. '
+                    'Reload to see their changes before saving yours.'
+                ))
+
+        self.write({'draft_blocks': blocks})
+        return self
+
+    def publish_draft(self, references=None):
+        """Copy the draft into a new revision and make it live.
+
+        `references` carries the product, category and attachment ids the
+        storefront found inside the blocks. Odoo cannot extract them itself -
+        the blocks column is opaque to it - so they are mirrored in by the only
+        layer that understands the content.
+        """
+        self.ensure_one()
+        return self._create_revision(
+            self.draft_blocks or [],
+            references=references,
+        )
+
+    def restore_revision(self, revision):
+        """Bring an older revision back by COPYING IT FORWARD.
+
+        Not by moving the live pointer backwards. History stays append-only, so
+        "what was live on 3 March?" always has an answer, and the live revision
+        is always the newest, which is why pruning needs no exception for it.
+
+        The draft is reset to match: in almost every case it holds exactly what
+        is being rolled back FROM, so leaving it would show "unpublished
+        changes" pointing at the rejected content. The caller warns first if
+        the draft differs.
+        """
+        self.ensure_one()
+
+        if revision.page_id != self:
+            raise UserError(_('That revision belongs to a different page.'))
+
+        # Read everything BEFORE creating the new revision: creating one
+        # prunes, and with a small revision limit the source revision is itself
+        # a candidate for deletion. Its content is not lost - that is the point
+        # of copying forward - but the record may be gone by the next line.
+        source_blocks = revision.blocks or []
+        source_number = revision.number
+        references = {
+            'product_tmpl_ids': revision.product_tmpl_ids.ids,
+            'category_ids': revision.category_ids.ids,
+            'attachment_ids': revision.attachment_ids.ids,
+        }
+
+        new_revision = self._create_revision(
+            source_blocks,
+            references=references,
+            restored_from=revision,
+            restored_from_number=source_number,
+        )
+        self.draft_blocks = source_blocks
+        return new_revision
+
+    def _create_revision(self, blocks, references=None, restored_from=None,
+                         restored_from_number=None):
+        self.ensure_one()
+        validate_blocks_structure(blocks)
+
+        Revision = self.env['alokai.page.revision']
+        last = Revision.search(
+            [('page_id', '=', self.id)], order='number desc', limit=1,
+        )
+
+        revision = Revision.create({
+            'page_id': self.id,
+            'number': (last.number if last else 0) + 1,
+            'blocks': blocks,
+            'restored_from_id': restored_from.id if restored_from else False,
+            'restored_from_number': restored_from_number or 0,
+        })
+
+        # Written immediately after create, in the same transaction - the only
+        # mutation a revision ever accepts.
+        refs = references or {}
+        revision.write({
+            'product_tmpl_ids': [(6, 0, refs.get('product_tmpl_ids') or [])],
+            'category_ids': [(6, 0, refs.get('category_ids') or [])],
+            'attachment_ids': [(6, 0, refs.get('attachment_ids') or [])],
+        })
+
+        self.write({
+            'live_revision_id': revision.id,
+            'is_published': True,
+        })
+
+        # Pruning runs after the live pointer moves, so the revision being
+        # kept is never a candidate for deletion.
+        Revision._prune(self)
+        return revision
+
+    def discard_draft(self):
+        """Reset the draft to whatever is live. The merchant's undo-everything."""
+        self.ensure_one()
+        self.draft_blocks = (
+            self.live_revision_id.blocks if self.live_revision_id else []
+        )
+        return self
+
+    def unpublish_page(self):
+        self.ensure_one()
+        self.is_published = False
+        return self

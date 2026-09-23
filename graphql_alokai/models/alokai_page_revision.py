@@ -97,7 +97,15 @@ class AlokaiPageRevision(models.Model):
         string='Restored From',
         readonly=True,
         ondelete='set null',
-        help='Set when this revision was created by restoring an older one.',
+        help='Set when this revision was created by restoring an older one. '
+             'Goes null once the source revision is pruned.',
+    )
+    # The durable half of the audit trail. The m2o above is convenient but
+    # fragile: restoring an old revision can itself prune the source, and a
+    # merchant asking "where did this come from?" deserves an answer after
+    # that. An integer survives.
+    restored_from_number = fields.Integer(
+        string='Restored From Revision', readonly=True,
     )
 
     # Mirrored by the storefront on publish. `blocks` is opaque to Odoo, so
