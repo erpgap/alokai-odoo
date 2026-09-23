@@ -28,7 +28,10 @@ def validate_blocks_structure(blocks):
 
     Deliberately not a schema check: see the module docstring above.
     """
-    if blocks is None:
+    # Odoo's Json field reads back False for an empty value, not None, so
+    # check falsiness rather than identity. An empty page is valid - a merchant
+    # who deletes every block has an empty page, not a broken one.
+    if not blocks:
         return
 
     if not isinstance(blocks, list):

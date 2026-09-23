@@ -11,6 +11,9 @@
     <record id="group_cms_editor" model="res.groups">
         <field name="name">CMS Editor</field>
         <field name="privilege_id" ref="website.res_groups_privilege_website"/>
+        <!-- A fresh install needs at least one working editor, matching how
+             website grants its own designer group. -->
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="comment">Can create, edit and publish storefront content pages.</field>
     </record>

@@ -1224,6 +1224,14 @@ class WebsitePage(OdooObjectType):
     publishing_date = graphene.String()
     website = graphene.Field(lambda: Website)
     content = graphene.String()
+    # Published CMS content. Empty for pages that predate the CMS, which still
+    # carry their copy in `content` above.
+    blocks = generic.GenericScalar()
+
+    def resolve_blocks(self, info):
+        if not self.live_revision_id:
+            return []
+        return self.live_revision_id.blocks or []
 
     def resolve_page_type(self, info):
         return self.page_type or None
