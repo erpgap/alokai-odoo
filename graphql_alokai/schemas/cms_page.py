@@ -105,6 +105,19 @@ class CmsPage(graphene.ObjectType):
         return (self.draft_blocks or []) != live
 
 
+class CmsLocale(graphene.ObjectType):
+    code = graphene.String()
+    label = graphene.String()
+    is_default = graphene.Boolean()
+
+
+class CmsRefOption(graphene.ObjectType):
+    """A product or category a merchant can pick in the inspector."""
+    id = graphene.Int()
+    name = graphene.String()
+    image_url = graphene.String()
+
+
 class CmsPageList(graphene.ObjectType):
     pages = graphene.List(CmsPage)
     total_count = graphene.Int()
@@ -135,6 +148,31 @@ class CmsQuery(graphene.ObjectType):
         page_id=graphene.Int(required=True),
         description='Revision history. Requires the CMS Editor group.',
     )
+    cms_products = graphene.List(
+        CmsRefOption,
+        search=graphene.String(default_value=''),
+        ids=graphene.List(graphene.Int),
+        limit=graphene.Int(default_value=20),
+        description='Product picker options. This is the capability a separate '
+                    'headless CMS could not provide without an id-sync job.',
+    )
+    cms_categories = graphene.List(
+        CmsRefOption,
+        search=graphene.String(default_value=''),
+        limit=graphene.Int(default_value=50),
+    )
+    cms_locales = graphene.List(
+        CmsLocale,
+        description='Content languages, from the websites active languages. '
+                    'Not the same list as the storefront UI translations - a '
+                    'merchant may sell in more languages than the interface '
+                    'has been translated into.',
+    )
+    cms_can_edit = graphene.Boolean(
+        description='Whether the current session may edit content. Asked of '
+                    'Odoo rather than inferred by the client - the storefront '
+                    'never decides this for itself.',
+    )
 
     @staticmethod
     def resolve_cms_page(self, info, slug=None, id=None):
@@ -154,6 +192,66 @@ class CmsQuery(graphene.ObjectType):
             return None
 
         return Page.search(domain, limit=1) or None
+
+    @staticmethod
+    def resolve_cms_products(self, info, search='', ids=None, limit=20):
+        env = info.context['env']
+        _check_editor(env)
+
+        domain = [('is_published', '=', True)]
+        # Resolving ids is how the inspector shows what is already selected,
+        # which must work whether or not the product matches the search box.
+        if ids:
+            domain = [('id', 'in', ids)]
+        elif search:
+            domain += [('name', 'ilike', search)]
+
+        products = env['product.template'].sudo().search(domain, limit=limit)
+        return [
+            CmsRefOption(
+                id=p.id,
+                name=p.name,
+                image_url='/web/image/product.template/%s/image_256' % p.id,
+            )
+            for p in products
+        ]
+
+    @staticmethod
+    def resolve_cms_categories(self, info, search='', limit=50):
+        env = info.context['env']
+        _check_editor(env)
+
+        domain = [('name', 'ilike', search)] if search else []
+        categories = env['product.public.category'].sudo().search(domain, limit=limit)
+        return [CmsRefOption(id=c.id, name=c.display_name) for c in categories]
+
+    @staticmethod
+    def resolve_cms_locales(self, info):
+        env = info.context['env']
+        website = env['website'].get_current_website()
+
+        languages = website.language_ids or env['res.lang'].sudo().search(
+            [('active', '=', True)]
+        )
+        default = website.default_lang_id or languages[:1]
+
+        return [
+            CmsLocale(
+                code=lang.code,
+                label=lang.name,
+                is_default=lang.id == default.id,
+            )
+            for lang in languages
+        ]
+
+    @staticmethod
+    def resolve_cms_can_edit(self, info):
+        env = info.context['env']
+        return bool(
+            env.user
+            and not env.user._is_public()
+            and env.user.has_group(CMS_EDITOR_GROUP)
+        )
 
     @staticmethod
     def resolve_cms_pages(self, info):
@@ -378,4 +476,6 @@ class CmsMutation(graphene.ObjectType):
 
 query_registry.append(CmsQuery)
 mutation_registry.append(CmsMutation)
-type_registry.extend([PageRevision, CmsPage, CmsPageList])
+type_registry.extend([
+    PageRevision, CmsPage, CmsPageList, CmsLocale, CmsRefOption,
+])

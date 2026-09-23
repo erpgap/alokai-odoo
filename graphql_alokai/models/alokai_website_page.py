@@ -11,6 +11,10 @@ class AlokaiWebsitePage(models.Model):
     _inherit = [
         'website.published.multi.mixin',
         'website.searchable.mixin',
+        # Gives the page website_meta_title / website_meta_description, which
+        # the CMS render target emits. Odoo's own SEO fields rather than our
+        # own, so they behave like every other page's in the backend.
+        'website.seo.metadata',
     ]
     _description = 'Alokai Website Page'
     _order = 'website_id'
