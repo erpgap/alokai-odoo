@@ -20,6 +20,30 @@ class ProductTemplate(models.Model):
     _name = 'product.template'
     _inherit = ['product.template', 'website.slug.redis.mixin']
 
+    def _invalidate_cms_pages(self):
+        """Refresh the CMS pages that feature these products.
+
+        This is the reverse lookup the mirrored product_tmpl_ids on each
+        revision exists for. It filters to each page's LIVE revision: a page
+        whose OLD revision mentioned a product is showing something else now,
+        and invalidating it would refresh a page based on content nobody can
+        see.
+
+        Without this, a price or name change leaves featured-product blocks
+        stale until their TTL expires.
+        """
+        if not self:
+            return
+
+        pages = self.env['alokai.website.page'].sudo().search([
+            ('is_published', '=', True),
+            ('live_revision_id.product_tmpl_ids', 'in', self.ids),
+        ])
+        if pages:
+            self.env['invalidate.cache'].create_invalidate_cache(
+                'alokai.website.page', pages.ids,
+            )
+
     @api.model
     def _graphql_get_search_order(self, sort=None):
         sorting = ''
@@ -526,11 +550,13 @@ class ProductTemplate(models.Model):
 
         res = super(ProductTemplate, self).write(vals)
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
+        self._invalidate_cms_pages()
 
         return res
 
     def unlink(self):
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
+        self._invalidate_cms_pages()
         return super(ProductTemplate, self).unlink()
 
     def _get_combination_info(self, combination=False, product_id=False, add_qty=1, parent_combination=False,

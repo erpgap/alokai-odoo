@@ -232,3 +232,85 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
                     pass
 
         return request.redirect('/shop/checkout')
+
+class AlokaiCmsMedia(http.Controller):
+    """Image uploads for the CMS studio.
+
+    A multipart endpoint rather than a GraphQL mutation: GraphQL cannot carry
+    a file, and base64 in a JSON body would inflate every upload by a third.
+
+    Images become ir.attachment records, which is what makes them part of the
+    merchant's one media library - with ACLs, backups and reuse outside the
+    CMS - rather than files on a storefront disk nobody backs up.
+    """
+
+    # An allowlist, not a denylist. SVG is deliberately absent: it can carry
+    # <script>, which makes an uploaded SVG stored XSS on the storefront.
+    ALLOWED_TYPES = {
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp',
+        'image/avif': 'avif',
+        'image/gif': 'gif',
+    }
+    MAX_BYTES = 8 * 1024 * 1024
+
+    def _check_editor(self):
+        if not request.env.user.has_group('graphql_alokai.group_cms_editor'):
+            raise Forbidden('You do not have permission to upload content images.')
+
+    @http.route('/alokai/cms/upload', type='http', auth='user', csrf=False, methods=['POST'])
+    def cms_upload(self, **kwargs):
+        self._check_editor()
+
+        upload = request.httprequest.files.get('file')
+        if not upload:
+            return request.make_json_response({'error': 'No file was uploaded.'}, status=400)
+
+        extension = self.ALLOWED_TYPES.get(upload.mimetype)
+        if not extension:
+            return request.make_json_response(
+                {'error': 'Images only - JPG, PNG, WebP, AVIF or GIF.'}, status=415)
+
+        data = upload.read()
+        if len(data) > self.MAX_BYTES:
+            return request.make_json_response(
+                {'error': 'Images must be under 8 MB.'}, status=413)
+
+        # The client filename is kept only as a readable label. The extension
+        # comes from the sniffed mimetype, so a crafted name cannot control
+        # what the file is served as.
+        stem = os.path.splitext(upload.filename or 'image')[0][:60] or 'image'
+
+        attachment = request.env['ir.attachment'].create({
+            'name': '%s.%s' % (stem, extension),
+            'raw': data,
+            'mimetype': upload.mimetype,
+            'res_model': 'alokai.website.page',
+            'public': True,
+        })
+
+        return request.make_json_response({
+            'id': attachment.id,
+            'name': attachment.name,
+            'size': len(data),
+            'url': '/web/image/%s' % attachment.id,
+        })
+
+    @http.route('/alokai/cms/media', type='http', auth='user', csrf=False, methods=['GET'])
+    def cms_media(self, limit=120, **kwargs):
+        """The media library listing."""
+        self._check_editor()
+
+        attachments = request.env['ir.attachment'].search([
+            ('res_model', '=', 'alokai.website.page'),
+            ('mimetype', 'in', list(self.ALLOWED_TYPES)),
+        ], order='create_date desc', limit=int(limit))
+
+        return request.make_json_response([{
+            'id': a.id,
+            'name': a.name,
+            'size': a.file_size,
+            'uploadedAt': a.create_date.isoformat() if a.create_date else None,
+            'url': '/web/image/%s' % a.id,
+        } for a in attachments])
