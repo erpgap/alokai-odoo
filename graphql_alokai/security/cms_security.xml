@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!--
+        Editors are internal users, not portal users: they edit the storefront,
+        they are not customers of it. Membership is the ONLY thing that grants
+        write access to CMS content - every write resolver re-checks it
+        server-side, and the storefront's cmsCanEdit flag is a UI affordance
+        that is never trusted for authorisation.
+    -->
+    <record id="group_cms_editor" model="res.groups">
+        <field name="name">CMS Editor</field>
+        <field name="privilege_id" ref="website.res_groups_privilege_website"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Can create, edit and publish storefront content pages.</field>
+    </record>
+
+    <!--
+        Multi-website scoping. Without these, an editor on one website could
+        rewrite another's pages - which matters because this ships to merchants
+        who may run several storefronts from one database.
+
+        A page with no website is shared, so it stays visible to everyone.
+    -->
+    <record id="alokai_website_page_cms_rule" model="ir.rule">
+        <field name="name">CMS: pages scoped to the allowed websites</field>
+        <field name="model_id" ref="model_alokai_website_page"/>
+        <field name="domain_force">
+            ['|', ('website_id', '=', False), ('website_id.company_id', 'in', company_ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('group_cms_editor'))]"/>
+    </record>
+
+    <record id="alokai_page_revision_cms_rule" model="ir.rule">
+        <field name="name">CMS: revisions follow their page</field>
+        <field name="model_id" ref="model_alokai_page_revision"/>
+        <field name="domain_force">
+            ['|', ('page_id.website_id', '=', False), ('page_id.website_id.company_id', 'in', company_ids)]
+        </field>
+        <field name="groups" eval="[(4, ref('group_cms_editor'))]"/>
+    </record>
+
+</odoo>

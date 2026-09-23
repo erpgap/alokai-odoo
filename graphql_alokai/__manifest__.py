@@ -4,7 +4,7 @@
 
 {
     'name': 'Alokai',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'GraphQL API connecting Odoo to the Alokai (Vue Storefront) headless frontend',
     'description': """
 Alokai
@@ -45,6 +45,7 @@ Features
         'website_blog'
     ],
     'data': [
+        'security/cms_security.xml',
         'security/ir.model.access.csv',
         'data/mail_template.xml',
         'data/website_data.xml',
