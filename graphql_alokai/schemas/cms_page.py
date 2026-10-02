@@ -75,6 +75,10 @@ class CmsPage(graphene.ObjectType):
     blocks = generic.GenericScalar()
     draft_blocks = generic.GenericScalar()
     revision_count = graphene.Int()
+    block_count = graphene.Int(
+        description='How many blocks the draft holds. A count rather than the '
+                    'blocks themselves, so the page list stays small.',
+    )
     live_revision = graphene.Int()
     updated_at = graphene.String()
     has_unpublished_changes = graphene.Boolean()
@@ -93,6 +97,9 @@ class CmsPage(graphene.ObjectType):
     def resolve_draft_blocks(self, info):
         _check_editor(info.context['env'])
         return self.draft_blocks or []
+
+    def resolve_block_count(self, info):
+        return len(self.draft_blocks or [])
 
     def resolve_live_revision(self, info):
         return self.live_revision_id.number if self.live_revision_id else None

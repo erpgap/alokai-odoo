@@ -637,6 +637,61 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
 
         self.assertEqual([p['id'] for p in products], [product.id])
 
+    def test_page_list_reports_real_block_counts(self):
+        """Regression: the list showed "0 blocks" for every page.
+
+        The list query deliberately does not fetch block bodies - that is what
+        keeps it small - so the storefront was deriving the count from data it
+        had never asked for and reporting every page as empty. The count comes
+        from the backend, which can see them.
+        """
+        self.authenticate(self.editor.login, self.editor_password)
+
+        page = self.env['alokai.website.page'].create({
+            'name': 'Counted', 'url': '/counted'})
+        page.draft_blocks = [block('one'), block('two'), block('three')]
+
+        pages = self._gql(
+            '{ cmsPages { pages { url blockCount hasUnpublishedChanges } } }'
+        )['data']['cmsPages']['pages']
+
+        row = next(p for p in pages if p['url'] == '/counted')
+        self.assertEqual(row['blockCount'], 3)
+        # Never published, so the draft differs from (empty) live content.
+        self.assertTrue(row['hasUnpublishedChanges'])
+
+    def test_unpublished_changes_is_reported_on_the_list(self):
+        self.authenticate(self.editor.login, self.editor_password)
+
+        page = self.env['alokai.website.page'].create({
+            'name': 'Synced', 'url': '/synced'})
+        page.draft_blocks = [block('live copy')]
+        page.publish_draft()
+
+        pages = self._gql(
+            '{ cmsPages { pages { url hasUnpublishedChanges blockCount } } }'
+        )['data']['cmsPages']['pages']
+        row = next(p for p in pages if p['url'] == '/synced')
+        self.assertFalse(row['hasUnpublishedChanges'])
+        self.assertEqual(row['blockCount'], 1)
+
+        page.draft_blocks = [block('edited')]
+        pages = self._gql(
+            '{ cmsPages { pages { url hasUnpublishedChanges } } }'
+        )['data']['cmsPages']['pages']
+        row = next(p for p in pages if p['url'] == '/synced')
+        self.assertTrue(row['hasUnpublishedChanges'])
+
+    def test_block_count_is_zero_for_an_empty_page(self):
+        self.authenticate(self.editor.login, self.editor_password)
+        self.env['alokai.website.page'].create({'name': 'Blank', 'url': '/blank'})
+
+        pages = self._gql(
+            '{ cmsPages { pages { url blockCount } } }'
+        )['data']['cmsPages']['pages']
+        row = next(p for p in pages if p['url'] == '/blank')
+        self.assertEqual(row['blockCount'], 0)
+
     def test_locales_come_from_odoo(self):
         body = self._gql('{ cmsLocales { code label isDefault } }')
         locales = body['data']['cmsLocales']
