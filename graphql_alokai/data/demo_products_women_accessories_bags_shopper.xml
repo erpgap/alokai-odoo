@@ -7,8 +7,8 @@
     <record id="women_accessories_bags_shopper_template_1" model="product.template">
         <field name="name">Tote Shopper</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">92.99</field>
+        <field name="standard_price">46.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -27,8 +27,8 @@
     <record id="women_accessories_bags_shopper_template_2" model="product.template">
         <field name="name">Canvas Shopper</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">100.5</field>
+        <field name="standard_price">50.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -47,8 +47,8 @@
     <record id="women_accessories_bags_shopper_template_3" model="product.template">
         <field name="name">Leather Tote</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">97.0</field>
+        <field name="standard_price">48.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -67,8 +67,8 @@
     <record id="women_accessories_bags_shopper_template_4" model="product.template">
         <field name="name">Reversible Tote</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">88.99</field>
+        <field name="standard_price">44.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -87,8 +87,8 @@
     <record id="women_accessories_bags_shopper_template_5" model="product.template">
         <field name="name">Drawstring Tote</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">90.5</field>
+        <field name="standard_price">45.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -122,8 +122,8 @@
     <record id="women_accessories_bags_shopper_template_7" model="product.template">
         <field name="name">Eco Cotton Tote</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">98.0</field>
+        <field name="standard_price">49.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -137,8 +137,8 @@
     <record id="women_accessories_bags_shopper_template_8" model="product.template">
         <field name="name">Slouchy Premium Tote</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">103.99</field>
+        <field name="standard_price">51.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

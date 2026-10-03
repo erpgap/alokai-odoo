@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 from .alokai_page_revision import validate_blocks_structure
 
@@ -44,6 +44,31 @@ class AlokaiWebsitePage(models.Model):
     # `product_tmpl_ids` is likewise superseded by the mirrored references on
     # each revision.
 
+    # --- what this record is ---------------------------------------------
+    # A `page` owns a url and everything on it. A `region` is a named slot the
+    # storefront places inside a page it owns - under the product listing, for
+    # instance - so a merchant can add content to pages whose structure is
+    # full of business logic they must not be able to rearrange.
+    #
+    # Both share this model so drafts, revisions, publishing, validation and
+    # the whole editor work for them without a second content pipeline.
+    kind = fields.Selection(
+        selection=[('page', 'Page'), ('region', 'Region')],
+        string='Kind', default='page', required=True, index=True,
+    )
+    region_key = fields.Char(
+        string='Region Key', index=True,
+        help='Which slot in the storefront this content fills, for example '
+             'category-after. Set by the storefront, not by the merchant.',
+    )
+
+    is_system = fields.Boolean(
+        string='System Page',
+        default=False,
+        help='A page the storefront owns, such as the homepage. Its content '
+             'is editable but it cannot be deleted and its address is fixed.',
+    )
+
     draft_blocks = fields.Json(
         string='Draft Content',
         help='What the editor is working on. Never served to visitors.',
@@ -73,6 +98,47 @@ class AlokaiWebsitePage(models.Model):
     def _compute_revision_count(self):
         for page in self:
             page.revision_count = len(page.revision_ids)
+
+    _region_key_uniq = models.Constraint(
+        'UNIQUE (region_key, website_id)',
+        'A website can only have one block list per region.',
+    )
+
+    @api.constrains('kind', 'url', 'region_key')
+    def _check_kind(self):
+        for page in self:
+            if page.kind == 'page' and not page.url:
+                raise ValidationError(_('A page needs an address.'))
+            if page.kind == 'region' and not page.region_key:
+                raise ValidationError(_('A region needs a key.'))
+
+    @api.model
+    def seed_region(self, region_key, name):
+        """Make sure a region exists so the merchant can find and fill it.
+
+        Regions are declared by the storefront, not created by merchants -
+        there is nowhere to put content that the storefront has not placed a
+        slot for, which is the guarantee that page structure stays in code.
+
+        Idempotent, and deliberately starts empty: an unfilled region renders
+        nothing, so a fresh install looks exactly as it does today.
+        """
+        website = self.env['website'].get_current_website()
+        existing = self.search([
+            ('region_key', '=', region_key),
+            ('website_id', 'in', (False, website.id)),
+        ], limit=1)
+        if existing:
+            return existing
+
+        return self.create({
+            'name': name,
+            'kind': 'region',
+            'region_key': region_key,
+            'website_id': website.id,
+            'is_system': True,
+            'draft_blocks': [],
+        })
 
     @api.constrains('draft_blocks')
     def _check_draft_blocks(self):
@@ -207,6 +273,51 @@ class AlokaiWebsitePage(models.Model):
         self.is_published = False
         return self
 
+    # --- system pages -----------------------------------------------------
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_system(self):
+        """The homepage is a route the storefront owns.
+
+        Its content is the merchant's; its existence is not. Deleting it would
+        leave / resolving to nothing, so the guard lives here rather than in
+        the UI - hiding the button is a courtesy, this is the rule.
+        """
+        for page in self:
+            if page.is_system:
+                raise UserError(_(
+                    '"%s" is part of the storefront and cannot be deleted. '
+                    'You can change the content on it.'
+                ) % page.name)
+
+    @api.model
+    def seed_homepage(self, blocks, name='Homepage'):
+        """Create or update the system page that backs /.
+
+        Idempotent, so it can be re-run after a storefront release adds blocks
+        without clobbering what the merchant has written: an existing page is
+        left exactly as it is.
+        """
+        website = self.env['website'].get_current_website()
+        existing = self.search([
+            ('url', '=', '/'),
+            ('website_id', 'in', (False, website.id)),
+        ], limit=1)
+
+        if existing:
+            existing.is_system = True
+            return existing
+
+        page = self.create({
+            'name': name,
+            'url': '/',
+            'website_id': website.id,
+            'is_system': True,
+            'draft_blocks': blocks,
+        })
+        page.publish_draft()
+        return page
+
     # --- cache invalidation ----------------------------------------------
 
     def _invalidate_storefront_cache(self):
@@ -228,7 +339,19 @@ class AlokaiWebsitePage(models.Model):
         return pages
 
     def write(self, vals):
+        # One write for the whole model. A second definition further down the
+        # class body silently replaces an earlier one, which is how the url
+        # guard below spent its first outing never running at all.
+        if 'url' in vals:
+            for page in self:
+                if page.is_system and vals['url'] != page.url:
+                    raise UserError(_(
+                        'The address of "%s" is fixed by the storefront and '
+                        'cannot be changed.'
+                    ) % page.name)
+
         result = super().write(vals)
+
         # Draft edits change nothing a visitor can see, so invalidating on them
         # would evict the cache on every autosave - roughly once a second while
         # someone is typing.

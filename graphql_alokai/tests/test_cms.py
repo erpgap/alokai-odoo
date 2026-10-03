@@ -313,6 +313,117 @@ class TestCmsModel(TransactionCase):
 
 
 @tagged('post_install', '-at_install')
+class TestCmsSystemPagesAndRegions(TransactionCase):
+    """The homepage, and the slots inside pages the storefront owns."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.Page = cls.env['alokai.website.page']
+
+    # --- system pages -----------------------------------------------------
+
+    def test_a_system_page_cannot_be_deleted(self):
+        """Its content is the merchant's; its existence is not."""
+        page = self.Page.create({
+            'name': 'Home', 'url': '/sys-home', 'is_system': True})
+
+        with self.assertRaises(UserError):
+            page.unlink()
+
+    def test_a_system_page_url_is_fixed(self):
+        page = self.Page.create({
+            'name': 'Home', 'url': '/sys-fixed', 'is_system': True})
+
+        with self.assertRaises(UserError):
+            page.url = '/somewhere-else'
+
+    def test_a_system_page_content_is_fully_editable(self):
+        page = self.Page.create({
+            'name': 'Home', 'url': '/sys-editable', 'is_system': True})
+
+        page.draft_blocks = [block('merchant copy')]
+        page.publish_draft()
+
+        self.assertEqual(
+            page.live_revision_id.blocks[0]['data']['title']['en_US'],
+            'merchant copy')
+
+    def test_an_ordinary_page_is_still_deletable(self):
+        page = self.Page.create({'name': 'Ordinary', 'url': '/ordinary'})
+        page.unlink()
+        self.assertFalse(page.exists())
+
+    def test_seed_homepage_is_idempotent(self):
+        """Re-running after a release must not overwrite merchant content."""
+        first = self.Page.seed_homepage([block('default copy')])
+        self.assertTrue(first.is_system)
+        self.assertTrue(first.is_published)
+
+        first.draft_blocks = [block('what the merchant wrote')]
+        first.publish_draft()
+
+        again = self.Page.seed_homepage([block('default copy')])
+
+        self.assertEqual(again, first)
+        self.assertEqual(
+            again.live_revision_id.blocks[0]['data']['title']['en_US'],
+            'what the merchant wrote')
+
+    # --- regions ----------------------------------------------------------
+
+    def test_a_region_needs_no_url(self):
+        region = self.Page.seed_region('test-slot', 'A test slot')
+        self.assertEqual(region.kind, 'region')
+        self.assertFalse(region.url)
+
+    def test_a_page_still_needs_a_url(self):
+        with self.assertRaises(ValidationError):
+            self.Page.create({'name': 'No address', 'kind': 'page'})
+
+    def test_a_region_needs_a_key(self):
+        with self.assertRaises(ValidationError):
+            self.Page.create({'name': 'No key', 'kind': 'region'})
+
+    def test_seed_region_is_idempotent(self):
+        first = self.Page.seed_region('once', 'Once')
+        first.draft_blocks = [block('merchant copy')]
+        first.publish_draft()
+
+        again = self.Page.seed_region('once', 'Once')
+
+        self.assertEqual(again, first)
+        self.assertEqual(
+            again.live_revision_id.blocks[0]['data']['title']['en_US'],
+            'merchant copy')
+
+    def test_a_region_starts_empty(self):
+        """So installing this changes nothing a visitor sees."""
+        region = self.Page.seed_region('starts-empty', 'Starts empty')
+        self.assertFalse(region.draft_blocks)
+        self.assertFalse(region.live_revision_id)
+
+    def test_a_region_cannot_be_deleted(self):
+        region = self.Page.seed_region('permanent', 'Permanent')
+        with self.assertRaises(UserError):
+            region.unlink()
+
+    def test_regions_use_the_same_revision_machinery(self):
+        region = self.Page.seed_region('versioned', 'Versioned')
+
+        region.draft_blocks = [block('first')]
+        first = region.publish_draft()
+        region.draft_blocks = [block('second')]
+        region.publish_draft()
+
+        restored = region.restore_revision(first)
+
+        self.assertEqual(restored.number, 3)
+        self.assertEqual(
+            region.live_revision_id.blocks[0]['data']['title']['en_US'], 'first')
+
+
+@tagged('post_install', '-at_install')
 class TestCmsInvalidation(TransactionCase):
     """Cache invalidation in both directions."""
 
@@ -691,6 +802,48 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
         )['data']['cmsPages']['pages']
         row = next(p for p in pages if p['url'] == '/blank')
         self.assertEqual(row['blockCount'], 0)
+
+    def test_region_blocks_are_readable_anonymously(self):
+        region = self.env['alokai.website.page'].seed_region(
+            'gql-slot', 'A slot')
+        region.draft_blocks = [block('region copy')]
+        region.publish_draft()
+
+        body = self._gql(
+            'query ($k: String!) { cmsRegion(key: $k) { id blocks } }',
+            {'k': 'gql-slot'})
+
+        self.assertEqual(
+            body['data']['cmsRegion']['blocks'][0]['data']['title']['en_US'],
+            'region copy')
+
+    def test_an_unpublished_region_reads_as_nothing(self):
+        """An empty slot must render nothing rather than erroring."""
+        self.env['alokai.website.page'].seed_region('gql-empty', 'Empty slot')
+
+        body = self._gql(
+            'query ($k: String!) { cmsRegion(key: $k) { id } }',
+            {'k': 'gql-empty'})
+
+        self.assertIsNone(body['data']['cmsRegion'])
+
+    def test_an_unknown_region_reads_as_nothing(self):
+        body = self._gql(
+            'query ($k: String!) { cmsRegion(key: $k) { id } }',
+            {'k': 'no-such-slot'})
+        self.assertIsNone(body['data']['cmsRegion'])
+
+    def test_a_system_page_cannot_be_deleted_over_graphql(self):
+        self.authenticate(self.editor.login, self.editor_password)
+        page = self.env['alokai.website.page'].create({
+            'name': 'Built in', 'url': '/built-in', 'is_system': True})
+
+        body = self._gql(
+            'mutation ($id: Int!) { deleteCmsPage(pageId: $id) }',
+            {'id': page.id}, expect_errors=True)
+
+        self.assertTrue(body['errors'])
+        self.assertTrue(page.exists())
 
     def test_locales_come_from_odoo(self):
         body = self._gql('{ cmsLocales { code label isDefault } }')

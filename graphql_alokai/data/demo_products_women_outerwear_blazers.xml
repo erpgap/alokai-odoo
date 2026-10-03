@@ -7,8 +7,8 @@
     <record id="women_outerwear_blazers_template_1" model="product.template">
         <field name="name">Tailored Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">93.99</field>
+        <field name="standard_price">46.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_outerwear_blazers_template_2" model="product.template">
         <field name="name">Single-Breasted Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">98.0</field>
+        <field name="standard_price">49.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_outerwear_blazers_template_3" model="product.template">
         <field name="name">Double-Breasted Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">96.0</field>
+        <field name="standard_price">48.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_outerwear_blazers_template_4" model="product.template">
         <field name="name">Cropped Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">89.0</field>
+        <field name="standard_price">44.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_outerwear_blazers_template_5" model="product.template">
         <field name="name">Oversized Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">88.5</field>
+        <field name="standard_price">44.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_outerwear_blazers_template_6" model="product.template">
         <field name="name">Linen Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">86.0</field>
+        <field name="standard_price">43.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_outerwear_blazers_template_7" model="product.template">
         <field name="name">Tweed Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">88.99</field>
+        <field name="standard_price">44.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_outerwear_blazers_template_8" model="product.template">
         <field name="name">Velvet Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">86.95</field>
+        <field name="standard_price">43.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_outerwear_blazers_template_9" model="product.template">
         <field name="name">Striped Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">88.95</field>
+        <field name="standard_price">44.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_outerwear_blazers_template_10" model="product.template">
         <field name="name">Cashmere Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">92.95</field>
+        <field name="standard_price">46.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_outerwear_blazers_template_11" model="product.template">
         <field name="name">Belted Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">97.99</field>
+        <field name="standard_price">48.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_outerwear_blazers_template_12" model="product.template">
         <field name="name">Designer Plaid Blazer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">95.0</field>
-        <field name="standard_price">47.5</field>
+        <field name="list_price">94.99</field>
+        <field name="standard_price">47.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

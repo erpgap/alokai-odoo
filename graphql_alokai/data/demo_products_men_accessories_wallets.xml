@@ -7,8 +7,8 @@
     <record id="men_accessories_wallets_template_1" model="product.template">
         <field name="name">Bi-Fold Wallet</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">43.95</field>
+        <field name="standard_price">21.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -27,8 +27,8 @@
     <record id="men_accessories_wallets_template_2" model="product.template">
         <field name="name">Leather Wallet</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">46.5</field>
+        <field name="standard_price">23.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -47,8 +47,8 @@
     <record id="men_accessories_wallets_template_3" model="product.template">
         <field name="name">Trifold Wallet</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">56.5</field>
+        <field name="standard_price">28.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -67,8 +67,8 @@
     <record id="men_accessories_wallets_template_4" model="product.template">
         <field name="name">Slim Wallet</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">51.5</field>
+        <field name="standard_price">25.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -87,8 +87,8 @@
     <record id="men_accessories_wallets_template_5" model="product.template">
         <field name="name">Money Clip</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">40.95</field>
+        <field name="standard_price">20.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -102,8 +102,8 @@
     <record id="men_accessories_wallets_template_6" model="product.template">
         <field name="name">Premium Card Holder</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">54.95</field>
+        <field name="standard_price">27.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -117,8 +117,8 @@
     <record id="men_accessories_wallets_template_7" model="product.template">
         <field name="name">Travel Wallet</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">45.99</field>
+        <field name="standard_price">23.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="men_accessories_wallets_template_8" model="product.template">
         <field name="name">Zip Wallet</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">57.0</field>
+        <field name="standard_price">28.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

@@ -1,0 +1,190 @@
+[
+  {
+    "id": "home_hero",
+    "blockType": "hero",
+    "schemaVersion": 1,
+    "data": {
+      "eyebrow": {
+        "en_US": ""
+      },
+      "title": {
+        "en_US": "Timeless Style, Everyday Ease"
+      },
+      "body": {
+        "en_US": "Considered essentials in natural fabrics — cotton, linen and leather — designed to move with you and last beyond the season."
+      },
+      "image": {
+        "en_US": "/img/home/hero.webp"
+      },
+      "ctas": [
+        {
+          "label": {
+            "en_US": "Shop Top Sellers"
+          },
+          "url": {
+            "en_US": "/products"
+          },
+          "style": "primary"
+        },
+        {
+          "label": {
+            "en_US": "View All Products"
+          },
+          "url": {
+            "en_US": "/products"
+          },
+          "style": "secondary"
+        }
+      ]
+    }
+  },
+  {
+    "id": "home_categories",
+    "blockType": "categories",
+    "schemaVersion": 1,
+    "data": {
+      "eyebrow": {
+        "en_US": "Browse"
+      },
+      "title": {
+        "en_US": "Shop by Category"
+      },
+      "linkLabel": {
+        "en_US": "All categories"
+      },
+      "linkUrl": {
+        "en_US": "/products"
+      },
+      "items": [
+        {
+          "name": {
+            "en_US": "Women"
+          },
+          "image": {
+            "en_US": "/img/home/cat_women_sand.webp"
+          },
+          "link": {
+            "en_US": "/women"
+          }
+        },
+        {
+          "name": {
+            "en_US": "Men"
+          },
+          "image": {
+            "en_US": "/img/home/cat_men_sand.webp"
+          },
+          "link": {
+            "en_US": "/men"
+          }
+        },
+        {
+          "name": {
+            "en_US": "Accessories"
+          },
+          "image": {
+            "en_US": "/img/home/cat_accessories_sand.webp"
+          },
+          "link": {
+            "en_US": "/women/accessories"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "home_bestsellers",
+    "blockType": "bestSellers",
+    "schemaVersion": 1,
+    "data": {
+      "eyebrow": {
+        "en_US": "Curated"
+      },
+      "title": {
+        "en_US": "Best Sellers"
+      },
+      "linkLabel": {
+        "en_US": "View all"
+      },
+      "linkUrl": {
+        "en_US": "/products"
+      },
+      "pageSize": 4,
+      "sort": "popular"
+    }
+  },
+  {
+    "id": "home_editorial",
+    "blockType": "editorial",
+    "schemaVersion": 1,
+    "data": {
+      "eyebrow": {
+        "en_US": "Our Philosophy"
+      },
+      "title": {
+        "en_US": "Made from honest materials"
+      },
+      "body": {
+        "en_US": "Every piece is cut from natural fabrics — organic cotton, pure linen, full-grain leather — chosen to wear in beautifully and feel better with every year."
+      },
+      "image": {
+        "en_US": "/img/home/editorial.webp"
+      },
+      "imageAlt": {
+        "en_US": "Made from honest materials"
+      },
+      "imagePosition": "left",
+      "ctaLabel": {
+        "en_US": "Discover the Story"
+      },
+      "ctaUrl": {
+        "en_US": "/products"
+      }
+    }
+  },
+  {
+    "id": "home_valueprops",
+    "blockType": "valueProps",
+    "schemaVersion": 1,
+    "data": {
+      "items": [
+        {
+          "title": {
+            "en_US": "Free Shipping"
+          },
+          "text": {
+            "en_US": "On all orders over $150"
+          },
+          "icon": "truck"
+        },
+        {
+          "title": {
+            "en_US": "30-Day Returns"
+          },
+          "text": {
+            "en_US": "Shop with confidence"
+          },
+          "icon": "return"
+        },
+        {
+          "title": {
+            "en_US": "2-Year Warranty"
+          },
+          "text": {
+            "en_US": "Crafted to last"
+          },
+          "icon": "shield"
+        },
+        {
+          "title": {
+            "en_US": "Expert Support"
+          },
+          "text": {
+            "en_US": "Here to help, always"
+          },
+          "icon": "support"
+        }
+      ]
+    }
+  }
+]

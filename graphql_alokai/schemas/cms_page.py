@@ -75,6 +75,12 @@ class CmsPage(graphene.ObjectType):
     blocks = generic.GenericScalar()
     draft_blocks = generic.GenericScalar()
     revision_count = graphene.Int()
+    kind = graphene.String()
+    region_key = graphene.String()
+    is_system = graphene.Boolean(
+        description='A page the storefront owns. Editable, but it cannot be '
+                    'deleted and its address is fixed.',
+    )
     block_count = graphene.Int(
         description='How many blocks the draft holds. A count rather than the '
                     'blocks themselves, so the page list stays small.',
@@ -140,6 +146,12 @@ class CmsQuery(graphene.ObjectType):
         slug=graphene.String(),
         id=graphene.Int(),
         description='Published page by URL. Public and cacheable.',
+    )
+    cms_region = graphene.Field(
+        CmsPage,
+        key=graphene.String(required=True),
+        description='Published blocks for a storefront region. Public and '
+                    'cacheable, like cmsPage.',
     )
     cms_pages = graphene.Field(
         CmsPageList,
@@ -261,13 +273,26 @@ class CmsQuery(graphene.ObjectType):
         )
 
     @staticmethod
+    def resolve_cms_region(self, info, key):
+        env = info.context['env']
+        # Public read, same reasoning as cmsPage: sudo, gated on published.
+        domain = env['website'].get_current_website().website_domain()
+        domain += [
+            ('kind', '=', 'region'),
+            ('region_key', '=', key),
+            ('live_revision_id', '!=', False),
+        ]
+        return env['alokai.website.page'].sudo().search(domain, limit=1) or None
+
+    @staticmethod
     def resolve_cms_pages(self, info):
         env = info.context['env']
         _check_editor(env)
 
         website = env['website'].get_current_website()
         pages = env['alokai.website.page'].search(
-            [('website_id', 'in', (False, website.id))], order='write_date desc',
+            [('website_id', 'in', (False, website.id))],
+            order='kind, write_date desc',
         )
         return CmsPageList(pages=pages, total_count=len(pages))
 
@@ -463,6 +488,11 @@ class DeleteCmsPage(graphene.Mutation):
     @staticmethod
     def mutate(self, info, page_id):
         page = _page_for_editor(info.context['env'], page_id)
+        # The model refuses this too; failing here just gives a cleaner error.
+        if page.is_system:
+            raise UserError(
+                '"%s" is part of the storefront and cannot be deleted.' % page.name)
+
         # live_revision_id is ondelete='restrict', so clear it before the
         # revisions cascade away with the page.
         page.live_revision_id = False

@@ -7,8 +7,8 @@
     <record id="women_shoes_boots_template_1" model="product.template">
         <field name="name">Ankle Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">103.5</field>
+        <field name="standard_price">51.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_shoes_boots_template_2" model="product.template">
         <field name="name">Knee-High Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">106.0</field>
+        <field name="standard_price">53.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_shoes_boots_template_3" model="product.template">
         <field name="name">Combat Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">108.0</field>
+        <field name="standard_price">54.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_shoes_boots_template_4" model="product.template">
         <field name="name">Chelsea Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">105.0</field>
+        <field name="standard_price">52.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_shoes_boots_template_5" model="product.template">
         <field name="name">Cowboy Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">118.5</field>
+        <field name="standard_price">59.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_shoes_boots_template_6" model="product.template">
         <field name="name">Over-the-Knee Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">116.95</field>
+        <field name="standard_price">58.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_shoes_boots_template_7" model="product.template">
         <field name="name">Riding Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">108.5</field>
+        <field name="standard_price">54.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_shoes_boots_template_8" model="product.template">
         <field name="name">Lace-Up Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">104.99</field>
+        <field name="standard_price">52.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_shoes_boots_template_9" model="product.template">
         <field name="name">Heeled Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">108.5</field>
+        <field name="standard_price">54.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_shoes_boots_template_10" model="product.template">
         <field name="name">Western Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">119.0</field>
+        <field name="standard_price">59.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_shoes_boots_template_11" model="product.template">
         <field name="name">Hiking Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">117.0</field>
+        <field name="standard_price">58.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_shoes_boots_template_12" model="product.template">
         <field name="name">Rain Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">118.99</field>
+        <field name="standard_price">59.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="women_shoes_boots_template_13" model="product.template">
         <field name="name">Suede Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">114.5</field>
+        <field name="standard_price">57.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="women_shoes_boots_template_14" model="product.template">
         <field name="name">Slouchy Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">108.0</field>
+        <field name="standard_price">54.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="women_shoes_boots_template_15" model="product.template">
         <field name="name">Designer Leather Boot</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">110.0</field>
-        <field name="standard_price">55.0</field>
+        <field name="list_price">105.95</field>
+        <field name="standard_price">52.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

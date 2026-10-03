@@ -7,8 +7,8 @@
     <record id="women_bottoms_trousers_template_1" model="product.template">
         <field name="name">Tailored Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">82.5</field>
+        <field name="standard_price">41.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_bottoms_trousers_template_2" model="product.template">
         <field name="name">Wide Leg Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">81.95</field>
+        <field name="standard_price">40.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_bottoms_trousers_template_3" model="product.template">
         <field name="name">Cropped Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">75.0</field>
+        <field name="standard_price">37.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_bottoms_trousers_template_4" model="product.template">
         <field name="name">Linen Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">72.95</field>
+        <field name="standard_price">36.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_bottoms_trousers_template_5" model="product.template">
         <field name="name">High-Waist Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">82.5</field>
+        <field name="standard_price">41.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_bottoms_trousers_template_6" model="product.template">
         <field name="name">Pleated Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">71.99</field>
+        <field name="standard_price">35.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_bottoms_trousers_template_7" model="product.template">
         <field name="name">Cigarette Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">88.95</field>
+        <field name="standard_price">44.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_bottoms_trousers_template_8" model="product.template">
         <field name="name">Palazzo Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">87.99</field>
+        <field name="standard_price">43.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_bottoms_trousers_template_9" model="product.template">
         <field name="name">Cargo Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">80.95</field>
+        <field name="standard_price">40.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_bottoms_trousers_template_10" model="product.template">
         <field name="name">Belted Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">81.95</field>
+        <field name="standard_price">40.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_bottoms_trousers_template_11" model="product.template">
         <field name="name">Pinstripe Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">71.95</field>
+        <field name="standard_price">35.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_bottoms_trousers_template_12" model="product.template">
         <field name="name">Wool Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">77.0</field>
+        <field name="standard_price">38.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="women_bottoms_trousers_template_13" model="product.template">
         <field name="name">Slim Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">82.5</field>
+        <field name="standard_price">41.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="women_bottoms_trousers_template_14" model="product.template">
         <field name="name">Paperbag Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">88.99</field>
+        <field name="standard_price">44.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="women_bottoms_trousers_template_15" model="product.template">
         <field name="name">Designer Silk Trousers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">80.0</field>
-        <field name="standard_price">40.0</field>
+        <field name="list_price">86.5</field>
+        <field name="standard_price">43.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

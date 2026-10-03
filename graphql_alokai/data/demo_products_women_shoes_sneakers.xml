@@ -7,8 +7,8 @@
     <record id="women_shoes_sneakers_template_1" model="product.template">
         <field name="name">White Leather Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">85.5</field>
+        <field name="standard_price">42.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_shoes_sneakers_template_2" model="product.template">
         <field name="name">Canvas Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">77.99</field>
+        <field name="standard_price">38.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_shoes_sneakers_template_3" model="product.template">
         <field name="name">High-Top Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">84.5</field>
+        <field name="standard_price">42.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_shoes_sneakers_template_4" model="product.template">
         <field name="name">Low-Top Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">78.95</field>
+        <field name="standard_price">39.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_shoes_sneakers_template_5" model="product.template">
         <field name="name">Slip-On Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">77.5</field>
+        <field name="standard_price">38.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_shoes_sneakers_template_6" model="product.template">
         <field name="name">Running Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">83.0</field>
+        <field name="standard_price">41.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_shoes_sneakers_template_7" model="product.template">
         <field name="name">Platform Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">83.95</field>
+        <field name="standard_price">41.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_shoes_sneakers_template_9" model="product.template">
         <field name="name">Mesh Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">79.99</field>
+        <field name="standard_price">39.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_shoes_sneakers_template_10" model="product.template">
         <field name="name">Suede Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">83.95</field>
+        <field name="standard_price">41.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_shoes_sneakers_template_11" model="product.template">
         <field name="name">Court Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">92.0</field>
+        <field name="standard_price">46.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_shoes_sneakers_template_12" model="product.template">
         <field name="name">Trainer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">91.95</field>
+        <field name="standard_price">45.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="women_shoes_sneakers_template_13" model="product.template">
         <field name="name">Knit Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">78.95</field>
+        <field name="standard_price">39.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="women_shoes_sneakers_template_14" model="product.template">
         <field name="name">Chunky Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">86.5</field>
+        <field name="standard_price">43.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="women_shoes_sneakers_template_15" model="product.template">
         <field name="name">Limited Edition Sneaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">82.5</field>
+        <field name="standard_price">41.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

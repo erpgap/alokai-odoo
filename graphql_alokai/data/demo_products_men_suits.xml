@@ -7,8 +7,8 @@
     <record id="men_suits_template_1" model="product.template">
         <field name="name">Classic Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">241.0</field>
+        <field name="standard_price">120.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="men_suits_template_2" model="product.template">
         <field name="name">Modern Slim Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">249.5</field>
+        <field name="standard_price">124.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="men_suits_template_3" model="product.template">
         <field name="name">Two-Piece Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">254.99</field>
+        <field name="standard_price">127.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="men_suits_template_4" model="product.template">
         <field name="name">Wool Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">251.5</field>
+        <field name="standard_price">125.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,7 +107,7 @@
     <record id="men_suits_template_5" model="product.template">
         <field name="name">Pinstripe Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
+        <field name="list_price">249.99</field>
         <field name="standard_price">125.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
@@ -132,8 +132,8 @@
     <record id="men_suits_template_6" model="product.template">
         <field name="name">Three-Piece Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">245.5</field>
+        <field name="standard_price">122.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -147,8 +147,8 @@
     <record id="men_suits_template_7" model="product.template">
         <field name="name">Linen Summer Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">246.99</field>
+        <field name="standard_price">123.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -162,8 +162,8 @@
     <record id="men_suits_template_8" model="product.template">
         <field name="name">Tweed Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">255.5</field>
+        <field name="standard_price">127.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -177,8 +177,8 @@
     <record id="men_suits_template_9" model="product.template">
         <field name="name">Tuxedo</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">249.95</field>
+        <field name="standard_price">124.97</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -192,8 +192,8 @@
     <record id="men_suits_template_10" model="product.template">
         <field name="name">Designer Double-Breasted Suit</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">250.0</field>
-        <field name="standard_price">125.0</field>
+        <field name="list_price">247.95</field>
+        <field name="standard_price">123.97</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

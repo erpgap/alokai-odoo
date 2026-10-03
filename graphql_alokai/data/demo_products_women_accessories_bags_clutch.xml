@@ -7,8 +7,8 @@
     <record id="women_accessories_bags_clutch_template_1" model="product.template">
         <field name="name">Evening Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">76.99</field>
+        <field name="standard_price">38.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -27,8 +27,8 @@
     <record id="women_accessories_bags_clutch_template_2" model="product.template">
         <field name="name">Envelope Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">81.0</field>
+        <field name="standard_price">40.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -47,8 +47,8 @@
     <record id="women_accessories_bags_clutch_template_3" model="product.template">
         <field name="name">Box Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">94.5</field>
+        <field name="standard_price">47.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -67,8 +67,8 @@
     <record id="women_accessories_bags_clutch_template_4" model="product.template">
         <field name="name">Foldover Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">82.99</field>
+        <field name="standard_price">41.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -87,8 +87,8 @@
     <record id="women_accessories_bags_clutch_template_5" model="product.template">
         <field name="name">Wristlet Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">87.95</field>
+        <field name="standard_price">43.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_accessories_bags_clutch_template_6" model="product.template">
         <field name="name">Beaded Evening Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">80.5</field>
+        <field name="standard_price">40.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -122,8 +122,8 @@
     <record id="women_accessories_bags_clutch_template_7" model="product.template">
         <field name="name">Suede Statement Clutch</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">85.0</field>
-        <field name="standard_price">42.5</field>
+        <field name="list_price">88.0</field>
+        <field name="standard_price">44.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

@@ -7,8 +7,8 @@
     <record id="men_outerwear_jackets_template_1" model="product.template">
         <field name="name">Leather Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">133.99</field>
+        <field name="standard_price">67.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="men_outerwear_jackets_template_2" model="product.template">
         <field name="name">Bomber Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">127.95</field>
+        <field name="standard_price">63.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="men_outerwear_jackets_template_3" model="product.template">
         <field name="name">Denim Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">137.5</field>
+        <field name="standard_price">68.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="men_outerwear_jackets_template_4" model="product.template">
         <field name="name">Windbreaker</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">135.99</field>
+        <field name="standard_price">68.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="men_outerwear_jackets_template_5" model="product.template">
         <field name="name">Trench Coat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">137.99</field>
+        <field name="standard_price">69.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="men_outerwear_jackets_template_6" model="product.template">
         <field name="name">Pea Coat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">142.99</field>
+        <field name="standard_price">71.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="men_outerwear_jackets_template_7" model="product.template">
         <field name="name">Wool Coat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">143.0</field>
+        <field name="standard_price">71.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="men_outerwear_jackets_template_8" model="product.template">
         <field name="name">Parka</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">144.5</field>
+        <field name="standard_price">72.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="men_outerwear_jackets_template_9" model="product.template">
         <field name="name">Puffer Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">140.99</field>
+        <field name="standard_price">70.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="men_outerwear_jackets_template_10" model="product.template">
         <field name="name">Field Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">129.95</field>
+        <field name="standard_price">64.97</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="men_outerwear_jackets_template_12" model="product.template">
         <field name="name">Harrington Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">140.5</field>
+        <field name="standard_price">70.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="men_outerwear_jackets_template_13" model="product.template">
         <field name="name">Biker Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">140.5</field>
+        <field name="standard_price">70.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="men_outerwear_jackets_template_14" model="product.template">
         <field name="name">Suede Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">127.95</field>
+        <field name="standard_price">63.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="men_outerwear_jackets_template_15" model="product.template">
         <field name="name">Anorak</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">129.99</field>
+        <field name="standard_price">65.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -382,8 +382,8 @@
     <record id="men_outerwear_jackets_template_16" model="product.template">
         <field name="name">Overcoat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">126.99</field>
+        <field name="standard_price">63.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -407,8 +407,8 @@
     <record id="men_outerwear_jackets_template_17" model="product.template">
         <field name="name">Hooded Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">128.0</field>
+        <field name="standard_price">64.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -432,8 +432,8 @@
     <record id="men_outerwear_jackets_template_18" model="product.template">
         <field name="name">Lightweight Jacket</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">137.0</field>
+        <field name="standard_price">68.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -457,8 +457,8 @@
     <record id="men_outerwear_jackets_template_19" model="product.template">
         <field name="name">Designer Wool Overcoat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">134.5</field>
+        <field name="standard_price">67.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -472,8 +472,8 @@
     <record id="men_outerwear_jackets_template_20" model="product.template">
         <field name="name">Premium Duffle Coat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">135.0</field>
-        <field name="standard_price">67.5</field>
+        <field name="list_price">137.99</field>
+        <field name="standard_price">69.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

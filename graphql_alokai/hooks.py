@@ -32,6 +32,55 @@ def pre_init_hook_login_check(env):
                 )
 
 
+def _seed_cms_homepage(env):
+    """Give a fresh install an editable homepage.
+
+    Without this a merchant installs Alokai, opens the studio, and finds no
+    homepage to edit - the storefront still renders it, from markup they
+    cannot reach. The point of the CMS is that they can.
+
+    The blocks are a snapshot of the storefront's default homepage, taken at
+    install time. They are not kept in step with later storefront releases on
+    purpose: once this runs, the content belongs to the merchant, and a
+    release that changes a block's shape is handled by the schema migrations
+    on the storefront side rather than by overwriting what they wrote.
+
+    Idempotent - an existing page for / is left exactly as it is.
+    """
+    path = os.path.join(os.path.dirname(__file__), 'data', 'cms_homepage_blocks.json')
+    try:
+        with open(path, encoding='utf-8') as handle:
+            blocks = json.load(handle)
+    except (OSError, ValueError) as error:
+        _logger.warning('Could not read the default homepage blocks: %s', error)
+        return
+
+    try:
+        env['alokai.website.page'].seed_homepage(blocks, name='Homepage')
+    except Exception as error:  # noqa: BLE001 - never block an install for this
+        _logger.warning('Could not seed the CMS homepage: %s', error)
+
+
+def _seed_cms_regions(env):
+    """Declare the slots the storefront provides.
+
+    These exist so a merchant can add content to category and product pages,
+    whose structure is otherwise entirely owned by code. They start empty and
+    render nothing, so installing this changes nothing a visitor sees.
+
+    Adding a region later is a line here plus a <CmsRegion> in the template.
+    """
+    regions = [
+        ('category-after', 'Below category pages'),
+        ('product-after', 'Below product pages'),
+    ]
+    for key, name in regions:
+        try:
+            env['alokai.website.page'].seed_region(key, name)
+        except Exception as error:  # noqa: BLE001 - never block an install
+            _logger.warning('Could not seed the %s region: %s', key, error)
+
+
 def post_init_hook_login_convert(env):
     """
     After the module is installed.
@@ -56,6 +105,8 @@ def post_init_hook_login_convert(env):
 
     _compute_category_slugs(env)
     _fix_broken_blog_slugs(env)
+    _seed_cms_homepage(env)
+    _seed_cms_regions(env)
 
     # ---- Demo tasks (gated) ---------------------------------------------
     # Use the existence of a graphql_alokai-created product.template as a

@@ -7,8 +7,8 @@
     <record id="men_shoes_dress_template_1" model="product.template">
         <field name="name">Oxford Shoes</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">132.99</field>
+        <field name="standard_price">66.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="men_shoes_dress_template_2" model="product.template">
         <field name="name">Loafers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">131.99</field>
+        <field name="standard_price">66.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="men_shoes_dress_template_3" model="product.template">
         <field name="name">Derby Shoes</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">134.99</field>
+        <field name="standard_price">67.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="men_shoes_dress_template_4" model="product.template">
         <field name="name">Monk Strap</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">130.95</field>
+        <field name="standard_price">65.47</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="men_shoes_dress_template_5" model="product.template">
         <field name="name">Brogue Shoes</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">138.95</field>
+        <field name="standard_price">69.47</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="men_shoes_dress_template_6" model="product.template">
         <field name="name">Wingtip Shoes</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">135.99</field>
+        <field name="standard_price">68.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="men_shoes_dress_template_7" model="product.template">
         <field name="name">Penny Loafers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">132.99</field>
+        <field name="standard_price">66.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="men_shoes_dress_template_8" model="product.template">
         <field name="name">Tassel Loafers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">121.95</field>
+        <field name="standard_price">60.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="men_shoes_dress_template_9" model="product.template">
         <field name="name">Cap Toe Oxford</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">122.0</field>
+        <field name="standard_price">61.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="men_shoes_dress_template_10" model="product.template">
         <field name="name">Plain Toe Derby</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">126.95</field>
+        <field name="standard_price">63.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="men_shoes_dress_template_11" model="product.template">
         <field name="name">Designer Suede Loafers</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">129.5</field>
+        <field name="standard_price">64.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -272,8 +272,8 @@
     <record id="men_shoes_dress_template_12" model="product.template">
         <field name="name">Premium Italian Oxford</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">130.0</field>
-        <field name="standard_price">65.0</field>
+        <field name="list_price">128.0</field>
+        <field name="standard_price">64.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

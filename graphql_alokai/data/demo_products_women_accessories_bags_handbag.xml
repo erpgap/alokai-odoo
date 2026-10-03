@@ -7,8 +7,8 @@
     <record id="women_accessories_bags_handbag_template_1" model="product.template">
         <field name="name">Top Handle Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">158.5</field>
+        <field name="standard_price">79.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -27,8 +27,8 @@
     <record id="women_accessories_bags_handbag_template_2" model="product.template">
         <field name="name">Structured Handbag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">142.95</field>
+        <field name="standard_price">71.47</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -47,8 +47,8 @@
     <record id="women_accessories_bags_handbag_template_3" model="product.template">
         <field name="name">Doctor Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">157.95</field>
+        <field name="standard_price">78.97</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -67,8 +67,8 @@
     <record id="women_accessories_bags_handbag_template_4" model="product.template">
         <field name="name">Trapeze Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">144.95</field>
+        <field name="standard_price">72.47</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -87,8 +87,8 @@
     <record id="women_accessories_bags_handbag_template_5" model="product.template">
         <field name="name">Frame Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">157.95</field>
+        <field name="standard_price">78.97</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_accessories_bags_handbag_template_6" model="product.template">
         <field name="name">Top Handle Satchel</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">151.99</field>
+        <field name="standard_price">76.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -127,8 +127,8 @@
     <record id="women_accessories_bags_handbag_template_7" model="product.template">
         <field name="name">Mini Handbag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">149.95</field>
+        <field name="standard_price">74.97</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -147,8 +147,8 @@
     <record id="women_accessories_bags_handbag_template_8" model="product.template">
         <field name="name">Box Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">154.5</field>
+        <field name="standard_price">77.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -167,8 +167,8 @@
     <record id="women_accessories_bags_handbag_template_9" model="product.template">
         <field name="name">Designer Limited Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">157.5</field>
+        <field name="standard_price">78.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_accessories_bags_handbag_template_10" model="product.template">
         <field name="name">Hand-Stitched Premium Bag</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">150.0</field>
-        <field name="standard_price">75.0</field>
+        <field name="list_price">148.99</field>
+        <field name="standard_price">74.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

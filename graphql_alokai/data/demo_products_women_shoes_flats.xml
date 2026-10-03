@@ -7,8 +7,8 @@
     <record id="women_shoes_flats_template_1" model="product.template">
         <field name="name">Ballet Flat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">55.5</field>
+        <field name="standard_price">27.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_shoes_flats_template_2" model="product.template">
         <field name="name">Loafer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">66.5</field>
+        <field name="standard_price">33.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_shoes_flats_template_3" model="product.template">
         <field name="name">Slip-On Flat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">56.0</field>
+        <field name="standard_price">28.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_shoes_flats_template_4" model="product.template">
         <field name="name">Pointed Flat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">60.99</field>
+        <field name="standard_price">30.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_shoes_flats_template_5" model="product.template">
         <field name="name">Espadrille</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">63.95</field>
+        <field name="standard_price">31.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_shoes_flats_template_6" model="product.template">
         <field name="name">Moccasin</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">56.95</field>
+        <field name="standard_price">28.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_shoes_flats_template_7" model="product.template">
         <field name="name">Driving Shoe</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">64.0</field>
+        <field name="standard_price">32.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_shoes_flats_template_8" model="product.template">
         <field name="name">Penny Loafer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">63.95</field>
+        <field name="standard_price">31.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_shoes_flats_template_9" model="product.template">
         <field name="name">Tassel Loafer</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">52.0</field>
+        <field name="standard_price">26.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_shoes_flats_template_10" model="product.template">
         <field name="name">Bow Flat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">55.0</field>
+        <field name="standard_price">27.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_shoes_flats_template_11" model="product.template">
         <field name="name">Pointed Toe Flat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">62.99</field>
+        <field name="standard_price">31.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_shoes_flats_template_12" model="product.template">
         <field name="name">Designer Hand-Stitched Flat</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">60.0</field>
-        <field name="standard_price">30.0</field>
+        <field name="list_price">68.95</field>
+        <field name="standard_price">34.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

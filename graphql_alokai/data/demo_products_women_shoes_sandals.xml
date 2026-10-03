@@ -7,8 +7,8 @@
     <record id="women_shoes_sandals_template_1" model="product.template">
         <field name="name">Strappy Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">58.99</field>
+        <field name="standard_price">29.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_shoes_sandals_template_2" model="product.template">
         <field name="name">Slide Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">44.5</field>
+        <field name="standard_price">22.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_shoes_sandals_template_3" model="product.template">
         <field name="name">Gladiator Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">45.0</field>
+        <field name="standard_price">22.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_shoes_sandals_template_4" model="product.template">
         <field name="name">Wedge Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">48.5</field>
+        <field name="standard_price">24.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_shoes_sandals_template_5" model="product.template">
         <field name="name">Espadrille Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">44.99</field>
+        <field name="standard_price">22.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_shoes_sandals_template_6" model="product.template">
         <field name="name">Flat Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">53.0</field>
+        <field name="standard_price">26.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_shoes_sandals_template_7" model="product.template">
         <field name="name">Heeled Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">53.0</field>
+        <field name="standard_price">26.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_shoes_sandals_template_8" model="product.template">
         <field name="name">Ankle Strap Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">53.99</field>
+        <field name="standard_price">27.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_shoes_sandals_template_9" model="product.template">
         <field name="name">T-Strap Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">41.5</field>
+        <field name="standard_price">20.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_shoes_sandals_template_10" model="product.template">
         <field name="name">Thong Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">44.5</field>
+        <field name="standard_price">22.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_shoes_sandals_template_11" model="product.template">
         <field name="name">Mule Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">48.99</field>
+        <field name="standard_price">24.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_shoes_sandals_template_12" model="product.template">
         <field name="name">Hand-Crafted Leather Sandal</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">50.0</field>
-        <field name="standard_price">25.0</field>
+        <field name="list_price">48.99</field>
+        <field name="standard_price">24.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

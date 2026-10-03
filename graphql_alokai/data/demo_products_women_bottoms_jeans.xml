@@ -7,8 +7,8 @@
     <record id="women_bottoms_jeans_template_1" model="product.template">
         <field name="name">Skinny Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">67.99</field>
+        <field name="standard_price">33.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_bottoms_jeans_template_2" model="product.template">
         <field name="name">Straight Leg Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">82.95</field>
+        <field name="standard_price">41.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_bottoms_jeans_template_3" model="product.template">
         <field name="name">Flare Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">78.0</field>
+        <field name="standard_price">39.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_bottoms_jeans_template_4" model="product.template">
         <field name="name">High-Waist Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">75.99</field>
+        <field name="standard_price">37.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_bottoms_jeans_template_5" model="product.template">
         <field name="name">Distressed Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">75.99</field>
+        <field name="standard_price">37.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_bottoms_jeans_template_6" model="product.template">
         <field name="name">Bootcut Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">67.99</field>
+        <field name="standard_price">33.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_bottoms_jeans_template_7" model="product.template">
         <field name="name">Wide Leg Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">79.0</field>
+        <field name="standard_price">39.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_bottoms_jeans_template_8" model="product.template">
         <field name="name">Mom Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">71.99</field>
+        <field name="standard_price">35.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_bottoms_jeans_template_9" model="product.template">
         <field name="name">Cropped Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">71.5</field>
+        <field name="standard_price">35.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_bottoms_jeans_template_10" model="product.template">
         <field name="name">Cuffed Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">81.95</field>
+        <field name="standard_price">40.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_bottoms_jeans_template_11" model="product.template">
         <field name="name">Slim Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">80.5</field>
+        <field name="standard_price">40.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_bottoms_jeans_template_12" model="product.template">
         <field name="name">Vintage Wash Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">79.99</field>
+        <field name="standard_price">39.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="women_bottoms_jeans_template_13" model="product.template">
         <field name="name">White Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">82.0</field>
+        <field name="standard_price">41.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="women_bottoms_jeans_template_14" model="product.template">
         <field name="name">Black Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">81.0</field>
+        <field name="standard_price">40.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="women_bottoms_jeans_template_15" model="product.template">
         <field name="name">Cropped Wide Leg</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">73.5</field>
+        <field name="standard_price">36.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -382,8 +382,8 @@
     <record id="women_bottoms_jeans_template_16" model="product.template">
         <field name="name">Premium Selvedge Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">67.95</field>
+        <field name="standard_price">33.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -397,8 +397,8 @@
     <record id="women_bottoms_jeans_template_17" model="product.template">
         <field name="name">Designer Distressed Jeans</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">75.0</field>
-        <field name="standard_price">37.5</field>
+        <field name="list_price">81.95</field>
+        <field name="standard_price">40.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

@@ -7,8 +7,8 @@
     <record id="women_tops_template_1" model="product.template">
         <field name="name">Silk Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">47.95</field>
+        <field name="standard_price">23.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="women_tops_template_2" model="product.template">
         <field name="name">Cotton Button-Up</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">38.99</field>
+        <field name="standard_price">19.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="women_tops_template_3" model="product.template">
         <field name="name">Off-Shoulder Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">48.99</field>
+        <field name="standard_price">24.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="women_tops_template_4" model="product.template">
         <field name="name">Striped Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">41.99</field>
+        <field name="standard_price">21.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="women_tops_template_5" model="product.template">
         <field name="name">V-Neck Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">40.95</field>
+        <field name="standard_price">20.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="women_tops_template_6" model="product.template">
         <field name="name">Peplum Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">51.99</field>
+        <field name="standard_price">26.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="women_tops_template_7" model="product.template">
         <field name="name">Ruffle Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">46.0</field>
+        <field name="standard_price">23.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="women_tops_template_8" model="product.template">
         <field name="name">Wrap Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">45.95</field>
+        <field name="standard_price">22.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="women_tops_template_9" model="product.template">
         <field name="name">Camisole</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">44.0</field>
+        <field name="standard_price">22.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="women_tops_template_10" model="product.template">
         <field name="name">Tank Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">39.95</field>
+        <field name="standard_price">19.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="women_tops_template_11" model="product.template">
         <field name="name">Halter Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">47.99</field>
+        <field name="standard_price">24.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="women_tops_template_12" model="product.template">
         <field name="name">Crop Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">47.5</field>
+        <field name="standard_price">23.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="women_tops_template_13" model="product.template">
         <field name="name">Embroidered Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">41.5</field>
+        <field name="standard_price">20.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="women_tops_template_14" model="product.template">
         <field name="name">Lace Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">36.95</field>
+        <field name="standard_price">18.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="women_tops_template_15" model="product.template">
         <field name="name">Sleeveless Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">49.99</field>
+        <field name="standard_price">25.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -382,8 +382,8 @@
     <record id="women_tops_template_16" model="product.template">
         <field name="name">Tunic Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">37.95</field>
+        <field name="standard_price">18.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -407,8 +407,8 @@
     <record id="women_tops_template_17" model="product.template">
         <field name="name">Floral Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">45.5</field>
+        <field name="standard_price">22.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -432,8 +432,8 @@
     <record id="women_tops_template_18" model="product.template">
         <field name="name">Cotton Tee Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">39.0</field>
+        <field name="standard_price">19.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -457,8 +457,8 @@
     <record id="women_tops_template_19" model="product.template">
         <field name="name">Designer Statement Blouse</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">36.5</field>
+        <field name="standard_price">18.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -472,8 +472,8 @@
     <record id="women_tops_template_20" model="product.template">
         <field name="name">Hand-Embroidered Top</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">45.0</field>
-        <field name="standard_price">22.5</field>
+        <field name="list_price">38.5</field>
+        <field name="standard_price">19.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />

@@ -7,8 +7,8 @@
     <record id="men_shirts_template_1" model="product.template">
         <field name="name">Oxford Dress Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">65.95</field>
+        <field name="standard_price">32.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -32,8 +32,8 @@
     <record id="men_shirts_template_2" model="product.template">
         <field name="name">Casual Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">56.95</field>
+        <field name="standard_price">28.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -57,8 +57,8 @@
     <record id="men_shirts_template_3" model="product.template">
         <field name="name">Linen Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">57.99</field>
+        <field name="standard_price">29.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -82,8 +82,8 @@
     <record id="men_shirts_template_4" model="product.template">
         <field name="name">Denim Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">73.99</field>
+        <field name="standard_price">36.99</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -107,8 +107,8 @@
     <record id="men_shirts_template_5" model="product.template">
         <field name="name">Flannel Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">58.99</field>
+        <field name="standard_price">29.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -132,8 +132,8 @@
     <record id="men_shirts_template_6" model="product.template">
         <field name="name">Plaid Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">58.5</field>
+        <field name="standard_price">29.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -157,8 +157,8 @@
     <record id="men_shirts_template_7" model="product.template">
         <field name="name">Striped Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">63.95</field>
+        <field name="standard_price">31.98</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -182,8 +182,8 @@
     <record id="men_shirts_template_8" model="product.template">
         <field name="name">White Dress Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">69.5</field>
+        <field name="standard_price">34.75</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -207,8 +207,8 @@
     <record id="men_shirts_template_9" model="product.template">
         <field name="name">Button-Down Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">58.5</field>
+        <field name="standard_price">29.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -232,8 +232,8 @@
     <record id="men_shirts_template_10" model="product.template">
         <field name="name">Chambray Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">66.0</field>
+        <field name="standard_price">33.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -257,8 +257,8 @@
     <record id="men_shirts_template_11" model="product.template">
         <field name="name">Slim Fit Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">70.99</field>
+        <field name="standard_price">35.49</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -282,8 +282,8 @@
     <record id="men_shirts_template_12" model="product.template">
         <field name="name">Regular Fit Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">58.99</field>
+        <field name="standard_price">29.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -307,8 +307,8 @@
     <record id="men_shirts_template_13" model="product.template">
         <field name="name">Pinpoint Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">57.99</field>
+        <field name="standard_price">29.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -332,8 +332,8 @@
     <record id="men_shirts_template_14" model="product.template">
         <field name="name">Twill Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">62.95</field>
+        <field name="standard_price">31.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -357,8 +357,8 @@
     <record id="men_shirts_template_15" model="product.template">
         <field name="name">Poplin Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">56.95</field>
+        <field name="standard_price">28.48</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -382,8 +382,8 @@
     <record id="men_shirts_template_16" model="product.template">
         <field name="name">Cotton Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">68.5</field>
+        <field name="standard_price">34.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -407,8 +407,8 @@
     <record id="men_shirts_template_17" model="product.template">
         <field name="name">Mandarin Collar Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">71.0</field>
+        <field name="standard_price">35.5</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -432,8 +432,8 @@
     <record id="men_shirts_template_18" model="product.template">
         <field name="name">French Cuff Dress Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">68.5</field>
+        <field name="standard_price">34.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -447,8 +447,8 @@
     <record id="men_shirts_template_19" model="product.template">
         <field name="name">Tuxedo Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">64.5</field>
+        <field name="standard_price">32.25</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
@@ -462,8 +462,8 @@
     <record id="men_shirts_template_20" model="product.template">
         <field name="name">Premium Sea Island Cotton Shirt</field>
         <field name="categ_id" ref="graphql_alokai.product_category_pants" />
-        <field name="list_price">65.0</field>
-        <field name="standard_price">32.5</field>
+        <field name="list_price">74.0</field>
+        <field name="standard_price">37.0</field>
         <field name="is_published" eval="True" />
         <field name="type">consu</field>
         <field name="is_storable" eval="True" />
