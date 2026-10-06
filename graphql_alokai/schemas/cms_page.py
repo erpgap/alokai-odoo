@@ -340,9 +340,12 @@ class CmsQuery(graphene.ObjectType):
         _check_editor(env)
 
         website = env['website'].get_current_website()
+        # Built-in pages (the homepage) first, then most recently edited.
+        # Pages saved in one transaction - a fresh demo install - share a
+        # write date, so name breaks the tie and they list alphabetically.
         pages = env['alokai.website.page'].search(
             [('website_id', 'in', (False, website.id))],
-            order='kind, write_date desc',
+            order='kind, is_system desc, write_date desc, name',
         )
         return CmsPageList(pages=pages, total_count=len(pages))
 

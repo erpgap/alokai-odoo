@@ -838,6 +838,19 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
         self.assertEqual(served_size('alokai.website.page'), (200, 100))
         self.assertEqual(served_size('product.template'), (200, 200))
 
+    def test_page_list_puts_built_in_first_then_ties_by_name(self):
+        Page = self.env['alokai.website.page']
+        Page.create([{'name': 'Zebra', 'url': '/order-z'}, {'name': 'Apple', 'url': '/order-a'}])
+        Page.seed_homepage([block()])
+        self.env.flush_all()
+        self.authenticate(self.editor.login, self.editor_password)
+
+        pages = self._gql('{ cmsPages { pages { name kind isSystem } } }')['data']['cmsPages']['pages']
+        names = [p['name'] for p in pages if p['kind'] == 'page']
+        self.assertTrue(pages[0]['isSystem'], 'the homepage is listed first')
+        # Created in this test's transaction, so they share a write date.
+        self.assertLess(names.index('Apple'), names.index('Zebra'))
+
     def test_malformed_url_is_rejected(self):
         self.authenticate(self.editor.login, self.editor_password)
         for url in ('no-leading-slash', '/', ''):
