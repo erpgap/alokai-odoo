@@ -96,6 +96,7 @@ def post_init_hook_login_convert(env):
       - Generate fake customer reviews on every product
       - Generate demo sales history (popularity + frequently-bought-together)
       - Set alternative products (upsell) on each product
+      - Enable Redis and push slugs and stock, if a Redis server is reachable
     """
     # ---- Production tasks ------------------------------------------------
     users = env['res.users'].search([])
@@ -125,6 +126,8 @@ def post_init_hook_login_convert(env):
     _generate_demo_sales(env)
     _generate_demo_alternatives(env)
     _clear_unwanted_social_fields(env)
+    # Last, so the bulk demo writes above run with Redis still disabled.
+    env['website']._alokai_demo_enable_redis()
 
 
 def _resolve_image_path(addon_dir, local_path):

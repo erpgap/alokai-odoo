@@ -337,6 +337,31 @@ class Website(models.Model):
         self.env['blog.blog'].search([])._update_slug_in_redis()
         self.env['blog.post'].search([])._update_slug_in_redis()
 
+    @api.model
+    def _alokai_demo_enable_redis(self):
+        """Called at the end of the post-init hook when demo data is loaded.
+        The storefront resolves URLs
+        through the slug keys in Redis, so a demo database without them shows
+        empty categories. Enable Redis and push the demo catalogue only when
+        a server is reachable, so installing demo data never requires Redis."""
+        ICP = self.env['ir.config_parameter'].sudo()
+        try:
+            redis.Redis(
+                host=ICP.get_param('alokai_redis_host', 'localhost'),
+                port=ICP.get_param('alokai_redis_port', 6379),
+                socket_timeout=1.0,
+                socket_connect_timeout=1.0,
+            ).ping()
+        except redis.exceptions.RedisError:
+            _logger.info("Alokai demo: Redis not reachable, leaving it disabled.")
+            return
+        ICP.set_param('alokai_redis_enabled', 'True')
+        # Push slugs without clearing existing slug:* keys, which may belong
+        # to other databases sharing the same Redis.
+        self.env['product.template'].search([])._update_slug_in_redis()
+        self.env['product.public.category'].search([])._update_slug_in_redis()
+        self.env['product.product']._update_all_products_stock_redis()
+
 
 class WebsiteRewrite(models.Model):
     _inherit = 'website.rewrite'
