@@ -234,7 +234,7 @@ class GraphQLController(http.Controller, GraphQLControllerMixin):
         return request.redirect('/shop/checkout')
 
 class AlokaiCmsMedia(http.Controller):
-    """Image uploads for the CMS studio.
+    """Image uploads for the CMS editor.
 
     A multipart endpoint rather than a GraphQL mutation: GraphQL cannot carry
     a file, and base64 in a JSON body would inflate every upload by a third.

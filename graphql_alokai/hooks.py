@@ -35,7 +35,7 @@ def pre_init_hook_login_check(env):
 def _seed_cms_homepage(env):
     """Give a fresh install an editable homepage.
 
-    Without this a merchant installs Alokai, opens the studio, and finds no
+    Without this a merchant installs Alokai, opens the CMS, and finds no
     homepage to edit - the storefront still renders it, from markup they
     cannot reach. The point of the CMS is that they can.
 

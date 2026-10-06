@@ -38,7 +38,7 @@ class AlokaiWebsitePage(models.Model):
     )
 
     # --- CMS -------------------------------------------------------------
-    # Content is authored as blocks in the storefront studio. `content` and
+    # Content is authored as blocks in the storefront CMS editor. `content` and
     # `page_type` above are superseded by this and kept only so existing
     # installs keep working; they are removed in a later, separate migration.
     # `product_tmpl_ids` is likewise superseded by the mirrored references on
@@ -348,6 +348,15 @@ class AlokaiWebsitePage(models.Model):
                     raise UserError(_(
                         'The address of "%s" is fixed by the storefront and '
                         'cannot be changed.'
+                    ) % page.name)
+        # Unpublishing would leave the storefront route with nothing behind
+        # it, the same as deleting, so it gets the same guard.
+        if 'is_published' in vals and not vals['is_published']:
+            for page in self:
+                if page.is_system and page.is_published:
+                    raise UserError(_(
+                        '"%s" is part of the storefront and cannot be '
+                        'unpublished.'
                     ) % page.name)
 
         result = super().write(vals)

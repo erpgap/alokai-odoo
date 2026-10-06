@@ -331,6 +331,24 @@ class TestCmsSystemPagesAndRegions(TransactionCase):
         with self.assertRaises(UserError):
             page.unlink()
 
+    def test_a_system_page_cannot_be_unpublished(self):
+        """Unpublishing leaves the route as empty as deleting would."""
+        page = self.Page.create({
+            'name': 'Home', 'url': '/sys-live', 'is_system': True})
+        page.publish_draft()
+
+        with self.assertRaises(UserError):
+            page.unpublish_page()
+        self.assertTrue(page.is_published)
+
+    def test_an_unpublished_system_page_can_be_published(self):
+        page = self.Page.create({
+            'name': 'Home', 'url': '/sys-draft', 'is_system': True,
+            'is_published': False})
+
+        page.publish_draft()
+        self.assertTrue(page.is_published)
+
     def test_a_system_page_url_is_fixed(self):
         page = self.Page.create({
             'name': 'Home', 'url': '/sys-fixed', 'is_system': True})
@@ -681,6 +699,26 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
             'mutation { createCmsPage(name: "Clash", url: "/public-page") '
             '{ id } }', expect_errors=True)
         self.assertTrue(body['errors'])
+
+    def test_a_category_url_is_rejected(self):
+        """The category route would win, so the page could never be seen."""
+        self.env['product.public.category'].create({
+            'name': 'Clash Category', 'website_slug': '/clash-category'})
+        self.authenticate(self.editor.login, self.editor_password)
+
+        body = self._gql(
+            'mutation { createCmsPage(name: "Clash", url: "/clash-category") '
+            '{ id } }', expect_errors=True)
+        self.assertIn('Clash Category', body['errors'][0]['message'])
+
+        page = self.env['alokai.website.page'].create({
+            'name': 'Movable', 'url': '/movable'})
+        body = self._gql(
+            'mutation ($id: Int!) { updateCmsPage(pageId: $id, '
+            'url: "/clash-category") { id } }',
+            {'id': page.id}, expect_errors=True)
+        self.assertTrue(body['errors'])
+        self.assertEqual(page.url, '/movable')
 
     def test_malformed_url_is_rejected(self):
         self.authenticate(self.editor.login, self.editor_password)

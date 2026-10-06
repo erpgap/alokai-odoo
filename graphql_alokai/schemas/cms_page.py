@@ -39,6 +39,39 @@ def _page_for_editor(env, page_id):
     return page
 
 
+def _clean_url(env, url, website, page=None):
+    """Validate a page address and return it stripped.
+
+    The storefront refuses addresses its own routes own before calling here;
+    what only Odoo knows is which addresses its records already use. Products,
+    categories and blogs all get their URLs from the slug mixin, so asking the
+    registry for its descendants covers any model that gains one later.
+    """
+    url = (url or '').strip()
+    if not url.startswith('/') or len(url) < 2:
+        raise UserError('The page address must start with / and not be empty.')
+
+    clash = env['alokai.website.page'].search([
+        ('url', '=', url),
+        ('id', '!=', page.id if page else False),
+        ('website_id', 'in', (False, website.id)),
+    ], limit=1)
+    if clash:
+        raise UserError('That address is already used by "%s".' % clash.name)
+
+    # Slugs are translated, and the storefront routes every language's.
+    langs = [code for code, _name in env['res.lang'].get_installed()]
+    owners = env.registry.descendants(['website.slug.redis.mixin'], '_inherit')
+    for model_name in owners - {'website.slug.redis.mixin'}:
+        for lang in langs:
+            Model = env[model_name].sudo().with_context(lang=lang)
+            record = Model.search([('website_slug', '=', url)], limit=1)
+            if record:
+                raise UserError('That address is already used by the %s "%s".' % (
+                    Model._description.lower(), record.display_name))
+    return url
+
+
 # --------------------------------------------------------------------------- #
 #                                   Types                                      #
 # --------------------------------------------------------------------------- #
@@ -155,7 +188,7 @@ class CmsQuery(graphene.ObjectType):
     )
     cms_pages = graphene.Field(
         CmsPageList,
-        description='Page list for the studio. Requires the CMS Editor group.',
+        description='Page list for the editor. Requires the CMS Editor group.',
     )
     cms_page_draft = graphene.Field(
         CmsPage,
@@ -417,17 +450,7 @@ class CreateCmsPage(graphene.Mutation):
         _check_editor(env)
 
         website = env['website'].get_current_website()
-        url = (url or '').strip()
-
-        if not url.startswith('/') or len(url) < 2:
-            raise UserError('The page address must start with / and not be empty.')
-
-        clash = env['alokai.website.page'].search([
-            ('url', '=', url),
-            ('website_id', 'in', (False, website.id)),
-        ], limit=1)
-        if clash:
-            raise UserError('That address is already used by "%s".' % clash.name)
+        url = _clean_url(env, url, website)
 
         return env['alokai.website.page'].create({
             'name': name,
@@ -461,19 +484,10 @@ class UpdateCmsPage(graphene.Mutation):
         if meta_description is not None:
             values['website_meta_description'] = meta_description
 
-        if url is not None:
-            url = url.strip()
-            if not url.startswith('/') or len(url) < 2:
-                raise UserError('The page address must start with / and not be empty.')
-
-            clash = env['alokai.website.page'].search([
-                ('url', '=', url),
-                ('id', '!=', page.id),
-                ('website_id', 'in', (False, page.website_id.id)),
-            ], limit=1)
-            if clash:
-                raise UserError('That address is already used by "%s".' % clash.name)
-            values['url'] = url
+        # Only a changed address is checked, so a page saved before these
+        # rules existed can still have its title or SEO edited.
+        if url is not None and url.strip() != page.url:
+            values['url'] = _clean_url(env, url, page.website_id, page)
 
         page.write(values)
         return page
