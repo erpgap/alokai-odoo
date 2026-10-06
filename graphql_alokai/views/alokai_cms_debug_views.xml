@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+    Debug-mode views of what the CMS stores. Read-only on purpose: content is
+    edited in the storefront editor, which validates blocks and keeps the
+    revision history consistent. Writing here would bypass both.
+-->
+<odoo>
+
+    <!-- Pages and regions ================================================ -->
+
+    <record id="alokai_cms_page_view_list" model="ir.ui.view">
+        <field name="name">alokai.website.page.cms.list</field>
+        <field name="model">alokai.website.page</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="name"/>
+                <field name="kind" optional="hide"/>
+                <field name="url" invisible="kind == 'region'"/>
+                <field name="region_key" invisible="kind == 'page'"/>
+                <field name="website_id" groups="website.group_multi_website"/>
+                <field name="is_system" string="Built In"/>
+                <field name="is_published"/>
+                <field name="live_revision_number"/>
+                <field name="revision_count" string="Revisions"/>
+                <field name="write_uid" optional="show"/>
+                <field name="write_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="alokai_cms_page_view_form" model="ir.ui.view">
+        <field name="name">alokai.website.page.cms.form</field>
+        <field name="model">alokai.website.page</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="kind"/>
+                            <field name="url" invisible="kind == 'region'"/>
+                            <field name="region_key" invisible="kind == 'page'"/>
+                            <field name="website_id" groups="website.group_multi_website"/>
+                            <field name="is_system" string="Built In"/>
+                        </group>
+                        <group>
+                            <field name="is_published"/>
+                            <field name="live_revision_id"/>
+                            <field name="revision_count" string="Revisions"/>
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="live" string="Live Blocks">
+                            <field name="live_blocks_display" class="font-monospace" nolabel="1"/>
+                        </page>
+                        <page name="draft" string="Draft Blocks">
+                            <field name="draft_blocks_display" class="font-monospace" nolabel="1"/>
+                        </page>
+                        <page name="revisions" string="Revisions">
+                            <field name="revision_ids" nolabel="1"
+                                   context="{'list_view_ref': 'graphql_alokai.alokai_cms_revision_view_list'}"/>
+                        </page>
+                        <page name="images" string="Draft Images">
+                            <field name="draft_attachment_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="mimetype"/>
+                                    <field name="file_size"/>
+                                    <field name="create_date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="seo" string="SEO" invisible="kind == 'region'">
+                            <group>
+                                <field name="website_meta_title"/>
+                                <field name="website_meta_description"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="alokai_cms_page_view_search" model="ir.ui.view">
+        <field name="name">alokai.website.page.cms.search</field>
+        <field name="model">alokai.website.page</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="region_key"/>
+                <filter string="Published" name="published" domain="[('is_published', '=', True)]"/>
+                <filter string="Not Published" name="not_published" domain="[('is_published', '=', False)]"/>
+                <separator/>
+                <filter string="Built In" name="system" domain="[('is_system', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_alokai_cms_pages" model="ir.actions.act_window">
+        <field name="name">CMS Pages</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kind', '=', 'page')]</field>
+        <field name="search_view_id" ref="alokai_cms_page_view_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('alokai_cms_page_view_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('alokai_cms_page_view_form')}),
+        ]"/>
+    </record>
+
+    <record id="action_alokai_cms_regions" model="ir.actions.act_window">
+        <field name="name">CMS Regions</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kind', '=', 'region')]</field>
+        <field name="search_view_id" ref="alokai_cms_page_view_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('alokai_cms_page_view_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('alokai_cms_page_view_form')}),
+        ]"/>
+    </record>
+
+    <!-- Revisions ======================================================== -->
+
+    <record id="alokai_cms_revision_view_list" model="ir.ui.view">
+        <field name="name">alokai.page.revision.list</field>
+        <field name="model">alokai.page.revision</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="page_id"/>
+                <field name="number"/>
+                <field name="restored_from_number" string="Restored From"/>
+                <field name="create_uid" string="Published By"/>
+                <field name="create_date" string="Published On"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="alokai_cms_revision_view_form" model="ir.ui.view">
+        <field name="name">alokai.page.revision.form</field>
+        <field name="model">alokai.page.revision</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="page_id"/>
+                            <field name="number"/>
+                            <field name="restored_from_id"/>
+                            <field name="restored_from_number" string="Restored From No."/>
+                        </group>
+                        <group>
+                            <field name="create_uid" string="Published By"/>
+                            <field name="create_date" string="Published On"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="blocks" string="Blocks">
+                            <field name="blocks_display" class="font-monospace" nolabel="1"/>
+                        </page>
+                        <page name="references" string="References">
+                            <group>
+                                <field name="product_tmpl_ids" widget="many2many_tags"/>
+                                <field name="category_ids" widget="many2many_tags"/>
+                                <field name="attachment_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="alokai_cms_revision_view_search" model="ir.ui.view">
+        <field name="name">alokai.page.revision.search</field>
+        <field name="model">alokai.page.revision</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="page_id"/>
+                <field name="product_tmpl_ids"/>
+                <field name="category_ids"/>
+                <filter string="Restored" name="restored" domain="[('restored_from_number', '!=', 0)]"/>
+                <group>
+                    <filter string="Page" name="group_by_page" context="{'group_by': 'page_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_alokai_cms_revisions" model="ir.actions.act_window">
+        <field name="name">CMS Revisions</field>
+        <field name="res_model">alokai.page.revision</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="alokai_cms_revision_view_search"/>
+        <field name="context">{'search_default_group_by_page': 1}</field>
+    </record>
+
+    <!-- Menu: Website > Alokai, debug mode only ========================== -->
+
+    <menuitem id="menu_alokai_root"
+        name="Alokai"
+        sequence="90"
+        parent="website.menu_website_configuration"
+        groups="base.group_no_one"/>
+
+    <menuitem id="menu_alokai_cms_pages"
+        name="CMS Pages"
+        sequence="10"
+        action="action_alokai_cms_pages"
+        parent="menu_alokai_root"/>
+
+    <menuitem id="menu_alokai_cms_regions"
+        name="CMS Regions"
+        sequence="20"
+        action="action_alokai_cms_regions"
+        parent="menu_alokai_root"/>
+
+    <menuitem id="menu_alokai_cms_revisions"
+        name="CMS Revisions"
+        sequence="30"
+        action="action_alokai_cms_revisions"
+        parent="menu_alokai_root"/>
+
+</odoo>

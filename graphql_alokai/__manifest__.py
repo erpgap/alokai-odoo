@@ -54,6 +54,7 @@ Features
         'views/product_views.xml',
         'views/website_views.xml',
         'views/alokai_website_page_views.xml',
+        'views/alokai_cms_debug_views.xml',
         'views/website_blog_views.xml',
         'views/res_config_settings_views.xml',
         'views/menu.xml'

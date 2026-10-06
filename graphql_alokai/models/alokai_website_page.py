@@ -3,7 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
-from .alokai_page_revision import validate_blocks_structure
+from .alokai_page_revision import pretty_blocks, validate_blocks_structure
 
 
 class AlokaiWebsitePage(models.Model):
@@ -93,6 +93,21 @@ class AlokaiWebsitePage(models.Model):
         help='The revision visitors currently see.',
     )
     revision_count = fields.Integer(compute='_compute_revision_count')
+    live_revision_number = fields.Integer(
+        related='live_revision_id.number', string='Live Revision No.')
+
+    # For the debug-mode backend views only: the web client has no widget
+    # for Json fields, so the blocks are shown as indented text.
+    draft_blocks_display = fields.Text(
+        string='Draft Blocks (JSON)', compute='_compute_blocks_display')
+    live_blocks_display = fields.Text(
+        string='Live Blocks (JSON)', compute='_compute_blocks_display')
+
+    @api.depends('draft_blocks', 'live_revision_id.blocks')
+    def _compute_blocks_display(self):
+        for page in self:
+            page.draft_blocks_display = pretty_blocks(page.draft_blocks)
+            page.live_blocks_display = pretty_blocks(page.live_revision_id.blocks)
 
     @api.depends('revision_ids')
     def _compute_revision_count(self):

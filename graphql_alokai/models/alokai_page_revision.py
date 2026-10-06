@@ -23,6 +23,13 @@ MAX_PAYLOAD_BYTES = 2 * 1024 * 1024
 DEFAULT_REVISION_LIMIT = 10
 
 
+def pretty_blocks(blocks):
+    """Blocks as indented JSON, for reading in the backend."""
+    if not blocks:
+        return False
+    return json.dumps(blocks, indent=2, ensure_ascii=False)
+
+
 def validate_blocks_structure(blocks):
     """Cheap structural backstop. Raises ValidationError, returns nothing.
 
@@ -139,6 +146,16 @@ class AlokaiPageRevision(models.Model):
         'attachment_id',
         string='Referenced Images',
     )
+
+    # For the debug-mode backend views only: the web client has no widget
+    # for Json fields, so the blocks are shown as indented text.
+    blocks_display = fields.Text(
+        string='Blocks (JSON)', compute='_compute_blocks_display')
+
+    @api.depends('blocks')
+    def _compute_blocks_display(self):
+        for revision in self:
+            revision.blocks_display = pretty_blocks(revision.blocks)
 
     _page_number_uniq = models.Constraint(
         'UNIQUE (page_id, number)',
