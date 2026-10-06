@@ -121,6 +121,15 @@ class CmsPage(graphene.ObjectType):
     live_revision = graphene.Int()
     updated_at = graphene.String()
     has_unpublished_changes = graphene.Boolean()
+    meta_image = graphene.String(
+        description='Odoo-relative URL of the share image (og:image), or null.',
+    )
+    seo = generic.GenericScalar(
+        description='Meta title and description per language, as stored, so '
+                    'a language with no text of its own shows as missing. '
+                    'source is "website" for the homepage, whose tags come '
+                    'from the website record. Requires the CMS Editor group.',
+    )
 
     def resolve_meta_title(self, info):
         return self.website_meta_title or None
@@ -136,6 +145,14 @@ class CmsPage(graphene.ObjectType):
     def resolve_draft_blocks(self, info):
         _check_editor(info.context['env'])
         return self.draft_blocks or []
+
+    def resolve_meta_image(self, info):
+        # Public like metaTitle: it is what the published page renders.
+        return self.sudo()._seo_image_url() if self.kind == 'page' else None
+
+    def resolve_seo(self, info):
+        _check_editor(info.context['env'])
+        return self.get_seo()
 
     def resolve_block_count(self, info):
         return len(self.draft_blocks or [])
@@ -493,6 +510,31 @@ class UpdateCmsPage(graphene.Mutation):
         return page
 
 
+class UpdateCmsPageSeo(graphene.Mutation):
+    class Arguments:
+        page_id = graphene.Int(required=True)
+        lang = graphene.String(required=True)
+        meta_title = graphene.String()
+        meta_description = graphene.String()
+        meta_image = graphene.String(
+            description='Base64 image data. An empty string removes the image.')
+
+    Output = CmsPage
+
+    @staticmethod
+    def mutate(self, info, page_id, lang, meta_title=None, meta_description=None,
+               meta_image=None):
+        page = _page_for_editor(info.context['env'], page_id)
+        values = {}
+        if meta_title is not None:
+            values['title'] = meta_title
+        if meta_description is not None:
+            values['description'] = meta_description
+        if meta_image is not None:
+            values['image'] = meta_image
+        return page.set_seo(lang, values)
+
+
 class DeleteCmsPage(graphene.Mutation):
     class Arguments:
         page_id = graphene.Int(required=True)
@@ -522,6 +564,8 @@ class CmsMutation(graphene.ObjectType):
     unpublish_cms_page = UnpublishCmsPage.Field(description='Hide a page from visitors.')
     create_cms_page = CreateCmsPage.Field()
     update_cms_page = UpdateCmsPage.Field()
+    update_cms_page_seo = UpdateCmsPageSeo.Field(
+        description='Save meta title and description for one language.')
     delete_cms_page = DeleteCmsPage.Field()
 
 

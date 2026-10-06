@@ -442,6 +442,63 @@ class TestCmsSystemPagesAndRegions(TransactionCase):
 
 
 @tagged('post_install', '-at_install')
+class TestCmsSeo(TransactionCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env['res.lang']._activate_lang('pt_PT')
+        cls.Page = cls.env['alokai.website.page']
+        cls.page = cls.Page.create({'name': 'About', 'url': '/seo-about'})
+
+    def test_seo_is_saved_per_language(self):
+        self.page.set_seo('en_US', {'title': 'About us', 'description': 'Who we are'})
+        self.page.set_seo('pt_PT', {'title': 'Sobre nós'})
+
+        seo = self.page.get_seo()
+        self.assertEqual(seo['source'], 'page')
+        self.assertEqual(seo['title'], {'en_US': 'About us', 'pt_PT': 'Sobre nós'})
+        # Never written in Portuguese, so it is missing rather than English.
+        self.assertNotIn('pt_PT', seo['description'])
+
+    def test_clearing_one_language_keeps_the_others(self):
+        self.page.set_seo('en_US', {'title': 'About us'})
+        self.page.set_seo('pt_PT', {'title': 'Sobre nós'})
+
+        self.page.set_seo('pt_PT', {'title': ''})
+
+        self.assertEqual(self.page.get_seo()['title'], {'en_US': 'About us'})
+
+    def test_homepage_seo_lives_on_the_website(self):
+        """The homepage renders the website record's tags, not its page's."""
+        home = self.Page.seed_homepage([block()])
+        home.set_seo('en_US', {'title': 'Shop timeless style'})
+
+        self.assertEqual(home.get_seo()['source'], 'website')
+        self.assertEqual(home.website_id.website_meta_title, 'Shop timeless style')
+        self.assertFalse(home.website_meta_title)
+
+    def test_share_image_is_saved_and_removed(self):
+        # 1x1 transparent PNG.
+        png = ('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAA'
+               'AAYAAjCB0C8AAAAASUVORK5CYII=')
+        self.page.set_seo('en_US', {'image': png})
+
+        url = self.page.get_seo()['image']
+        self.assertTrue(url.startswith(
+            '/web/image/alokai.website.page/%s/website_meta_img' % self.page.id))
+
+        self.page.set_seo('en_US', {'image': ''})
+        self.assertIsNone(self.page.get_seo()['image'])
+
+    def test_a_region_has_no_seo(self):
+        region = self.Page.create({
+            'name': 'Below products', 'kind': 'region', 'region_key': 'seo-region'})
+        with self.assertRaises(UserError):
+            region.set_seo('en_US', {'title': 'Nope'})
+
+
+@tagged('post_install', '-at_install')
 class TestCmsInvalidation(TransactionCase):
     """Cache invalidation in both directions."""
 
@@ -719,6 +776,22 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
             {'id': page.id}, expect_errors=True)
         self.assertTrue(body['errors'])
         self.assertEqual(page.url, '/movable')
+
+    def test_editor_saves_and_reads_seo(self):
+        page = self.env['alokai.website.page'].create({
+            'name': 'Seo', 'url': '/seo-gql'})
+        self.authenticate(self.editor.login, self.editor_password)
+
+        self._gql(
+            'mutation ($id: Int!) { updateCmsPageSeo(pageId: $id, lang: "en_US", '
+            'metaTitle: "Our story", metaDescription: "How it started") { id } }',
+            {'id': page.id})
+        body = self._gql(
+            'query ($id: Int!) { cmsPageDraft(id: $id) { seo } }', {'id': page.id})
+
+        seo = body['data']['cmsPageDraft']['seo']
+        self.assertEqual(seo['title']['en_US'], 'Our story')
+        self.assertEqual(seo['description']['en_US'], 'How it started')
 
     def test_malformed_url_is_rejected(self):
         self.authenticate(self.editor.login, self.editor_password)
