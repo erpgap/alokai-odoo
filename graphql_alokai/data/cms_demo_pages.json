@@ -1,0 +1,1261 @@
+[
+  {
+    "name": "About",
+    "url": "/about",
+    "meta_title": "About — Alokai by ERPGAP",
+    "meta_description": "Alokai is a showcase storefront built by ERPGAP, connecting Odoo to a modern headless commerce experience.",
+    "blocks": [
+      {
+        "id": "about_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "About"
+          },
+          "title": {
+            "en_US": "Built by ERPGAP"
+          },
+          "subtitle": {
+            "en_US": "Alokai is a showcase storefront connecting Odoo to a modern, headless shopping experience."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_about_banner}"
+          }
+        }
+      },
+      {
+        "id": "about_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Our story"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "ERPGAP helps businesses run on Odoo — and sell beautifully on top of it. Alokai is our open storefront that proves how good headless commerce on Odoo can look and feel."
+          },
+          "align": "left",
+          "size": "lead",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "about_3",
+        "blockType": "featureList",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": ""
+          },
+          "columns": "3",
+          "numbered": true,
+          "items": [
+            {
+              "title": {
+                "en_US": "Odoo at the core"
+              },
+              "text": {
+                "en_US": "ERPGAP are Odoo specialists. Alokai plugs a modern storefront straight into Odoo for catalog, pricing, inventory and orders — one source of truth."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Headless & fast"
+              },
+              "text": {
+                "en_US": "Built on Nuxt and the Alokai (Vue Storefront) framework for a fast, SEO-friendly, fully customisable shopping experience."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Open & extensible"
+              },
+              "text": {
+                "en_US": "A composable architecture you own end to end — themeable, API-first, and ready to grow with your business."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "about_4",
+        "blockType": "editorial",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "The showcase"
+          },
+          "title": {
+            "en_US": "Commerce, the composable way"
+          },
+          "body": {
+            "en_US": "Everything you see here — the catalog, cart, search and checkout — is powered by Odoo through the Alokai framework. It's a template you can make entirely your own."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_about_editorial}"
+          },
+          "imageAlt": {
+            "en_US": "Crafted commerce"
+          },
+          "imagePosition": "left",
+          "ctaLabel": {
+            "en_US": "Explore the store"
+          },
+          "ctaUrl": {
+            "en_US": "/products"
+          }
+        }
+      },
+      {
+        "id": "about_5",
+        "blockType": "stats",
+        "schemaVersion": 1,
+        "data": {
+          "items": [
+            {
+              "value": {
+                "en_US": "10+"
+              },
+              "label": {
+                "en_US": "Years with Odoo"
+              }
+            },
+            {
+              "value": {
+                "en_US": "100%"
+              },
+              "label": {
+                "en_US": "Composable & headless"
+              }
+            },
+            {
+              "value": {
+                "en_US": "∞"
+              },
+              "label": {
+                "en_US": "Customisable"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "about_6",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "about_7",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": "Work with ERPGAP"
+          },
+          "body": {
+            "en_US": "Want a storefront like this on your own Odoo? We'd love to talk. Reach us at [info@erpgap.com](mailto:info@erpgap.com)."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": "Visit erpgap.com"
+          },
+          "ctaUrl": {
+            "en_US": "https://www.erpgap.com/"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Sustainability",
+    "url": "/sustainability",
+    "meta_title": "Sustainability — Alokai",
+    "meta_description": "Our approach to materials, making and responsibility.",
+    "blocks": [
+      {
+        "id": "sustainability_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Our responsibility"
+          },
+          "title": {
+            "en_US": "Made to last, made with care"
+          },
+          "subtitle": {
+            "en_US": "Considered design is the most sustainable design — here's how we approach it."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_sustainability_banner}"
+          }
+        }
+      },
+      {
+        "id": "sustainability_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "sustainability_3",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "We believe the most responsible product is one you keep for years. That principle shapes the materials we choose, the way we make, and how we get it to you."
+          },
+          "align": "left",
+          "size": "lead",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "sustainability_4",
+        "blockType": "featureList",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": ""
+          },
+          "columns": "2",
+          "numbered": true,
+          "items": [
+            {
+              "title": {
+                "en_US": "Natural materials"
+              },
+              "text": {
+                "en_US": "Organic cotton, pure linen and responsibly sourced leather — fibres chosen to last and to age well."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Made to last"
+              },
+              "text": {
+                "en_US": "We design against the trend cycle. Fewer, better pieces mean less waste over a garment's life."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Lower-impact shipping"
+              },
+              "text": {
+                "en_US": "Recyclable, plastic-free packaging and carbon-aware carriers on every order."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Transparent sourcing"
+              },
+              "text": {
+                "en_US": "We work with partners who share our standards on materials, labour and traceability."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "sustainability_5",
+        "blockType": "editorial",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "A work in progress"
+          },
+          "title": {
+            "en_US": "Honest about the journey"
+          },
+          "body": {
+            "en_US": "We don't claim to be perfect. Sustainability is a direction, not a badge — and we'd rather share real progress than greenwash. This is a demo showcase, but the principles reflect how we'd build a responsible brand."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_sustainability_editorial}"
+          },
+          "imageAlt": {
+            "en_US": "Considered craft"
+          },
+          "imagePosition": "right",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Stores",
+    "url": "/stores",
+    "meta_title": "Stores — Alokai",
+    "meta_description": "Visit an Alokai flagship store.",
+    "blocks": [
+      {
+        "id": "stores_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Visit us"
+          },
+          "title": {
+            "en_US": "Our stores"
+          },
+          "subtitle": {
+            "en_US": "Come see the collection in person at one of our flagship locations."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_stores_banner}"
+          }
+        }
+      },
+      {
+        "id": "stores_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "stores_3",
+        "blockType": "cardGrid",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": ""
+          },
+          "columns": "3",
+          "imageShape": "classic",
+          "items": [
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_store_lisbon}"
+              },
+              "eyebrow": {
+                "en_US": ""
+              },
+              "title": {
+                "en_US": "Lisbon"
+              },
+              "text": {
+                "en_US": "Rua Garrett 42, 1200-203 Lisboa"
+              },
+              "footnote": {
+                "en_US": "Mon–Sat 10–20 · Sun 12–18"
+              },
+              "link": {
+                "en_US": ""
+              }
+            },
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_store_london}"
+              },
+              "eyebrow": {
+                "en_US": ""
+              },
+              "title": {
+                "en_US": "London"
+              },
+              "text": {
+                "en_US": "18 Redchurch Street, Shoreditch, E2 7DJ"
+              },
+              "footnote": {
+                "en_US": "Mon–Sat 10–19 · Sun 11–17"
+              },
+              "link": {
+                "en_US": ""
+              }
+            },
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_store_newyork}"
+              },
+              "eyebrow": {
+                "en_US": ""
+              },
+              "title": {
+                "en_US": "New York"
+              },
+              "text": {
+                "en_US": "76 Greene Street, SoHo, NY 10012"
+              },
+              "footnote": {
+                "en_US": "Mon–Sun 11–20"
+              },
+              "link": {
+                "en_US": ""
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "stores_4",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Can't make it in? You can shop the full collection [online](/products), with complimentary shipping over $150."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Journal",
+    "url": "/journal",
+    "meta_title": "Journal — Alokai",
+    "meta_description": "Stories on design, materials and the people behind Alokai.",
+    "blocks": [
+      {
+        "id": "journal_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Journal"
+          },
+          "title": {
+            "en_US": "Stories & ideas"
+          },
+          "subtitle": {
+            "en_US": "On design, materials and the craft behind every piece."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_journal_banner}"
+          }
+        }
+      },
+      {
+        "id": "journal_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "journal_3",
+        "blockType": "cardGrid",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": ""
+          },
+          "columns": "2",
+          "imageShape": "wide",
+          "items": [
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_journal_1}"
+              },
+              "eyebrow": {
+                "en_US": "Materials · May 2026"
+              },
+              "title": {
+                "en_US": "Why we choose natural fibres"
+              },
+              "text": {
+                "en_US": "Organic cotton, linen and full-grain leather — and how they wear in over time."
+              },
+              "footnote": {
+                "en_US": ""
+              },
+              "link": {
+                "en_US": ""
+              }
+            },
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_journal_2}"
+              },
+              "eyebrow": {
+                "en_US": "Design · Apr 2026"
+              },
+              "title": {
+                "en_US": "The case for fewer, better pieces"
+              },
+              "text": {
+                "en_US": "A look at how a considered wardrobe outlasts the trend cycle."
+              },
+              "footnote": {
+                "en_US": ""
+              },
+              "link": {
+                "en_US": ""
+              }
+            },
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_journal_3}"
+              },
+              "eyebrow": {
+                "en_US": "Craft · Mar 2026"
+              },
+              "title": {
+                "en_US": "Inside our leather workshop"
+              },
+              "text": {
+                "en_US": "Meet the makers shaping every bag, by hand, one at a time."
+              },
+              "footnote": {
+                "en_US": ""
+              },
+              "link": {
+                "en_US": ""
+              }
+            },
+            {
+              "image": {
+                "en_US": "{image:graphql_alokai.cms_demo_image_journal_4}"
+              },
+              "eyebrow": {
+                "en_US": "Behind the build · Feb 2026"
+              },
+              "title": {
+                "en_US": "Headless commerce on Odoo"
+              },
+              "text": {
+                "en_US": "How ERPGAP connects this storefront to Odoo with the Alokai framework."
+              },
+              "footnote": {
+                "en_US": ""
+              },
+              "link": {
+                "en_US": ""
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "Shipping",
+    "url": "/shipping",
+    "meta_title": "Shipping — Alokai",
+    "meta_description": "Shipping options, delivery times and tracking for Alokai orders.",
+    "blocks": [
+      {
+        "id": "shipping_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Help"
+          },
+          "title": {
+            "en_US": "Shipping & Delivery"
+          },
+          "subtitle": {
+            "en_US": "Considered packaging, carbon-aware carriers and tracking on every order."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_shipping_banner}"
+          }
+        }
+      },
+      {
+        "id": "shipping_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "shipping_3",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "We aim to dispatch every order within one business day. You'll receive a confirmation email with tracking as soon as your parcel leaves our warehouse."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "shipping_4",
+        "blockType": "infoRows",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": "Delivery options"
+          },
+          "items": [
+            {
+              "label": {
+                "en_US": "Standard"
+              },
+              "value": {
+                "en_US": "3–5 business days"
+              },
+              "note": {
+                "en_US": "Free over $150 · $8 under"
+              }
+            },
+            {
+              "label": {
+                "en_US": "Express"
+              },
+              "value": {
+                "en_US": "1–2 business days"
+              },
+              "note": {
+                "en_US": "$18 flat"
+              }
+            },
+            {
+              "label": {
+                "en_US": "International"
+              },
+              "value": {
+                "en_US": "7–14 business days"
+              },
+              "note": {
+                "en_US": "Calculated at checkout"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "shipping_5",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": "Processing & tracking"
+          },
+          "body": {
+            "en_US": "Orders placed before 1pm local time ship the same day, Monday to Friday. Once dispatched, your tracking link stays live until delivery — no account required."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "shipping_6",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": "International orders"
+          },
+          "body": {
+            "en_US": "We ship worldwide. Duties and import taxes, where they apply, are calculated transparently at checkout so there are no surprises on delivery. Still have a question? [Visit our FAQ](/faq)."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Returns",
+    "url": "/returns",
+    "meta_title": "Returns & Exchanges — Alokai",
+    "meta_description": "30-day returns and easy exchanges on Alokai orders.",
+    "blocks": [
+      {
+        "id": "returns_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Help"
+          },
+          "title": {
+            "en_US": "Returns & Exchanges"
+          },
+          "subtitle": {
+            "en_US": "Changed your mind? You have 30 days, on us."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_returns_banner}"
+          }
+        }
+      },
+      {
+        "id": "returns_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "returns_3",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "We want you to love what you ordered. If something isn't right, return any unworn item within 30 days for a full refund or exchange."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "returns_4",
+        "blockType": "featureList",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": "How it works"
+          },
+          "columns": "2",
+          "numbered": true,
+          "items": [
+            {
+              "title": {
+                "en_US": "Start your return"
+              },
+              "text": {
+                "en_US": "Use the link in your dispatch email or contact us — no account needed."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Pack it up"
+              },
+              "text": {
+                "en_US": "Place items back in their original packaging with tags attached."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Drop it off"
+              },
+              "text": {
+                "en_US": "Print the prepaid label and drop your parcel at any partner location."
+              }
+            },
+            {
+              "title": {
+                "en_US": "Get refunded"
+              },
+              "text": {
+                "en_US": "Refunds are issued to your original payment method within 5 business days of arrival."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "returns_5",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": "What can be returned"
+          },
+          "body": {
+            "en_US": "- Unworn items with original tags and packaging.\n- Within 30 days of delivery.\n- Final-sale items and gift cards are not eligible.\n\nPrefer an exchange? Start a return and pick your new size or colour — we'll ship the replacement as soon as your original is on its way back. [More questions?](/faq)"
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "FAQ",
+    "url": "/faq",
+    "meta_title": "FAQ — Alokai",
+    "meta_description": "Frequently asked questions about orders, shipping, returns and more.",
+    "blocks": [
+      {
+        "id": "faq_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Help"
+          },
+          "title": {
+            "en_US": "Frequently asked questions"
+          },
+          "subtitle": {
+            "en_US": "Everything you need to know about ordering, shipping and returns."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_faq_banner}"
+          }
+        }
+      },
+      {
+        "id": "faq_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "faq_3",
+        "blockType": "faq",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": ""
+          },
+          "items": [
+            {
+              "group": {
+                "en_US": "Orders"
+              },
+              "question": {
+                "en_US": "Can I change or cancel my order?"
+              },
+              "answer": {
+                "en_US": "Orders can be changed or cancelled within one hour of placing them, before they enter our dispatch queue. Contact us as soon as possible and we'll do our best to help."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Orders"
+              },
+              "question": {
+                "en_US": "How do I track my order?"
+              },
+              "answer": {
+                "en_US": "Every dispatch email includes a live tracking link — no account required. You can follow your parcel from our warehouse to your door."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Shipping"
+              },
+              "question": {
+                "en_US": "Do you ship internationally?"
+              },
+              "answer": {
+                "en_US": "Yes, we ship worldwide. Duties and taxes, where applicable, are calculated transparently at checkout. See our Shipping page for delivery estimates."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Shipping"
+              },
+              "question": {
+                "en_US": "How much is shipping?"
+              },
+              "answer": {
+                "en_US": "Standard shipping is complimentary on orders over $150, and a flat $8 below that. Express and international rates are shown at checkout."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Returns"
+              },
+              "question": {
+                "en_US": "What is your return policy?"
+              },
+              "answer": {
+                "en_US": "Return any unworn item with its original tags within 30 days for a full refund or exchange. Final-sale items and gift cards are excluded."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Returns"
+              },
+              "question": {
+                "en_US": "When will I be refunded?"
+              },
+              "answer": {
+                "en_US": "Refunds are issued to your original payment method within 5 business days of your return arriving back with us."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Products & care"
+              },
+              "question": {
+                "en_US": "What materials do you use?"
+              },
+              "answer": {
+                "en_US": "Our pieces are cut from natural fabrics — organic cotton, pure linen and full-grain leather — chosen to wear in beautifully over time."
+              }
+            },
+            {
+              "group": {
+                "en_US": "Products & care"
+              },
+              "question": {
+                "en_US": "How should I care for my pieces?"
+              },
+              "answer": {
+                "en_US": "Care instructions are printed on each garment's label. As a rule, cooler washes and air-drying keep natural fibres looking their best for longer."
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "faq_4",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Still stuck? Reach the team via our [contact details](/contact)."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Contact",
+    "url": "/contact",
+    "meta_title": "Contact — Alokai by ERPGAP",
+    "meta_description": "Get in touch with the team behind Alokai.",
+    "blocks": [
+      {
+        "id": "contact_1",
+        "blockType": "pageHeader",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Help"
+          },
+          "title": {
+            "en_US": "Get in touch"
+          },
+          "subtitle": {
+            "en_US": "Questions about an order, or about building your own Alokai storefront? We're here."
+          },
+          "image": {
+            "en_US": "{image:graphql_alokai.cms_demo_image_contact_banner}"
+          }
+        }
+      },
+      {
+        "id": "contact_2",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": "Demo store"
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "normal",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      },
+      {
+        "id": "contact_3",
+        "blockType": "contactForm",
+        "schemaVersion": 1,
+        "data": {
+          "title": {
+            "en_US": "Talk to us"
+          },
+          "channels": [
+            {
+              "label": {
+                "en_US": "Email"
+              },
+              "value": {
+                "en_US": "info@erpgap.com"
+              },
+              "link": {
+                "en_US": "mailto:info@erpgap.com"
+              }
+            },
+            {
+              "label": {
+                "en_US": "Website"
+              },
+              "value": {
+                "en_US": "erpgap.com"
+              },
+              "link": {
+                "en_US": "https://www.erpgap.com/"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "contact_4",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Looking for order help first? You might find your answer in the [FAQ](/faq), [Shipping](/shipping) or [Returns](/returns) pages."
+          },
+          "align": "left",
+          "size": "body",
+          "spacing": "compact",
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          }
+        }
+      }
+    ]
+  }
+]

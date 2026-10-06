@@ -372,6 +372,28 @@ class TestCmsSystemPagesAndRegions(TransactionCase):
         page.unlink()
         self.assertFalse(page.exists())
 
+    def test_demo_pages_are_seeded_published_and_never_overwritten(self):
+        from odoo.addons.graphql_alokai.hooks import _seed_cms_demo_pages
+
+        mine = self.Page.search([('url', '=', '/faq')]) or self.Page.create(
+            {'name': 'My FAQ', 'url': '/faq'})
+        mine.name = 'My FAQ'
+        _seed_cms_demo_pages(self.env)
+        _seed_cms_demo_pages(self.env)
+
+        about = self.Page.search([('url', '=', '/about')])
+        self.assertEqual(len(about), 1, 'seeding twice must not duplicate')
+        self.assertTrue(about.is_published)
+        self.assertFalse(about.is_system, 'demo pages are the merchant\'s to delete')
+        banner = about.live_revision_id.blocks[0]
+        self.assertEqual(banner['blockType'], 'pageHeader')
+        # Images come from the media library, and the revision records them.
+        banner_image = self.env.ref('graphql_alokai.cms_demo_image_about_banner')
+        self.assertEqual(banner['data']['image']['en_US'], '/web/image/%s' % banner_image.id)
+        self.assertIn(banner_image, about.live_revision_id.attachment_ids)
+        self.assertEqual(about.website_meta_title, 'About — Alokai by ERPGAP')
+        self.assertEqual(mine.name, 'My FAQ')
+
     def test_seed_homepage_is_idempotent(self):
         """Re-running after a release must not overwrite merchant content."""
         first = self.Page.seed_homepage([block('default copy')])

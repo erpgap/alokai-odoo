@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import random
+import re
 from datetime import datetime, timedelta
 
 from odoo import api, _
@@ -64,6 +65,73 @@ def _seed_cms_homepage(env):
         _logger.warning('Could not seed the CMS homepage: %s', error)
 
 
+_DEMO_IMAGE = re.compile(r'^\{image:([\w.]+)\}$')
+
+
+def _resolve_demo_images(env, value, attachment_ids):
+    """Swap `{image:<xml id>}` for the URL the media library serves it at.
+
+    Attachment ids differ per database, so the demo content names its images
+    by XML id (data/demo_cms_images.xml) and this fills in the real ids.
+    """
+    if isinstance(value, dict):
+        return {key: _resolve_demo_images(env, item, attachment_ids) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_resolve_demo_images(env, item, attachment_ids) for item in value]
+    if isinstance(value, str):
+        match = _DEMO_IMAGE.match(value)
+        if match:
+            attachment = env.ref(match.group(1))
+            attachment_ids.append(attachment.id)
+            return '/web/image/%s' % attachment.id
+    return value
+
+
+def _seed_cms_demo_pages(env):
+    """The demo store's content pages - about, FAQ, shipping and the rest.
+
+    They are demo content, not part of the storefront: a real store writes its
+    own, so they exist only where demo data was installed. Each is a normal,
+    published CMS page the merchant can edit or delete.
+
+    An address that already has a page is skipped, so nothing a merchant
+    wrote is ever overwritten.
+    """
+    path = os.path.join(os.path.dirname(__file__), 'data', 'cms_demo_pages.json')
+    try:
+        with open(path, encoding='utf-8') as handle:
+            pages = json.load(handle)
+    except (OSError, ValueError) as error:
+        _logger.warning('Could not read the demo content pages: %s', error)
+        return
+
+    Page = env['alokai.website.page']
+    website = env['website'].get_current_website()
+    created = 0
+    for spec in pages:
+        if Page.search_count([
+            ('url', '=', spec['url']),
+            ('website_id', 'in', (False, website.id)),
+        ]):
+            continue
+        attachment_ids = []
+        page = Page.create({
+            'name': spec['name'],
+            'url': spec['url'],
+            'website_id': website.id,
+            'draft_blocks': _resolve_demo_images(env, spec['blocks'], attachment_ids),
+        })
+        # The references the editor would send on publish, so the images are
+        # known to be in use rather than looking like orphans.
+        page.publish_draft(references={'attachment_ids': attachment_ids})
+        page.set_seo('en_US', {
+            'title': spec.get('meta_title'),
+            'description': spec.get('meta_description'),
+        })
+        created += 1
+    _logger.info('Demo content pages created: %s', created)
+
+
 def _seed_cms_regions(env):
     """Declare the slots the storefront provides.
 
@@ -99,6 +167,7 @@ def post_init_hook_login_convert(env):
       - Generate fake customer reviews on every product
       - Generate demo sales history (popularity + frequently-bought-together)
       - Set alternative products (upsell) on each product
+      - Create the demo store's content pages (about, FAQ, ...) in the CMS
       - Enable Redis and push slugs and stock, if a Redis server is reachable
     """
     # ---- Production tasks ------------------------------------------------
@@ -129,6 +198,7 @@ def post_init_hook_login_convert(env):
     _generate_demo_sales(env)
     _generate_demo_alternatives(env)
     _clear_unwanted_social_fields(env)
+    _seed_cms_demo_pages(env)
     # Last, so the bulk demo writes above run with Redis still disabled.
     env['website']._alokai_demo_enable_redis()
 

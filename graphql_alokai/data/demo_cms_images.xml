@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+    Images for the demo content pages, in the CMS media library. Filed the way
+    an editor upload is (public, res_model alokai.website.page), so they show
+    in the library and are served by /web/image like any other upload. The
+    pages refer to them through their XML ids; see _seed_cms_demo_pages.
+-->
+<odoo noupdate="1">
+
+    <record id="cms_demo_image_about_banner" model="ir.attachment">
+        <field name="name">about-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/about-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_about_editorial" model="ir.attachment">
+        <field name="name">about-editorial.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/about-editorial.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_contact_banner" model="ir.attachment">
+        <field name="name">contact-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/contact-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_faq_banner" model="ir.attachment">
+        <field name="name">faq-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/faq-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_journal_1" model="ir.attachment">
+        <field name="name">journal-1.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/journal-1.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_journal_2" model="ir.attachment">
+        <field name="name">journal-2.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/journal-2.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_journal_3" model="ir.attachment">
+        <field name="name">journal-3.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/journal-3.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_journal_4" model="ir.attachment">
+        <field name="name">journal-4.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/journal-4.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_journal_banner" model="ir.attachment">
+        <field name="name">journal-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/journal-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_returns_banner" model="ir.attachment">
+        <field name="name">returns-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/returns-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_shipping_banner" model="ir.attachment">
+        <field name="name">shipping-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/shipping-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_store_lisbon" model="ir.attachment">
+        <field name="name">store-lisbon.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/store-lisbon.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_store_london" model="ir.attachment">
+        <field name="name">store-london.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/store-london.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_store_newyork" model="ir.attachment">
+        <field name="name">store-newyork.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/store-newyork.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_stores_banner" model="ir.attachment">
+        <field name="name">stores-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/stores-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_sustainability_banner" model="ir.attachment">
+        <field name="name">sustainability-banner.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/sustainability-banner.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+    <record id="cms_demo_image_sustainability_editorial" model="ir.attachment">
+        <field name="name">sustainability-editorial.webp</field>
+        <field name="datas" type="base64" file="graphql_alokai/data/cms_demo_images/sustainability-editorial.webp"/>
+        <field name="mimetype">image/webp</field>
+        <field name="res_model">alokai.website.page</field>
+        <field name="public" eval="True"/>
+    </record>
+
+</odoo>
