@@ -81,22 +81,28 @@ class IrBinary(models.AbstractModel):
 
                     if img.mode != 'RGBA':
                         img = img.convert('RGBA')
-                    # Create a new background, merge the background with the image centered
-                    img_w, img_h = img.size
-                    if target_format == 'jpeg':
-                        background = Image.new('RGB', (width, height), background_rgba[:3])
+                    if self._is_cms_media(record):
+                        # CMS images keep their own proportions: the storefront
+                        # crops them to the block's shape, and padding them to
+                        # the requested box would show as a white frame.
+                        background = img.convert('RGB') if target_format == 'jpeg' else img
                     else:
-                        background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
-                    bg_w, bg_h = background.size
-                    offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
-                    if target_format == 'jpeg':
-                        # JPEG has no alpha channel. Composite over the (white)
-                        # background using the image's own alpha as the mask so
-                        # transparent areas show the background colour instead
-                        # of turning black.
-                        background.paste(img, offset, mask=img)
-                    else:
-                        background.paste(img, offset)
+                        # Create a new background, merge the background with the image centered
+                        img_w, img_h = img.size
+                        if target_format == 'jpeg':
+                            background = Image.new('RGB', (width, height), background_rgba[:3])
+                        else:
+                            background = WebPImagePlugin.Image.new('RGBA', (width, height), background_rgba)
+                        bg_w, bg_h = background.size
+                        offset = ((bg_w - img_w) // 2, (bg_h - img_h) // 2)
+                        if target_format == 'jpeg':
+                            # JPEG has no alpha channel. Composite over the (white)
+                            # background using the image's own alpha as the mask so
+                            # transparent areas show the background colour instead
+                            # of turning black.
+                            background.paste(img, offset, mask=img)
+                        else:
+                            background.paste(img, offset)
 
                     # Get compression quality from settings
                     quality = int(ICP.get_param('alokai_image_quality', 100))
@@ -116,6 +122,10 @@ class IrBinary(models.AbstractModel):
                     stream.data = base64.b64decode(image_base64)
                 self._update_download_name(record, stream, filename, field_name, filename_field, f'image/{target_format}', default_mimetype)
         return stream
+
+    def _is_cms_media(self, record):
+        """An image from the CMS media library, as uploaded by the editor."""
+        return record._name == 'ir.attachment' and record.res_model == 'alokai.website.page'
 
     def _update_download_name(self, record, stream, filename, field_name, filename_field, mimetype, default_mimetype):
         if stream.type in ('data', 'path'):

@@ -815,6 +815,29 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
         self.assertEqual(seo['title']['en_US'], 'Our story')
         self.assertEqual(seo['description']['en_US'], 'How it started')
 
+    def test_cms_images_are_resized_without_padding(self):
+        """Product tiles are padded to the requested box; CMS images are not,
+        or a photo shows a white frame inside its block."""
+        import base64
+        import io
+        from PIL import Image
+
+        buffer = io.BytesIO()
+        Image.new('RGB', (400, 200), (200, 100, 50)).save(buffer, format='WEBP')
+        data = buffer.getvalue()
+
+        def served_size(res_model):
+            attachment = self.env['ir.attachment'].create({
+                'name': 'photo.webp', 'raw': data, 'mimetype': 'image/webp',
+                'res_model': res_model, 'public': True,
+            })
+            response = self.url_open('/web/image/%s/200x200/photo.webp' % attachment.id)
+            self.assertEqual(response.status_code, 200)
+            return Image.open(io.BytesIO(response.content)).size
+
+        self.assertEqual(served_size('alokai.website.page'), (200, 100))
+        self.assertEqual(served_size('product.template'), (200, 200))
+
     def test_malformed_url_is_rejected(self):
         self.authenticate(self.editor.login, self.editor_password)
         for url in ('no-leading-slash', '/', ''):

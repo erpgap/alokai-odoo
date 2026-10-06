@@ -29,6 +29,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": "Our story"
           },
@@ -39,14 +40,17 @@
             "en_US": "ERPGAP helps businesses run on Odoo — and sell beautifully on top of it. Alokai is our open storefront that proves how good headless commerce on Odoo can look and feel."
           },
           "align": "left",
+          "width": "column",
           "size": "lead",
           "spacing": "normal",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -57,6 +61,8 @@
           "title": {
             "en_US": ""
           },
+          "layout": "band",
+          "numberPosition": "above",
           "columns": "3",
           "numbered": true,
           "items": [
@@ -108,6 +114,7 @@
             "en_US": "Crafted commerce"
           },
           "imagePosition": "left",
+          "titleSize": "regular",
           "ctaLabel": {
             "en_US": "Explore the store"
           },
@@ -154,24 +161,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "compact",
+          "spacing": "start",
+          "divider": true,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -179,6 +190,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -189,14 +201,17 @@
             "en_US": "Want a storefront like this on your own Odoo? We'd love to talk. Reach us at [info@erpgap.com](mailto:info@erpgap.com)."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
           "spacing": "compact",
+          "divider": false,
           "ctaLabel": {
             "en_US": "Visit erpgap.com"
           },
           "ctaUrl": {
             "en_US": "https://www.erpgap.com/"
-          }
+          },
+          "ctaPosition": "beside"
         }
       }
     ]
@@ -231,24 +246,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -256,6 +275,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -266,14 +286,17 @@
             "en_US": "We believe the most responsible product is one you keep for years. That principle shapes the materials we choose, the way we make, and how we get it to you."
           },
           "align": "left",
+          "width": "column",
           "size": "lead",
           "spacing": "compact",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -284,6 +307,8 @@
           "title": {
             "en_US": ""
           },
+          "layout": "band",
+          "numberPosition": "beside",
           "columns": "2",
           "numbered": true,
           "items": [
@@ -343,6 +368,7 @@
             "en_US": "Considered craft"
           },
           "imagePosition": "right",
+          "titleSize": "regular",
           "ctaLabel": {
             "en_US": ""
           },
@@ -383,24 +409,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "wide",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -411,6 +441,7 @@
           "title": {
             "en_US": ""
           },
+          "spacing": "compact",
           "columns": "3",
           "imageShape": "classic",
           "items": [
@@ -419,6 +450,9 @@
                 "en_US": "{image:graphql_alokai.cms_demo_image_store_lisbon}"
               },
               "eyebrow": {
+                "en_US": ""
+              },
+              "date": {
                 "en_US": ""
               },
               "title": {
@@ -441,6 +475,9 @@
               "eyebrow": {
                 "en_US": ""
               },
+              "date": {
+                "en_US": ""
+              },
               "title": {
                 "en_US": "London"
               },
@@ -459,6 +496,9 @@
                 "en_US": "{image:graphql_alokai.cms_demo_image_store_newyork}"
               },
               "eyebrow": {
+                "en_US": ""
+              },
+              "date": {
                 "en_US": ""
               },
               "title": {
@@ -482,6 +522,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -492,14 +533,17 @@
             "en_US": "Can't make it in? You can shop the full collection [online](/products), with complimentary shipping over $150."
           },
           "align": "left",
+          "width": "wide",
           "size": "body",
-          "spacing": "compact",
+          "spacing": "end",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       }
     ]
@@ -534,24 +578,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "wide",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -562,6 +610,7 @@
           "title": {
             "en_US": ""
           },
+          "spacing": "end",
           "columns": "2",
           "imageShape": "wide",
           "items": [
@@ -570,7 +619,10 @@
                 "en_US": "{image:graphql_alokai.cms_demo_image_journal_1}"
               },
               "eyebrow": {
-                "en_US": "Materials · May 2026"
+                "en_US": "Materials"
+              },
+              "date": {
+                "en_US": "May 2026"
               },
               "title": {
                 "en_US": "Why we choose natural fibres"
@@ -590,7 +642,10 @@
                 "en_US": "{image:graphql_alokai.cms_demo_image_journal_2}"
               },
               "eyebrow": {
-                "en_US": "Design · Apr 2026"
+                "en_US": "Design"
+              },
+              "date": {
+                "en_US": "Apr 2026"
               },
               "title": {
                 "en_US": "The case for fewer, better pieces"
@@ -610,7 +665,10 @@
                 "en_US": "{image:graphql_alokai.cms_demo_image_journal_3}"
               },
               "eyebrow": {
-                "en_US": "Craft · Mar 2026"
+                "en_US": "Craft"
+              },
+              "date": {
+                "en_US": "Mar 2026"
               },
               "title": {
                 "en_US": "Inside our leather workshop"
@@ -630,7 +688,10 @@
                 "en_US": "{image:graphql_alokai.cms_demo_image_journal_4}"
               },
               "eyebrow": {
-                "en_US": "Behind the build · Feb 2026"
+                "en_US": "Behind the build"
+              },
+              "date": {
+                "en_US": "Feb 2026"
               },
               "title": {
                 "en_US": "Headless commerce on Odoo"
@@ -680,24 +741,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -705,6 +770,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -715,14 +781,17 @@
             "en_US": "We aim to dispatch every order within one business day. You'll receive a confirmation email with tracking as soon as your parcel leaves our warehouse."
           },
           "align": "left",
-          "size": "body",
+          "width": "column",
+          "size": "intro",
           "spacing": "compact",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -733,6 +802,7 @@
           "title": {
             "en_US": "Delivery options"
           },
+          "spacing": "compact",
           "items": [
             {
               "label": {
@@ -775,6 +845,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -785,14 +856,17 @@
             "en_US": "Orders placed before 1pm local time ship the same day, Monday to Friday. Once dispatched, your tracking link stays live until delivery — no account required."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
           "spacing": "compact",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -800,6 +874,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -810,14 +885,17 @@
             "en_US": "We ship worldwide. Duties and import taxes, where they apply, are calculated transparently at checkout so there are no surprises on delivery. Still have a question? [Visit our FAQ](/faq)."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "compact",
+          "spacing": "end",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       }
     ]
@@ -852,24 +930,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -877,6 +959,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -887,14 +970,17 @@
             "en_US": "We want you to love what you ordered. If something isn't right, return any unworn item within 30 days for a full refund or exchange."
           },
           "align": "left",
-          "size": "body",
+          "width": "column",
+          "size": "intro",
           "spacing": "compact",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -905,6 +991,8 @@
           "title": {
             "en_US": "How it works"
           },
+          "layout": "column",
+          "numberPosition": "beside",
           "columns": "2",
           "numbered": true,
           "items": [
@@ -948,6 +1036,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -955,17 +1044,49 @@
             "en_US": "What can be returned"
           },
           "body": {
-            "en_US": "- Unworn items with original tags and packaging.\n- Within 30 days of delivery.\n- Final-sale items and gift cards are not eligible.\n\nPrefer an exchange? Start a return and pick your new size or colour — we'll ship the replacement as soon as your original is on its way back. [More questions?](/faq)"
+            "en_US": "- Unworn items with original tags and packaging.\n- Within 30 days of delivery.\n- Final-sale items and gift cards are not eligible."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "compact",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
+        }
+      },
+      {
+        "id": "returns_6",
+        "blockType": "richText",
+        "schemaVersion": 1,
+        "data": {
+          "variant": "text",
+          "eyebrow": {
+            "en_US": ""
+          },
+          "title": {
+            "en_US": ""
+          },
+          "body": {
+            "en_US": "Prefer an exchange? Start a return and pick your new size or colour — we'll ship the replacement as soon as your original is on its way back. [More questions?](/faq)"
+          },
+          "align": "left",
+          "width": "column",
+          "size": "body",
+          "spacing": "end",
+          "divider": false,
+          "ctaLabel": {
+            "en_US": ""
+          },
+          "ctaUrl": {
+            "en_US": ""
+          },
+          "ctaPosition": "below"
         }
       }
     ]
@@ -1000,24 +1121,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -1028,6 +1153,7 @@
           "title": {
             "en_US": ""
           },
+          "spacing": "compact",
           "items": [
             {
               "group": {
@@ -1125,6 +1251,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -1135,14 +1262,17 @@
             "en_US": "Still stuck? Reach the team via our [contact details](/contact)."
           },
           "align": "left",
+          "width": "column",
           "size": "body",
-          "spacing": "compact",
+          "spacing": "end",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       }
     ]
@@ -1177,24 +1307,28 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "notice",
           "eyebrow": {
-            "en_US": "Demo store"
+            "en_US": ""
           },
           "title": {
-            "en_US": ""
+            "en_US": "Demo store."
           },
           "body": {
             "en_US": "Alokai is a showcase storefront by [ERPGAP](https://www.erpgap.com/alokai/). The information on this page is illustrative only — no real orders, shipments, or payments are processed."
           },
           "align": "left",
+          "width": "wide",
           "size": "body",
-          "spacing": "normal",
+          "spacing": "start",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       },
       {
@@ -1205,6 +1339,7 @@
           "title": {
             "en_US": "Talk to us"
           },
+          "spacing": "compact",
           "channels": [
             {
               "label": {
@@ -1236,6 +1371,7 @@
         "blockType": "richText",
         "schemaVersion": 1,
         "data": {
+          "variant": "text",
           "eyebrow": {
             "en_US": ""
           },
@@ -1246,14 +1382,17 @@
             "en_US": "Looking for order help first? You might find your answer in the [FAQ](/faq), [Shipping](/shipping) or [Returns](/returns) pages."
           },
           "align": "left",
+          "width": "wide",
           "size": "body",
-          "spacing": "compact",
+          "spacing": "end",
+          "divider": false,
           "ctaLabel": {
             "en_US": ""
           },
           "ctaUrl": {
             "en_US": ""
-          }
+          },
+          "ctaPosition": "below"
         }
       }
     ]
