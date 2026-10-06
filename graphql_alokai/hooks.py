@@ -50,7 +50,10 @@ def _seed_cms_homepage(env):
     path = os.path.join(os.path.dirname(__file__), 'data', 'cms_homepage_blocks.json')
     try:
         with open(path, encoding='utf-8') as handle:
-            blocks = json.load(handle)
+            # {year} is the install year: the merchant owns the text from
+            # here on, and edits it like any other copy.
+            blocks = json.loads(
+                handle.read().replace('{year}', str(datetime.now().year)))
     except (OSError, ValueError) as error:
         _logger.warning('Could not read the default homepage blocks: %s', error)
         return
