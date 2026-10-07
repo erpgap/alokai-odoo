@@ -127,8 +127,8 @@ class CmsPage(graphene.ObjectType):
     seo = generic.GenericScalar(
         description='Meta title and description per language, as stored, so '
                     'a language with no text of its own shows as missing. '
-                    'source is "website" for the homepage, whose tags come '
-                    'from the website record. Requires the CMS Editor group.',
+                    'Every page stores its own, the homepage included. '
+                    'Requires the CMS Editor group.',
     )
 
     def resolve_meta_title(self, info):

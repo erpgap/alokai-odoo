@@ -340,21 +340,6 @@ class AlokaiWebsitePage(models.Model):
         'description': 'website_meta_description',
     }
 
-    def _seo_record(self):
-        """The record whose SEO the storefront actually renders for this page.
-
-        The homepage takes its tags from the website record, not from its CMS
-        page (see layers/home/pages/index.vue in the storefront), so editing
-        the page's own fields would change nothing a visitor or crawler sees.
-        sudo for the website because a CMS editor is not a website admin; the
-        caller only ever writes the two meta fields through it.
-        """
-        self.ensure_one()
-        if self.is_system and self.url == '/':
-            website = self.website_id or self.env['website'].get_current_website()
-            return website.sudo()
-        return self
-
     def get_seo(self):
         """Stored meta title and description per language.
 
@@ -362,13 +347,10 @@ class AlokaiWebsitePage(models.Model):
         falls back to English and would make an untranslated field look done.
         A language missing from a map has no translation of its own.
         """
-        record = self._seo_record()
-        result = {
-            'source': 'website' if record._name == 'website' else 'page',
-            'image': self._seo_image_url(),
-        }
+        self.ensure_one()
+        result = {'image': self._seo_image_url()}
         for key, field_name in self._SEO_FIELDS.items():
-            stored = record._fields[field_name]._get_stored_translations(record)
+            stored = self._fields[field_name]._get_stored_translations(self)
             result[key] = stored or {}
         return result
 
@@ -379,12 +361,11 @@ class AlokaiWebsitePage(models.Model):
         field cannot be. The write date busts browser and CDN caches when the
         image is replaced under the same URL.
         """
-        record = self._seo_record()
-        if not record.website_meta_img:
+        if not self.website_meta_img:
             return None
-        unique = int(record.write_date.timestamp()) if record.write_date else 0
+        unique = int(self.write_date.timestamp()) if self.write_date else 0
         return '/web/image/%s/%s/website_meta_img?unique=%s' % (
-            record._name, record.id, unique)
+            self._name, self.id, unique)
 
     def set_seo(self, lang, values):
         """Save meta title and description for one language.
@@ -398,7 +379,6 @@ class AlokaiWebsitePage(models.Model):
         if self.kind != 'page':
             raise UserError(_('Only pages have SEO settings.'))
 
-        record = self._seo_record()
         for key, field_name in self._SEO_FIELDS.items():
             if key not in values:
                 continue
@@ -407,11 +387,11 @@ class AlokaiWebsitePage(models.Model):
             # is emptied rather than removed.
             if not value:
                 value = '' if lang == 'en_US' else False
-            record.update_field_translations(field_name, {lang: value})
+            self.update_field_translations(field_name, {lang: value})
 
         # Base64 image data, or a falsy value to remove the image.
         if 'image' in values:
-            record.website_meta_img = values['image'] or False
+            self.website_meta_img = values['image'] or False
 
         self._invalidate_storefront_cache()
         return self

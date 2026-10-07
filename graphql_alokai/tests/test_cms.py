@@ -478,7 +478,6 @@ class TestCmsSeo(TransactionCase):
         self.page.set_seo('pt_PT', {'title': 'Sobre nós'})
 
         seo = self.page.get_seo()
-        self.assertEqual(seo['source'], 'page')
         self.assertEqual(seo['title'], {'en_US': 'About us', 'pt_PT': 'Sobre nós'})
         # Never written in Portuguese, so it is missing rather than English.
         self.assertNotIn('pt_PT', seo['description'])
@@ -491,14 +490,27 @@ class TestCmsSeo(TransactionCase):
 
         self.assertEqual(self.page.get_seo()['title'], {'en_US': 'About us'})
 
-    def test_homepage_seo_lives_on_the_website(self):
-        """The homepage renders the website record's tags, not its page's."""
+    def test_homepage_seo_lives_on_its_own_page(self):
+        """The homepage stores its tags like any other page.
+
+        It used to be the one exception, writing through to the website
+        record, which took a special case in the model and a sudo write for
+        editors who are not website admins.
+        """
         home = self.Page.seed_homepage([block()])
         home.set_seo('en_US', {'title': 'Shop timeless style'})
 
-        self.assertEqual(home.get_seo()['source'], 'website')
-        self.assertEqual(home.website_id.website_meta_title, 'Shop timeless style')
-        self.assertFalse(home.website_meta_title)
+        self.assertEqual(home.website_meta_title, 'Shop timeless style')
+        self.assertEqual(home.get_seo()['title'], {'en_US': 'Shop timeless style'})
+
+    def test_homepage_seo_does_not_touch_the_website_record(self):
+        """Saving homepage SEO no longer writes to the website as superuser."""
+        home = self.Page.seed_homepage([block()])
+        before = home.website_id.website_meta_title
+
+        home.set_seo('en_US', {'title': 'Only on the page'})
+
+        self.assertEqual(home.website_id.website_meta_title, before)
 
     def test_share_image_is_saved_and_removed(self):
         # 1x1 transparent PNG.
