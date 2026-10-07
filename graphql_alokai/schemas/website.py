@@ -91,10 +91,13 @@ class WebsiteQuery(graphene.ObjectType):
         env = info.context['env']
         website = env['website'].get_current_website()
 
+        # `or None` on each: an unset Char is False in Odoo, and graphene
+        # coerces that into the string "false" rather than a null, which the
+        # storefront then renders as a description reading "false".
         return HomepageList(
-            meta_title=website.website_meta_title,
-            meta_keyword=website.website_meta_keywords,
-            meta_description=website.website_meta_description,
+            meta_title=website.website_meta_title or None,
+            meta_keyword=website.website_meta_keywords or None,
+            meta_description=website.website_meta_description or None,
             meta_image=f'/web/image/website/{website.id}/website_meta_img',
             meta_image_filename=get_image_filename(website, name='website_meta_title'),
             json_ld=website.json_ld,
