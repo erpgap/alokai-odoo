@@ -83,6 +83,12 @@
                             <group>
                                 <field name="website_meta_title"/>
                                 <field name="website_meta_description"/>
+                                <field name="website_meta_img" widget="image"/>
+                            </group>
+                            <!-- Computed, never written: the business for the
+                                 homepage, a breadcrumb for every other page. -->
+                            <group string="Structured Data">
+                                <field name="pprint_json_ld" nolabel="1"/>
                             </group>
                         </page>
                     </notebook>
