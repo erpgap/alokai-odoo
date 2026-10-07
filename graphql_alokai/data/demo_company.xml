@@ -46,10 +46,6 @@
         <field name="alokai_payment_success_return_url">https://alokai.erpgap.com/checkout/thank-you</field>
         <field name="alokai_payment_error_return_url">https://alokai.erpgap.com/checkout/payment-fail</field>
 
-        <field name="website_meta_title">Alokai - Modern Fashion &amp; Lifestyle Online Store</field>
-        <field name="website_meta_description">Shop the latest fashion at Alokai. Discover curated collections of women's and men's clothing, shoes and accessories, with free shipping and easy returns.</field>
-        <field name="website_meta_keywords">fashion online, women's fashion, men's fashion, online clothing, shoes, accessories, fashion store, alokai</field>
-
         <field name="social_twitter">https://x.com/erpGap</field>
         <field name="social_linkedin">https://www.linkedin.com/company/erpgap/posts/?feedView=all</field>
         <field name="social_github">https://github.com/odoogap</field>

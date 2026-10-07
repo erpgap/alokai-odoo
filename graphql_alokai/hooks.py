@@ -132,6 +132,43 @@ def _seed_cms_demo_pages(env):
     _logger.info('Demo content pages created: %s', created)
 
 
+def _seed_demo_homepage_seo(env):
+    """Give the demo store's homepage its meta title and description.
+
+    These used to sit on the website record, which made the homepage the one
+    page whose tags were not its own. They are set here, on the page, for the
+    same reason the other demo pages set theirs: it is demo copy, so a real
+    store installing without demo data starts empty rather than branded as
+    Alokai.
+
+    Skipped when the homepage already has tags, so re-running an install never
+    overwrites what a merchant wrote.
+    """
+    path = os.path.join(
+        os.path.dirname(__file__), 'data', 'cms_demo_homepage_seo.json')
+    try:
+        with open(path, encoding='utf-8') as handle:
+            seo = json.load(handle)
+    except (OSError, ValueError) as error:
+        _logger.warning('Could not read the demo homepage SEO: %s', error)
+        return
+
+    website = env['website'].get_current_website()
+    home = env['alokai.website.page'].search([
+        ('url', '=', '/'),
+        ('is_system', '=', True),
+        ('website_id', 'in', (False, website.id)),
+    ], limit=1)
+    if not home or home.website_meta_title:
+        return
+
+    home.set_seo('en_US', {
+        'title': seo.get('meta_title'),
+        'description': seo.get('meta_description'),
+    })
+    _logger.info('Demo homepage SEO set on page %s', home.id)
+
+
 def _seed_cms_regions(env):
     """Declare the slots the storefront provides.
 
@@ -199,6 +236,7 @@ def post_init_hook_login_convert(env):
     _generate_demo_alternatives(env)
     _clear_unwanted_social_fields(env)
     _seed_cms_demo_pages(env)
+    _seed_demo_homepage_seo(env)
     # Last, so the bulk demo writes above run with Redis still disabled.
     env['website']._alokai_demo_enable_redis()
 

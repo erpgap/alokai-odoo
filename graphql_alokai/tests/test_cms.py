@@ -20,6 +20,7 @@ first time and the mistake was invisible to inspection:
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests.common import TransactionCase, new_test_user, tagged
 
+from ..hooks import _seed_demo_homepage_seo
 from .common import AlokaiGraphQLCommon
 
 
@@ -502,6 +503,30 @@ class TestCmsSeo(TransactionCase):
 
         self.assertEqual(home.website_meta_title, 'Shop timeless style')
         self.assertEqual(home.get_seo()['title'], {'en_US': 'Shop timeless style'})
+
+    def test_demo_seeding_gives_the_homepage_its_own_tags(self):
+        """The demo store's homepage SEO lands on the page, not the website.
+
+        It used to be set on the website record by demo_company.xml. Demo data
+        only runs on a fresh install, so this covers the path directly rather
+        than leaving it to be discovered by a merchant installing the demo.
+        """
+        home = self.Page.seed_homepage([block()])
+        home.update_field_translations('website_meta_title', {'en_US': False})
+        home.update_field_translations('website_meta_description', {'en_US': False})
+
+        _seed_demo_homepage_seo(self.env)
+
+        self.assertTrue(home.website_meta_title)
+        self.assertIn('Alokai', home.website_meta_title)
+
+    def test_demo_seeding_never_overwrites_a_merchants_tags(self):
+        home = self.Page.seed_homepage([block()])
+        home.set_seo('en_US', {'title': 'Ours, not the demo copy'})
+
+        _seed_demo_homepage_seo(self.env)
+
+        self.assertEqual(home.website_meta_title, 'Ours, not the demo copy')
 
     def test_homepage_seo_does_not_touch_the_website_record(self):
         """Saving homepage SEO no longer writes to the website as superuser."""

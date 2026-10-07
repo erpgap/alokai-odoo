@@ -19,13 +19,13 @@
                 </group>
             </xpath>
             <xpath expr="//page[@name='page_custom_code']" position="before">
-                <page name="seo" string="Homepage SEO">
-                    <group name="default_opengraph">
-                        <field name="website_meta_title" string="Meta Title"/>
-                        <field name="website_meta_description" string="Meta Description"/>
-                        <field name="website_meta_keywords" string="Meta Keywords"
-                               help="Separate every keyword with a comma"/>
-                        <field name="website_meta_img" string="Meta Image" widget="image"/>
+                <!-- The homepage's meta title, description and share image are
+                     edited in the CMS, with every other page's. What is left
+                     here is the structured data the storefront emits for the
+                     business itself, which is computed from the company record
+                     and shown read-only. -->
+                <page name="structured_data" string="Structured Data">
+                    <group>
                         <field name="pprint_json_ld"/>
                     </group>
                 </page>
