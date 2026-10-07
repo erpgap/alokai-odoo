@@ -121,6 +121,11 @@ class CmsPage(graphene.ObjectType):
     live_revision = graphene.Int()
     updated_at = graphene.String()
     has_unpublished_changes = graphene.Boolean()
+    json_ld = graphene.String(
+        description='Structured data the storefront emits for this page: the '
+                    'business for the homepage, a breadcrumb for every other. '
+                    'Computed, never authored.',
+    )
     meta_image = graphene.String(
         description='Odoo-relative URL of the share image (og:image), or null.',
     )
@@ -136,6 +141,9 @@ class CmsPage(graphene.ObjectType):
 
     def resolve_meta_description(self, info):
         return self.website_meta_description or None
+
+    def resolve_json_ld(self, info):
+        return self.json_ld or None
 
     def resolve_blocks(self, info):
         # Published content only. The draft lives in a separate column, which

@@ -17,6 +17,8 @@ first time and the mistake was invisible to inspection:
     rather than ``None``, so a guard checking identity rejected empty pages.
 """
 
+import json
+
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests.common import TransactionCase, new_test_user, tagged
 
@@ -503,6 +505,33 @@ class TestCmsSeo(TransactionCase):
 
         self.assertEqual(home.website_meta_title, 'Shop timeless style')
         self.assertEqual(home.get_seo()['title'], {'en_US': 'Shop timeless style'})
+
+    def test_a_content_page_emits_a_breadcrumb(self):
+        """Content pages had no structured data at all before this."""
+        data = json.loads(self.page.json_ld)
+
+        self.assertEqual(data['@type'], 'BreadcrumbList')
+        names = [item['name'] for item in data['itemListElement']]
+        self.assertEqual(names, ['Home', 'About'])
+        self.assertTrue(data['itemListElement'][1]['item'].endswith('/seo-about'))
+
+    def test_the_homepage_emits_the_business_not_a_breadcrumb(self):
+        """A breadcrumb to itself says nothing; the entity belongs here."""
+        home = self.Page.seed_homepage([block()])
+
+        data = json.loads(home.json_ld)
+
+        self.assertEqual(data['@type'], 'OnlineStore')
+
+    def test_a_region_emits_nothing(self):
+        """Regions render inside other pages and have no url of their own."""
+        region = self.Page.seed_region('category-after', name='After category')
+
+        self.assertFalse(region.json_ld)
+
+    def test_the_preview_travels_with_the_seo_payload(self):
+        """The dialog shows it read-only, so it comes back with the rest."""
+        self.assertIn('jsonLd', self.page.get_seo())
 
     def test_demo_seeding_gives_the_homepage_its_own_tags(self):
         """The demo store's homepage SEO lands on the page, not the website.

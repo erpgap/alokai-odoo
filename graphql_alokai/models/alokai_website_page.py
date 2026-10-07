@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -340,6 +342,53 @@ class AlokaiWebsitePage(models.Model):
         'description': 'website_meta_description',
     }
 
+    def _compute_json_ld(self):
+        """Structured data for this page. Computed, never authored.
+
+        The homepage emits the business itself - the `OnlineStore` block the
+        website record computes from the company - because that is the page
+        search engines treat as the entity's home, and repeating it on every
+        page would only blur which url represents it.
+
+        Every other page emits a breadcrumb, which is the structured data a
+        content page can actually earn a rich result with. Products and
+        categories already have one (`get_json_ld_breadcrumb`); CMS pages were
+        the only page type emitting nothing at all.
+
+        Regions have no url of their own - they render inside other pages - so
+        they emit nothing.
+        """
+        for page in self:
+            if page.kind != 'page':
+                page.json_ld = None
+                continue
+
+            website = page.website_id or self.env['website'].get_current_website()
+
+            if page.is_system and page.url == '/':
+                page.json_ld = website.json_ld
+                continue
+
+            domain = website._alokai_domain()
+            page.json_ld = json.dumps({
+                '@context': 'https://schema.org/',
+                '@type': 'BreadcrumbList',
+                'itemListElement': [
+                    {
+                        '@type': 'ListItem',
+                        'position': 1,
+                        'name': 'Home',
+                        'item': f'{domain}/',
+                    },
+                    {
+                        '@type': 'ListItem',
+                        'position': 2,
+                        'name': page.name or '',
+                        'item': f'{domain}{page.url or ""}',
+                    },
+                ],
+            })
+
     def get_seo(self):
         """Stored meta title and description per language.
 
@@ -348,7 +397,12 @@ class AlokaiWebsitePage(models.Model):
         A language missing from a map has no translation of its own.
         """
         self.ensure_one()
-        result = {'image': self._seo_image_url()}
+        result = {
+            'image': self._seo_image_url(),
+            # Read-only: the storefront emits this, the merchant does not
+            # write it. Shown so they can see what it says.
+            'jsonLd': self.json_ld,
+        }
         for key, field_name in self._SEO_FIELDS.items():
             stored = self._fields[field_name]._get_stored_translations(self)
             result[key] = stored or {}
