@@ -680,6 +680,8 @@ class TestCmsSecurity(TransactionCase):
             groups='base.group_user,graphql_alokai.group_cms_editor')
         cls.plain_user = new_test_user(
             cls.env, login='cms_plain_test', groups='base.group_user')
+        cls.portal_user = new_test_user(
+            cls.env, login='cms_portal_test', groups='base.group_portal')
         cls.page = cls.env['alokai.website.page'].create({
             'name': 'Secured', 'url': '/secured'})
 
@@ -698,6 +700,21 @@ class TestCmsSecurity(TransactionCase):
             self.env['alokai.page.revision'].with_user(self.plain_user).create({
                 'page_id': self.page.id, 'number': 1, 'blocks': [],
             })
+
+    def test_portal_user_cannot_write(self):
+        page = self.page.with_user(self.portal_user)
+        with self.assertRaises(AccessError):
+            page.draft_blocks = [block('by a customer')]
+
+    def test_portal_user_cannot_be_made_an_editor(self):
+        """The group implies internal user, and Odoo keeps internal and portal
+        disjoint - so no customer can ever hold it, from either side of the
+        relation."""
+        group = self.env.ref('graphql_alokai.group_cms_editor')
+        with self.assertRaises(ValidationError):
+            self.portal_user.write({'group_ids': [(4, group.id)]})
+        with self.assertRaises(ValidationError):
+            group.write({'user_ids': [(4, self.portal_user.id)]})
 
     def test_public_user_cannot_write(self):
         public = self.env.ref('base.public_user')
@@ -770,7 +787,7 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
 
     # --- authorisation ----------------------------------------------------
 
-    def test_anonymous_cannot_read_drafts_or_lists(self):
+    def _assert_editor_reads_refused(self):
         for document in (
             '{ cmsPages { totalCount } }',
             'query ($id: Int!) { cmsPageDraft(id: $id) { id } }',
@@ -782,7 +799,7 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
                 document, {'id': self.published.id}, expect_errors=True)
             self.assertTrue(body['errors'], document)
 
-    def test_anonymous_cannot_write(self):
+    def _assert_editor_writes_refused(self):
         for document, variables in (
             ('mutation { createCmsPage(name: "X", url: "/x") { id } }', {}),
             ('mutation ($id: Int!, $b: GenericScalar!) '
@@ -798,9 +815,41 @@ class TestCmsGraphQL(AlokaiGraphQLCommon):
             body = self._gql(document, variables, expect_errors=True)
             self.assertTrue(body['errors'], document)
 
+    def test_anonymous_cannot_read_drafts_or_lists(self):
+        self._assert_editor_reads_refused()
+
+    def test_anonymous_cannot_write(self):
+        self._assert_editor_writes_refused()
+
     def test_cms_can_edit_is_false_anonymously(self):
         body = self._gql('{ cmsCanEdit }')
         self.assertFalse(body['data']['cmsCanEdit'])
+
+    # A customer authenticates fine - the same Login mutation the editor uses -
+    # so being logged in must not be mistaken for being allowed to edit.
+
+    def test_portal_user_cannot_read_drafts_or_lists(self):
+        self._login()
+        self._assert_editor_reads_refused()
+
+    def test_portal_user_cannot_write(self):
+        self._login()
+        self._assert_editor_writes_refused()
+
+    def test_cms_can_edit_is_false_for_a_portal_user(self):
+        self._login()
+        body = self._gql('{ cmsCanEdit }')
+        self.assertFalse(body['data']['cmsCanEdit'])
+
+    def test_portal_user_cannot_list_or_upload_media(self):
+        self._login()
+        listing = self.url_open('/alokai/cms/media')
+        self.assertEqual(listing.status_code, 403)
+
+        upload = self.url_open(
+            '/alokai/cms/upload',
+            files={'file': ('x.png', b'\x89PNG\r\n\x1a\n', 'image/png')})
+        self.assertEqual(upload.status_code, 403)
 
     def test_cms_can_edit_is_true_for_an_editor(self):
         self.authenticate(self.editor.login, self.editor_password)
