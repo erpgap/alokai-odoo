@@ -29,6 +29,13 @@ class _Info:
         self.context = {'env': env}
 
 
+class _AllIds(set):
+    """Marks every id as already prefetched, to price without the page
+    prefetch."""
+    def __contains__(self, item):
+        return True
+
+
 @tagged('post_install', '-at_install', 'alokai_request_cache')
 class TestRequestCache(TransactionCase):
 
@@ -80,6 +87,22 @@ class TestRequestCache(TransactionCase):
             'product_id': cls.product.product_variant_id.id,
             'website_id': cls.website.id,
         })
+        # A listing page: templates with several variants each, so the page's
+        # variants, taxes and attribute values are worth loading in one go.
+        cls.page_color = env['product.attribute'].create({
+            'name': 'RC Colour', 'create_variant': 'always',
+            'value_ids': [(0, 0, {'name': 'RC Red'}), (0, 0, {'name': 'RC Blue'})],
+        })
+        cls.page = env['product.template'].create([{
+            'name': 'RC Page %d' % i, 'list_price': 10.0 + i,
+            'is_published': True, 'sale_ok': True,
+            'attribute_line_ids': [(0, 0, {
+                'attribute_id': cls.page_color.id,
+                'value_ids': [(6, 0, cls.page_color.value_ids.ids)],
+            })],
+        } for i in range(6)])
+        cls.page[1].product_variant_ids[:1].image_variant_1920 = _ONE_PX_GIF
+        cls.page[4].product_variant_ids[:1].image_variant_1920 = _ONE_PX_GIF
         env.flush_all()
 
     def setUp(self):
@@ -116,6 +139,56 @@ class TestRequestCache(TransactionCase):
         self.assertIsNot(a, b)
         self.assertEqual(a['list_price'], self.product._get_combination_info()['list_price'])
         self.assertEqual(b['list_price'], self.other._get_combination_info()['list_price'])
+
+    def _page(self):
+        """The listing page as the products query hands it to the resolvers:
+        the records of one recordset, iterated, so each shares the page's
+        prefetch set (indexing a recordset would drop it)."""
+        self.env.invalidate_all()
+        return list(self.env['product.template'].browse(self.page.ids))
+
+    def _price_page(self, prefetch):
+        """Pricing info and query count for every product on a fresh page."""
+        info = _Info(self.env)
+        if not prefetch:
+            info.context[request_cache.CACHE_KEY] = {'pricing_prefetched': {
+                'product.template': _AllIds(), 'product.product': _AllIds()}}
+        q0 = self.env.cr.sql_log_count
+        infos = {
+            product.id: request_cache.get_template_pricing_info(info, product)
+            for product in self._page()
+        }
+        return infos, self.env.cr.sql_log_count - q0
+
+    def test_pricing_page_prefetch_keeps_prices(self):
+        """Loading the page in one go changes nothing in the pricing info."""
+        batched, _ = self._price_page(prefetch=True)
+        single, _ = self._price_page(prefetch=False)
+        self.assertEqual(batched, single)
+        for product in self.page:
+            direct = product.product_variant_id._get_combination_info_variant()
+            self.assertEqual(batched[product.id]['price'], direct['price'])
+            self.assertEqual(batched[product.id]['list_price'], direct['list_price'])
+            self.assertEqual(batched[product.id]['product_id'], product.product_variant_id.id)
+            self.assertEqual(batched[product.id]['combination'], direct['combination'])
+
+    def test_pricing_page_prefetch_saves_queries(self):
+        """Pricing a page costs fewer queries when its records are loaded
+        together than when every product loads its own."""
+        self._price_page(prefetch=True)   # warm the ormcaches both runs share
+        _, batched = self._price_page(prefetch=True)
+        _, single = self._price_page(prefetch=False)
+        self.assertLess(batched, single - len(self.page),
+                        "the page's records must be read once, not per product")
+
+    def test_pricing_page_prefetch_runs_once(self):
+        """The page is loaded on the first lookup only, whichever product
+        asks first."""
+        info = _Info(self.env)
+        page = self._page()
+        request_cache.get_template_pricing_info(info, page[2])
+        loaded = info.context[request_cache.CACHE_KEY]['pricing_prefetched']['product.product']
+        self.assertEqual(loaded, set(self.page.product_variant_id.ids))
 
     def test_cached_dict_survives_serialising_copy(self):
         """Callers copy the dict before rewriting keys; the cache stays intact
@@ -177,6 +250,30 @@ class TestRequestCache(TransactionCase):
         self.assertIsNone(
             request_cache.first_variant_with_image(self.info, self.product),
             "a product without a variant image must return None")
+
+    def test_first_variant_with_image_is_correct_for_a_page(self):
+        """Each product on a page gets its own first variant, or None."""
+        for product in self._page():
+            first = product.product_variant_ids[:1]
+            expected = first if product in (self.page[1], self.page[4]) else None
+            self.assertEqual(
+                request_cache.first_variant_with_image(self.info, product), expected,
+                product.name)
+
+    def test_first_variant_with_image_loads_the_page_once(self):
+        """The first product answers for the whole page: the others then hit
+        no database."""
+        page = self._page()
+        request_cache.first_variant_with_image(self.info, page[0])
+        q0 = self.env.cr.sql_log_count
+        for product in page[1:]:
+            request_cache.first_variant_with_image(self.info, product)
+        self.assertEqual(self.env.cr.sql_log_count, q0,
+                         "the page's image lookups must be done in one go")
+
+    def test_first_variant_with_image_ignores_variants(self):
+        self.assertIsNone(request_cache.first_variant_with_image(
+            self.info, self.product_with_variant_image.product_variant_id))
 
     def test_first_variant_with_image_computed_once(self):
         first = request_cache.first_variant_with_image(self.info, self.product_with_variant_image)

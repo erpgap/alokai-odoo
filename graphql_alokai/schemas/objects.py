@@ -13,8 +13,8 @@ from odoo.http import request
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE
 from odoo.addons.graphql_alokai.graphql.registry import type_registry
 from odoo.addons.graphql_alokai.schemas.request_cache import (
-    current_website, first_variant_with_image, get_pricing_info, is_in_wishlist,
-    rating_stats, redis_stock_qty)
+    current_website, first_variant_with_image, get_pricing_info, get_template_pricing_info,
+    is_in_wishlist, rating_stats, redis_stock_qty)
 from odoo.addons.website_sale.models.website import (
     PRICELIST_SESSION_CACHE_KEY,
 )
@@ -750,7 +750,7 @@ class Product(OdooObjectType):
     # Specific to use in Product Template
     def resolve_combination_info(self, info):
         # Copy the cached dict: this resolver rewrites keys for serialisation.
-        pricing_info = dict(get_pricing_info(info, self.product_variant_id))
+        pricing_info = dict(get_template_pricing_info(info, self))
         if pricing_info.get('currency', False) and pricing_info['currency'].id:
             pricing_info['currency'] = {
                 'id': pricing_info['currency'].id,

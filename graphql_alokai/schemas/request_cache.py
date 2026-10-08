@@ -15,6 +15,8 @@ Both are computed once here and reused. The cache lives only for the duration
 of the request, so there is nothing to invalidate.
 """
 
+from odoo.tools.constants import PREFETCH_MAX
+
 CACHE_KEY = '_alokai_request_cache'
 
 
@@ -48,13 +50,84 @@ def first_variant_with_image(info, product):
     cache = _cache(info).setdefault('first_variant_image', {})
     key = (product._name, product.id)
     if key not in cache:
-        variant = None
-        if product._name == 'product.template':
-            first = product.product_variant_ids[:1]
-            if first and first.image_variant_1920:
-                variant = first
-        cache[key] = variant
+        if product._name != 'product.template':
+            cache[key] = None
+            return None
+        # Answer for the whole listing page at once: one read of the variants
+        # and one of their image attachments. ``bin_size`` only reads the
+        # attachment size instead of loading every image from the filestore.
+        templates = _siblings(info, product, 'first_variant_image_loaded')
+        firsts = {template.id: template.product_variant_ids[:1] for template in templates}
+        variants = product.env['product.product'].browse(
+            first.id for first in firsts.values() if first)
+        with_image = set(variants.with_context(bin_size=True).filtered('image_variant_1920').ids)
+        # Iterated records keep the page-wide prefetch set, so the image
+        # filename's name/write_date are then read in one query too.
+        by_id = {variant.id: variant for variant in variants if variant.id in with_image}
+        for template_id, first in firsts.items():
+            cache[(product._name, template_id)] = by_id.get(first.id)
     return cache[key]
+
+
+def _siblings(info, product, bucket):
+    """The not-yet-handled records of ``product``'s prefetch batch (the
+    product listing page it was loaded with), ``product`` included.
+
+    ``bucket`` names the per-request set remembering which ids were already
+    handled, so each batch is processed once whatever record asks first.
+    """
+    done = _cache(info).setdefault(bucket, {}).setdefault(product._name, set())
+    ids = [product.id] + [
+        id_ for id_ in product._prefetch_ids
+        if id_ != product.id and isinstance(id_, int)
+    ]
+    ids = [id_ for id_ in ids if id_ not in done][:PREFETCH_MAX]
+    done.update(ids)
+    return product.browse(ids)
+
+
+def _prefetch_pricing(info, product):
+    """Load, for the whole listing page at once, the records the per-product
+    ``_get_combination_info`` call reads.
+
+    That call re-browses the variant by id, which drops the prefetch batch, so
+    without this every product on the page would read its own variant, taxes
+    and attribute values (about eight queries per product). Once loaded here
+    those reads are served from the ORM cache.
+    """
+    records = _siblings(info, product, 'pricing_prefetched')
+    if records._name == 'product.template':
+        done = _cache(info)['pricing_prefetched'].setdefault('product.product', set())
+        variants = records.product_variant_id.filtered(lambda variant: variant.id not in done)
+        done.update(variants.ids)
+    else:
+        variants = records
+    variants = variants.browse(variants.ids)
+    if not variants:
+        return
+    # Reading one plain column loads every prefetchable column of the batch.
+    variants.mapped('default_code')
+    templates = variants.product_tmpl_id
+    templates.mapped('taxes_id')
+    variants.mapped('currency_id')
+    ptavs = (
+        variants.product_template_attribute_value_ids
+        | templates.attribute_line_ids.product_template_value_ids
+    )
+    ptavs.mapped('ptav_active')
+    ptavs.mapped('exclude_for')
+
+
+def get_template_pricing_info(info, template):
+    """Return the (cached) pricing info of ``template``'s first variant.
+
+    The page is loaded from the template: unlike the computed
+    ``product_variant_id``, it always carries the listing page's prefetch set.
+    """
+    if not template:
+        return None
+    _prefetch_pricing(info, template)
+    return get_pricing_info(info, template.product_variant_id)
 
 
 def get_pricing_info(info, product):
@@ -73,6 +146,7 @@ def get_pricing_info(info, product):
     cache = _cache(info).setdefault('pricing', {})
     key = (product._name, product.id)
     if key not in cache:
+        _prefetch_pricing(info, product)
         if product._name == 'product.template':
             cache[key] = product._get_combination_info() or None
         else:
