@@ -122,10 +122,12 @@ class ProductTemplate(models.Model):
         if kwargs.get('in_stock', False):
             domains.append(self._graphql_in_stock_domain(website))
 
+        # Every word must match the name or the internal reference. The sales
+        # description is left out: matching inside long marketing text returns
+        # unrelated products, and it cannot use an index.
         if search:
-            for srch in search.split(" "):
-                domains.append([
-                    '|', '|', ('name', 'ilike', srch), ('description_sale', 'ilike', srch), ('default_code', 'ilike', srch)])
+            for srch in search.split():
+                domains.append(['|', ('name', 'ilike', srch), ('default_code', 'ilike', srch)])
 
         # Used for improving attributes filtering
         attributes_partial_domain = domains.copy()

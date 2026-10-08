@@ -108,6 +108,18 @@ class TestProductList(TransactionCase):
 
         cls.website = env['website'].get_current_website()
 
+        # --- Search targets ------------------------------------------- #
+        cls.search_products = Template.create([{
+            'name': 'ZZQ Linen Jacket', 'default_code': 'ZZQ-JKT-01',
+            'description_sale': 'A breezy summer layer.',
+            'is_published': True, 'sale_ok': True,
+        }, {
+            'name': 'ZZQ Wool Scarf', 'default_code': 'ZZQ-SCF-02',
+            'description_sale': 'Pairs well with the linen jacket.',
+            'is_published': True, 'sale_ok': True,
+        }])
+        cls.jacket, cls.scarf = cls.search_products
+
         # --- Redis stock: only some of the bulk products are in stock -- #
         cls.stocked = cls.products[:7]
         env['product.template.redis_stock'].create([{
@@ -213,6 +225,35 @@ class TestProductList(TransactionCase):
             self._facet_count(filter_counts, self.green.id), 3,
             "Green is available in 3 shirts; it must not be double-counted to 5")
         self.assertEqual(self._facet_count(filter_counts, self.red.id), 3)
+
+    # ------------------------------------------------------------------ #
+    #  Search                                                            #
+    # ------------------------------------------------------------------ #
+    def _search(self, search):
+        products, total, *_ = self._call(
+            get_product_list, sort={'id': ASC}, page_size=100, search=search,
+            ids=self.search_products.ids)
+        self.assertEqual(total, len(products))
+        return products
+
+    def test_search_matches_name(self):
+        self.assertEqual(self._search('linen'), self.jacket)
+
+    def test_search_matches_internal_reference(self):
+        self.assertEqual(self._search('zzq-scf'), self.scarf)
+
+    def test_search_ignores_sales_description(self):
+        """'jacket' is in the scarf's description only: the scarf must not
+        come up."""
+        self.assertEqual(self._search('jacket'), self.jacket)
+        self.assertFalse(self._search('breezy'))
+
+    def test_search_needs_every_word(self):
+        self.assertEqual(self._search('zzq jacket'), self.jacket)
+        self.assertFalse(self._search('wool jacket'))
+
+    def test_search_ignores_extra_spaces(self):
+        self.assertEqual(self._search('  linen   jacket '), self.jacket)
 
     # ------------------------------------------------------------------ #
     #  Stock                                                             #
