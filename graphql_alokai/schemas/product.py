@@ -190,15 +190,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         })
     else:
         website = env['website'].get_current_website()
-        # Backed by the (website_id, quantity, product_id) index created in
-        # product.redis_stock.init().
-        env.cr.execute("""
-            SELECT DISTINCT product_id
-            FROM product_template_redis_stock
-            WHERE website_id = %s AND quantity > 0
-        """, (website.id,))
-        in_stock_ids = [row[0] for row in env.cr.fetchall()]
-        in_stock_domain = Domain.AND(domain + [[('id', 'in', in_stock_ids)]])
+        in_stock_domain = Domain.AND(domain + [Product._graphql_in_stock_domain(website)])
         filter_counts.append({
             'type': 'in_stock',
             'total': Product.search_count(in_stock_domain),

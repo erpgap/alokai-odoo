@@ -107,6 +107,15 @@ class TestProductList(TransactionCase):
         cls.shirt_ids = cls.shirts.ids
 
         cls.website = env['website'].get_current_website()
+
+        # --- Redis stock: only some of the bulk products are in stock -- #
+        cls.stocked = cls.products[:7]
+        env['product.template.redis_stock'].create([{
+            'product_id': product.id, 'website_id': cls.website.id, 'quantity': 3.0,
+        } for product in cls.stocked] + [{
+            # A row at zero stock is not "in stock".
+            'product_id': cls.products[7].id, 'website_id': cls.website.id, 'quantity': 0.0,
+        }])
         env.flush_all()
 
         # Convenience id strings for the ``attrib_values`` filter, shaped as
@@ -204,6 +213,40 @@ class TestProductList(TransactionCase):
             self._facet_count(filter_counts, self.green.id), 3,
             "Green is available in 3 shirts; it must not be double-counted to 5")
         self.assertEqual(self._facet_count(filter_counts, self.red.id), 3)
+
+    # ------------------------------------------------------------------ #
+    #  Stock                                                             #
+    # ------------------------------------------------------------------ #
+    def test_in_stock_filter_returns_stocked_products(self):
+        products, total, _, _, _, filter_counts = self._call(
+            get_product_list, sort={'id': ASC}, page_size=100,
+            ids=self.product_ids, in_stock=True)
+        self.assertEqual(products, self.stocked)
+        self.assertEqual(total, len(self.stocked))
+        self.assertEqual(self._in_stock_count(filter_counts), len(self.stocked))
+
+    def test_in_stock_count_without_the_filter(self):
+        """Unfiltered, the in-stock count still reports how many of the
+        matching products are in stock."""
+        _, total, _, _, _, filter_counts = self._call(
+            get_product_list, sort={'id': ASC}, ids=self.product_ids)
+        self.assertEqual(total, len(self.product_ids))
+        self.assertEqual(self._in_stock_count(filter_counts), len(self.stocked))
+
+    def test_in_stock_is_per_website(self):
+        other = self.env['website'].create({'name': 'ZZ Other Website'})
+        self.env['product.template.redis_stock'].create({
+            'product_id': self.products[10].id, 'website_id': other.id, 'quantity': 9.0,
+        })
+        products, *_ = self._call(
+            get_product_list, sort={'id': ASC}, page_size=100,
+            ids=self.product_ids, in_stock=True)
+        self.assertNotIn(self.products[10], products)
+
+    @staticmethod
+    def _in_stock_count(filter_counts):
+        [count] = [d['total'] for d in filter_counts if d['type'] == 'in_stock']
+        return count
 
     @staticmethod
     def _facet_count(filter_counts, value_id):

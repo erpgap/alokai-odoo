@@ -70,6 +70,19 @@ class ProductTemplate(models.Model):
         return sorting
 
     @api.model
+    def _graphql_in_stock_domain(self, website):
+        """Products with Redis stock on ``website``, as a sub-select.
+
+        Backed by the (website_id, quantity, product_id) index created in
+        product.redis_stock.init(). Kept in SQL rather than reading the ids
+        into Python and sending every one of them back in an ``IN`` list.
+        """
+        return [('product_tmpl_redis_stock_ids', 'any', [
+            ('website_id', '=', website.id),
+            ('quantity', '>', 0),
+        ])]
+
+    @api.model
     def _graphql_get_search_domain(self, search, **kwargs):
         env = self.env
         website = env['website'].get_current_website()
@@ -107,16 +120,7 @@ class ProductTemplate(models.Model):
 
         # Stock
         if kwargs.get('in_stock', False):
-            # Backed by the (website_id, quantity, product_id) index created in
-            # product.redis_stock.init().
-            self.env.cr.execute("""
-                SELECT DISTINCT product_id
-                FROM product_template_redis_stock
-                WHERE website_id = %s AND quantity > 0
-            """, (website.id,))
-            product_ids = [row[0] for row in self.env.cr.fetchall()]
-
-            domains.append([('id', 'in', product_ids)])
+            domains.append(self._graphql_in_stock_domain(website))
 
         if search:
             for srch in search.split(" "):
