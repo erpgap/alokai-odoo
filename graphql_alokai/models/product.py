@@ -204,14 +204,16 @@ class ProductTemplate(models.Model):
             # else a single Offer
             product_url = f"{website_domain}{product.website_slug or ''}"
             variants = product.product_variant_ids
-            variant_prices = [v.list_price for v in variants if v.list_price]
+            variant_prices = [
+                price for price in (v._get_combination_info_variant()['price'] for v in variants) if price
+            ]
             use_aggregate = len(variants) > 1 and len(set(variant_prices)) > 1
 
             if use_aggregate:
                 offers = {
                     "@type": "AggregateOffer",
                     "url": product_url,
-                    "priceCurrency": product.currency_id.name,
+                    "priceCurrency": website.currency_id.name,
                     "lowPrice": f"{min(variant_prices):.2f}",
                     "highPrice": f"{max(variant_prices):.2f}",
                     "offerCount": len(variants),
@@ -226,8 +228,8 @@ class ProductTemplate(models.Model):
                 offers = {
                     "@type": "Offer",
                     "url": product_url,
-                    "priceCurrency": product.currency_id.name,
-                    "price": f"{product.list_price:.2f}",
+                    "priceCurrency": website.currency_id.name,
+                    "price": f"{product._get_combination_info()['price']:.2f}",
                     "itemCondition": "https://schema.org/NewCondition",
                     "availability": availability,
                     "seller": {
@@ -755,8 +757,8 @@ class ProductProduct(models.Model):
                 "offers": {
                     "@type": "Offer",
                     "url": f"{website_domain}{product.website_slug or ''}",
-                    "priceCurrency": product.currency_id.name,
-                    "price": f"{product.list_price:.2f}",
+                    "priceCurrency": website.currency_id.name,
+                    "price": f"{product._get_combination_info_variant()['price']:.2f}",
                     "itemCondition": "https://schema.org/NewCondition",
                     "availability": availability,
                     "seller": {

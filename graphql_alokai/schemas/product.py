@@ -7,7 +7,7 @@ from werkzeug import urls
 
 from odoo.fields import Domain
 from graphql import GraphQLError
-from odoo import _
+from odoo import _, fields
 from collections import defaultdict
 from graphene.types import generic
 from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
@@ -25,6 +25,12 @@ def _price_bounds(Product, price_domain):
     [(min_price, max_price)] = Product._read_group(
         price_domain, aggregates=['list_price:min', 'list_price:max'])
     return float(min_price or 0.0), float(max_price or 0.0)
+
+
+def _convert_price(env, amount, from_currency, to_currency):
+    website = env['website'].get_current_website()
+    return from_currency._convert(
+        amount, to_currency, website.company_id, fields.Date.context_today(website), round=False)
 
 
 def _values_present_in(Product, domain):
@@ -89,6 +95,13 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
     Category = env['product.public.category'].sudo()
     AttributeValue = env['product.attribute.value'].sudo()
 
+    website = env['website'].get_current_website()
+    company_currency = website.company_id.currency_id
+    website_currency = website.currency_id
+    for price_key in ('min_price', 'max_price'):
+        if kwargs.get(price_key):
+            kwargs[price_key] = _convert_price(env, float(kwargs[price_key]), website_currency, company_currency)
+
     domain, attributes_partial_domain, prices_partial_domain, filtered_attributes = \
         Product._graphql_get_search_domain(search, **kwargs)
 
@@ -100,7 +113,10 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
 
     # Min/max price are computed without the price filter so the slider keeps
     # its full range while the user drags it.
-    min_price, max_price = _price_bounds(Product, Domain.AND(prices_partial_domain))
+    min_price, max_price = (
+        _convert_price(env, price, company_currency, website_currency)
+        for price in _price_bounds(Product, Domain.AND(prices_partial_domain))
+    )
 
     # ------------------------------------------------------------------ #
     #  Attribute facets                                                  #

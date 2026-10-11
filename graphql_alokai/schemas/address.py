@@ -9,6 +9,18 @@ from odoo import _
 from odoo.http import request
 from odoo.addons.graphql_alokai.schemas.objects import Partner
 from odoo.addons.graphql_alokai.graphql.registry import mutation_registry, query_registry
+from odoo.addons.website_sale.models.website import FISCAL_POSITION_SESSION_CACHE_KEY
+
+
+def update_order_fiscal_position(order):
+    fpos_before = order.fiscal_position_id
+    order._compute_fiscal_position_id()
+    if order.fiscal_position_id != fpos_before:
+        order._recompute_taxes()
+        if request:
+            request.session[FISCAL_POSITION_SESSION_CACHE_KEY] = order.fiscal_position_id.id
+            request.fiscal_position = order.fiscal_position_id
+
 
 def get_partner_id(env, order, website):
     if order:
@@ -190,7 +202,7 @@ class AddAddress(graphene.Mutation):
                 order.partner_shipping_id = partner.id
 
             # Trigger the change of fiscal position when the shipping address is modified
-            order._compute_fiscal_position_id()
+            update_order_fiscal_position(order)
 
         return partner
 
@@ -243,7 +255,7 @@ class UpdateAddress(graphene.Mutation):
         # shipping address.
         fiscal_fields = {'country_id', 'state_id', 'zip'}
         if order and partner == order.partner_shipping_id and fiscal_fields & values.keys():
-            order._compute_fiscal_position_id()
+            update_order_fiscal_position(order)
 
         return partner
 
@@ -277,7 +289,7 @@ class DeleteAddress(graphene.Mutation):
                 order.partner_shipping_id = partner.parent_id.id
 
             # Trigger the change of fiscal position when the shipping address is modified
-            order._compute_fiscal_position_id()
+            update_order_fiscal_position(order)
 
         # Archive address, safer than delete since this address could be in use by other object
         partner.active = False
@@ -307,7 +319,7 @@ class SelectAddress(graphene.Mutation):
             order.partner_shipping_id = partner.id
 
         # Trigger the change of fiscal position when the shipping address is modified
-        order._compute_fiscal_position_id()
+        update_order_fiscal_position(order)
 
         return partner
 

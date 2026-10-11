@@ -797,7 +797,8 @@ class Product(OdooObjectType):
         return pricing_info or None
 
     def resolve_price(self, info):
-        return self.list_price or None
+        pricing_info = get_pricing_info(info, self.sudo())
+        return (pricing_info or {}).get('list_price') or None
 
     def resolve_attribute_values(self, info):
         return self.attribute_line_ids.product_template_value_ids or None
