@@ -226,6 +226,27 @@ class TestProductList(TransactionCase):
             "Green is available in 3 shirts; it must not be double-counted to 5")
         self.assertEqual(self._facet_count(filter_counts, self.red.id), 3)
 
+    def test_disjunctive_facet_counts_honour_price_filter(self):
+        """A sibling value's count lifts only its own attribute's filter; the
+        price filter still applies. An expensive Green shirt outside the price
+        range must not be counted under Green while Red is selected.
+        """
+        pricey = self.env['product.template'].create({
+            'name': 'ZZ Shirt E', 'list_price': 100.0, 'is_published': True,
+            'sale_ok': True,
+            'attribute_line_ids': [(0, 0, {
+                'attribute_id': self.color.id,
+                'value_ids': [(6, 0, self.green.ids)]})],
+        })
+        _, _, _, _, _, filter_counts = self._call(
+            get_product_list, sort={'id': ASC},
+            ids=self.shirt_ids + pricey.ids, attrib_values=[self.f_red],
+            max_price=50)
+        self.assertEqual(
+            self._facet_count(filter_counts, self.green.id), 3,
+            "Shirt E costs 100, above the max price of 50; Green must not count it")
+        self.assertEqual(self._facet_count(filter_counts, self.red.id), 3)
+
     # ------------------------------------------------------------------ #
     #  Search                                                            #
     # ------------------------------------------------------------------ #

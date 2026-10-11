@@ -162,11 +162,15 @@ class ProductTemplate(models.Model):
         # Min and max price of recordset need to be calculated without the price filter
         prices_partial_domain = domains.copy()
 
-        # Product Price Filter
+        # Product Price Filter. The attribute facet counts must honour it too,
+        # so it also goes into the attributes partial domain.
+        price_domains = []
         if kwargs.get('min_price', False):
-            domains.append([('list_price', '>=', float(kwargs['min_price']))])
+            price_domains.append([('list_price', '>=', float(kwargs['min_price']))])
         if kwargs.get('max_price', False):
-            domains.append([('list_price', '<=', float(kwargs['max_price']))])
+            price_domains.append([('list_price', '<=', float(kwargs['max_price']))])
+        domains += price_domains
+        attributes_partial_domain += price_domains
 
         return (
             domains,
