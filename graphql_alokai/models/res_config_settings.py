@@ -3,6 +3,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import uuid
+from urllib.parse import urlencode
+
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval
@@ -88,3 +90,20 @@ class ResConfigSettings(models.TransientModel):
     def create_alokai_cache_invalidation_key(self):
         ICP = self.env['ir.config_parameter'].sudo()
         ICP.set_param('alokai_cache_invalidation_key', str(uuid.uuid4()))
+
+    def action_launch_alokai_saas_trial(self):
+        """Open the hosted trial flow with this Odoo instance prefilled."""
+        ICP = self.env['ir.config_parameter'].sudo()
+        saas_base_url = (ICP.get_param(
+            'graphql_alokai.saas_base_url',
+            'https://zeppln.erpgap.com',
+        ) or 'https://zeppln.erpgap.com').rstrip('/')
+        instance_url = ICP.get_param('web.base.url', '').rstrip('/')
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '%s/trial/launch?%s' % (
+                saas_base_url,
+                urlencode({'instance': instance_url}),
+            ),
+            'target': 'new',
+        }

@@ -13,6 +13,15 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='website_info_settings']" position="after">
                 <block title="Alokai" id="alokai_settings">
+                    <setting id="alokai_saas_trial_settings"
+                             string="Alokai as a Service"
+                             help="Launch a hosted trial using the products from this Odoo instance.">
+                        <button name="action_launch_alokai_saas_trial"
+                                string="Test Alokai as a Service with your own products"
+                                type="object"
+                                class="btn btn-primary"
+                                icon="fa-external-link"/>
+                    </setting>
                     <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request" id="alokai_debug_mode_settings">
                         <field name="alokai_debug_mode"/>
                     </setting>
