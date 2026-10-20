@@ -38,7 +38,8 @@
                         name="redis_flushdb"
                         type="object"
                         string="Flush Redis"
-                        class="btn-primary"
+                        class="btn-secondary"
+                        confirm="Are you sure you want to flush the Redis cache?"
                     />
                 </header>
             </xpath>
