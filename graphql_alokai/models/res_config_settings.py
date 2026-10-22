@@ -49,7 +49,7 @@ class ResConfigSettings(models.TransientModel):
             alokai_cache_invalidation=ICP.get_param('alokai_cache_invalidation'),
             alokai_cache_invalidation_key=ICP.get_param('alokai_cache_invalidation_key'),
             alokai_cache_invalidation_url=ICP.get_param('alokai_cache_invalidation_url'),
-            alokai_image_quality=int(ICP.get_param('alokai_image_quality', 100)),
+            alokai_image_quality=int(ICP.get_param('alokai_image_quality', 80)),
             alokai_image_background_rgba=ICP.get_param('alokai_image_background_rgba', '(255, 255, 255, 255)'),
             alokai_image_resize_limit=int(ICP.get_param('alokai_image_resize_limit', 1920)),
             alokai_recent_sales_count_days=int(ICP.get_param('alokai_recent_sales_count_days', 30)),

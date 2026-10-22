@@ -105,7 +105,7 @@ class IrBinary(models.AbstractModel):
                             background.paste(img, offset)
 
                     # Get compression quality from settings
-                    quality = int(ICP.get_param('alokai_image_quality', 100))
+                    quality = int(ICP.get_param('alokai_image_quality', 80))
 
                     stream_image = io.BytesIO()
                     if target_format == 'jpeg':

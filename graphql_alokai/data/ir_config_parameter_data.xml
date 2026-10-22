@@ -14,7 +14,7 @@
 
     <record id="alokai_image_quality" model="ir.config_parameter">
         <field name="key">alokai_image_quality</field>
-        <field name="value">100</field>
+        <field name="value">80</field>
     </record>
 
     <record id="alokai_image_background_rgba" model="ir.config_parameter">
