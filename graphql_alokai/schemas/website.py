@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import graphene
 from graphene.types import generic
-from odoo.addons.graphql_alokai.schemas.objects import WebsiteMenu, get_image_filename
+from odoo.addons.graphql_alokai.schemas.objects import Website, WebsiteMenu, get_image_filename
 from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 
 
@@ -37,6 +37,16 @@ class WebsiteQuery(graphene.ObjectType):
     website_homepage = graphene.Field(
         Homepage,
     )
+    website = graphene.Field(
+        Website,
+        description='The website this request belongs to, resolved from its '
+                    'Request-Host. Lets the storefront show the store\'s own '
+                    'name rather than one fixed at build time.',
+    )
+
+    @staticmethod
+    def resolve_website(self, info):
+        return info.context['env']['website'].get_current_website()
 
     @staticmethod
     def resolve_website_menu(self, info, no_parent=False):
