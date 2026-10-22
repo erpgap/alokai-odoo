@@ -3,10 +3,12 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import json
+import re
 import logging
 import itertools
 from odoo.fields import Domain
 from collections import defaultdict
+from urllib.parse import urlencode
 from datetime import datetime, timedelta
 from odoo import models, fields, api, _
 from odoo.http import request
@@ -218,7 +220,50 @@ class ProductTemplate(models.Model):
             prices[variant.id] = price
         return prices
 
+    # Variant axes schema.org has a property for. Google reads them from
+    # `variesBy` and from each variant; any other axis is described with
+    # additionalProperty instead.
+    _ALOKAI_SCHEMA_AXES = {
+        'color': 'color',
+        'colour': 'color',
+        'size': 'size',
+        'material': 'material',
+        'pattern': 'pattern',
+    }
+
+    @staticmethod
+    def _alokai_slugify_axis_value(name):
+        """The storefront's slugifyValue (layers/product/utils): "Off White" -> "off-white"."""
+        return re.sub(r'[^a-z0-9]+', '-', (name or '').strip().lower()).strip('-')
+
+    def _alokai_variant_path(self, variant):
+        """The storefront URL path of one variant, as mountUrlSlugForProductVariant builds it.
+
+        The template slug plus one query parameter per variant axis: the
+        attribute name lowercased, and the value as "<slug>-<ptav id>" (or the
+        bare id when the name has nothing to slugify).
+        """
+        params = []
+        for ptav in variant.product_template_attribute_value_ids:
+            slug = self._alokai_slugify_axis_value(ptav.name)
+            params.append((ptav.attribute_id.name.lower(), f'{slug}-{ptav.id}' if slug else str(ptav.id)))
+        path = self.website_slug or ''
+        return f'{path}?{urlencode(params)}' if params else path
+
     def _compute_json_ld(self):
+        """schema.org markup for the product page.
+
+        A template with several variants is described as a ProductGroup with
+        one Product per variant, each with its own Offer - its price, its
+        stock, its URL. That is the shape Google reads for products whose
+        variants share a page: here every variant URL (?color=...) declares
+        the template URL as canonical, so the template page is the one that
+        is indexed and must describe all of them. A single AggregateOffer
+        spanning the variants made the product ineligible for merchant
+        listings, which need a concrete price.
+
+        A template with one variant stays a Product with one Offer.
+        """
         env = self.env
         website = env['website'].get_current_website()
         base_url = env['ir.config_parameter'].sudo().get_param('web.base.url', '')
@@ -226,85 +271,111 @@ class ProductTemplate(models.Model):
             base_url = base_url[:-1]
 
         website_domain = website._alokai_domain()
+        currency = website.currency_id.name
 
         seller_name = (website and website.display_name) or env.user.company_id.display_name
         shop_prices = self._alokai_variant_shop_prices(website)
 
-        for product in self:
-            images = []
-            if product.image_1920:
-                images.append(f'{base_url}/web/image/product.template/{product.id}/image_1920')
+        def availability(record):
+            # The website-scoped, Redis-backed stock flag (the same source as
+            # is_in_stock) rather than a live qty_available aggregation.
+            in_stock = record.has_stock if record.is_storable else True
+            return "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"
 
-            # Dynamic availability: use the website-scoped, Redis-backed stock
-            # flag (same source as is_in_stock) rather than a live qty_available
-            # aggregation per variant.
-            if product.is_storable:
-                in_stock = product.has_stock
-            else:
-                in_stock = True
-            availability = "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"
-
-            # Build offers: AggregateOffer if multiple variants with different prices,
-            # else a single Offer
-            product_url = f"{website_domain}{product.website_slug or ''}"
-            variants = product.product_variant_ids
-            variant_prices = [
-                price for price in (shop_prices[v.id] for v in variants) if price
-            ]
-            use_aggregate = len(variants) > 1 and len(set(variant_prices)) > 1
-
-            if use_aggregate:
-                offers = {
-                    "@type": "AggregateOffer",
-                    "url": product_url,
-                    "priceCurrency": website.currency_id.name,
-                    "lowPrice": f"{min(variant_prices):.2f}",
-                    "highPrice": f"{max(variant_prices):.2f}",
-                    "offerCount": len(variants),
-                    "itemCondition": "https://schema.org/NewCondition",
-                    "availability": availability,
-                    "seller": {
-                        "@type": "Organization",
-                        "name": seller_name,
-                    },
-                }
-            else:
-                offers = {
-                    "@type": "Offer",
-                    "url": product_url,
-                    "priceCurrency": website.currency_id.name,
-                    # Every variant has this price (or there is one variant),
-                    # so it is the template's price too.
-                    "price": f"{(variant_prices[0] if variant_prices else product._get_combination_info()['price']):.2f}",
-                    "itemCondition": "https://schema.org/NewCondition",
-                    "availability": availability,
-                    "seller": {
-                        "@type": "Organization",
-                        "name": seller_name,
-                    },
-                }
-
-            json_ld = {
-                "@context": "https://schema.org",
-                "@type": "Product",
-                "name": product.with_context(display_default_code=False).display_name,
-                "image": images,
-                "brand": {
-                    "@type": "Brand",
+        def offer(url, price, record):
+            return {
+                "@type": "Offer",
+                "url": url,
+                "priceCurrency": currency,
+                "price": f"{price:.2f}",
+                "itemCondition": "https://schema.org/NewCondition",
+                "availability": availability(record),
+                "seller": {
+                    "@type": "Organization",
                     "name": seller_name,
                 },
-                "offers": offers,
             }
+
+        # bin_size: only whether an image exists is needed, not its bytes.
+        sized = self.with_context(bin_size=True)
+
+        for product, product_sized in zip(self, sized):
+            images = []
+            if product_sized.image_1920:
+                images.append(f'{base_url}/web/image/product.template/{product.id}/image_1920')
+
+            product_url = f"{website_domain}{product.website_slug or ''}"
+            variants = product.product_variant_ids
+
+            if len(variants) > 1:
+                axes = []
+                has_variant = []
+                for variant, variant_sized in zip(variants, variants.with_context(bin_size=True)):
+                    item = {
+                        "@type": "Product",
+                        "name": variant.with_context(display_default_code=False).display_name,
+                        "offers": offer(
+                            f"{website_domain}{product._alokai_variant_path(variant)}",
+                            shop_prices[variant.id],
+                            variant,
+                        ),
+                    }
+                    if variant.default_code:
+                        item["sku"] = variant.default_code
+                    if variant_sized.image_variant_1920:
+                        item["image"] = f'{base_url}/web/image/product.product/{variant.id}/image_1920'
+                    elif images:
+                        item["image"] = images[0]
+
+                    extra = []
+                    for ptav in variant.product_template_attribute_value_ids:
+                        attribute = ptav.attribute_id.name
+                        schema_property = self._ALOKAI_SCHEMA_AXES.get(attribute.lower())
+                        if schema_property:
+                            item[schema_property] = ptav.name
+                            if schema_property not in axes:
+                                axes.append(schema_property)
+                        else:
+                            extra.append({"@type": "PropertyValue", "name": attribute, "value": ptav.name})
+                    if extra:
+                        item["additionalProperty"] = extra
+                    has_variant.append(item)
+
+                json_ld = {
+                    "@context": "https://schema.org",
+                    "@type": "ProductGroup",
+                    "name": product.with_context(display_default_code=False).display_name,
+                    "url": product_url,
+                    "productGroupID": product.default_code or str(product.id),
+                    "image": images,
+                    "brand": {
+                        "@type": "Brand",
+                        "name": seller_name,
+                    },
+                    "hasVariant": has_variant,
+                }
+                if axes:
+                    json_ld["variesBy"] = [f"https://schema.org/{axis}" for axis in axes]
+            else:
+                price = shop_prices[variants.id] if variants else product._get_combination_info()['price']
+                json_ld = {
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    "name": product.with_context(display_default_code=False).display_name,
+                    "image": images,
+                    "brand": {
+                        "@type": "Brand",
+                        "name": seller_name,
+                    },
+                    "offers": offer(product_url, price, product),
+                }
+                # For a single-variant template default_code is the variant's.
+                sku = product.default_code or product.variants_default_code
+                if sku:
+                    json_ld["sku"] = sku
 
             if product.description_sale:
                 json_ld["description"] = product.description_sale
-
-            # SKU: prefer template's default_code; fall back to single variant's code.
-            # For multi-variant templates default_code is NULL (Odoo computes it from
-            # variants when there's exactly one), so use variants_default_code.
-            sku = product.default_code or product.variants_default_code
-            if sku:
-                json_ld["sku"] = sku
 
             # Category: hierarchical path like "Women > Clothing > Dresses"
             if product.public_categ_ids:
@@ -765,92 +836,6 @@ class ProductProduct(models.Model):
         else:
             # has_stock = False
             return [('id', 'not in', product_ids)]
-
-    def _compute_json_ld(self):
-        env = self.env
-        website = env['website'].get_current_website()
-        base_url = env['ir.config_parameter'].sudo().get_param('web.base.url', '')
-        if base_url and base_url[-1:] == '/':
-            base_url = base_url[:-1]
-
-        website_domain = website._alokai_domain()
-
-        seller_name = (website and website.display_name) or env.user.company_id.display_name
-
-        for product in self:
-            images = []
-            if product.image_1920:
-                images.append(f'{base_url}/web/image/product.product/{product.id}/image_1920')
-
-            # Dynamic availability: use the website-scoped, Redis-backed stock
-            # flag (same source as is_in_stock) rather than a live qty_available
-            # read per variant.
-            if product.is_storable:
-                in_stock = product.has_stock
-            else:
-                in_stock = True
-            availability = "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"
-
-            json_ld = {
-                "@context": "https://schema.org",
-                "@type": "Product",
-                "name": product.with_context(display_default_code=False).display_name,
-                "image": images,
-                "brand": {
-                    "@type": "Brand",
-                    "name": seller_name,
-                },
-                "offers": {
-                    "@type": "Offer",
-                    "url": f"{website_domain}{product.website_slug or ''}",
-                    "priceCurrency": website.currency_id.name,
-                    "price": f"{product._get_combination_info_variant()['price']:.2f}",
-                    "itemCondition": "https://schema.org/NewCondition",
-                    "availability": availability,
-                    "seller": {
-                        "@type": "Organization",
-                        "name": seller_name,
-                    },
-                },
-            }
-
-            # Link variant back to its template
-            if product.product_tmpl_id:
-                json_ld["isVariantOf"] = {
-                    "@type": "ProductGroup",
-                    "name": product.product_tmpl_id.name,
-                }
-
-            if product.description_sale:
-                json_ld["description"] = product.description_sale
-
-            if product.default_code:
-                json_ld["sku"] = product.default_code
-
-            # Category from the parent template's public categories
-            tmpl = product.product_tmpl_id
-            if tmpl and tmpl.public_categ_ids:
-                deepest = tmpl.public_categ_ids[0]
-                parts = []
-                node = deepest
-                while node:
-                    parts.append(node.name)
-                    node = node.parent_id
-                parts.reverse()
-                json_ld["category"] = ' > '.join(parts)
-
-            # aggregateRating from template (variants share their template's reviews).
-            # Google prefers numeric values as strings in structured data.
-            if tmpl and getattr(tmpl, 'rating_count', 0) > 0:
-                json_ld["aggregateRating"] = {
-                    "@type": "AggregateRating",
-                    "ratingValue": f"{tmpl.sudo().rating_avg:.2f}",
-                    "reviewCount": str(tmpl.rating_count),
-                    "bestRating": "5",
-                    "worstRating": "1",
-                }
-
-            product.json_ld = json.dumps(json_ld)
 
     @api.model
     def _update_dirty_products_stock_redis(self):
