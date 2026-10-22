@@ -16,3 +16,4 @@ from . import test_website
 from . import test_website_company
 from . import test_cms
 from . import test_wishlist
+from . import test_storefront_contract
