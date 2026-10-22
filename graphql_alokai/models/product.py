@@ -9,6 +9,7 @@ from odoo.fields import Domain
 from collections import defaultdict
 from datetime import datetime, timedelta
 from odoo import models, fields, api, _
+from odoo.http import request
 from odoo.tools.float_utils import float_round
 from odoo.exceptions import ValidationError
 from psycopg2.extras import execute_values
@@ -179,6 +180,44 @@ class ProductTemplate(models.Model):
             filtered_attributes
         )
 
+    def _alokai_variant_shop_prices(self, website):
+        """The shop price of every variant of these templates, in one pass.
+
+        The same number `_get_combination_info_variant()['price']` gives - the
+        pricelist price with the product's taxes, mapped by the fiscal
+        position, applied the way the website displays them - but priced for
+        all variants in one pricelist call. Per variant, combination info also
+        works out stock, wishlist and discount data the JSON-LD never reads,
+        which made it most of the cost of a product page's query.
+
+        Outside a shop request (no pricelist on the request) it falls back to
+        combination info, which knows how to find one.
+        """
+        variants = self.product_variant_ids
+        if not variants:
+            return {}
+        pricelist = request and getattr(request, 'pricelist', None)
+        if not pricelist:
+            return {v.id: v._get_combination_info_variant()['price'] for v in variants}
+
+        currency = website.currency_id
+        rule_prices = pricelist.with_context(self.env.context)._compute_price_rule(
+            variants, 1.0, currency=currency,
+        )
+        fiscal_position = request.fiscal_position
+        company = self.env.company
+        prices = {}
+        for variant in variants:
+            price = rule_prices[variant.id][0]
+            product_taxes = variant.sudo().taxes_id._filter_taxes_by_company(company)
+            if product_taxes:
+                price = self._apply_taxes_to_price(
+                    price, currency, product_taxes, fiscal_position.map_tax(product_taxes),
+                    variant, website=website,
+                )
+            prices[variant.id] = price
+        return prices
+
     def _compute_json_ld(self):
         env = self.env
         website = env['website'].get_current_website()
@@ -189,6 +228,7 @@ class ProductTemplate(models.Model):
         website_domain = website._alokai_domain()
 
         seller_name = (website and website.display_name) or env.user.company_id.display_name
+        shop_prices = self._alokai_variant_shop_prices(website)
 
         for product in self:
             images = []
@@ -209,7 +249,7 @@ class ProductTemplate(models.Model):
             product_url = f"{website_domain}{product.website_slug or ''}"
             variants = product.product_variant_ids
             variant_prices = [
-                price for price in (v._get_combination_info_variant()['price'] for v in variants) if price
+                price for price in (shop_prices[v.id] for v in variants) if price
             ]
             use_aggregate = len(variants) > 1 and len(set(variant_prices)) > 1
 
@@ -233,7 +273,9 @@ class ProductTemplate(models.Model):
                     "@type": "Offer",
                     "url": product_url,
                     "priceCurrency": website.currency_id.name,
-                    "price": f"{product._get_combination_info()['price']:.2f}",
+                    # Every variant has this price (or there is one variant),
+                    # so it is the template's price too.
+                    "price": f"{(variant_prices[0] if variant_prices else product._get_combination_info()['price']):.2f}",
                     "itemCondition": "https://schema.org/NewCondition",
                     "availability": availability,
                     "seller": {
