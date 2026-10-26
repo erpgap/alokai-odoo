@@ -60,7 +60,10 @@ class ProductTemplate(models.Model):
                 elif field == 'popular':
                     sorting += 'recent_sales_count %s' % val.value
                 elif field == 'newest':
-                    sorting += 'published_datetime %s, create_date %s' % (val.value, val.value)
+                    # Products published before the date was recorded have
+                    # none: sort them as the oldest, by creation date.
+                    nulls = 'NULLS LAST' if val.value == 'DESC' else 'NULLS FIRST'
+                    sorting += 'published_datetime %s %s, create_date %s' % (val.value, nulls, val.value)
                 else:
                     sorting += '%s %s' % (field, val.value)
 
@@ -607,25 +610,37 @@ class ProductTemplate(models.Model):
             'target': 'new',
         }
 
+    @staticmethod
+    def _publishes(vals):
+        # The backend toggles is_published; website_published is the website
+        # mixin's alias for it (the frontend publish button writes that one).
+        return bool(vals.get('is_published') or vals.get('website_published'))
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('website_published'):
-                vals['published_datetime'] = datetime.now()
+            if self._publishes(vals):
+                vals.setdefault('published_datetime', fields.Datetime.now())
 
         return super(ProductTemplate, self).create(vals_list)
 
     def write(self, vals):
-        if 'website_published' in vals:
-            for product in self:
-                if vals['website_published'] and not product.website_published and not product.published_datetime:
-                    vals['published_datetime'] = datetime.now()
+        # Only a first publication is dated: republishing keeps the original
+        # date. Written apart from the rest so a product already dated in the
+        # same batch keeps its own.
+        first_published = self.browse()
+        if self._publishes(vals) and 'published_datetime' not in vals:
+            first_published = self.filtered(lambda p: not p.is_published and not p.published_datetime)
+        if first_published:
+            super(ProductTemplate, first_published).write(
+                dict(vals, published_datetime=fields.Datetime.now()))
+        if self - first_published:
+            super(ProductTemplate, self - first_published).write(vals)
 
-        res = super(ProductTemplate, self).write(vals)
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
         self._invalidate_cms_pages()
 
-        return res
+        return True
 
     def unlink(self):
         self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)

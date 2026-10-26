@@ -224,6 +224,42 @@ class TestProductList(TransactionCase):
             'sale_ok': True, 'public_categ_ids': [(6, 0, category.ids)],
         })
 
+    def test_publishing_from_the_backend_dates_the_product(self):
+        """The backend toggles is_published; that must date the product, and
+        republishing it later keeps the first date."""
+        product = self.env['product.template'].create({'name': 'ZZ Unpublished'})
+        self.assertFalse(product.published_datetime)
+        product.is_published = True
+        first = product.published_datetime
+        self.assertTrue(first)
+        product.is_published = False
+        product.is_published = True
+        self.assertEqual(product.published_datetime, first)
+
+    def test_publishing_a_batch_keeps_each_products_date(self):
+        """Publishing several products at once dates only those never
+        published, and leaves the others' dates alone."""
+        Template = self.env['product.template']
+        dated = Template.create({'name': 'ZZ Dated'})
+        dated.write({'published_datetime': '2020-01-01 00:00:00'})
+        fresh = Template.create({'name': 'ZZ Fresh'})
+        (dated + fresh).write({'is_published': True})
+        self.assertEqual(str(dated.published_datetime), '2020-01-01 00:00:00')
+        self.assertTrue(fresh.published_datetime)
+
+    def test_newest_lists_undated_products_last(self):
+        """Products published before the date was recorded have none; the
+        newest sort must not put them ahead of a product just published."""
+        Template = self.env['product.template']
+        undated = Template.create({'name': 'ZZ Undated', 'is_published': True, 'sale_ok': True})
+        undated.write({'published_datetime': False})
+        recent = Template.create({'name': 'ZZ Recent', 'is_published': True, 'sale_ok': True})
+        ids = (undated + recent).ids
+        newest = self._call(get_product_list, sort={'newest': DESC}, ids=ids)[0]
+        oldest = self._call(get_product_list, sort={'newest': ASC}, ids=ids)[0]
+        self.assertEqual(newest.ids, [recent.id, undated.id])
+        self.assertEqual(oldest.ids, [undated.id, recent.id])
+
     def test_category_slug_includes_subcategories(self):
         """A category page also lists the products of its subcategories."""
         child = self._category('ZZ Child', '/zz-test-category/child', self.category)
