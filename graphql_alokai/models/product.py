@@ -1148,12 +1148,6 @@ class ProductPublicCategory(models.Model):
         return super(ProductPublicCategory, self).unlink()
 
 
-class ProductAttributeValue(models.Model):
-    _inherit = 'product.attribute.value'
-
-    visibility = fields.Selection(related='attribute_id.visibility', store=True, readonly=True)
-
-
 class ProductTag(models.Model):
     _inherit = 'product.tag'
 

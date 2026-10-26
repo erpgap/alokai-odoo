@@ -50,7 +50,7 @@ def _count_templates_by_value(Product, domain):
     return {
         value.id: count
         for value, count in groups
-        if value and count and value.visibility == 'visible'
+        if value and count and value.attribute_id.visibility == 'visible'
     }
 
 
@@ -130,7 +130,7 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         category_values = AttributeValue
         if category:
             category_values = category.mapped('attribute_ids').mapped('value_ids').filtered(
-                lambda av: av.visibility and av.visibility == 'visible')
+                lambda av: av.attribute_id.visibility == 'visible')
 
         if category_values:
             present_ids = set(present_values.ids)

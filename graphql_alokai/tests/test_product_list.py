@@ -213,6 +213,18 @@ class TestProductList(TransactionCase):
             get_product_list, sort={'id': ASC}, ids=self.shirt_ids)
         self.assertEqual(set(attr_values.ids), {self.red.id, self.green.id})
 
+    def test_hidden_attributes_are_not_filters(self):
+        """An attribute hidden from eCommerce filters offers none of its
+        values, with or without a category's configured filters."""
+        self.color.visibility = 'hidden'
+        _, _, attr_values, *_ = self._call(
+            get_product_list, sort={'id': ASC}, ids=self.shirt_ids)
+        self.assertFalse(attr_values)
+        _, _, attr_values, *_ = self._call(
+            get_product_list, sort={'id': ASC}, category_id=self.category.ids)
+        self.assertFalse(attr_values & (self.red + self.green + self.blue))
+        self.assertTrue(attr_values & (self.s + self.m))
+
     def _category(self, name, slug, parent=None):
         return self.env['product.public.category'].create({
             'name': name, 'website_slug': slug, 'parent_id': parent and parent.id,
