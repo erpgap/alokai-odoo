@@ -13,11 +13,11 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='website_info_settings']" position="after">
                 <block title="Alokai" id="alokai_settings">
-                    <setting id="alokai_saas_trial_settings"
-                             string="Alokai as a Service"
-                             help="Launch a hosted trial using the products from this Odoo instance.">
-                        <button name="action_launch_alokai_saas_trial"
-                                string="Test Alokai as a Service with your own products"
+                    <setting id="alokai_saas_instance_settings"
+                             string="Alokai instance"
+                             help="Create or open the hosted Alokai instance connected to this Odoo database.">
+                        <button name="action_launch_alokai_instance"
+                                string="Open Alokai instance"
                                 type="object"
                                 class="btn btn-primary"
                                 icon="fa-external-link"/>
