@@ -53,6 +53,14 @@ class TestSalesData(TransactionCase):
         self.assertEqual(self.shirt.recent_sales_count, 100)
         self.assertEqual(self.scarf.recent_sales_count, 20)
 
+    def test_a_new_product_starts_at_zero(self):
+        """Until the next refresh a new product scores 0, not NULL - which
+        the popular sort would rank first."""
+        product = self.env['product.template'].create({'name': 'ZZ New'})
+        self.env.flush_all()
+        self.env.invalidate_all()
+        self.assertEqual(product.recent_sales_count, 0)
+
     def test_frequently_bought_together(self):
         """Products bought on the same order are related, both ways."""
         self.assertEqual(self.shirt.frequently_bought_together_ids.related_product_id, self.scarf)

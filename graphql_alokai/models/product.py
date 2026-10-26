@@ -442,10 +442,13 @@ class ProductTemplate(models.Model):
                     slug_name = self.env['ir.http']._slugify(product.name or '').strip().strip('-')
                     product.website_slug = f'{prefix}/{slug_name}-{product.id}'
 
-    def _compute_recent_sales_count(self):
-        # Skip unsaved (NewId) records - only persisted rows have integer ids
-        self = self.filtered(lambda p: isinstance(p.id, int))
+    def _update_recent_sales_count(self):
+        """Write the popularity of these products, from their recent sales.
 
+        Run by the daily sales data cron, never on create or write: a score is
+        relative to the best seller of its category, so it is only meaningful
+        computed over the whole catalogue at once.
+        """
         lookback_days = int(self.env['ir.config_parameter'].sudo().get_param('alokai_recent_sales_count_days', 30))
         date_days_ago = fields.Datetime.now() - timedelta(days=lookback_days)
         done_states = self.env['sale.report'].sudo()._get_done_states()
@@ -501,6 +504,7 @@ class ProductTemplate(models.Model):
                 WHERE v.id = t.id
             """
             execute_values(self.env.cr, query, values)
+            self.invalidate_recordset(['recent_sales_count'])
 
     @api.depends('published_datetime')
     def _compute_published_hours(self):
@@ -513,8 +517,9 @@ class ProductTemplate(models.Model):
 
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
-    recent_sales_count = fields.Float('Recent Sales Count', compute='_compute_recent_sales_count', store=True,
-                                      readonly=True)
+    # Written by the sales data cron; 0 until its next run, so a new product
+    # is not ranked first by the popular sort (NULLs sort first descending).
+    recent_sales_count = fields.Float('Recent Sales Count', default=0.0, readonly=True)
     recent_sales_count_increment = fields.Integer('Recent Sales Count Increment', default=0, required=True)
     frequently_bought_together_ids = fields.One2many('product.template.fbt', 'product_id', 'Frequently Bought Together',
                                                      readonly=True)
@@ -658,7 +663,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def calculate_products_popularity(self):
-        self.search([])._compute_recent_sales_count()
+        self.search([])._update_recent_sales_count()
 
     @api.model
     def calculate_frequently_bought_together(self):
