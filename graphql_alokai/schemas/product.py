@@ -33,37 +33,25 @@ def _convert_price(env, amount, from_currency, to_currency):
         amount, to_currency, website.company_id, fields.Date.context_today(website), round=False)
 
 
-def _values_present_in(Product, domain):
-    """Attribute values that actually occur in ``domain``'s result set.
+def _count_templates_by_value(Product, domain):
+    """``{attribute_value_id: number of templates in ``domain`` whose
+    attribute lines list that value}``, for every visible value that occurs.
 
-    A single GROUP BY on the stored ``variant_attribute_value_ids`` relation
-    instead of materialising every product and mapping in Python.
+    One grouped query over the attribute lines answers both which values are
+    present (count > 0) and how many products each has, so no value list has
+    to be stored on the template to know what to offer as a filter.
     """
-    AttributeValue = Product.env['product.attribute.value'].sudo()
-    values = AttributeValue.browse([
-        value.id
-        for [value] in Product._read_group(domain, groupby=['variant_attribute_value_ids'])
-        if value
-    ])
-    return values.filtered(lambda av: av.visibility and av.visibility == 'visible')
-
-
-def _count_templates_by_value(Product, count_domain, value_ids):
-    """``{attribute_value_id: number of templates in ``count_domain`` whose
-    attribute lines list that value}``.
-
-    One grouped query replaces the legacy per-product Python set counting.
-    """
-    if not value_ids:
-        return {}
     Line = Product.env['product.template.attribute.line'].sudo()
-    template_query = Product._search(count_domain)
     groups = Line._read_group(
-        [('product_tmpl_id', 'in', template_query), ('value_ids', 'in', list(value_ids))],
+        [('product_tmpl_id', 'in', Product._search(domain))],
         groupby=['value_ids'],
         aggregates=['product_tmpl_id:count_distinct'],
     )
-    return {value.id: count for value, count in groups}
+    return {
+        value.id: count
+        for value, count in groups
+        if value and count and value.visibility == 'visible'
+    }
 
 
 def _price_sorted_page(env, Product, full_domain, sort, offset, page_size):
@@ -130,7 +118,8 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         # attribute values (so a category page always offers its full filter
         # set), intersected with what the current result set actually has;
         # otherwise fall back to the values present in the result set.
-        present_values = _values_present_in(Product, full_domain)
+        counts = _count_templates_by_value(Product, full_domain)
+        present_values = AttributeValue.browse(list(counts))
 
         category = None
         if kwargs.get('category_id'):
@@ -158,7 +147,6 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
         step1_values = universe.filtered(
             lambda av: av.attribute_id.id not in filtered_attributes)
         attribute_values |= step1_values
-        counts = _count_templates_by_value(Product, full_domain, step1_values.ids)
         for av in step1_values:
             attribute_value_counts[av.id] += counts.get(av.id, 0)
 
@@ -176,10 +164,10 @@ def get_product_list(env, current_page, page_size, search, sort, **kwargs):
             partial_domain.append(Domain.AND(other_filters))
             partial_domain = Domain.AND(partial_domain)
 
-            partial_values = _values_present_in(Product, partial_domain).filtered(
+            counts = _count_templates_by_value(Product, partial_domain)
+            partial_values = AttributeValue.browse(list(counts)).filtered(
                 lambda av: av.attribute_id.id == attribute_id)
             attribute_values |= partial_values
-            counts = _count_templates_by_value(Product, partial_domain, partial_values.ids)
             for av in partial_values:
                 attribute_value_counts[av.id] += counts.get(av.id, 0)
 

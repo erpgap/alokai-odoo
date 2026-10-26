@@ -113,7 +113,12 @@ class ProductTemplate(models.Model):
             category_domain = website.website_domain()
             category_domain += [('website_slug', '=', kwargs['category_slug'])]
             categories = env['product.public.category'].sudo().search(category_domain)
-            domains.append([('public_categ_slug_ids', 'in', categories.ids)])
+            # The category and its descendants, resolved up front: passing the
+            # ids as a list lets Postgres estimate the match from its column
+            # statistics, where a child_of subquery left it guessing - and on
+            # large catalogues picking a plan several times slower.
+            categories = categories.search([('id', 'child_of', categories.ids)])
+            domains.append([('public_categ_ids', 'in', categories.ids)])
 
         # Filter With Name
         if kwargs.get('name', False):
@@ -442,36 +447,6 @@ class ProductTemplate(models.Model):
             "itemListElement": items
         }
 
-    def _get_public_categ_slug(self, category_ids, category):
-        category_ids.append(category.id)
-
-        if category.parent_id:
-            category_ids = self._get_public_categ_slug(category_ids, category.parent_id)
-
-        return category_ids
-
-    @api.depends('public_categ_ids')
-    def _compute_public_categ_slug_ids(self):
-        """ To allow search of website_slug on parent categories """
-        cr = self.env.cr
-
-        for product in self:
-            category_ids = []
-
-            for category in product.public_categ_ids:
-                category_ids = product._get_public_categ_slug(category_ids, category)
-
-            cr.execute("""
-                DELETE FROM product_template_product_public_category_slug_rel
-                WHERE product_template_id=%s;
-            """, (product.id,))
-
-            for category_id in list(dict.fromkeys(category_ids)):
-                cr.execute("""
-                    INSERT INTO product_template_product_public_category_slug_rel(product_template_id, product_public_category_id)
-                    VALUES(%s, %s);
-                """, (product.id, category_id,))
-
     @api.depends('name')
     def _compute_website_slug(self):
         langs = self.env['res.lang'].search([])
@@ -486,25 +461,6 @@ class ProductTemplate(models.Model):
                     prefix = '/product'
                     slug_name = self.env['ir.http']._slugify(product.name or '').strip().strip('-')
                     product.website_slug = f'{prefix}/{slug_name}-{product.id}'
-
-    @api.depends('product_variant_ids', 'product_variant_id', 'attribute_line_ids')
-    def _compute_variant_attribute_value_ids(self):
-        """
-        Used to filter attribute values on the website.
-        This method computes a list of attribute values from variants of published products.
-        This will ensure that the available attribute values on the website filtering will return results.
-        By default, Odoo only shows attributes that will return results but doesn't consider that a particular
-        attribute value may not have a variant.
-        """
-        for product in self:
-            variants = product.product_variant_ids
-            attribute_values = variants.\
-                mapped('product_template_attribute_value_ids').\
-                mapped('product_attribute_value_id')
-            attribute_values += variants.\
-                mapped('valid_product_template_attribute_line_ids').\
-                mapped('value_ids')
-            product.variant_attribute_value_ids = [(6, 0, attribute_values.ids)]
 
     def _compute_recent_sales_count(self):
         # Skip unsaved (NewId) records - only persisted rows have integer ids
@@ -575,16 +531,8 @@ class ProductTemplate(models.Model):
             else:
                 product.published_hours = 0
 
-    variant_attribute_value_ids = fields.Many2many('product.attribute.value',
-                                                   'product_template_variant_product_attribute_value_rel',
-                                                   compute='_compute_variant_attribute_value_ids',
-                                                   store=True, readonly=True)
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
-    public_categ_slug_ids = fields.Many2many('product.public.category',
-                                             'product_template_product_public_category_slug_rel',
-                                             compute='_compute_public_categ_slug_ids',
-                                             store=True, readonly=True)
     recent_sales_count = fields.Float('Recent Sales Count', compute='_compute_recent_sales_count', store=True,
                                       readonly=True)
     recent_sales_count_increment = fields.Integer('Recent Sales Count Increment', default=0, required=True)

@@ -111,7 +111,7 @@ class InvalidateCache(models.Model):
     def _get_product_tags(self, product_ids):
         tags = ','.join(f'P{product_id}' for product_id in product_ids)
         category_ids = self.env['product.template'].search(
-            [('id', 'in', product_ids)]).mapped('public_categ_slug_ids').ids
+            [('id', 'in', product_ids)]).mapped('public_categ_ids.parents_and_self').ids
         if category_ids:
             tags += ',' + ','.join(f'C{category_id}' for category_id in category_ids)
         return tags
@@ -119,7 +119,7 @@ class InvalidateCache(models.Model):
     def _get_category_tags(self, product_ids):
         tags = ','.join(f'P{product_id}' for product_id in product_ids)
         category_ids = self.env['product.template'].search(
-            [('id', 'in', product_ids)]).mapped('public_categ_slug_ids').ids
+            [('id', 'in', product_ids)]).mapped('public_categ_ids.parents_and_self').ids
         if category_ids:
             tags += ',' + ','.join(f'C{category_id}' for category_id in category_ids)
         return tags

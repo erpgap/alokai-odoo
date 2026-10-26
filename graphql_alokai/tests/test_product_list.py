@@ -206,6 +206,49 @@ class TestProductList(TransactionCase):
         counted = {d['id'] for d in filter_counts if d['type'] == 'attribute_value'}
         self.assertTrue(facet_ids <= counted)
 
+    def test_facets_offer_only_values_in_the_result(self):
+        """Without a category, the facets are exactly the values the listed
+        products carry: the shirts come in Red and Green, never Blue."""
+        _, _, attr_values, *_ = self._call(
+            get_product_list, sort={'id': ASC}, ids=self.shirt_ids)
+        self.assertEqual(set(attr_values.ids), {self.red.id, self.green.id})
+
+    def _category(self, name, slug, parent=None):
+        return self.env['product.public.category'].create({
+            'name': name, 'website_slug': slug, 'parent_id': parent and parent.id,
+        })
+
+    def _product_in(self, category):
+        return self.env['product.template'].create({
+            'name': 'ZZ %s Product' % category.name, 'is_published': True,
+            'sale_ok': True, 'public_categ_ids': [(6, 0, category.ids)],
+        })
+
+    def test_category_slug_includes_subcategories(self):
+        """A category page also lists the products of its subcategories."""
+        child = self._category('ZZ Child', '/zz-test-category/child', self.category)
+        product = self._product_in(child)
+        products, total, *_ = self._call(
+            get_product_list, sort={'id': ASC}, page_size=100,
+            category_slug='/zz-test-category')
+        self.assertIn(product, products)
+        self.assertEqual(total, len(self.products) + 1)
+
+    def test_category_page_follows_a_moved_subcategory(self):
+        """Moving a subcategory under another parent moves its products with
+        it, without any product having to be saved again."""
+        other = self._category('ZZ Other', '/zz-other')
+        child = self._category('ZZ Child', '/zz-test-category/child', self.category)
+        product = self._product_in(child)
+        child.parent_id = other
+
+        def listed(slug):
+            return self._call(
+                get_product_list, sort={'id': ASC}, page_size=100, category_slug=slug)[0]
+
+        self.assertIn(product, listed('/zz-other'))
+        self.assertNotIn(product, listed('/zz-test-category'))
+
     def test_disjunctive_facet_counts_are_not_double_counted(self):
         """Filtering on Red, the sibling colour Green must report its TRUE
         availability, counted once — not inflated by products available in
