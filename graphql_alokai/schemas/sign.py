@@ -223,7 +223,7 @@ class UpdatePassword(graphene.Mutation):
             user = env['res.users'].sudo().search([('id', '=', env.uid), ('active', 'in', [True, False])], limit=1)
 
             # Prevent "Public User" to be Updated
-            if user and user.is_public_user:
+            if user and user._is_public():
                 raise GraphQLError(_('Partner cannot be updated.'))
             try:
                 # change_password() already re-verifies current_password

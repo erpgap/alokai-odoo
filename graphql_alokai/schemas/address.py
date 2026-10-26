@@ -25,11 +25,11 @@ def update_order_fiscal_position(order):
 def get_partner_id(env, order, website):
     if order:
         # Is public user
-        if not order.partner_id.user_ids or order.partner_id.is_public_user:
+        if not order.partner_id.user_ids or order.partner_id._alokai_is_public():
             partner_id = order.partner_id.id
         else:
             partner_id = env.user.partner_id.commercial_partner_id.id
-    elif env.user.id == env.user.is_public_user:
+    elif env.user._is_public():
         # Public users need to have an order to be able to list addresses
         raise GraphQLError(_('Shopping cart not found.'))
     else:
@@ -80,13 +80,13 @@ class AddressQuery(graphene.ObjectType):
 
         if order:
             # Is public user
-            if not order.partner_id.user_ids or order.partner_id.is_public_user:
+            if not order.partner_id.user_ids or order.partner_id._alokai_is_public():
                 partner_id = order.partner_id.id
             else:
                 partner_id = env.user.partner_id.commercial_partner_id.id
         else:
             # Is public user
-            if env.user.is_public_user:
+            if env.user._is_public():
                 partner_id = env.user.partner_id.id
             else:
                 partner_id = env.user.partner_id.commercial_partner_id.id
@@ -159,7 +159,7 @@ class AddAddress(graphene.Mutation):
 
         if order:
             partner = order.partner_id
-        elif env.user.is_public_user:
+        elif env.user._is_public():
             raise GraphQLError(_('Shopping cart not found.'))
         else:
             partner = env.user.partner_id
@@ -179,7 +179,7 @@ class AddAddress(graphene.Mutation):
         }
 
         # Check public user
-        if partner.is_public_user:
+        if partner._alokai_is_public():
             # Create main contact
             values['type'] = 'contact'
             partner_id = ResPartner.create(values).id

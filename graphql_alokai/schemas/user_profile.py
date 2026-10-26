@@ -49,7 +49,7 @@ class UpdateMyAccount(graphene.Mutation):
         env = info.context["env"]
         user = request.env.user
         # Prevent "Public User" to be Updated
-        if user.is_public_user:
+        if user._is_public():
             raise GraphQLError(_('Partner cannot be updated.'))
 
         partner = user.partner_id
@@ -70,7 +70,7 @@ class DeleteMyAccount(graphene.Mutation):
         user = request.env.user.sudo()
 
         # Prevent "Public User" to be deleted
-        if user.is_public_user or not user.has_group('base.group_portal'):
+        if user._is_public() or not user.has_group('base.group_portal'):
             raise GraphQLError(_('User cannot be deleted.'))
 
         if user:

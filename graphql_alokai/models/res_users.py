@@ -5,7 +5,7 @@
 import logging
 
 from odoo.http import request
-from odoo import api, models, fields, _
+from odoo import models, _
 from odoo.addons.auth_signup.models.res_partner import now
 from odoo.exceptions import UserError
 
@@ -14,15 +14,6 @@ _logger = logging.getLogger(__name__)
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
-
-    @api.depends('website_ids')
-    def _compute_is_public_user(self):
-        for user in self:
-            user.is_public_user = bool(user.website_ids)
-
-    website_ids = fields.One2many('website', 'user_id', string='Websites as Public User')
-    is_public_user = fields.Boolean('Is Public User', compute='_compute_is_public_user', store=True, readonly=True)
-
 
     def _get_website_reset_password_email_template(self):
         website = self.env['website'].get_current_website()

@@ -210,7 +210,7 @@ class CreateUpdatePartner(graphene.Mutation):
         partner = order.partner_id
 
         # Is public user
-        if partner.is_public_user:
+        if partner._alokai_is_public():
             partner = env['res.partner'].sudo().create(data)
 
             order.write({

@@ -296,12 +296,12 @@ class Partner(OdooObjectType):
 
     def resolve_current_pricelist(self, info):
         website = current_website(info)
-        if not self.is_public_user and self.property_product_pricelist:
+        if not self._alokai_is_public() and self.property_product_pricelist:
             request.session[PRICELIST_SESSION_CACHE_KEY] = self.property_product_pricelist.id
         return website._get_and_cache_current_pricelist()
 
     def resolve_is_public(self, info):
-        return not self or self.is_public_user
+        return not self or self._alokai_is_public()
 
     def resolve_company_name(self, info):
         company = get_parent_company(self)

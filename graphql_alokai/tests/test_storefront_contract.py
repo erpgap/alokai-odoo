@@ -71,6 +71,17 @@ class TestStorefrontContract(AlokaiGraphQLCommon):
         self.assertEqual(body['data']['website']['id'], website.id)
         self.assertEqual(body['data']['website']['name'], website.name)
 
+    # ---------------------- public partner --------------------------- #
+    def test_only_the_websites_anonymous_partner_is_public(self):
+        """Partner.isPublic tells the storefront the cart is anonymous: true
+        for the website's public partner (whose user is archived), false for
+        a customer's."""
+        public = self.website.user_id.partner_id
+        self.assertTrue(public._alokai_is_public())
+        self.assertFalse(self.partner._alokai_is_public())
+        self.assertTrue(self.website.user_id._is_public())
+        self.assertFalse(self.user._is_public())
+
     # ---------------------- product JSON-LD -------------------------- #
     def test_variants_are_a_product_group(self):
         json_ld, product = self._product(self.grouped)
