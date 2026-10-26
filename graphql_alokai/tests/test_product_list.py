@@ -260,6 +260,36 @@ class TestProductList(TransactionCase):
         self.assertEqual(newest.ids, [recent.id, undated.id])
         self.assertEqual(oldest.ids, [undated.id, recent.id])
 
+    def test_category_without_slug_gets_a_readable_one(self):
+        """A category created without a slug builds one from its parent's
+        slug and its own name; a slug someone typed is kept."""
+        Category = self.env['product.public.category']
+        child = Category.create({'name': 'ZZ Kids Wear', 'parent_id': self.category.id})
+        self.assertEqual(child.website_slug, '/zz-test-category/zz-kids-wear')
+        top = Category.create({'name': 'ZZ Top Level'})
+        self.assertEqual(top.website_slug, '/zz-top-level')
+        typed = Category.create({'name': 'ZZ Typed', 'website_slug': '/zz-chosen'})
+        self.assertEqual(typed.website_slug, '/zz-chosen')
+
+    def test_category_slug_in_use_gets_a_suffix(self):
+        """A generated slug that is already taken gets -2, then -3."""
+        Category = self.env['product.public.category']
+        first, second, third = Category.create([
+            {'name': 'ZZ Same', 'parent_id': self.category.id} for _i in range(3)])
+        self.assertEqual(first.website_slug, '/zz-test-category/zz-same')
+        self.assertEqual(second.website_slug, '/zz-test-category/zz-same-2')
+        self.assertEqual(third.website_slug, '/zz-test-category/zz-same-3')
+
+    def test_category_created_with_its_children(self):
+        """Children created inline with their parent are created before the
+        parent has a slug; theirs must still start with the parent's."""
+        parent = self.env['product.public.category'].create({
+            'name': 'ZZ Batch Parent',
+            'child_id': [(0, 0, {'name': 'ZZ Batch Child'})],
+        })
+        self.assertEqual(parent.website_slug, '/zz-batch-parent')
+        self.assertEqual(parent.child_id.website_slug, '/zz-batch-parent/zz-batch-child')
+
     def test_category_slug_includes_subcategories(self):
         """A category page also lists the products of its subcategories."""
         child = self._category('ZZ Child', '/zz-test-category/child', self.category)

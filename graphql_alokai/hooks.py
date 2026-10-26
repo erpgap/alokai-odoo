@@ -195,7 +195,6 @@ def post_init_hook_login_convert(env):
 
     Production tasks (always run):
       - Lowercase portal user logins
-      - Compute hierarchical website_slug on graphql_alokai categories
       - Repair blog.post slugs accidentally storing 'False/' or 'None/' prefixes
 
     Demo tasks (only run when this module's demo data was loaded):
@@ -213,7 +212,6 @@ def post_init_hook_login_convert(env):
         if user.login and user.has_group('base.group_portal'):
             user.login = user.login.lower()
 
-    _compute_category_slugs(env)
     _fix_broken_blog_slugs(env)
     _seed_cms_homepage(env)
     _seed_cms_regions(env)
@@ -409,70 +407,6 @@ def _stock_demo_variants(env, quantity=100):
         "Stock setup complete: %s variants stocked (qty=%s), %s already had stock",
         len(vals_list), quantity, len(variants) - len(vals_list),
     )
-
-
-def _compute_category_slugs(env):
-    """
-    Set hierarchical website_slug values on product.public.category records
-    created by this module (whether shipped as data or demo data).
-
-    Default behaviour of product.public.category.create() falls back to
-    `/category/{id}` when no slug is given - replace those with a path-style
-    slug walking up the parent chain, e.g.:
-        /women
-        /women/clothing
-        /women/clothing/dresses
-        /men/accessories/wallets
-
-    Hierarchical paths are unique by construction (different parents -> different
-    paths) and SEO-friendly. The model's _validate_website_slug guards against
-    accidental collisions.
-
-    Idempotent: only updates categories whose current slug still matches the
-    default `/category/{id}` pattern. Safe to run in production - no-op if this
-    module has not created any categories.
-    """
-    imd = env['ir.model.data'].search([
-        ('module', '=', 'graphql_alokai'),
-        ('model', '=', 'product.public.category'),
-    ])
-    if not imd:
-        _logger.info("No graphql_alokai categories found; skipping slug computation")
-        return
-
-    categories = env['product.public.category'].browse(imd.mapped('res_id')).exists()
-    slugify = env['ir.http']._slugify
-    langs = env['res.lang'].search([])
-
-    def hierarchical_slug(cat):
-        """Walk up parent chain and build '/parent/.../leaf' slug."""
-        parts = []
-        node = cat
-        while node:
-            slug_part = slugify(node.name or '').strip().strip('-')
-            if slug_part:
-                parts.append(slug_part)
-            node = node.parent_id
-        parts.reverse()
-        return '/' + '/'.join(parts) if parts else None
-
-    # Sort parents-first so any cross-checks see consistent state
-    sorted_cats = categories.sorted(lambda c: (len(c.parent_path or ''), c.id))
-
-    updated = 0
-    for category in sorted_cats:
-        default_slug = f'/category/{category.id}'
-        # Skip if user/admin already set a custom slug
-        if category.website_slug and category.website_slug != default_slug:
-            continue
-        for lang in langs:
-            cat = category.with_context(lang=lang.code)
-            slug = hierarchical_slug(cat)
-            if slug:
-                cat.website_slug = slug
-        updated += 1
-
-    _logger.info("Category slugs computed: %s categories updated", updated)
 
 
 # Sample customer review feedback - varied so reviews don't look templated

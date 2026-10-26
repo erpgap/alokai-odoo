@@ -1089,15 +1089,39 @@ class ProductPublicCategory(models.Model):
     website_slug = fields.Char('Website Slug', translate=True, copy=False)
     attribute_ids = fields.Many2many('product.attribute', string='Filtering Attributes')
 
+    def _default_website_slug(self):
+        """A readable slug for a category created without one: its parent's
+        slug plus its own name, e.g. /women/clothing/dresses, in the
+        language of the context.
+
+        A slug already in use gets -2, -3, ... appended; a name that slugifies
+        to nothing falls back to /category/<id>.
+        """
+        self.ensure_one()
+        name = self.env['ir.http']._slugify(self.name or '').strip('-')
+        if not name:
+            return f'/category/{self.id}'
+        # A parent created along with its children has no slug yet while they
+        # are created: build it the way it is about to be built.
+        parent = self.parent_id
+        prefix = parent and (parent.website_slug or parent._default_website_slug()) or ''
+        base = f"{prefix.rstrip('/')}/{name}"
+        slug, suffix = base, 2
+        while self.search_count([('website_slug', '=', slug), ('id', '!=', self.id)], limit=1):
+            slug, suffix = f'{base}-{suffix}', suffix + 1
+        return slug
+
     @api.model_create_multi
     def create(self, vals_list):
         res = super(ProductPublicCategory, self).create(vals_list)
 
-        for rec in res:
-            if rec.website_slug:
-                rec._validate_website_slug()
-            else:
-                rec.website_slug = f'/category/{rec.id}'
+        res.filtered('website_slug')._validate_website_slug()
+        # One slug per language, from the translated name.
+        langs = [code for code, _name in self.env['res.lang'].get_installed()]
+        for rec in res.filtered(lambda c: not c.website_slug):
+            for lang in langs:
+                rec = rec.with_context(lang=lang)
+                rec.website_slug = rec._default_website_slug()
 
         return res
 
