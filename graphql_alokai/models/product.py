@@ -477,20 +477,20 @@ class ProductTemplate(models.Model):
             ('date', '>=', date_days_ago),
         ]
 
+        # Quantity sold per template, over all its variants. Lines without a
+        # product (sections, notes) group under an empty template.
         sale_groups = self.env['sale.report'].sudo()._read_group(
             domain,
-            ['product_id', 'product_uom_qty'],
-            ['product_id:sum'],
+            ['product_tmpl_id'],
+            ['product_uom_qty:sum'],
         )
-        # TODO: check why product id is False in sale.report
-        sale_count_map = {group[0].id: group[1] for group in sale_groups if group[0]}
+        sale_count_map = {template.id: qty for template, qty in sale_groups if template}
 
         raw = []
 
         for product in self:
             if product.type in ['product', 'consu']:
-                product_id = product.product_variant_id.id
-                sales_count = sale_count_map.get(product_id, 0)
+                sales_count = sale_count_map.get(product.id, 0)
                 sales_count = float_round(sales_count, precision_rounding=product.uom_id.rounding)
                 recent_sales_count = sales_count + product.recent_sales_count_increment
             else:
@@ -682,6 +682,13 @@ class ProductTemplate(models.Model):
         return combination_info
 
     @api.model
+    def _cron_refresh_sales_data(self):
+        """Popularity and frequently-bought-together, from the same window of
+        recent sales, refreshed together so they never disagree."""
+        self.calculate_products_popularity()
+        self.calculate_frequently_bought_together()
+
+    @api.model
     def calculate_products_popularity(self):
         self.search([])._compute_recent_sales_count()
 
@@ -711,6 +718,10 @@ class ProductTemplate(models.Model):
                 for j in range(i + 1, len(products)):
                     product_a, qty_a = products[i]
                     product_b, qty_b = products[j]
+                    # Two variants of one product on an order don't make it
+                    # bought together with itself.
+                    if product_a == product_b:
+                        continue
                     # Add the quantities of the products to each other (since it's symmetric)
                     product_relations[product_a][product_b] += min(qty_a, qty_b)
                     product_relations[product_b][product_a] += min(qty_a, qty_b)
