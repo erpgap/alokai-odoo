@@ -36,7 +36,8 @@ Data lives in Odoo only, and Odoo remains the single source of truth.
   "dirty" updates plus a daily full resync).
 - **Redis slug sync** providing a dynamic-route fallback for records created
   after a storefront build.
-- **On-demand frontend cache invalidation** when records change.
+- **Alokai cache clearing on request**: select products or categories and
+  run *Action → Clear Alokai Cache*.
 - **Merchandising**: frequently-bought-together and product popularity.
 - **Stripe payments** (optional module) with webhook, return-redirect and a
   reconciliation safety net so a payment is never silently lost.
@@ -83,8 +84,10 @@ For full setup instructions see the
 Go to **Website → Settings → Vue Storefront** and set:
 
 - **Payment Return Url**
-- **Cache Invalidation Url**
-- **Cache Invalidation Key**
+- **Cache Invalidation Key** — must match `NUXT_CACHE_INVALIDATION_KEY` on the
+  Alokai; each website's **Alokai Domain** is the Alokai it clears.
+- **Cache Invalidation Signing Secret** — only if Alokai sets
+  `NUXT_CACHE_INVALIDATION_SIGNING_SECRET`.
 - **Web Base Url**
 
 ### System parameters

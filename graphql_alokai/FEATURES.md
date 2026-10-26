@@ -120,7 +120,8 @@ the whole storefront: catalog, cart, checkout, account, content and SEO.
 ## ⚡ Built for Headless Performance
 
 - **Redis-backed stock cache** kept in sync by lightweight background jobs.
-- **On-demand cache invalidation** when records change.
+- **Alokai cache clearing on request** for selected products and
+  categories (*Action → Clear Alokai Cache*).
 - **CDN-friendly image URLs** so every size variant caches cleanly.
 - **Redis slug sync** providing a dynamic-route fallback for records created
   after a storefront build.

@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-graphql_alokai.access_invalidate_cache,access_invalidate_cache,graphql_alokai.model_invalidate_cache,base.group_user,1,1,1,1
 access_website_menu_image_public,access_website_menu_image_public,model_website_menu_image,base.group_public,1,0,0,0
 access_website_menu_image_portal,access_website_menu_image_portal,model_website_menu_image,base.group_portal,1,0,0,0
 access_website_menu_image_user,access_website_menu_image_user,model_website_menu_image,base.group_user,1,0,0,0

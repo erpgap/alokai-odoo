@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 ERPGAP/PROMPTEQUATION LDA
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo>
+
+    <record id="action_product_template_clear_alokai_cache" model="ir.actions.server">
+        <field name="name">Clear Alokai Cache</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_alokai_clear_cache()</field>
+    </record>
+
+    <record id="action_product_public_category_clear_alokai_cache" model="ir.actions.server">
+        <field name="name">Clear Alokai Cache</field>
+        <field name="model_id" ref="website_sale.model_product_public_category"/>
+        <field name="binding_model_id" ref="website_sale.model_product_public_category"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_alokai_clear_cache()</field>
+    </record>
+
+</odoo>

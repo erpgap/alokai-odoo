@@ -18,3 +18,4 @@ from . import test_cms
 from . import test_wishlist
 from . import test_storefront_contract
 from . import test_sales_data
+from . import test_alokai_cache

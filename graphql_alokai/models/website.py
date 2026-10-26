@@ -6,7 +6,6 @@ import logging
 import redis
 import pprint
 import json
-import requests
 import urllib.parse
 from html import unescape
 from odoo import models, fields, api, tools
@@ -363,38 +362,6 @@ class Website(models.Model):
         self.env['product.product']._update_all_products_stock_redis()
 
 
-class WebsiteRewrite(models.Model):
-    _inherit = 'website.rewrite'
-
-    def _get_alokai_tags(self):
-        tags = 'WR%s' % self.id
-        return tags
-
-    def _alokai_request_cache_invalidation(self):
-        ICP = self.env['ir.config_parameter'].sudo()
-        url = ICP.get_param('alokai_cache_invalidation_url', False)
-        key = ICP.get_param('alokai_cache_invalidation_key', False)
-
-        if url and key:
-            try:
-                for website_rewrite in self:
-                    tags = website_rewrite._get_alokai_tags()
-
-                    # Make the GET request to the /cache-invalidate
-                    requests.get(url, params={'key': key, 'tags': tags}, timeout=5)
-            except:
-                pass
-
-    def write(self, vals):
-        res = super(WebsiteRewrite, self).write(vals)
-        self._alokai_request_cache_invalidation()
-        return res
-
-    def unlink(self):
-        self._alokai_request_cache_invalidation()
-        return super(WebsiteRewrite, self).unlink()
-
-
 class WebsiteMenu(models.Model):
     _inherit = 'website.menu'
 
@@ -464,11 +431,6 @@ class BlogBlog(models.Model):
 
     website_slug = fields.Char('Website Slug', compute='_compute_website_slug', store=True, readonly=True,
                                translate=True)
-
-    def write(self, vals):
-        res = super(BlogBlog, self).write(vals)
-        self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
-        return res
 
 
 class BlogPost(models.Model):

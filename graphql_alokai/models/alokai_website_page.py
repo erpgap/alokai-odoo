@@ -447,28 +447,7 @@ class AlokaiWebsitePage(models.Model):
         if 'image' in values:
             self.website_meta_img = values['image'] or False
 
-        self._invalidate_storefront_cache()
         return self
-
-    # --- cache invalidation ----------------------------------------------
-
-    def _invalidate_storefront_cache(self):
-        """Queue this page's URL for invalidation.
-
-        Without this, a merchant publishes, reloads, sees the old page and
-        reports it as a bug. Treat it as part of publishing, not a follow-up.
-        """
-        if not self:
-            return
-        self.env['invalidate.cache'].create_invalidate_cache(
-            'alokai.website.page', self.ids,
-        )
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        pages = super().create(vals_list)
-        pages._invalidate_storefront_cache()
-        return pages
 
     def write(self, vals):
         # One write for the whole model. A second definition further down the
@@ -491,17 +470,4 @@ class AlokaiWebsitePage(models.Model):
                         'unpublished.'
                     ) % page.name)
 
-        result = super().write(vals)
-
-        # Draft edits change nothing a visitor can see, so invalidating on them
-        # would evict the cache on every autosave - roughly once a second while
-        # someone is typing.
-        visitor_facing = set(vals) - {'draft_blocks', 'draft_attachment_ids'}
-        if visitor_facing:
-            self._invalidate_storefront_cache()
-        return result
-
-    def unlink(self):
-        pages = self.exists()
-        pages._invalidate_storefront_cache()
-        return super(AlokaiWebsitePage, pages).unlink()
+        return super().write(vals)

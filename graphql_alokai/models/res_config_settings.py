@@ -20,9 +20,15 @@ class ResConfigSettings(models.TransientModel):
         'Payment Error Return Url', related='website_id.alokai_payment_error_return_url', readonly=False,
         required=True
     )
-    alokai_cache_invalidation = fields.Boolean('Cache Invalidation')
-    alokai_cache_invalidation_key = fields.Char('Cache Invalidation Key', required=True)
-    alokai_cache_invalidation_url = fields.Char('Cache Invalidation Url', required=True)
+    alokai_cache_invalidation_key = fields.Char(
+        'Cache Invalidation Key', required=True,
+        help="Signs the requests that clear pages from the Alokai cache. "
+             "Must match NUXT_CACHE_INVALIDATION_KEY on Alokai.")
+    alokai_cache_invalidation_signing_secret = fields.Char(
+        'Cache Invalidation Signing Secret',
+        help="Only if Alokai sets NUXT_CACHE_INVALIDATION_SIGNING_SECRET: "
+             "the same value. Otherwise requests are signed with the key, as "
+             "Alokai then expects.")
     alokai_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)],
                                           related='website_id.alokai_mailing_list_id', readonly=False)
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password',
@@ -46,9 +52,8 @@ class ResConfigSettings(models.TransientModel):
         ICP = self.env['ir.config_parameter'].sudo()
         res.update(
             alokai_debug_mode=ICP.get_param('alokai_debug_mode'),
-            alokai_cache_invalidation=ICP.get_param('alokai_cache_invalidation'),
             alokai_cache_invalidation_key=ICP.get_param('alokai_cache_invalidation_key'),
-            alokai_cache_invalidation_url=ICP.get_param('alokai_cache_invalidation_url'),
+            alokai_cache_invalidation_signing_secret=ICP.get_param('alokai_cache_invalidation_signing_secret'),
             alokai_image_quality=int(ICP.get_param('alokai_image_quality', 80)),
             alokai_image_background_rgba=ICP.get_param('alokai_image_background_rgba', '(255, 255, 255, 255)'),
             alokai_image_resize_limit=int(ICP.get_param('alokai_image_resize_limit', 1920)),
@@ -69,9 +74,8 @@ class ResConfigSettings(models.TransientModel):
         super(ResConfigSettings, self).set_values()
         ICP = self.env['ir.config_parameter'].sudo()
         ICP.set_param('alokai_debug_mode', self.alokai_debug_mode)
-        ICP.set_param('alokai_cache_invalidation', self.alokai_cache_invalidation)
         ICP.set_param('alokai_cache_invalidation_key', self.alokai_cache_invalidation_key)
-        ICP.set_param('alokai_cache_invalidation_url', self.alokai_cache_invalidation_url)
+        ICP.set_param('alokai_cache_invalidation_signing_secret', self.alokai_cache_invalidation_signing_secret or False)
         ICP.set_param('alokai_image_quality', self.alokai_image_quality)
         ICP.set_param('alokai_image_background_rgba', self.alokai_image_background_rgba)
         ICP.set_param('alokai_image_resize_limit', self.alokai_image_resize_limit)

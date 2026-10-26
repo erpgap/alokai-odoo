@@ -21,31 +21,8 @@ _logger = logging.getLogger(__name__)
 
 class ProductTemplate(models.Model):
     _name = 'product.template'
-    _inherit = ['product.template', 'website.slug.redis.mixin']
-
-    def _invalidate_cms_pages(self):
-        """Refresh the CMS pages that feature these products.
-
-        This is the reverse lookup the mirrored product_tmpl_ids on each
-        revision exists for. It filters to each page's LIVE revision: a page
-        whose OLD revision mentioned a product is showing something else now,
-        and invalidating it would refresh a page based on content nobody can
-        see.
-
-        Without this, a price or name change leaves featured-product blocks
-        stale until their TTL expires.
-        """
-        if not self:
-            return
-
-        pages = self.env['alokai.website.page'].sudo().search([
-            ('is_published', '=', True),
-            ('live_revision_id.product_tmpl_ids', 'in', self.ids),
-        ])
-        if pages:
-            self.env['invalidate.cache'].create_invalidate_cache(
-                'alokai.website.page', pages.ids,
-            )
+    _inherit = ['product.template', 'website.slug.redis.mixin', 'alokai.cache.mixin']
+    _alokai_cache_route = 'product'
 
     @api.model
     def _graphql_get_search_order(self, sort=None):
@@ -636,16 +613,7 @@ class ProductTemplate(models.Model):
                 dict(vals, published_datetime=fields.Datetime.now()))
         if self - first_published:
             super(ProductTemplate, self - first_published).write(vals)
-
-        self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
-        self._invalidate_cms_pages()
-
         return True
-
-    def unlink(self):
-        self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
-        self._invalidate_cms_pages()
-        return super(ProductTemplate, self).unlink()
 
     def _get_combination_info(self, combination=False, product_id=False, add_qty=1, parent_combination=False,
                               only_template=False, **kwargs):
@@ -982,7 +950,8 @@ class ProductTemplateRedisStock(models.Model):
 
 class ProductPublicCategory(models.Model):
     _name = 'product.public.category'
-    _inherit = ['product.public.category', 'website.slug.redis.mixin']
+    _inherit = ['product.public.category', 'website.slug.redis.mixin', 'alokai.cache.mixin']
+    _alokai_cache_route = 'category'
 
     def action_open_storefront(self):
         """Smart-button action: open this category on the configured website
@@ -1140,12 +1109,7 @@ class ProductPublicCategory(models.Model):
         res = super(ProductPublicCategory, self).write(vals)
         if vals.get('website_slug', False):
             self._validate_website_slug()
-        self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
         return res
-
-    def unlink(self):
-        self.env['invalidate.cache'].create_invalidate_cache(self._name, self.ids)
-        return super(ProductPublicCategory, self).unlink()
 
 
 class ProductTag(models.Model):

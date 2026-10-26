@@ -18,15 +18,12 @@
                     </setting>
                     <setting></setting>
 
-                    <setting title="Enable the Cache Invalidation" id="alokai_cache_invalidation_settings">
-                        <field name="alokai_cache_invalidation"/>
+                    <setting id="alokai_cache_invalidation_key_settings"
+                             help="Products and categories can then be cleared from the Alokai cache with Action &gt; Clear Alokai Cache.">
+                        <field name="alokai_cache_invalidation_key" t-translation="off"/>
                     </setting>
-                    <setting></setting>
-                    <setting id="alokai_cache_invalidation_key_settings" invisible="not alokai_cache_invalidation">
-                        <field name="alokai_cache_invalidation_key" required="alokai_cache_invalidation" t-translation="off"/>
-                    </setting>
-                    <setting id="alokai_cache_invalidation_url_settings" invisible="not alokai_cache_invalidation">
-                        <field name="alokai_cache_invalidation_url" required="alokai_cache_invalidation" t-translation="off"/>
+                    <setting id="alokai_cache_invalidation_signing_secret_settings">
+                        <field name="alokai_cache_invalidation_signing_secret" password="True" t-translation="off"/>
                     </setting>
 
                     <setting id="alokai_payment_success_return_url_settings">

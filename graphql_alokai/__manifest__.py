@@ -22,7 +22,7 @@ Features
   "dirty" updates plus a daily full resync).
 * Redis slug sync providing a dynamic-route fallback for records created after
   a storefront build.
-* On-demand frontend cache invalidation when records change.
+* Alokai cache clearing on request for selected products and categories.
 * Merchandising: frequently-bought-together and product popularity.
 """,
     'category': 'Website/eCommerce',
@@ -51,6 +51,7 @@ Features
         'data/website_data.xml',
         'data/ir_config_parameter_data.xml',
         'data/ir_cron_data.xml',
+        'data/alokai_cache_actions.xml',
         'views/product_views.xml',
         'views/website_views.xml',
         'views/alokai_website_page_views.xml',

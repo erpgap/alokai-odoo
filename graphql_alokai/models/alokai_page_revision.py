@@ -119,10 +119,10 @@ class AlokaiPageRevision(models.Model):
     )
 
     # Mirrored by the storefront on publish. `blocks` is opaque to Odoo, so
-    # anything Odoo must answer a question about has to live outside it. These
-    # exist for exactly one question - "which live pages reference product X?"
-    # - which is how a product change invalidates the right pages. Without
-    # them, cache invalidation falls back to TTL staleness.
+    # anything Odoo must answer a question about has to live outside it: these
+    # answer "which live pages reference product X?". Product changes no
+    # longer clear those pages automatically - the storefront cache is
+    # cleared on request - so nothing in Odoo asks it today.
     product_tmpl_ids = fields.Many2many(
         'product.template',
         'alokai_page_revision_product_template_rel',

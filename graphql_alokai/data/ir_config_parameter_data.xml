@@ -7,11 +7,6 @@
 
     <function model="res.config.settings" name="create_alokai_cache_invalidation_key"/>
 
-    <record id="alokai_cache_invalidation_url" model="ir.config_parameter">
-        <field name="key">alokai_cache_invalidation_url</field>
-        <field name="value">http://localhost:3000/cache-invalidate</field>
-    </record>
-
     <record id="alokai_image_quality" model="ir.config_parameter">
         <field name="key">alokai_image_quality</field>
         <field name="value">80</field>

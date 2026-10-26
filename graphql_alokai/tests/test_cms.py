@@ -9,10 +9,6 @@ first time and the mistake was invisible to inspection:
   * ``test_restore_survives_pruning_its_own_source`` - creating a revision
     prunes, and with a small limit the revision being restored FROM is itself
     a deletion candidate, so the code read a record that no longer existed.
-  * ``test_product_write_invalidates_featuring_pages`` - the hook was added as
-    a new ``write`` on a class that already defined one further down its body,
-    which silently replaced it. Invalidation queued nothing and the code looked
-    correct.
   * ``test_empty_blocks_are_valid`` - Odoo's Json field reads back ``False``
     rather than ``None``, so a guard checking identity rejected empty pages.
 """
@@ -584,88 +580,6 @@ class TestCmsSeo(TransactionCase):
             'name': 'Below products', 'kind': 'region', 'region_key': 'seo-region'})
         with self.assertRaises(UserError):
             region.set_seo('en_US', {'title': 'Nope'})
-
-
-@tagged('post_install', '-at_install')
-class TestCmsInvalidation(TransactionCase):
-    """Cache invalidation in both directions."""
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.env['ir.config_parameter'].sudo().set_param(
-            'alokai_cache_invalidation', '1')
-        cls.Page = cls.env['alokai.website.page']
-        cls.product = cls.env['product.template'].create({
-            'name': 'Featured Thing', 'is_published': True,
-        })
-
-    def _queued_page_ids(self):
-        self.env.cr.execute(
-            "SELECT res_id FROM invalidate_cache WHERE res_model = %s",
-            ('alokai.website.page',))
-        return [row[0] for row in self.env.cr.fetchall()]
-
-    def _clear_queue(self):
-        self.env.cr.execute(
-            "DELETE FROM invalidate_cache WHERE res_model = %s",
-            ('alokai.website.page',))
-
-    def test_publishing_queues_the_page(self):
-        page = self.Page.create({'name': 'Q', 'url': '/queued'})
-        self._clear_queue()
-
-        page.draft_blocks = [block()]
-        page.publish_draft()
-
-        self.assertIn(page.id, self._queued_page_ids())
-
-    def test_draft_only_writes_queue_nothing(self):
-        """Autosave fires about once a second; evicting the cache each time
-        would be worse than useless."""
-        page = self.Page.create({'name': 'D', 'url': '/draft-only'})
-        self._clear_queue()
-
-        page.write({'draft_blocks': [block('typing')]})
-
-        self.assertEqual(self._queued_page_ids(), [])
-
-    def test_product_write_invalidates_featuring_pages(self):
-        """Regression: the hook was silently replaced by a later `write`."""
-        page = self.Page.create({'name': 'F', 'url': '/features-product'})
-        page.draft_blocks = [block(block_type='featuredProducts')]
-        page.publish_draft(references={'product_tmpl_ids': self.product.ids})
-        self._clear_queue()
-
-        self.product.write({'description_sale': 'changed'})
-
-        self.assertIn(page.id, self._queued_page_ids())
-
-    def test_product_write_ignores_pages_referencing_it_only_in_old_revisions(self):
-        """A page whose OLD revision mentioned a product shows something else
-        now; refreshing it would act on content nobody can see."""
-        page = self.Page.create({'name': 'S', 'url': '/stale-reference'})
-        page.draft_blocks = [block(block_type='featuredProducts')]
-        page.publish_draft(references={'product_tmpl_ids': self.product.ids})
-
-        page.draft_blocks = [block('no products now')]
-        page.publish_draft(references={})
-        self._clear_queue()
-
-        self.product.write({'description_sale': 'changed again'})
-
-        self.assertNotIn(page.id, self._queued_page_ids())
-
-    def test_unpublished_pages_are_not_invalidated_by_product_changes(self):
-        page = self.Page.create({'name': 'U', 'url': '/unpublished'})
-        page.draft_blocks = [block()]
-        page.publish_draft(references={'product_tmpl_ids': self.product.ids})
-        page.unpublish_page()
-        self._clear_queue()
-
-        self.product.write({'description_sale': 'once more'})
-
-        self.assertNotIn(page.id, self._queued_page_ids())
 
 
 @tagged('post_install', '-at_install')
