@@ -9,7 +9,7 @@
 
     <record id="graphql_alokai_saas_base_url" model="ir.config_parameter">
         <field name="key">graphql_alokai.saas_base_url</field>
-        <field name="value">https://zeppln.erpgap.com</field>
+        <field name="value">https://www.zeppln.com</field>
     </record>
 
     <record id="alokai_cache_invalidation_url" model="ir.config_parameter">

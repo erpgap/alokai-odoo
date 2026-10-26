@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import uuid
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit, urlunsplit
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
@@ -14,6 +14,12 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     alokai_debug_mode = fields.Boolean('Debug Mode')
+    alokai_saas_base_url = fields.Char(
+        'Zeppln portal URL',
+        config_parameter='graphql_alokai.saas_base_url',
+        default='https://www.zeppln.com',
+        help='Public Zeppln portal used to launch and manage this Alokai instance.',
+    )
     alokai_payment_success_return_url = fields.Char(
         'Payment Success Return Url', related='website_id.alokai_payment_success_return_url', readonly=False,
         required=True
@@ -87,17 +93,26 @@ class ResConfigSettings(models.TransientModel):
         ICP = self.env['ir.config_parameter'].sudo()
         ICP.set_param('alokai_cache_invalidation_key', str(uuid.uuid4()))
 
-    def action_launch_alokai_saas_trial(self):
-        """Open the hosted trial flow with this Odoo instance prefilled."""
+    def action_launch_alokai_instance(self):
+        """Open the Zeppln instance portal with this Odoo database prefilled."""
         ICP = self.env['ir.config_parameter'].sudo()
         saas_base_url = (ICP.get_param(
             'graphql_alokai.saas_base_url',
-            'https://zeppln.erpgap.com',
-        ) or 'https://zeppln.erpgap.com').rstrip('/')
+            'https://www.zeppln.com',
+        ) or 'https://www.zeppln.com').rstrip('/')
+        # Transparently migrate the former portal URL for existing databases.
+        if saas_base_url == 'https://zeppln.erpgap.com':
+            saas_base_url = 'https://www.zeppln.com'
+            ICP.set_param('graphql_alokai.saas_base_url', saas_base_url)
         instance_url = ICP.get_param('web.base.url', '').rstrip('/')
+        # Odoo may be configured with an internal HTTP base URL even though its
+        # public reverse-proxy endpoint is HTTPS. Zeppln only accepts HTTPS.
+        parsed_url = urlsplit(instance_url)
+        if parsed_url.hostname:
+            instance_url = urlunsplit(('https', parsed_url.netloc, parsed_url.path, '', '')).rstrip('/')
         return {
             'type': 'ir.actions.act_url',
-            'url': '%s/trial/launch?%s' % (
+            'url': '%s/instance/launch?%s' % (
                 saas_base_url,
                 urlencode({'instance': instance_url}),
             ),
