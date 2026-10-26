@@ -19,6 +19,23 @@ from psycopg2.extras import execute_values
 _logger = logging.getLogger(__name__)
 
 
+def _has_stock_domain(in_stock, operator, value):
+    """The search domain for ``has_stock``: ``in_stock`` (a sub-select on the
+    Redis stock mirror) for True, its negation for False.
+
+    Odoo 19 hands boolean searches over as ``in`` a list of values and
+    derives ``not in`` from it, so ``in`` is the only operator handled.
+    """
+    if operator != 'in':
+        return NotImplemented
+    wanted = {bool(v) for v in value}
+    if wanted == {True}:
+        return Domain(in_stock)
+    if wanted == {False}:
+        return ~Domain(in_stock)
+    return Domain.TRUE if wanted else Domain.FALSE
+
+
 class ProductTemplate(models.Model):
     _name = 'product.template'
     _inherit = ['product.template', 'website.slug.redis.mixin', 'alokai.cache.mixin']
@@ -538,33 +555,13 @@ class ProductTemplate(models.Model):
 
     def _compute_has_stock(self):
         website = self.env['website'].get_current_website()
-        self.env.cr.execute("""
-            SELECT DISTINCT product_id
-            FROM product_template_redis_stock
-            WHERE website_id = %s AND quantity > 0
-        """, (website.id,))
-        product_ids = [row[0] for row in self.env.cr.fetchall()]
-        products_with_stock = set(product_ids)
-
+        in_stock = self.env['product.template.redis_stock']._in_stock_product_ids(self, website)
         for product in self:
-            product.has_stock = product.id in products_with_stock
+            product.has_stock = product.id in in_stock
 
     def _search_has_stock(self, operator, value):
         website = self.env['website'].get_current_website()
-        self.env.cr.execute("""
-            SELECT DISTINCT product_id
-            FROM product_template_redis_stock
-            WHERE website_id = %s AND quantity > 0
-        """, (website.id,))
-        product_ids = [row[0] for row in self.env.cr.fetchall()]
-
-        # We only handle True/False filters here
-        if (operator in ('=', '==') and value) or (operator == '!=' and not value):
-            # has_stock = True
-            return [('id', 'in', product_ids)]
-        else:
-            # has_stock = False
-            return [('id', 'not in', product_ids)]
+        return _has_stock_domain(self._graphql_in_stock_domain(website), operator, value)
 
     def _get_product_placeholder_filename(self):
         """Return the placeholder shown for products without an image.
@@ -756,33 +753,16 @@ class ProductProduct(models.Model):
 
     def _compute_has_stock(self):
         website = self.env['website'].get_current_website()
-        self.env.cr.execute("""
-            SELECT DISTINCT product_id
-            FROM product_product_redis_stock
-            WHERE website_id = %s AND quantity > 0
-        """, (website.id,))
-        product_ids = [row[0] for row in self.env.cr.fetchall()]
-        products_with_stock = set(product_ids)
-
+        in_stock = self.env['product.product.redis_stock']._in_stock_product_ids(self, website)
         for product in self:
-            product.has_stock = product.id in products_with_stock
+            product.has_stock = product.id in in_stock
 
     def _search_has_stock(self, operator, value):
         website = self.env['website'].get_current_website()
-        self.env.cr.execute("""
-            SELECT DISTINCT product_id
-            FROM product_product_redis_stock
-            WHERE website_id = %s AND quantity > 0
-        """, (website.id,))
-        product_ids = [row[0] for row in self.env.cr.fetchall()]
-
-        # We only handle True/False filters here
-        if (operator in ('=', '==') and value) or (operator == '!=' and not value):
-            # has_stock = True
-            return [('id', 'in', product_ids)]
-        else:
-            # has_stock = False
-            return [('id', 'not in', product_ids)]
+        return _has_stock_domain([('product_redis_stock_ids', 'any', [
+            ('website_id', '=', website.id),
+            ('quantity', '>', 0),
+        ])], operator, value)
 
     @api.model
     def _update_dirty_products_stock_redis(self):
@@ -907,6 +887,20 @@ class ProductStockRedis(models.AbstractModel):
                 'name': '%s_website_qty_idx' % self._table,
                 'table': self._table,
             })
+
+    @api.model
+    def _in_stock_product_ids(self, products, website):
+        """Ids of ``products`` with stock on ``website``: one query on the
+        (website_id, quantity, product_id) index for just these products,
+        rather than every product in stock."""
+        if not products.ids:
+            return set()
+        groups = self.sudo()._read_group([
+            ('product_id', 'in', products.ids),
+            ('website_id', '=', website.id),
+            ('quantity', '>', 0),
+        ], ['product_id'])
+        return {product.id for [product] in groups}
 
     @api.model
     def bulk_update_redis_stock(self, values):

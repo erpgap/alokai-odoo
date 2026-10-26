@@ -426,6 +426,31 @@ class TestProductList(TransactionCase):
             ids=self.product_ids, in_stock=True)
         self.assertNotIn(self.products[10], products)
 
+    def test_has_stock_per_product(self):
+        """In stock with a positive row; not with a zero row or none."""
+        products = self.products[:10]
+        self.assertEqual(products.filtered('has_stock'), self.stocked)
+
+    def test_search_has_stock(self):
+        Template = self.env['product.template']
+        mine = [('id', 'in', self.product_ids)]
+        others = self.products - self.stocked
+        self.assertEqual(Template.search(mine + [('has_stock', '=', True)]), self.stocked)
+        self.assertEqual(Template.search(mine + [('has_stock', '=', False)]), others)
+        self.assertEqual(Template.search(mine + [('has_stock', '!=', True)]), others)
+
+    def test_variant_has_stock(self):
+        # Product 5 comes in 3 colours x 2 sizes.
+        variant, other = self.products[5].product_variant_ids[:2]
+        self.env['product.product.redis_stock'].create({
+            'product_id': variant.id, 'website_id': self.website.id, 'quantity': 2.0})
+        self.assertTrue(variant.has_stock)
+        self.assertFalse(other.has_stock)
+        self.assertEqual(
+            self.env['product.product'].search([
+                ('id', 'in', (variant + other).ids), ('has_stock', '=', True)]),
+            variant)
+
     @staticmethod
     def _in_stock_count(filter_counts):
         [count] = [d['total'] for d in filter_counts if d['type'] == 'in_stock']
