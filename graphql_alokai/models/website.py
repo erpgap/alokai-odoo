@@ -298,6 +298,11 @@ class Website(models.Model):
              "website's Domain when empty."
     )
 
+    alokai_saas_token = fields.Char(
+        'Alokai SaaS Token', copy=False, groups='base.group_system',
+        help="Authenticates the SaaS callback that reports the domain of the "
+             "Alokai instance created for this website.")
+
     def _alokai_domain(self):
         """Storefront base URL: the dedicated Alokai Domain, else the website's
         Domain, else the system base URL. Trailing slash stripped, ready to

@@ -2,11 +2,12 @@
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import secrets
 import uuid
 from urllib.parse import urlencode, urlsplit, urlunsplit
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -19,6 +20,13 @@ class ResConfigSettings(models.TransientModel):
         config_parameter='graphql_alokai.saas_base_url',
         default='https://www.zeppln.com',
         help='Public Zeppln portal used to launch and manage this Alokai instance.',
+    )
+    alokai_saas_instance_created = fields.Boolean(
+        'Alokai instance created',
+        config_parameter='graphql_alokai.saas_instance_created',
+        default=False,
+        readonly=True,
+        help='Set when the SaaS reports back that the Alokai instance exists.',
     )
     alokai_payment_success_return_url = fields.Char(
         'Payment Success Return Url', related='website_id.alokai_payment_success_return_url', readonly=False,
@@ -97,8 +105,7 @@ class ResConfigSettings(models.TransientModel):
         ICP = self.env['ir.config_parameter'].sudo()
         ICP.set_param('alokai_cache_invalidation_key', str(uuid.uuid4()))
 
-    def action_launch_alokai_instance(self):
-        """Open the Zeppln instance portal with this Odoo database prefilled."""
+    def _alokai_saas_base_url(self):
         ICP = self.env['ir.config_parameter'].sudo()
         saas_base_url = (ICP.get_param(
             'graphql_alokai.saas_base_url',
@@ -108,17 +115,54 @@ class ResConfigSettings(models.TransientModel):
         if saas_base_url == 'https://zeppln.erpgap.com':
             saas_base_url = 'https://www.zeppln.com'
             ICP.set_param('graphql_alokai.saas_base_url', saas_base_url)
-        instance_url = ICP.get_param('web.base.url', '').rstrip('/')
+        return saas_base_url
+
+    def _alokai_public_base_url(self):
+        instance_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '').rstrip('/')
         # Odoo may be configured with an internal HTTP base URL even though its
         # public reverse-proxy endpoint is HTTPS. Zeppln only accepts HTTPS.
         parsed_url = urlsplit(instance_url)
         if parsed_url.hostname:
             instance_url = urlunsplit(('https', parsed_url.netloc, parsed_url.path, '', '')).rstrip('/')
+        return instance_url
+
+    def action_create_alokai_instance(self):
+        """Create the website backing the Alokai instance and open the Zeppln
+        portal to launch it. The website's token is handed to the SaaS, which
+        presents it back on /alokai/saas/instance with the instance domain."""
+        Website = self.env['website'].sudo()
+        # Reuse the website of a launch that hasn't been reported back yet, so
+        # clicking again doesn't pile up websites.
+        website = Website.search([('alokai_saas_token', '!=', False)], limit=1)
+        if not website:
+            website = Website.create({
+                'name': _('Alokai'),
+                'alokai_saas_token': secrets.token_urlsafe(32),
+            })
+        public_base_url = self._alokai_public_base_url()
         return {
             'type': 'ir.actions.act_url',
             'url': '%s/instance/launch?%s' % (
-                saas_base_url,
-                urlencode({'instance': instance_url}),
+                self._alokai_saas_base_url(),
+                urlencode({
+                    'instance': public_base_url,
+                    'token': website.alokai_saas_token,
+                    'callback': '%s/alokai/saas/instance' % public_base_url,
+                }),
             ),
+            'target': 'new',
+        }
+
+    def action_open_alokai_instance(self):
+        """Open the storefront of the Alokai instance reported by the SaaS."""
+        website = self.env['website'].sudo().search([('alokai_saas_token', '!=', False)], limit=1)
+        if not website.alokai_domain:
+            raise UserError(_('The Alokai instance has not reported its domain yet.'))
+        url = website.alokai_domain
+        if '://' not in url:
+            url = 'https://%s' % url
+        return {
+            'type': 'ir.actions.act_url',
+            'url': url,
             'target': 'new',
         }

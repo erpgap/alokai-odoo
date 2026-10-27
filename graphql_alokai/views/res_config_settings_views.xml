@@ -16,11 +16,19 @@
                     <setting id="alokai_saas_instance_settings"
                              string="Alokai instance"
                              help="Create or open the hosted Alokai instance connected to this Odoo database.">
-                        <button name="action_launch_alokai_instance"
+                        <field name="alokai_saas_instance_created" invisible="1"/>
+                        <button name="action_create_alokai_instance"
+                                string="Create Alokai instance"
+                                type="object"
+                                class="btn btn-primary"
+                                icon="fa-plus"
+                                invisible="alokai_saas_instance_created"/>
+                        <button name="action_open_alokai_instance"
                                 string="Open Alokai instance"
                                 type="object"
                                 class="btn btn-primary"
-                                icon="fa-external-link"/>
+                                icon="fa-external-link"
+                                invisible="not alokai_saas_instance_created"/>
                     </setting>
                     <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request" id="alokai_debug_mode_settings">
                         <field name="alokai_debug_mode"/>
