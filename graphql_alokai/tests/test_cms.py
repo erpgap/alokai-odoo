@@ -14,12 +14,15 @@ first time and the mistake was invisible to inspection:
 """
 
 import json
+from unittest.mock import patch
 
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests.common import TransactionCase, new_test_user, tagged
 
 from ..hooks import _seed_demo_homepage_seo
 from .common import AlokaiGraphQLCommon
+from .test_stock import _FakeRedis
+from ..models.website import slug_key
 
 
 def block(title='Hello', block_type='hero'):
@@ -460,6 +463,92 @@ class TestCmsSystemPagesAndRegions(TransactionCase):
         self.assertEqual(restored.number, 3)
         self.assertEqual(
             region.live_revision_id.blocks[0]['data']['title']['en_US'], 'first')
+
+
+@tagged('post_install', '-at_install')
+class TestCmsSlugRedis(TransactionCase):
+    """The slug keys the storefront routes CMS pages by.
+
+    The storefront answers 404 for any URL with no key, without asking Odoo,
+    so a key that is missing hides a live page and one that lingers serves a
+    404 page from the CMS instead of a plain one.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.Page = cls.env['alokai.website.page']
+
+    def setUp(self):
+        super().setUp()
+        self.redis = _FakeRedis()
+        patcher = patch.object(
+            type(self.env['website']), '_redis_connect', return_value=self.redis)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def _key(self, url):
+        return slug_key(url)
+
+    def _published(self, url):
+        page = self.Page.create({'name': 'Page', 'url': url})
+        page.publish_draft()
+        return page
+
+    def test_a_draft_page_has_no_key(self):
+        self.Page.create({'name': 'Draft', 'url': '/redis-draft'})
+        self.assertNotIn(self._key('/redis-draft'), self.redis.store)
+
+    def test_publishing_adds_the_key(self):
+        self._published('/redis-live')
+        self.assertEqual(
+            self.redis.store[self._key('/redis-live')], 'alokai.website.page')
+
+    def test_unpublishing_removes_the_key(self):
+        page = self._published('/redis-gone')
+        page.unpublish_page()
+        self.assertNotIn(self._key('/redis-gone'), self.redis.store)
+
+    def test_deleting_removes_the_key(self):
+        page = self._published('/redis-deleted')
+        page.unlink()
+        self.assertNotIn(self._key('/redis-deleted'), self.redis.store)
+
+    def test_moving_a_page_moves_its_key(self):
+        page = self._published('/redis-old')
+        page.write({'url': '/redis-new'})
+        self.assertNotIn(self._key('/redis-old'), self.redis.store)
+        self.assertIn(self._key('/redis-new'), self.redis.store)
+
+    def test_a_key_another_model_owns_is_left_alone(self):
+        page = self._published('/redis-shared')
+        self.redis.store[self._key('/redis-shared')] = 'product.template'
+        page.unpublish_page()
+        self.assertEqual(
+            self.redis.store[self._key('/redis-shared')], 'product.template')
+
+    def test_a_key_another_live_page_uses_is_kept(self):
+        """Two websites can each have a page at the same address."""
+        other_website = self.env['website'].create({'name': 'Other site'})
+        page = self._published('/redis-twice')
+        twin = self.Page.create({
+            'name': 'Twin', 'url': '/redis-twice',
+            'website_id': other_website.id})
+        twin.publish_draft()
+
+        page.unpublish_page()
+        self.assertIn(self._key('/redis-twice'), self.redis.store)
+
+    def test_a_region_has_no_key(self):
+        region = self.Page.seed_region('redis-slot', 'Slot')
+        region.publish_draft()
+        self.assertEqual(self.redis.store, {})
+
+    def test_a_draft_save_does_not_touch_redis(self):
+        page = self._published('/redis-autosave')
+        with patch.object(type(self.Page), '_sync_slugs_in_redis') as sync:
+            page.save_draft([block()])
+        sync.assert_not_called()
 
 
 @tagged('post_install', '-at_install')

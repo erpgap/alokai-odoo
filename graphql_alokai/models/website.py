@@ -18,34 +18,88 @@ from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
 _logger = logging.getLogger(__name__)
 
 
+def slug_key(slug):
+    # The storefront looks keys up with encodeURIComponent.
+    return f"slug:{urllib.parse.quote(slug, safe='')}"
+
+
+def sync_slug_keys(redis_client, model_name, current, gone):
+    """Set a key for every slug in `current` and drop those in `gone`.
+
+    The storefront resolves every URL its build did not know through these
+    keys and answers 404 when there is none, without asking Odoo. A key left
+    behind sends visitors to a page that asks Odoo only to find nothing.
+
+    A key now owned by another model is not the caller's to remove.
+    """
+    for slug in set(gone) - set(current):
+        key = slug_key(slug)
+        if redis_client.get(key) == model_name:
+            redis_client.delete(key)
+
+    pipe = redis_client.pipeline()
+    for slug in current:
+        pipe.set(slug_key(slug), model_name)
+    pipe.execute()
+
+
 class WebsiteSlugRedisMixin(models.AbstractModel):
     _name = 'website.slug.redis.mixin'
     _description = 'Mixin to sync website slugs with Redis'
 
-    def _update_slug_in_redis(self):
+    def _redis_slug_is_live(self):
+        """Whether the storefront should route to this record at all."""
+        self.ensure_one()
+        if 'active' in self._fields and not self.active:
+            return False
+        if hasattr(self, 'is_published') and not self.is_published:
+            return False
+        if hasattr(self, 'sale_ok') and not self.sale_ok:
+            return False
+        return True
+
+    def _redis_slugs(self, live_only=True):
+        """Every slug these records have, in every language."""
+        langs = self.env['res.lang'].search([])
+        return {
+            slug
+            for record in self
+            if not live_only or record._redis_slug_is_live()
+            for lang in langs
+            for slug in [record.with_context(lang=lang.code).website_slug]
+            if slug
+        }
+
+    def _update_slug_in_redis(self, previous=frozenset()):
+        """Make the slug keys match these records as they are now.
+
+        `previous` is the slugs they had before the change: those they no
+        longer answer at - unpublished, archived, renamed, deleted - lose
+        their key.
+        """
         redis_client = self.env['website']._redis_connect()
         if not redis_client:
             return
         try:
-            langs = self.env['res.lang'].search([])
-            pipe = redis_client.pipeline()
-
-            for record in self:
-                # Optional: skip unpublished or not relevant records
-                if hasattr(record, 'is_published') and not record.is_published:
-                    continue
-                if hasattr(record, 'sale_ok') and not record.sale_ok:
-                    continue
-
-                for lang in langs:
-                    slug = record.with_context(lang=lang.code).website_slug
-                    if slug:
-                        encoded_slug = urllib.parse.quote(slug, safe='')
-                        pipe.set(f'slug:{encoded_slug}', record._name)
-
-            pipe.execute()
+            current = self._redis_slugs()
+            gone = set(previous) - current
+            if gone:
+                # Translations can make two records share a slug.
+                others = self.search([
+                    ('id', 'not in', self.ids),
+                    ('website_slug', 'in', list(gone)),
+                ])
+                gone -= others._redis_slugs()
+            sync_slug_keys(redis_client, self._name, current, gone)
         finally:
             redis_client.close()
+
+    def _redis_previous_slugs(self):
+        # Read only when the keys will be synced: a write with Redis off
+        # should not pay for reading every language's slug.
+        if not self.env['website']._redis_enabled():
+            return frozenset()
+        return self._redis_slugs(live_only=False)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -54,8 +108,15 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
         return records
 
     def write(self, vals):
+        previous = self._redis_previous_slugs()
         res = super().write(vals)
-        self._update_slug_in_redis()
+        self._update_slug_in_redis(previous)
+        return res
+
+    def unlink(self):
+        previous = self._redis_previous_slugs()
+        res = super().unlink()
+        self.browse()._update_slug_in_redis(previous)
         return res
 
 
@@ -340,6 +401,7 @@ class Website(models.Model):
         self.env['blog.tag'].search([])._update_slug_in_redis()
         self.env['blog.blog'].search([])._update_slug_in_redis()
         self.env['blog.post'].search([])._update_slug_in_redis()
+        self.env['alokai.website.page'].search([])._sync_slugs_in_redis()
 
     @api.model
     def _alokai_demo_enable_redis(self):
@@ -364,6 +426,7 @@ class Website(models.Model):
         # to other databases sharing the same Redis.
         self.env['product.template'].search([])._update_slug_in_redis()
         self.env['product.public.category'].search([])._update_slug_in_redis()
+        self.env['alokai.website.page'].search([])._sync_slugs_in_redis()
         self.env['product.product']._update_all_products_stock_redis()
 
 

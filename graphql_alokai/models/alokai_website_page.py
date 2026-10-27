@@ -6,6 +6,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
 from .alokai_page_revision import pretty_blocks, validate_blocks_structure
+from .website import sync_slug_keys
 
 
 class AlokaiWebsitePage(models.Model):
@@ -470,4 +471,77 @@ class AlokaiWebsitePage(models.Model):
                         'unpublished.'
                     ) % page.name)
 
-        return super().write(vals)
+        # Draft saves touch none of these, so autosave never reaches Redis.
+        previous = (
+            self._storefront_urls(published_only=False)
+            if self._SLUG_FIELDS & vals.keys() else None
+        )
+        res = super().write(vals)
+        if previous is not None:
+            self._sync_slugs_in_redis(previous)
+        return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        pages = super().create(vals_list)
+        pages._sync_slugs_in_redis()
+        return pages
+
+    def unlink(self):
+        previous = self._storefront_urls(published_only=False)
+        res = super().unlink()
+        self.browse()._sync_slugs_in_redis(previous)
+        return res
+
+    # --- storefront routing ----------------------------------------------
+
+    _SLUG_FIELDS = {'url', 'is_published', 'kind', 'website_id'}
+
+    def _storefront_urls(self, published_only=True):
+        """Every address these pages have, in every installed language.
+
+        Regions have no address of their own, and an unpublished page answers
+        at none.
+        """
+        langs = [code for code, _name in self.env['res.lang'].get_installed()]
+        return {
+            url
+            for page in self
+            if page.kind == 'page' and (page.is_published or not published_only)
+            for lang in langs
+            for url in [page.with_context(lang=lang).url]
+            if url
+        }
+
+    def _sync_slugs_in_redis(self, previous=frozenset()):
+        """Make the storefront's slug keys match these pages as they are now.
+
+        The storefront resolves every URL its build did not know through
+        `slug:<url>` and answers 404 when there is no key, without asking
+        Odoo. So a published page needs its key, and an address a page no
+        longer answers at - unpublished, deleted, moved - must lose it.
+
+        Not website.slug.redis.mixin, though it keeps the keys the same way:
+        a page's address is `url`, not website_slug, and _clean_url treats
+        every model inheriting the mixin as having a website_slug to search.
+
+        `previous` is the addresses the pages had before the change.
+        """
+        redis_client = self.env['website']._redis_connect()
+        if not redis_client:
+            return
+        try:
+            current = self._storefront_urls()
+            gone = set(previous) - current
+            if gone:
+                # The same address can be live on another website's page.
+                others = self.search([
+                    ('id', 'not in', self.ids),
+                    ('kind', '=', 'page'),
+                    ('is_published', '=', True),
+                    ('url', 'in', list(gone)),
+                ])
+                gone -= others._storefront_urls()
+            sync_slug_keys(redis_client, self._name, current, gone)
+        finally:
+            redis_client.close()
