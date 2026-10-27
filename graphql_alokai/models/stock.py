@@ -10,16 +10,22 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     def _create_stock_is_dirty_redis(self):
-        # Redis is opt-in; skip entirely when disabled (also covers tests).
-        if not self.env['website']._redis_enabled():
+        # Opt-in; skip entirely when there's nowhere to send stock (also
+        # covers tests).
+        mode = self.env['website']._alokai_sync_mode()
+        if not mode:
             return
 
         product_ids = list({q.product_id.id for q in self})
         if not product_ids:
             return
-        # Defer to postcommit so the dirty flag only appears after Postgres
-        # commits, otherwise the cron could read it and write stale stock.
-        self.env.cr.postcommit.add(lambda: self._write_dirty_keys_redis(product_ids))
+        if mode == 'redis':
+            # Defer to postcommit so the dirty flag only appears after Postgres
+            # commits, otherwise the cron could read it and write stale stock.
+            self.env.cr.postcommit.add(lambda: self._write_dirty_keys_redis(product_ids))
+        else:
+            # In the same transaction: the row is only seen once it commits.
+            self.env['alokai.zeppln.dirty']._add('stock', [{'ids': product_ids}])
 
     @api.model
     def _write_dirty_keys_redis(self, product_ids):
@@ -45,19 +51,9 @@ class StockQuant(models.Model):
         # We only trigger the existing cron (never write the redis_stock tables
         # here) to keep it the single writer to those tables and avoid the
         # serialization errors that concurrent writers would cause.
-        if not self.env['website']._redis_enabled():
+        if not self.env['website']._alokai_sync_mode():
             return
-        cron = self.env.ref(
-            'graphql_alokai.ir_cron_update_dirty_products_stock_redis',
-            raise_if_not_found=False,
-        )
-        if cron:
-            # Called inline (not via postcommit): the ir.cron.trigger row must
-            # commit with this transaction — postcommit runs after the final
-            # COMMIT, so a row created there is rolled back on cursor close.
-            # Redundant triggers in one transaction are fine: the worker
-            # consumes all pending triggers in a single run.
-            cron._trigger()
+        self.env['website']._alokai_trigger_dirty_cron()
 
     def write(self, vals):
         res = super(StockQuant, self).write(vals)

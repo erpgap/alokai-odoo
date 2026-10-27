@@ -61,6 +61,15 @@ class _FakeRedis:
         pass
 
 
+def run_dirty_sync(env):
+    """What a commit and the next dirty cron run would do: write the dirty
+    flags queued for after the commit, then sync them."""
+    env.cr.postcommit.run()
+    # The cron commits (real commit is forbidden inside a test); stub it.
+    with patch.object(env.cr, 'commit', lambda *a, **k: None):
+        env['product.product']._update_dirty_products_stock_redis()
+
+
 @tagged('post_install', '-at_install', 'alokai')
 class TestAlokaiStockTrigger(TransactionCase):
 

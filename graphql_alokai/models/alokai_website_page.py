@@ -472,25 +472,27 @@ class AlokaiWebsitePage(models.Model):
                     ) % page.name)
 
         # Draft saves touch none of these, so autosave never reaches Redis.
+        Website = self.env['website']
         previous = (
             self._storefront_urls(published_only=False)
-            if self._SLUG_FIELDS & vals.keys() else None
+            if self._SLUG_FIELDS & vals.keys() and Website._alokai_sync_mode() else None
         )
         res = super().write(vals)
         if previous is not None:
-            self._sync_slugs_in_redis(previous)
+            Website._alokai_mark_slugs_dirty(self, previous)
         return res
 
     @api.model_create_multi
     def create(self, vals_list):
         pages = super().create(vals_list)
-        pages._sync_slugs_in_redis()
+        self.env['website']._alokai_mark_slugs_dirty(pages)
         return pages
 
     def unlink(self):
-        previous = self._storefront_urls(published_only=False)
+        Website = self.env['website']
+        previous = self._storefront_urls(published_only=False) if Website._alokai_sync_mode() else ()
         res = super().unlink()
-        self.browse()._sync_slugs_in_redis(previous)
+        Website._alokai_mark_slugs_dirty(self, previous)
         return res
 
     # --- storefront routing ----------------------------------------------
@@ -513,8 +515,10 @@ class AlokaiWebsitePage(models.Model):
             if url
         }
 
-    def _sync_slugs_in_redis(self, previous=frozenset()):
-        """Make the storefront's slug keys match these pages as they are now.
+    def _slug_changes(self, previous=frozenset()):
+        """``(current, gone)``: the addresses these pages answer at now, and
+        those of `previous` - the addresses they had before the change - they
+        no longer do.
 
         The storefront resolves every URL its build did not know through
         `slug:<url>` and answers 404 when there is no key, without asking
@@ -524,24 +528,27 @@ class AlokaiWebsitePage(models.Model):
         Not website.slug.redis.mixin, though it keeps the keys the same way:
         a page's address is `url`, not website_slug, and _clean_url treats
         every model inheriting the mixin as having a website_slug to search.
-
-        `previous` is the addresses the pages had before the change.
         """
+        current = self._storefront_urls()
+        gone = set(previous) - current
+        if gone:
+            # The same address can be live on another website's page.
+            others = self.search([
+                ('id', 'not in', self.ids),
+                ('kind', '=', 'page'),
+                ('is_published', '=', True),
+                ('url', 'in', list(gone)),
+            ])
+            gone -= others._storefront_urls()
+        return current, gone
+
+    def _sync_slugs_in_redis(self, previous=frozenset()):
+        """Make the slug keys match these pages as they are now, at once.
+        Saves go through the dirty cron instead (_alokai_mark_slugs_dirty)."""
         redis_client = self.env['website']._redis_connect()
         if not redis_client:
             return
         try:
-            current = self._storefront_urls()
-            gone = set(previous) - current
-            if gone:
-                # The same address can be live on another website's page.
-                others = self.search([
-                    ('id', 'not in', self.ids),
-                    ('kind', '=', 'page'),
-                    ('is_published', '=', True),
-                    ('url', 'in', list(gone)),
-                ])
-                gone -= others._storefront_urls()
-            sync_slug_keys(redis_client, self._name, current, gone)
+            sync_slug_keys(redis_client, self._name, *self._slug_changes(previous))
         finally:
             redis_client.close()

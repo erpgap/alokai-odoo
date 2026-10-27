@@ -21,7 +21,7 @@ from odoo.tests.common import TransactionCase, new_test_user, tagged
 
 from ..hooks import _seed_demo_homepage_seo
 from .common import AlokaiGraphQLCommon
-from .test_stock import _FakeRedis
+from .test_stock import _FakeRedis, run_dirty_sync
 from ..models.website import slug_key
 
 
@@ -481,11 +481,20 @@ class TestCmsSlugRedis(TransactionCase):
 
     def setUp(self):
         super().setUp()
+        website_cls = type(self.env['website'])
+        # Drop flags queued by earlier tests, with Redis off.
+        with patch.object(website_cls, '_redis_enabled', return_value=False):
+            self.env.cr.postcommit.run()
         self.redis = _FakeRedis()
-        patcher = patch.object(
-            type(self.env['website']), '_redis_connect', return_value=self.redis)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        for name, value in (('_redis_enabled', True), ('_redis_connect', self.redis)):
+            patcher = patch.object(website_cls, name, return_value=value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
+    def _store(self):
+        """Redis once saves so far have been synced by the dirty cron."""
+        run_dirty_sync(self.env)
+        return self.redis.store
 
     def _key(self, url):
         return slug_key(url)
@@ -497,35 +506,35 @@ class TestCmsSlugRedis(TransactionCase):
 
     def test_a_draft_page_has_no_key(self):
         self.Page.create({'name': 'Draft', 'url': '/redis-draft'})
-        self.assertNotIn(self._key('/redis-draft'), self.redis.store)
+        self.assertNotIn(self._key('/redis-draft'), self._store())
 
     def test_publishing_adds_the_key(self):
         self._published('/redis-live')
         self.assertEqual(
-            self.redis.store[self._key('/redis-live')], 'alokai.website.page')
+            self._store()[self._key('/redis-live')], 'alokai.website.page')
 
     def test_unpublishing_removes_the_key(self):
         page = self._published('/redis-gone')
         page.unpublish_page()
-        self.assertNotIn(self._key('/redis-gone'), self.redis.store)
+        self.assertNotIn(self._key('/redis-gone'), self._store())
 
     def test_deleting_removes_the_key(self):
         page = self._published('/redis-deleted')
         page.unlink()
-        self.assertNotIn(self._key('/redis-deleted'), self.redis.store)
+        self.assertNotIn(self._key('/redis-deleted'), self._store())
 
     def test_moving_a_page_moves_its_key(self):
         page = self._published('/redis-old')
         page.write({'url': '/redis-new'})
-        self.assertNotIn(self._key('/redis-old'), self.redis.store)
-        self.assertIn(self._key('/redis-new'), self.redis.store)
+        self.assertNotIn(self._key('/redis-old'), self._store())
+        self.assertIn(self._key('/redis-new'), self._store())
 
     def test_a_key_another_model_owns_is_left_alone(self):
         page = self._published('/redis-shared')
-        self.redis.store[self._key('/redis-shared')] = 'product.template'
+        self._store()[self._key('/redis-shared')] = 'product.template'
         page.unpublish_page()
         self.assertEqual(
-            self.redis.store[self._key('/redis-shared')], 'product.template')
+            self._store()[self._key('/redis-shared')], 'product.template')
 
     def test_a_key_another_live_page_uses_is_kept(self):
         """Two websites can each have a page at the same address."""
@@ -537,18 +546,18 @@ class TestCmsSlugRedis(TransactionCase):
         twin.publish_draft()
 
         page.unpublish_page()
-        self.assertIn(self._key('/redis-twice'), self.redis.store)
+        self.assertIn(self._key('/redis-twice'), self._store())
 
     def test_a_region_has_no_key(self):
         region = self.Page.seed_region('redis-slot', 'Slot')
         region.publish_draft()
-        self.assertEqual(self.redis.store, {})
+        self.assertEqual(self._store(), {})
 
     def test_a_draft_save_does_not_touch_redis(self):
         page = self._published('/redis-autosave')
-        with patch.object(type(self.Page), '_sync_slugs_in_redis') as sync:
+        with patch.object(type(self.env['website']), '_alokai_mark_slugs_dirty') as mark:
             page.save_draft([block()])
-        sync.assert_not_called()
+        mark.assert_not_called()
 
 
 @tagged('post_install', '-at_install')

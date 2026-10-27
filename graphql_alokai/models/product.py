@@ -14,7 +14,10 @@ from odoo import models, fields, api, _
 from odoo.http import request
 from odoo.tools.float_utils import float_round
 from odoo.exceptions import ValidationError
+from odoo.tools import split_every
 from psycopg2.extras import execute_values
+
+from .website import DIRTY_BATCH, sync_slug_keys
 
 _logger = logging.getLogger(__name__)
 
@@ -766,8 +769,12 @@ class ProductProduct(models.Model):
 
     @api.model
     def _update_dirty_products_stock_redis(self):
-        # Redis is opt-in; skip entirely when disabled (also covers tests).
-        if not self.env['website']._redis_enabled():
+        """The dirty cron: stock and slugs changed since its last run, to
+        Redis, or to the Zeppln storefront (see website._alokai_sync_mode)."""
+        mode = self.env['website']._alokai_sync_mode()
+        if mode == 'zeppln':
+            return self.env['alokai.zeppln.dirty']._send()
+        if mode != 'redis':
             return
 
         redis_client = self.env['website']._redis_connect()
@@ -778,18 +785,20 @@ class ProductProduct(models.Model):
             # only delete the keys we scanned. At current scale this never
             # fires (catalog < 5000), it's just a safety valve for growth.
             dirty_keys = list(itertools.islice(redis_client.scan_iter('stock:product-is-dirty-*'), 5000))
-            if not dirty_keys:
+            slug_keys = list(itertools.islice(redis_client.scan_iter('dirty:slug-*'), 5000))
+            if not dirty_keys and not slug_keys:
                 return
-            if len(dirty_keys) >= 5000:
+            if len(dirty_keys) >= 5000 or len(slug_keys) >= 5000:
                 _logger.warning(
-                    "Alokai stock: dirty-key batch capped at 5000; the rest will "
+                    "Alokai: dirty-key batch capped at 5000; the rest will "
                     "sync on the next run.")
 
             # Skip None (key deleted concurrently) and dedupe: multiple keys
             # per product is now expected (uuid-suffixed flags).
             values = [redis_client.get(k) for k in dirty_keys]
             product_ids = list({int(v) for v in values if v is not None})
-            if product_ids:
+            slug_entries = [json.loads(v) for v in map(redis_client.get, slug_keys) if v is not None]
+            if product_ids or slug_entries:
                 # The scan above can observe flags for changes that committed
                 # AFTER this cron's REPEATABLE READ snapshot began. Reset the
                 # snapshot before reading free_qty so every scanned flag's change
@@ -800,35 +809,47 @@ class ProductProduct(models.Model):
                 self.env.cr.commit()
                 self.env.invalidate_all()
 
+            if product_ids:
                 products = self.search([('id', 'in', product_ids)])
                 products._update_products_stock_redis(redis_client)
+            for model, changes in self.env['website']._alokai_slug_changes(slug_entries).items():
+                sync_slug_keys(redis_client, model, *changes)
 
             # Delete the scanned flags only after the update above succeeded: if
             # it raised, we never get here, the flags survive and the products
             # are retried on the next run.
-            for dirty_key in dirty_keys:
+            for dirty_key in dirty_keys + slug_keys:
                 redis_client.delete(dirty_key)
         finally:
             redis_client.close()
 
     @api.model
     def _update_all_products_stock_redis(self):
-        # Redis is opt-in; skip entirely when disabled (also covers tests).
-        if not self.env['website']._redis_enabled():
+        # Opt-in; skip entirely when there's nowhere to send stock (also
+        # covers tests).
+        mode = self.env['website']._alokai_sync_mode()
+        if not mode:
             return
         # Don't write the redis_stock tables directly here. Instead flag every
         # product dirty and let the dirty cron sync them. That keeps a single
         # writer to those tables, avoiding REPEATABLE READ serialization errors
         # when this full resync would otherwise overlap the dirty cron.
         product_ids = self.search([]).ids
-        self.env['stock.quant']._write_dirty_keys_redis(product_ids)
+        if mode == 'redis':
+            self.env['stock.quant']._write_dirty_keys_redis(product_ids)
+        else:
+            self.env['alokai.zeppln.dirty']._add('stock', [
+                {'ids': list(ids)} for ids in split_every(DIRTY_BATCH, product_ids)])
+            self.env['website']._alokai_trigger_dirty_cron()
 
     def _update_products_stock_redis(self, redis_client):
+        """Write these products' stock to Redis, or with no `redis_client`,
+        send it to the Zeppln storefront."""
         if not self:
             return
 
         StockWarehouse = self.env['stock.warehouse']
-        pipe = redis_client.pipeline()
+        stock = {}
 
         product_tmpls = self.mapped('product_tmpl_id')
         websites = self.env['website'].search([])
@@ -848,7 +869,7 @@ class ProductProduct(models.Model):
                 free_qty = product.with_context(location=lot_stock_ids).free_qty
                 data[website.id] = free_qty
                 product_stock_values.append((product.id, website.id, free_qty))
-            pipe.set(f'stock:product-{product.id}', json.dumps(data))
+            stock[product.id] = data
 
         for product_tmpl in product_tmpls:
             for website in websites:
@@ -860,7 +881,13 @@ class ProductProduct(models.Model):
         # first: even if the (secondary) Postgres tables fail afterwards, Redis
         # already reflects the sale. A Postgres failure raises, so the caller
         # skips deleting the flags and the row is retried on the next run.
-        pipe.execute()
+        if redis_client:
+            pipe = redis_client.pipeline()
+            for product_id, data in stock.items():
+                pipe.set(f'stock:product-{product_id}', json.dumps(data))
+            pipe.execute()
+        else:
+            self.env['website']._zeppln_website()._zeppln_post('stock', {'stock': stock})
 
         self.env['product.product.redis_stock'].bulk_update_redis_stock(product_stock_values)
         self.env['product.template.redis_stock'].bulk_update_redis_stock(template_stock_values)

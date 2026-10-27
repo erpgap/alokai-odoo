@@ -15,3 +15,4 @@ from . import alokai_website_page
 from . import stock
 from . import res_partner
 from . import product_wishlist
+from . import zeppln

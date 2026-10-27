@@ -2,13 +2,20 @@
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import re
+import hashlib
+import hmac
 import logging
 import redis
+import requests
 import pprint
 import json
+import time
 import urllib.parse
+import uuid
+from collections import defaultdict
 from html import unescape
 from odoo import models, fields, api, tools
+from odoo.tools import split_every
 from odoo import _
 from odoo.addons.graphql_alokai.schemas.objects import get_image_url
 from odoo.fields import Domain
@@ -16,6 +23,15 @@ from odoo.exceptions import UserError
 from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
 
 _logger = logging.getLogger(__name__)
+
+# Records per dirty entry, and per request to the Zeppln storefront.
+DIRTY_BATCH = 1000
+
+# Every model with slug keys, for the full resync.
+SLUG_MODELS = (
+    'product.template', 'product.public.category',
+    'blog.tag', 'blog.blog', 'blog.post', 'alokai.website.page',
+)
 
 
 def slug_key(slug):
@@ -70,53 +86,55 @@ class WebsiteSlugRedisMixin(models.AbstractModel):
             if slug
         }
 
-    def _update_slug_in_redis(self, previous=frozenset()):
-        """Make the slug keys match these records as they are now.
+    def _slug_changes(self, previous=frozenset()):
+        """``(current, gone)``: the slugs these records answer at now, and
+        those of `previous` - the slugs they had before the change - they no
+        longer do: unpublished, archived, renamed, deleted."""
+        current = self._redis_slugs()
+        gone = set(previous) - current
+        if gone:
+            # Translations can make two records share a slug.
+            others = self.search([
+                ('id', 'not in', self.ids),
+                ('website_slug', 'in', list(gone)),
+            ])
+            gone -= others._redis_slugs()
+        return current, gone
 
-        `previous` is the slugs they had before the change: those they no
-        longer answer at - unpublished, archived, renamed, deleted - lose
-        their key.
-        """
+    def _update_slug_in_redis(self, previous=frozenset()):
+        """Make the slug keys match these records as they are now, at once.
+        Saves go through the dirty cron instead (_alokai_mark_slugs_dirty)."""
         redis_client = self.env['website']._redis_connect()
         if not redis_client:
             return
         try:
-            current = self._redis_slugs()
-            gone = set(previous) - current
-            if gone:
-                # Translations can make two records share a slug.
-                others = self.search([
-                    ('id', 'not in', self.ids),
-                    ('website_slug', 'in', list(gone)),
-                ])
-                gone -= others._redis_slugs()
-            sync_slug_keys(redis_client, self._name, current, gone)
+            sync_slug_keys(redis_client, self._name, *self._slug_changes(previous))
         finally:
             redis_client.close()
 
     def _redis_previous_slugs(self):
-        # Read only when the keys will be synced: a write with Redis off
-        # should not pay for reading every language's slug.
-        if not self.env['website']._redis_enabled():
+        # Read only when the keys will be synced: a write with nowhere to
+        # send slugs should not pay for reading every language's slug.
+        if not self.env['website']._alokai_sync_mode():
             return frozenset()
         return self._redis_slugs(live_only=False)
 
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
-        records._update_slug_in_redis()
+        self.env['website']._alokai_mark_slugs_dirty(records)
         return records
 
     def write(self, vals):
         previous = self._redis_previous_slugs()
         res = super().write(vals)
-        self._update_slug_in_redis(previous)
+        self.env['website']._alokai_mark_slugs_dirty(self, previous)
         return res
 
     def unlink(self):
         previous = self._redis_previous_slugs()
         res = super().unlink()
-        self.browse()._update_slug_in_redis(previous)
+        self.env['website']._alokai_mark_slugs_dirty(self, previous)
         return res
 
 
@@ -264,6 +282,112 @@ class Website(models.Model):
         return self.env['ir.config_parameter'].sudo().get_param('alokai_redis_enabled') == 'True'
 
     @api.model
+    def _alokai_sync_mode(self):
+        """Where stock and slugs go: 'redis' when Odoo writes them to Redis
+        itself, 'zeppln' when a Zeppln storefront has reported in - its Redis
+        is private, so they are sent to the storefront instead - else
+        nowhere (False)."""
+        if self._redis_enabled():
+            return 'redis'
+        if self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_instance_created'):
+            return 'zeppln'
+        return False
+
+    @api.model
+    def _alokai_trigger_dirty_cron(self):
+        # Run the dirty cron now rather than on its next tick. Called inline
+        # (not via postcommit): the ir.cron.trigger row must commit with this
+        # transaction - postcommit runs after the final COMMIT, so a row
+        # created there is rolled back on cursor close. Redundant triggers in
+        # one transaction are fine: the worker consumes all pending triggers
+        # in a single run.
+        cron = self.env.ref(
+            'graphql_alokai.ir_cron_update_dirty_products_stock_redis',
+            raise_if_not_found=False,
+        )
+        if cron:
+            cron._trigger()
+
+    @api.model
+    def _alokai_mark_slugs_dirty(self, records, previous=frozenset()):
+        """Have the dirty cron bring the slug keys of `records` up to date.
+
+        `previous` is the slugs they had before the change, for the cron to
+        remove those they no longer answer at. Nothing is written to Redis or
+        sent here: a save rolled back after it would leave keys for a state
+        that never existed, and an unreachable Redis would lose the change.
+        """
+        mode = self._alokai_sync_mode()
+        if not mode or not records:
+            return
+        entries = [
+            {'model': records._name, 'ids': list(ids), 'previous': sorted(previous)}
+            for ids in split_every(DIRTY_BATCH, records.ids)
+        ]
+        if mode == 'redis':
+            # After commit, as the stock flags: a rolled-back save marks none.
+            self.env.cr.postcommit.add(lambda: self._write_dirty_slugs_redis(entries))
+        else:
+            # In the same transaction: a rolled-back save leaves no row.
+            self.env['alokai.zeppln.dirty']._add('slug', entries)
+        self._alokai_trigger_dirty_cron()
+
+    @api.model
+    def _write_dirty_slugs_redis(self, entries):
+        redis_client = self._redis_connect()
+        if not redis_client:
+            return
+        try:
+            # Not under slug:, which the storefront scans for its pages.
+            pipe = redis_client.pipeline()
+            for entry in entries:
+                pipe.set(f'dirty:slug-{entry["model"]}-{uuid.uuid4().hex}', json.dumps(entry))
+            pipe.execute()
+        finally:
+            redis_client.close()
+
+    @api.model
+    def _alokai_slug_changes(self, entries):
+        """``{model: (current, gone)}`` for dirty slug entries, from the records
+        as they are now."""
+        grouped = defaultdict(lambda: (set(), set()))
+        for entry in entries:
+            ids, previous = grouped[entry['model']]
+            ids.update(entry['ids'])
+            previous.update(entry['previous'])
+        return {
+            model: self.env[model].sudo().browse(ids).exists()._slug_changes(previous)
+            for model, (ids, previous) in grouped.items()
+            if model in self.env
+        }
+
+    @api.model
+    def _zeppln_website(self):
+        website_id = self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_website_id')
+        return self.sudo().browse(int(website_id or 0)).exists()
+
+    def _zeppln_post(self, route, payload):
+        """One request to the Zeppln storefront, signed with the website token
+        as its zepplnSecurity checks it: HMAC-SHA256 of
+        METHOD:PATH:TIMESTAMP:BODY."""
+        self.ensure_one()
+        path = f'/api/internal/zeppln/{route}'
+        body = json.dumps(payload, separators=(',', ':'))
+        timestamp = str(int(time.time() * 1000))
+        signature = hmac.new(
+            self.alokai_saas_token.encode(), f'POST:{path}:{timestamp}:{body}'.encode(),
+            hashlib.sha256).hexdigest()
+        base_url = self.alokai_domain.rstrip('/')
+        if '://' not in base_url:
+            base_url = 'https://' + base_url
+        response = requests.post(base_url + path, data=body.encode(), timeout=30, headers={
+            'Content-Type': 'application/json',
+            'x-zeppln-timestamp': timestamp,
+            'x-zeppln-signature': signature,
+        })
+        response.raise_for_status()
+
+    @api.model
     def _redis_connect(self):
         # Single gate: when Redis is disabled, return None so callers skip.
         if not self._redis_enabled():
@@ -385,23 +509,11 @@ class Website(models.Model):
 
     @api.model
     def _update_all_slugs_redis(self):
-        redis_client = self.env['website']._redis_connect()
-        if not redis_client:
-            return
-        try:
-            # Delet one-by-one to avoid Redis blocking or memory pressure
-            delete_keys = list(redis_client.scan_iter('slug:*'))
-            for delete_key in delete_keys:
-                redis_client.delete(delete_key)
-        finally:
-            redis_client.close()
-
-        self.env['product.template'].search([])._update_slug_in_redis()
-        self.env['product.public.category'].search([])._update_slug_in_redis()
-        self.env['blog.tag'].search([])._update_slug_in_redis()
-        self.env['blog.blog'].search([])._update_slug_in_redis()
-        self.env['blog.post'].search([])._update_slug_in_redis()
-        self.env['alokai.website.page'].search([])._sync_slugs_in_redis()
+        """Mark every slug dirty, for the dirty cron to write. The keys are not
+        wiped first: the storefront answers 404 for a URL without one, so
+        every page would be gone until the cron got to it."""
+        for model in SLUG_MODELS:
+            self._alokai_mark_slugs_dirty(self.env[model].sudo().search([]))
 
     @api.model
     def _alokai_demo_enable_redis(self):
