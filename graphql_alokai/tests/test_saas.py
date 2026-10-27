@@ -38,12 +38,18 @@ class TestAlokaiSaas(HttpCase):
         token = self._create_instance()['token'][0]
         response = self._callback(token, {'domain': 'https://shop.zeppln.example/'})
         self.assertEqual(response.status_code, 200)
-        website = self.env['website'].search([('alokai_saas_token', '=', token)])
+        website = self.env['website'].browse(int(
+            self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_website_id')))
+        self.assertEqual(website.name, 'Zeppln')
         self.assertEqual(website.alokai_domain, 'https://shop.zeppln.example')
+        self.assertFalse(website.alokai_saas_token)
         self.assertEqual(self.env['ir.config_parameter'].sudo().get_param(FLAG), 'True')
         settings = self.env['res.config.settings'].create({})
         self.assertTrue(settings.alokai_saas_instance_created)
         self.assertEqual(settings.action_open_alokai_instance()['url'], 'https://shop.zeppln.example')
+        # The token is spent: replaying the request is refused.
+        self.assertEqual(self._callback(token, {'domain': 'evil.example'}).status_code, 401)
+        self.assertEqual(website.alokai_domain, 'https://shop.zeppln.example')
 
     def test_callback_rejects_a_bad_token(self):
         self._create_instance()

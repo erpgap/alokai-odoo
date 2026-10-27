@@ -136,7 +136,7 @@ class ResConfigSettings(models.TransientModel):
         website = Website.search([('alokai_saas_token', '!=', False)], limit=1)
         if not website:
             website = Website.create({
-                'name': _('Alokai'),
+                'name': 'Zeppln',
                 'alokai_saas_token': secrets.token_urlsafe(32),
             })
         public_base_url = self._alokai_public_base_url()
@@ -155,7 +155,8 @@ class ResConfigSettings(models.TransientModel):
 
     def action_open_alokai_instance(self):
         """Open the storefront of the Alokai instance reported by the SaaS."""
-        website = self.env['website'].sudo().search([('alokai_saas_token', '!=', False)], limit=1)
+        website_id = self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_website_id')
+        website = self.env['website'].sudo().browse(int(website_id or 0)).exists()
         if not website.alokai_domain:
             raise UserError(_('The Alokai instance has not reported its domain yet.'))
         url = website.alokai_domain

@@ -18,7 +18,7 @@ class AlokaiSaas(http.Controller):
         """Called back by the SaaS once the Alokai instance exists, with the
         token of the website created for it (``Authorization: Bearer``) and
         the instance domain (JSON body ``{"domain": ...}``), which is only
-        known at this point."""
+        known at this point. The token works once."""
         auth = request.httprequest.headers.get('Authorization', '')
         token = auth[len('Bearer '):].strip() if auth.startswith('Bearer ') else ''
         website = request.env['website'].sudo().search([('alokai_saas_token', '!=', False)], limit=1)
@@ -33,7 +33,14 @@ class AlokaiSaas(http.Controller):
         if not domain or not isinstance(domain, str):
             return request.make_json_response({'error': 'Missing domain'}, status=400)
 
-        website.alokai_domain = domain.strip().rstrip('/')
-        request.env['ir.config_parameter'].sudo().set_param('graphql_alokai.saas_instance_created', True)
+        # The token is single use: once the instance is reported, clearing it
+        # keeps the website from being processed again.
+        website.write({
+            'alokai_domain': domain.strip().rstrip('/'),
+            'alokai_saas_token': False,
+        })
+        ICP = request.env['ir.config_parameter'].sudo()
+        ICP.set_param('graphql_alokai.saas_website_id', website.id)
+        ICP.set_param('graphql_alokai.saas_instance_created', True)
         _logger.info("Alokai SaaS instance reported for website %s: %s", website.id, website.alokai_domain)
         return request.make_json_response({'website_id': website.id, 'domain': website.alokai_domain})
