@@ -3,6 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import uuid
+import secrets
 from urllib.parse import urlencode, urlsplit, urlunsplit
 
 from odoo import api, fields, models, _
@@ -14,6 +15,8 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     alokai_debug_mode = fields.Boolean('Debug Mode')
+    alokai_saas_token = fields.Char('Zeppln token', related='website_id.alokai_saas_token', readonly=False)
+    alokai_saas_instance_url = fields.Char('Alokai instance URL', related='website_id.alokai_saas_instance_url', readonly=True)
     alokai_saas_base_url = fields.Char(
         'Zeppln portal URL',
         config_parameter='graphql_alokai.saas_base_url',
@@ -94,7 +97,10 @@ class ResConfigSettings(models.TransientModel):
         ICP.set_param('alokai_cache_invalidation_key', str(uuid.uuid4()))
 
     def action_launch_alokai_instance(self):
-        """Open the Zeppln instance portal with this Odoo database prefilled."""
+        """Open Zeppln using the selected website's persistent credential."""
+        self.ensure_one()
+        if not self.website_id.alokai_saas_token:
+            self.website_id.alokai_saas_token = secrets.token_urlsafe(32)
         ICP = self.env['ir.config_parameter'].sudo()
         saas_base_url = (ICP.get_param(
             'graphql_alokai.saas_base_url',
@@ -110,11 +116,14 @@ class ResConfigSettings(models.TransientModel):
         parsed_url = urlsplit(instance_url)
         if parsed_url.hostname:
             instance_url = urlunsplit(('https', parsed_url.netloc, parsed_url.path, '', '')).rstrip('/')
+        # The browser first visits a local controller. It submits the token to
+        # Zeppln in a POST form, preventing it from appearing in a URL.
         return {
             'type': 'ir.actions.act_url',
-            'url': '%s/instance/launch?%s' % (
-                saas_base_url,
-                urlencode({'instance': instance_url}),
-            ),
+            'url': '/graphql_alokai/zeppln/launch?%s' % urlencode({
+                'website_id': self.website_id.id,
+                'odoo_url': instance_url,
+                'zeppln_url': saas_base_url,
+            }),
             'target': 'new',
         }

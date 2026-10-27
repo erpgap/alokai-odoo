@@ -6,6 +6,8 @@ import os
 import json
 import logging
 import hashlib
+import hmac
+import html
 from graphql import parse, print_ast
 
 from odoo import http
@@ -87,6 +89,41 @@ class AlokaiBinary(Binary):
             xmlid=xmlid, model=model, id=id, field=field, filename_field=filename_field, filename=filename,
             mimetype=mimetype, unique=unique, download=download, width=width, height=height, crop=crop,
             access_token=access_token, nocache=nocache)
+
+
+class ZepplnController(http.Controller):
+
+    @http.route('/graphql_alokai/zeppln/launch', type='http', auth='user', methods=['GET'])
+    def zeppln_launch(self, website_id=None, odoo_url=None, zeppln_url=None, **kwargs):
+        website = request.env['website'].browse(int(website_id or 0)).exists()
+        if not website or website.company_id not in request.env.user.company_ids:
+            raise Forbidden()
+        if not website.alokai_saas_token:
+            website.sudo().alokai_saas_token = os.urandom(32).hex()
+        target = (zeppln_url or 'https://www.zeppln.com').rstrip('/') + '/instance/launch'
+        fields = {
+            'instance': odoo_url or request.env['ir.config_parameter'].sudo().get_param('web.base.url', ''),
+            'websiteId': str(website.id),
+            'odooToken': website.alokai_saas_token,
+        }
+        inputs = ''.join('<input type="hidden" name="%s" value="%s">' % (html.escape(key), html.escape(value)) for key, value in fields.items())
+        return Response('<!doctype html><html><body><form id="launch" method="post" action="%s">%s</form><script>document.getElementById("launch").submit()</script></body></html>' % (html.escape(target), inputs), content_type='text/html')
+
+    @http.route('/graphql_alokai/zeppln/instance-ready', type='http', auth='none', csrf=False, methods=['POST'])
+    def zeppln_instance_ready(self, **kwargs):
+        try:
+            payload = json.loads(request.httprequest.data or b'{}')
+        except (TypeError, ValueError):
+            payload = {}
+        token = (request.httprequest.headers.get('Authorization') or '').removeprefix('Bearer ').strip()
+        website = request.env['website'].sudo().browse(int(payload.get('website_id') or 0)).exists()
+        if not website or not token or not hmac.compare_digest(token, website.alokai_saas_token or ''):
+            return Response(json.dumps({'ok': False, 'error': 'Unauthorized'}), status=401, content_type='application/json')
+        instance_url = payload.get('instance_url')
+        if not isinstance(instance_url, str) or not instance_url.startswith('https://'):
+            return Response(json.dumps({'ok': False, 'error': 'Invalid instance URL'}), status=400, content_type='application/json')
+        website.alokai_saas_instance_url = instance_url.rstrip('/')
+        return Response(json.dumps({'ok': True}), content_type='application/json')
 
 
 class GraphQLController(http.Controller, GraphQLControllerMixin):

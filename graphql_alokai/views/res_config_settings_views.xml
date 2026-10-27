@@ -15,12 +15,18 @@
                 <block title="Alokai" id="alokai_settings">
                     <setting id="alokai_saas_instance_settings"
                              string="Alokai instance"
-                             help="Create or open the hosted Alokai instance connected to this Odoo database.">
+                             help="Create or open the hosted Alokai instance connected to this website.">
                         <button name="action_launch_alokai_instance"
                                 string="Open Alokai instance"
                                 type="object"
                                 class="btn btn-primary"
                                 icon="fa-external-link"/>
+                    </setting>
+                    <setting id="alokai_saas_token_settings" string="Zeppln token" help="Website credential used by Zeppln and the hosted Alokai instance.">
+                        <field name="alokai_saas_token" password="True"/>
+                    </setting>
+                    <setting id="alokai_saas_instance_url_settings" string="Hosted Alokai URL" help="Updated automatically when Zeppln finishes provisioning.">
+                        <field name="alokai_saas_instance_url" readonly="True"/>
                     </setting>
                     <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request" id="alokai_debug_mode_settings">
                         <field name="alokai_debug_mode"/>
