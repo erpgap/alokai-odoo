@@ -56,7 +56,7 @@ class ZepplnController(http.Controller):
         """
         auth = request.httprequest.headers.get('Authorization', '')
         token = auth[len('Bearer '):].strip() if auth.startswith('Bearer ') else ''
-        website = request.env['website'].sudo().search([('alokai_saas_token', '!=', False)], limit=1)
+        website = request.env['website'].sudo().search([('alokai_saas_token', '=', token)], limit=1) if token else request.env['website']
         if not token or not website or not hmac.compare_digest(token, website.alokai_saas_token):
             return request.make_json_response({'error': 'Invalid token'}, status=401)
 
@@ -68,10 +68,11 @@ class ZepplnController(http.Controller):
         if not domain or not isinstance(domain, str):
             return request.make_json_response({'error': 'Missing domain'}, status=400)
 
-        if website.alokai_domain:
-            return request.make_json_response({'status': 'ignored', 'domain': website.alokai_domain})
+        domain = domain.strip().rstrip('/')
+        if website.alokai_domain == domain:
+            return request.make_json_response({'status': 'unchanged', 'domain': website.alokai_domain})
 
-        website.alokai_domain = domain.strip().rstrip('/')
+        website.alokai_domain = domain
         # The storefront starts with an empty Redis: send it everything.
         request.env['product.product'].sudo()._update_all_products_stock_redis()
         request.env['website'].sudo()._update_all_slugs_redis()
