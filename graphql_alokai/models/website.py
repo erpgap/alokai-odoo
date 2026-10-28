@@ -490,6 +490,12 @@ class Website(models.Model):
         'Payment Error Return Path', compute='_compute_alokai_payment_paths',
         inverse='_inverse_alokai_payment_paths',
         help="Storefront page a shopper returns to when the payment fails.")
+    user_id = fields.Many2one(domain=lambda self: [('group_ids', 'in', self.env.ref('base.group_public').id)])
+    alokai_public_pricelist_id = fields.Many2one(
+        'product.pricelist', 'Public Pricelist',
+        compute='_compute_alokai_public_pricelist_id', inverse='_inverse_alokai_public_pricelist_id',
+        domain="[('company_id', 'in', (company_id, False))]",
+        help="Pricelist of the Public User: the prices anonymous shoppers see.")
     alokai_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)])
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password')
     order_confirmation_email_template_id = fields.Many2one('mail.template', string='Order confirmation')
@@ -509,6 +515,19 @@ class Website(models.Model):
     def _compute_alokai_storefront_url(self):
         for website in self:
             website.alokai_storefront_url = website._alokai_domain()
+
+    # The partner's pricelist is per company: read and write it in the
+    # website's company, not the current user's.
+    @api.depends('user_id', 'company_id')
+    def _compute_alokai_public_pricelist_id(self):
+        for website in self:
+            partner = website.user_id.partner_id.with_company(website.company_id)
+            website.alokai_public_pricelist_id = partner.property_product_pricelist
+
+    def _inverse_alokai_public_pricelist_id(self):
+        for website in self:
+            partner = website.user_id.partner_id.sudo().with_company(website.company_id)
+            partner.property_product_pricelist = website.alokai_public_pricelist_id
 
     @api.depends('alokai_domain', 'domain')
     def _compute_alokai_payment_return_urls(self):

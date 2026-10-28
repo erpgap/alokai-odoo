@@ -15,10 +15,10 @@
                     <field name="alokai_domain" placeholder="e.g. shop.example.com"/>
                     <field
                         name="user_id"
-                        domain="[('share', '=', True)]"
                         context="{'active_test': False}"
                         options="{'no_create': True}"
                     />
+                    <field name="alokai_public_pricelist_id" options="{'no_create': True}"/>
                     <field name="alokai_mailing_list_id"/>
                     <label for="alokai_payment_success_path" string="Payment Success Return Url"/>
                     <div class="d-flex align-items-baseline">
