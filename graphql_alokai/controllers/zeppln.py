@@ -8,7 +8,7 @@ import requests
 from urllib.parse import urlsplit
 
 from odoo import http
-from odoo.http import request
+from odoo.http import request, Response
 
 _logger = logging.getLogger(__name__)
 
@@ -40,7 +40,9 @@ class ZepplnController(http.Controller):
         destination = saas_base_url + (parsed.path or '/signup')
         if parsed.query:
             destination += '?' + parsed.query
-        return request.redirect(destination)
+        # request.redirect() may localize an external path against the current
+        # Odoo host. Return an explicit HTTP redirect with the absolute URL.
+        return Response(status=303, headers={'Location': destination})
 
     @http.route('/zeppln/instance-ready', type='http', auth='public', csrf=False, methods=['POST'])
     def instance_ready(self, **kwargs):
