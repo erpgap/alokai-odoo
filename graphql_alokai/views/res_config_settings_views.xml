@@ -16,19 +16,19 @@
                     <setting id="alokai_saas_instance_settings"
                              string="Alokai instance"
                              help="Create or open the hosted Alokai instance connected to this Odoo database.">
-                        <field name="alokai_saas_instance_created" invisible="1"/>
+                        <field name="alokai_saas_instance_url" invisible="1"/>
                         <button name="action_create_alokai_instance"
                                 string="Create Zeppln instance"
                                 type="object"
                                 class="btn btn-primary"
                                 icon="fa-plus"
-                                invisible="alokai_saas_instance_created"/>
+                                invisible="alokai_saas_instance_url"/>
                         <button name="action_open_alokai_instance"
                                 string="Open Zeppln instance"
                                 type="object"
                                 class="btn btn-primary"
                                 icon="fa-external-link"
-                                invisible="not alokai_saas_instance_created"/>
+                                invisible="not alokai_saas_instance_url"/>
                     </setting>
                     <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request" id="alokai_debug_mode_settings">
                         <field name="alokai_debug_mode"/>

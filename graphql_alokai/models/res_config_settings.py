@@ -21,13 +21,8 @@ class ResConfigSettings(models.TransientModel):
         default='https://www.zeppln.com',
         help='Public Zeppln portal used to launch and manage this Alokai instance.',
     )
-    alokai_saas_instance_created = fields.Boolean(
-        'Alokai instance created',
-        config_parameter='graphql_alokai.saas_instance_created',
-        default=False,
-        readonly=True,
-        help='Set when the SaaS reports back that the Alokai instance exists.',
-    )
+    alokai_saas_instance_url = fields.Char(
+        'Zeppln instance URL', related='website_id.alokai_domain', readonly=True)
     alokai_storefront_url = fields.Char(related='website_id.alokai_storefront_url')
     alokai_payment_success_path = fields.Char(
         related='website_id.alokai_payment_success_path', readonly=False, required=True)
@@ -139,9 +134,9 @@ class ResConfigSettings(models.TransientModel):
         }
 
     def action_open_alokai_instance(self):
-        """Open the storefront of the Alokai instance reported by the SaaS."""
-        website_id = self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_website_id')
-        website = self.env['website'].sudo().browse(int(website_id or 0)).exists()
+        """Open the selected website's storefront reported by Zeppln."""
+        self.ensure_one()
+        website = self.website_id
         if not website.alokai_domain:
             raise UserError(_('The Alokai instance has not reported its domain yet.'))
         url = website.alokai_domain
