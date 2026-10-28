@@ -124,28 +124,18 @@ class ResConfigSettings(models.TransientModel):
         return instance_url
 
     def action_create_alokai_instance(self):
-        """Create the website backing the Zeppln instance and open the Zeppln
-        portal to launch it. The website's token is handed to Zeppln, which
-        gives it to the storefront: it presents it back on
-        /zeppln/instance-ready with its domain, and signs what Odoo sends it."""
-        Website = self.env['website'].sudo()
-        # Reuse the website of a launch that hasn't been reported back yet, so
-        # clicking again doesn't pile up websites.
-        website = Website.search([('alokai_saas_token', '!=', False)], limit=1)
-        if not website:
-            website = Website.create({
-                'name': 'Zeppln',
-                'alokai_saas_token': secrets.token_urlsafe(32),
-            })
+        """Open the local controller, which POSTs the website token to Zeppln."""
+        self.ensure_one()
+        website = self.website_id.sudo()
+        if not website.alokai_saas_token:
+            website.alokai_saas_token = secrets.token_urlsafe(32)
         return {
             'type': 'ir.actions.act_url',
-            'url': '%s/instance/launch?%s' % (
-                self._alokai_saas_base_url(),
-                urlencode({
-                    'instance': self._alokai_public_base_url(),
-                    'token': website.alokai_saas_token,
-                }),
-            ),
+            'url': '/zeppln/launch?%s' % urlencode({
+                'website_id': website.id,
+                'odoo_url': website.domain or self._alokai_public_base_url(),
+                'zeppln_url': self._alokai_saas_base_url(),
+            }),
             'target': 'new',
         }
 

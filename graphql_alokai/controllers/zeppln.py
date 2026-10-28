@@ -4,6 +4,7 @@
 
 import hmac
 import logging
+import html
 
 from odoo import http
 from odoo.http import request
@@ -12,6 +13,19 @@ _logger = logging.getLogger(__name__)
 
 
 class ZepplnController(http.Controller):
+
+    @http.route('/zeppln/launch', type='http', auth='user', csrf=False, methods=['GET'])
+    def launch(self, website_id=None, odoo_url=None, zeppln_url=None, **kwargs):
+        website = request.env['website'].sudo().browse(int(website_id or 0)).exists()
+        if not website or not website.alokai_saas_token:
+            return request.not_found()
+        target = (zeppln_url or 'https://www.zeppln.com').rstrip('/') + '/instance/launch'
+        values = {
+            'instance': odoo_url or website.domain,
+            'odooToken': website.alokai_saas_token,
+        }
+        inputs = ''.join('<input type="hidden" name="%s" value="%s">' % (html.escape(key), html.escape(str(value or ''))) for key, value in values.items())
+        return request.make_response('<!doctype html><html><body><form id="launch" method="post" action="%s">%s</form><script>document.getElementById("launch").submit()</script></body></html>' % (html.escape(target), inputs), headers=[('Content-Type', 'text/html; charset=utf-8')])
 
     @http.route('/zeppln/instance-ready', type='http', auth='public', csrf=False, methods=['POST'])
     def instance_ready(self, **kwargs):
