@@ -20,7 +20,10 @@ class ZepplnController(http.Controller):
         website = request.env['website'].sudo().browse(int(website_id or 0)).exists()
         if not website or not website.alokai_saas_token:
             return request.not_found()
-        target = (zeppln_url or 'https://www.zeppln.com').rstrip('/') + '/instance/launch'
+        saas_base_url = (request.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_base_url', 'https://www.zeppln.com') or 'https://www.zeppln.com').rstrip('/')
+        if saas_base_url == 'https://zeppln.erpgap.com':
+            saas_base_url = 'https://www.zeppln.com'
+        target = saas_base_url + '/instance/launch'
         try:
             response = requests.post(target, data={
                 'instance': odoo_url or website.domain,

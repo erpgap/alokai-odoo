@@ -134,7 +134,6 @@ class ResConfigSettings(models.TransientModel):
             'url': '/zeppln/launch?%s' % urlencode({
                 'website_id': website.id,
                 'odoo_url': website.domain or self._alokai_public_base_url(),
-                'zeppln_url': self._alokai_saas_base_url(),
             }),
             'target': 'new',
         }
