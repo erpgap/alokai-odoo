@@ -295,11 +295,14 @@ def _load_demo_product_images(env):
             _logger.warning("No product.template found for xmlid %s", xmlid)
             continue
 
-        # Set template image from the first done image
+        # Template image from the first done image. Assigned once, at the end:
+        # every assignment is resized into four thumbnails, the slowest step
+        # of a demo install.
+        template_image = None
         first_img_path = _resolve_image_path(addon_dir, done_images[0]['local_path'])
         if first_img_path:
             with open(first_img_path, 'rb') as f:
-                template.image_1920 = base64.b64encode(f.read())
+                template_image = base64.b64encode(f.read())
             total_templates += 1
         else:
             _logger.warning("Image file missing: %s", os.path.join(addon_dir, done_images[0]['local_path']))
@@ -343,7 +346,10 @@ def _load_demo_product_images(env):
             # matches the product page default.
             first_variant = template.product_variant_ids[:1]
             if first_variant and first_variant.image_variant_1920:
-                template.image_1920 = first_variant.image_variant_1920
+                template_image = first_variant.image_variant_1920
+
+        if template_image:
+            template.image_1920 = template_image
 
     _logger.info(
         "Demo images loaded: %s templates, %s variants, %s missing files",
@@ -523,15 +529,17 @@ def _generate_demo_sales(env, n_orders=3000, lookback_days=3650):
     `alokai_recent_sales_count_days`. We:
       - widen that window so the static demo orders keep counting (otherwise the
         data would fade ~30 days after install),
-      - create ~n_orders orders in state 'sale' (no action_confirm, so no stock
-        pickings) with category-themed baskets and weighted product picks (a few
+      - create ~n_orders orders in state 'sale' (no action_confirm, and
+        skip_procurement so no stock pickings or reservations eat the demo
+        stock; no chatter either) with category-themed baskets and weighted product picks (a few
         clear bestsellers -> long-tail popularity, repeated co-occurrence ->
         meaningful FBT), dated over the past ~6 months,
       - run both crons so popularity + FBT are populated immediately.
 
     Deterministic (fixed seed); idempotent (skips if demo orders already exist).
     """
-    SaleOrder = env['sale.order']
+    SaleOrder = env['sale.order'].with_context(
+        skip_procurement=True, tracking_disable=True, sale_no_log_for_new_lines=True)
     if SaleOrder.search_count([('client_order_ref', '=', 'ALOKAI_DEMO')]):
         _logger.info("Demo sales already generated; skipping")
         return
