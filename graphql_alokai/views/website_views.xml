@@ -20,8 +20,16 @@
                         options="{'no_create': True}"
                     />
                     <field name="alokai_mailing_list_id"/>
-                    <field name="alokai_payment_success_return_url"/>
-                    <field name="alokai_payment_error_return_url"/>
+                    <label for="alokai_payment_success_path" string="Payment Success Return Url"/>
+                    <div class="d-flex align-items-baseline">
+                        <field name="alokai_storefront_url" class="w-auto text-muted"/>
+                        <field name="alokai_payment_success_path"/>
+                    </div>
+                    <label for="alokai_payment_error_path" string="Payment Error Return Url"/>
+                    <div class="d-flex align-items-baseline">
+                        <field name="alokai_storefront_url" class="w-auto text-muted"/>
+                        <field name="alokai_payment_error_path"/>
+                    </div>
                 </group>
             </xpath>
             <xpath expr="//page[@name='page_custom_code']" position="before">

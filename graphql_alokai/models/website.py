@@ -27,6 +27,12 @@ _logger = logging.getLogger(__name__)
 # Records per dirty entry, and per request to the Zeppln storefront.
 DIRTY_BATCH = 1000
 
+# Payment return URL field: (the field editing its path, the default path).
+PAYMENT_RETURN_FIELDS = {
+    'alokai_payment_success_return_url': ('alokai_payment_success_path', '/checkout/thank-you'),
+    'alokai_payment_error_return_url': ('alokai_payment_error_path', '/checkout/payment-fail'),
+}
+
 # Every model with slug keys, for the full resync.
 SLUG_MODELS = (
     'product.template', 'product.public.category',
@@ -467,12 +473,23 @@ class Website(models.Model):
             },
         }
 
+    # Rebuilt on the new storefront domain whenever the domain changes; the
+    # forms only edit their paths.
     alokai_payment_success_return_url = fields.Char(
-        'Payment Success Return Url', required=True, translate=True, default='Dummy'
-    )
+        'Payment Success Return Url',
+        compute='_compute_alokai_payment_return_urls', store=True, readonly=False)
     alokai_payment_error_return_url = fields.Char(
-        'Payment Error Return Url', required=True,  translate=True, default='Dummy'
-    )
+        'Payment Error Return Url',
+        compute='_compute_alokai_payment_return_urls', store=True, readonly=False)
+    alokai_storefront_url = fields.Char('Storefront URL', compute='_compute_alokai_storefront_url')
+    alokai_payment_success_path = fields.Char(
+        'Payment Success Return Path', compute='_compute_alokai_payment_paths',
+        inverse='_inverse_alokai_payment_paths',
+        help="Storefront page a shopper returns to after paying.")
+    alokai_payment_error_path = fields.Char(
+        'Payment Error Return Path', compute='_compute_alokai_payment_paths',
+        inverse='_inverse_alokai_payment_paths',
+        help="Storefront page a shopper returns to when the payment fails.")
     alokai_mailing_list_id = fields.Many2one('mailing.list', 'Newsletter', domain=[('is_public', '=', True)])
     reset_password_email_template_id = fields.Many2one('mail.template', string='Reset Password')
     order_confirmation_email_template_id = fields.Many2one('mail.template', string='Order confirmation')
@@ -487,6 +504,33 @@ class Website(models.Model):
         'Alokai SaaS Token', copy=False, groups='base.group_system',
         help="Authenticates the SaaS callback that reports the domain of the "
              "Alokai instance created for this website.")
+
+    @api.depends('alokai_domain', 'domain')
+    def _compute_alokai_storefront_url(self):
+        for website in self:
+            website.alokai_storefront_url = website._alokai_domain()
+
+    @api.depends('alokai_domain', 'domain')
+    def _compute_alokai_payment_return_urls(self):
+        # Keeps each URL's path (its current value is still the old one here).
+        for website in self:
+            for url_field, (_path_field, default_path) in PAYMENT_RETURN_FIELDS.items():
+                path = urllib.parse.urlsplit(website[url_field] or '').path
+                if not path.startswith('/'):
+                    path = default_path
+                website[url_field] = website._alokai_domain() + path
+
+    @api.depends('alokai_payment_success_return_url', 'alokai_payment_error_return_url')
+    def _compute_alokai_payment_paths(self):
+        for website in self:
+            for url_field, (path_field, _default_path) in PAYMENT_RETURN_FIELDS.items():
+                website[path_field] = urllib.parse.urlsplit(website[url_field] or '').path
+
+    def _inverse_alokai_payment_paths(self):
+        for website in self:
+            for url_field, (path_field, default_path) in PAYMENT_RETURN_FIELDS.items():
+                path = website[path_field] or default_path
+                website[url_field] = website._alokai_domain() + '/' + path.lstrip('/')
 
     def _alokai_domain(self):
         """Storefront base URL: the dedicated Alokai Domain, else the website's

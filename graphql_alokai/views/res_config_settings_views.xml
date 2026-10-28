@@ -43,11 +43,17 @@
                         <field name="alokai_cache_invalidation_signing_secret" password="True" t-translation="off"/>
                     </setting>
 
-                    <setting id="alokai_payment_success_return_url_settings">
-                        <field name="alokai_payment_success_return_url"/>
+                    <setting id="alokai_payment_success_return_url_settings" string="Payment Success Return Url">
+                        <div class="d-flex align-items-baseline">
+                            <field name="alokai_storefront_url" class="w-auto text-muted"/>
+                            <field name="alokai_payment_success_path"/>
+                        </div>
                     </setting>
-                    <setting id="alokai_payment_error_return_url_settings">
-                        <field name="alokai_payment_error_return_url"/>
+                    <setting id="alokai_payment_error_return_url_settings" string="Payment Error Return Url">
+                        <div class="d-flex align-items-baseline">
+                            <field name="alokai_storefront_url" class="w-auto text-muted"/>
+                            <field name="alokai_payment_error_path"/>
+                        </div>
                     </setting>
                     <setting id="alokai_mailing_list_id_settings">
                         <field name="alokai_mailing_list_id"/>

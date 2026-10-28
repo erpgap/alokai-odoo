@@ -62,3 +62,34 @@ class TestHostResolution(TransactionCase):
         self.assertEqual(
             self.Website._alokai_resolve_by_host('shop-moved.example.com'), self.w1,
             "resolution must reflect the new domain, not a stale cache")
+
+
+@tagged('post_install', '-at_install', 'alokai_website')
+class TestPaymentReturnUrls(TransactionCase):
+
+    def test_return_urls_follow_the_alokai_domain(self):
+        website = self.env['website'].create({
+            'name': 'ZZ Shop', 'alokai_domain': 'https://shop.example.com/'})
+        self.assertEqual(website.alokai_payment_success_return_url,
+                         'https://shop.example.com/checkout/thank-you')
+        self.assertEqual(website.alokai_payment_error_return_url,
+                         'https://shop.example.com/checkout/payment-fail')
+
+        # The URLs are the stored values: setting a path changes them.
+        website.alokai_payment_success_path = 'done'
+        self.assertEqual(website.alokai_payment_success_return_url, 'https://shop.example.com/done')
+
+        # A new domain keeps the paths.
+        website.alokai_domain = 'https://new.example.com'
+        self.env.flush_all()
+        self.env.invalidate_all()
+        self.assertEqual(website.alokai_payment_success_return_url, 'https://new.example.com/done')
+        self.assertEqual(website.alokai_payment_error_return_url,
+                         'https://new.example.com/checkout/payment-fail')
+        self.assertEqual(website.alokai_payment_success_path, '/done')
+
+    def test_a_given_url_is_kept(self):
+        website = self.env['website'].create({
+            'name': 'ZZ Shop', 'alokai_domain': 'https://shop.example.com',
+            'alokai_payment_success_return_url': 'https://pay.example.com/ok'})
+        self.assertEqual(website.alokai_payment_success_return_url, 'https://pay.example.com/ok')

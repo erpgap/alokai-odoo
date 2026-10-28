@@ -35,6 +35,8 @@ class TestAlokaiSaas(HttpCase):
         patcher = patch.object(type(self.env['website']), '_redis_enabled', return_value=False)
         patcher.start()
         self.addCleanup(patcher.stop)
+        # Start without an instance, whatever the database was used for.
+        self.env['website'].search([('alokai_saas_token', '!=', False)]).alokai_saas_token = False
 
     def _create_instance(self):
         action = self.env['res.config.settings'].create({}).action_create_alokai_instance()

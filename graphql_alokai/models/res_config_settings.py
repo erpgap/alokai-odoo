@@ -28,14 +28,11 @@ class ResConfigSettings(models.TransientModel):
         readonly=True,
         help='Set when the SaaS reports back that the Alokai instance exists.',
     )
-    alokai_payment_success_return_url = fields.Char(
-        'Payment Success Return Url', related='website_id.alokai_payment_success_return_url', readonly=False,
-        required=True
-    )
-    alokai_payment_error_return_url = fields.Char(
-        'Payment Error Return Url', related='website_id.alokai_payment_error_return_url', readonly=False,
-        required=True
-    )
+    alokai_storefront_url = fields.Char(related='website_id.alokai_storefront_url')
+    alokai_payment_success_path = fields.Char(
+        related='website_id.alokai_payment_success_path', readonly=False, required=True)
+    alokai_payment_error_path = fields.Char(
+        related='website_id.alokai_payment_error_path', readonly=False, required=True)
     alokai_cache_invalidation_key = fields.Char(
         'Cache Invalidation Key', required=True,
         help="Signs the requests that clear pages from the Alokai cache. "
