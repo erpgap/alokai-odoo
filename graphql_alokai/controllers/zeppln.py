@@ -4,7 +4,7 @@
 
 import hmac
 import logging
-import html
+import requests
 
 from odoo import http
 from odoo.http import request
@@ -20,12 +20,16 @@ class ZepplnController(http.Controller):
         if not website or not website.alokai_saas_token:
             return request.not_found()
         target = (zeppln_url or 'https://www.zeppln.com').rstrip('/') + '/instance/launch'
-        values = {
-            'instance': odoo_url or website.domain,
-            'odooToken': website.alokai_saas_token,
-        }
-        inputs = ''.join('<input type="hidden" name="%s" value="%s">' % (html.escape(key), html.escape(str(value or ''))) for key, value in values.items())
-        return request.make_response('<!doctype html><html><body><form id="launch" method="post" action="%s">%s</form><script>document.getElementById("launch").submit()</script></body></html>' % (html.escape(target), inputs), headers=[('Content-Type', 'text/html; charset=utf-8')])
+        try:
+            response = requests.post(target, data={
+                'instance': odoo_url or website.domain,
+                'odooToken': website.alokai_saas_token,
+            }, allow_redirects=False, timeout=20)
+        except requests.RequestException:
+            return request.make_json_response({'error': 'Zeppln is unavailable.'}, status=502)
+        if response.status_code not in (301, 302, 303, 307, 308) or not response.headers.get('Location'):
+            return request.make_json_response({'error': 'Zeppln rejected the launch request.'}, status=502)
+        return request.redirect(response.headers['Location'])
 
     @http.route('/zeppln/instance-ready', type='http', auth='public', csrf=False, methods=['POST'])
     def instance_ready(self, **kwargs):
