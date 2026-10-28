@@ -44,7 +44,7 @@ class TestAlokaiSaas(HttpCase):
 
     def _callback(self, token, payload):
         return self.url_open(
-            '/alokai/saas/instance', json=payload,
+            '/zeppln/instance-ready', json=payload,
             headers={'Authorization': 'Bearer %s' % token} if token else {})
 
     def test_create_makes_one_website_with_a_token(self):

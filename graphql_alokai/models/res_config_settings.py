@@ -127,7 +127,7 @@ class ResConfigSettings(models.TransientModel):
         """Create the website backing the Zeppln instance and open the Zeppln
         portal to launch it. The website's token is handed to Zeppln, which
         gives it to the storefront: it presents it back on
-        /alokai/saas/instance with its domain, and signs what Odoo sends it."""
+        /zeppln/instance-ready with its domain, and signs what Odoo sends it."""
         Website = self.env['website'].sudo()
         # Reuse the website of a launch that hasn't been reported back yet, so
         # clicking again doesn't pile up websites.

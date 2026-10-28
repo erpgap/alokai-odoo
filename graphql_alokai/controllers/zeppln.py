@@ -11,14 +11,13 @@ from odoo.http import request
 _logger = logging.getLogger(__name__)
 
 
-class AlokaiSaas(http.Controller):
+class ZepplnController(http.Controller):
 
-    @http.route('/alokai/saas/instance', type='http', auth='public', csrf=False, methods=['POST'])
-    def saas_instance(self, **kwargs):
+    @http.route('/zeppln/instance-ready', type='http', auth='public', csrf=False, methods=['POST'])
+    def instance_ready(self, **kwargs):
         """Called by the Zeppln storefront when it starts (NUXT_ZEPPLN_INIT),
-        with the token of the website created for it (``Authorization:
-        Bearer``) and its domain (JSON body ``{"domain": ...}``), which is only
-        known once the instance exists.
+        with the website Zeppln token (``Authorization: Bearer``) and the
+        provisioned instance URL (JSON body ``{"instance_url": ...}``).
 
         The first call sets the domain and sends the storefront every stock
         and slug. Later ones - every restart - change nothing. The token stays:
@@ -34,7 +33,7 @@ class AlokaiSaas(http.Controller):
             data = request.get_json_data()
         except ValueError:
             data = None
-        domain = isinstance(data, dict) and data.get('domain')
+        domain = isinstance(data, dict) and (data.get('instance_url') or data.get('domain'))
         if not domain or not isinstance(domain, str):
             return request.make_json_response({'error': 'Missing domain'}, status=400)
 
@@ -42,9 +41,6 @@ class AlokaiSaas(http.Controller):
             return request.make_json_response({'status': 'ignored', 'domain': website.alokai_domain})
 
         website.alokai_domain = domain.strip().rstrip('/')
-        ICP = request.env['ir.config_parameter'].sudo()
-        ICP.set_param('graphql_alokai.saas_website_id', website.id)
-        ICP.set_param('graphql_alokai.saas_instance_created', True)
         # The storefront starts with an empty Redis: send it everything.
         request.env['product.product'].sudo()._update_all_products_stock_redis()
         request.env['website'].sudo()._update_all_slugs_redis()
