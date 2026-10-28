@@ -16,7 +16,7 @@ class ResConfigSettings(models.TransientModel):
 
     alokai_debug_mode = fields.Boolean('Debug Mode')
     alokai_saas_token = fields.Char('Zeppln token', related='website_id.alokai_saas_token', readonly=False)
-    alokai_saas_instance_url = fields.Char('Alokai instance URL', related='website_id.alokai_saas_instance_url', readonly=True)
+    alokai_saas_instance_url = fields.Char('Alokai instance URL', related='website_id.alokai_domain', readonly=True)
     alokai_saas_base_url = fields.Char(
         'Zeppln portal URL',
         config_parameter='graphql_alokai.saas_base_url',
@@ -110,9 +110,12 @@ class ResConfigSettings(models.TransientModel):
         if saas_base_url == 'https://zeppln.erpgap.com':
             saas_base_url = 'https://www.zeppln.com'
             ICP.set_param('graphql_alokai.saas_base_url', saas_base_url)
-        instance_url = ICP.get_param('web.base.url', '').rstrip('/')
-        # Odoo may be configured with an internal HTTP base URL even though its
-        # public reverse-proxy endpoint is HTTPS. Zeppln only accepts HTTPS.
+        # Use the selected website's public domain, not web.base.url. The latter
+        # can be an internal/reverse-proxy address and is wrong for multi-site Odoo.
+        instance_url = (self.website_id.domain or ICP.get_param('web.base.url', '')).rstrip('/')
+        if '://' not in instance_url:
+            instance_url = 'https://' + instance_url
+        # Zeppln only accepts public HTTPS Odoo endpoints.
         parsed_url = urlsplit(instance_url)
         if parsed_url.hostname:
             instance_url = urlunsplit(('https', parsed_url.netloc, parsed_url.path, '', '')).rstrip('/')

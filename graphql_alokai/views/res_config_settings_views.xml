@@ -25,7 +25,7 @@
                     <setting id="alokai_saas_token_settings" string="Zeppln token" help="Website credential used by Zeppln and the hosted Alokai instance.">
                         <field name="alokai_saas_token" password="True"/>
                     </setting>
-                    <setting id="alokai_saas_instance_url_settings" string="Hosted Alokai URL" help="Updated automatically when Zeppln finishes provisioning.">
+                    <setting id="alokai_saas_instance_url_settings" string="Alokai domain" help="Updated automatically by Zeppln when provisioning finishes.">
                         <field name="alokai_saas_instance_url" readonly="True"/>
                     </setting>
                     <setting help="Enabling debug mode will log headers, queries, mutations and arguments on each request" id="alokai_debug_mode_settings">

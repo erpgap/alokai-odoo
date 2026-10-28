@@ -103,7 +103,6 @@ class ZepplnController(http.Controller):
         target = (zeppln_url or 'https://www.zeppln.com').rstrip('/') + '/instance/launch'
         fields = {
             'instance': odoo_url or request.env['ir.config_parameter'].sudo().get_param('web.base.url', ''),
-            'websiteId': str(website.id),
             'odooToken': website.alokai_saas_token,
         }
         inputs = ''.join('<input type="hidden" name="%s" value="%s">' % (html.escape(key), html.escape(value)) for key, value in fields.items())
@@ -116,13 +115,13 @@ class ZepplnController(http.Controller):
         except (TypeError, ValueError):
             payload = {}
         token = (request.httprequest.headers.get('Authorization') or '').removeprefix('Bearer ').strip()
-        website = request.env['website'].sudo().browse(int(payload.get('website_id') or 0)).exists()
+        website = request.env['website'].sudo().search([('alokai_saas_token', '=', token)], limit=1)
         if not website or not token or not hmac.compare_digest(token, website.alokai_saas_token or ''):
             return Response(json.dumps({'ok': False, 'error': 'Unauthorized'}), status=401, content_type='application/json')
         instance_url = payload.get('instance_url')
         if not isinstance(instance_url, str) or not instance_url.startswith('https://'):
             return Response(json.dumps({'ok': False, 'error': 'Invalid instance URL'}), status=400, content_type='application/json')
-        website.alokai_saas_instance_url = instance_url.rstrip('/')
+        website.alokai_domain = instance_url.rstrip('/')
         return Response(json.dumps({'ok': True}), content_type='application/json')
 
 

@@ -92,7 +92,6 @@ class Website(models.Model):
     # The hosted SaaS offer supports one published Alokai instance per website.
     # These values are edited through the selected website's Settings page.
     alokai_saas_token = fields.Char('Zeppln token', copy=False, groups='base.group_system')
-    alokai_saas_instance_url = fields.Char('Alokai instance URL', copy=False, readonly=True)
 
     def _compute_json_ld(self):
         for website in self:
