@@ -40,15 +40,6 @@ class ShoppingCartQuery(graphene.ObjectType):
         if order:
             order.order_line.filtered(lambda l: not l.product_id.active).unlink()
 
-            # User
-            user = env['res.users'].sudo().search([('id', '=', env.uid)], limit=1)
-            # When Cart is created by one Public User
-            if not user:
-                user = env.user
-                # Claim the cart for this partner (recomputes addresses,
-                # pricelist, fiscal position, taxes and prices).
-                order._update_address(user.partner_id.id, ['partner_id'])
-
             fbt = order.\
                 mapped('order_line').\
                 mapped('product_id').\
