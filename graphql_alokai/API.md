@@ -155,7 +155,7 @@ List endpoints share a common shape: `filter`, `currentPage` (1-based),
 | `cartClear` | – | `Order` |
 | `setShippingMethod` | `shippingMethodId: Int!` | `CartData` |
 | `createUpdatePartner` | `name: String!`, `email: String!`, `subscribeNewsletter: Boolean!`, `phone: String`, `mobile: String` | `Partner` |
-| `applyCoupon` | `promo: String` | `ApplyCouponList` (`order`, `error`) |
+| `applyCoupon` | `promo: String` (promo code, or a gift card code) | `ApplyCouponList` (`order`, `error`) |
 | `applyGiftCard` | `promo: String` | `ApplyGiftCardList` (`order`, `error`) |
 | `makeGiftCardPayment` | – | `{ done: Boolean }` |
 

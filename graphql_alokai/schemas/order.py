@@ -150,7 +150,7 @@ class ApplyCoupon(graphene.Mutation):
         if 'error' in status:
             return ApplyCouponList(order=order, error=error)
         if not status:
-            error = _('No reward to claim with this coupon')
+            error = _('No reward to claim with this code')
             return ApplyCouponList(order=order, error=error)
         coupons = env['loyalty.card']
         rewards = env['loyalty.reward']
