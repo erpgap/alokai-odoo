@@ -949,6 +949,9 @@ class Order(OdooObjectType):
     invoice_count = graphene.Int()
     coupons = graphene.List(graphene.NonNull(lambda: Coupon))
     gift_cards = graphene.List(graphene.NonNull(lambda: GiftCard))
+    confirmation_email = graphene.String(
+        description="Whether the customer's emails about this order went out: "
+                    "'sent', 'failed', or 'pending' (queued, or none sent yet)")
     cart_quantity = graphene.Int()
     report_order_line = graphene.List(graphene.NonNull(lambda: OrderLine))
 
@@ -1012,6 +1015,24 @@ class Order(OdooObjectType):
 
     def resolve_gift_cards(self, info):
         return self.applied_coupon_ids.filtered(lambda c: c.program_type == 'gift_card') or None
+
+    def resolve_confirmation_email(self, info):
+        order = self.sudo()
+        # sale.async_emails queues it for a cron instead of sending it now.
+        if order.pending_email_template_id:
+            return 'pending'
+        notifications = order.env['mail.notification'].search([
+            ('mail_message_id.model', '=', 'sale.order'),
+            ('mail_message_id.res_id', '=', order.id),
+            ('res_partner_id', '=', order.partner_id.id),
+            ('notification_type', '=', 'email'),
+        ])
+        statuses = set(notifications.mapped('notification_status'))
+        if 'sent' in statuses:
+            return 'sent'
+        if statuses & {'exception', 'bounce'}:
+            return 'failed'
+        return 'pending'
 
     def resolve_cart_quantity(self, info):
         return self.cart_quantity or None

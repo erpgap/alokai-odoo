@@ -284,7 +284,7 @@ values[`**AttributeValue**`]`.
 attribute`**Attribute**.
 
 **Order** — `id name dateOrder stage clientOrderRef orderUrl cartQuantity
-invoiceStatus invoiceCount` · amounts (`amountUntaxed amountTax amountTotal
+invoiceStatus invoiceCount confirmationEmail` (`sent`/`failed`/`pending`) · amounts (`amountUntaxed amountTax amountTotal
 amountDelivery amountSubtotal amountDiscounts amountGiftCards taxTotals
 currencyRate`) · relations (`partner/partnerShipping/partnerInvoice`**Partner**`,
 currency`**Currency**`, shippingMethod`**ShippingMethod**`,
