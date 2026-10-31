@@ -123,6 +123,17 @@ class MakeGiftCardPayment(graphene.Mutation):
         tx = order.get_portal_last_transaction()
 
         if order and not order.amount_total and not tx:
+            # Nothing is left to pay, so nothing else stands between this call
+            # and a confirmed order: refuse one with no customer to ship it to
+            # (a guest's cart stays on the public partner until they give
+            # their details).
+            shipping = order.partner_shipping_id
+            if (
+                order.partner_id._alokai_is_public()
+                or not order.partner_id.email
+                or not (shipping.street and shipping.city and shipping.country_id)
+            ):
+                raise GraphQLError(_('Add your contact details and delivery address before placing the order.'))
             order.with_context(send_email=True).action_confirm()
             return MakeGiftCardPayment(done=True)
 
