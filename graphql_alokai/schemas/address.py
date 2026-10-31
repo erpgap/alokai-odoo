@@ -229,8 +229,11 @@ class UpdateAddress(graphene.Mutation):
         if address.get('name'):
             values.update({'name': address['name']})
         if address.get('street'):
-            values.update({'street': address['street']})
-        if address.get('street2'):
+            # The street lines go together: a new first line without a second
+            # one clears the old second line instead of keeping it under a
+            # street it no longer belongs to.
+            values.update({'street': address['street'], 'street2': address.get('street2') or False})
+        elif address.get('street2'):
             values.update({'street2': address['street2']})
         if address.get('phone'):
             values.update({'phone': address['phone']})
