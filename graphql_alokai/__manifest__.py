@@ -4,7 +4,7 @@
 
 {
     'name': 'Alokai',
-    'version': '19.0.1.6.0',
+    'version': '19.0.1.7.0',
     'summary': 'GraphQL API connecting Odoo to the Alokai (Vue Storefront) headless frontend',
     'description': """
 Alokai

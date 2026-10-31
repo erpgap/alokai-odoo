@@ -24,7 +24,7 @@ from redis.exceptions import TimeoutError, AuthenticationError, ConnectionError
 
 _logger = logging.getLogger(__name__)
 
-# Records per dirty entry, and per request to the Zeppln storefront.
+# Records per dirty entry, and per request to a storefront Odoo pushes to.
 DIRTY_BATCH = 1000
 
 # Payment return URL field: (the field editing its path, the default path).
@@ -290,13 +290,13 @@ class Website(models.Model):
     @api.model
     def _alokai_sync_mode(self):
         """Where stock and slugs go: 'redis' when Odoo writes them to Redis
-        itself, 'zeppln' when a Zeppln storefront has reported in - its Redis
-        is private, so they are sent to the storefront instead - else
-        nowhere (False)."""
+        itself, 'push' when storefronts with a Redis of their own have
+        reported in (see _push_websites) - they are queued and sent to them -
+        else nowhere (False)."""
         if self._redis_enabled():
             return 'redis'
-        if self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_instance_created'):
-            return 'zeppln'
+        if self._push_websites():
+            return 'push'
         return False
 
     @api.model
@@ -335,7 +335,7 @@ class Website(models.Model):
             self.env.cr.postcommit.add(lambda: self._write_dirty_slugs_redis(entries))
         else:
             # In the same transaction: a rolled-back save leaves no row.
-            self.env['alokai.zeppln.dirty']._add('slug', entries)
+            self.env['alokai.sync.queue']._add('slug', entries)
         self._alokai_trigger_dirty_cron()
 
     @api.model
@@ -368,14 +368,28 @@ class Website(models.Model):
         }
 
     @api.model
-    def _zeppln_website(self):
-        website_id = self.env['ir.config_parameter'].sudo().get_param('graphql_alokai.saas_website_id')
-        return self.sudo().browse(int(website_id or 0)).exists()
+    def _push_websites(self):
+        """The websites whose storefront Odoo pushes stock and slugs to,
+        Redis being theirs and not Odoo's: those with a token, given when
+        their instance was created, whose instance has reported its domain
+        (/zeppln/instance-ready). Read from the websites themselves: the config
+        parameters this used to read stopped being set when that callback
+        moved, and nothing reached the storefront after its first full sync."""
+        return self.sudo().search([
+            ('alokai_saas_token', '!=', False), ('alokai_domain', '!=', False),
+        ])
 
-    def _zeppln_post(self, route, payload):
-        """One request to the Zeppln storefront, signed with the website token
-        as its zepplnSecurity checks it: HMAC-SHA256 of
-        METHOD:PATH:TIMESTAMP:BODY."""
+    def _push_post(self, route, payload):
+        """Send to each of these websites' storefronts; raises on the first
+        that fails."""
+        for website in self:
+            website._push_post_one(route, payload)
+
+    def _push_post_one(self, route, payload):
+        """One request to the storefront, signed with the website token as
+        its zepplnSecurity checks it: HMAC-SHA256 of
+        METHOD:PATH:TIMESTAMP:BODY. The route and headers keep their Zeppln
+        names: deployed storefronts answer to them."""
         self.ensure_one()
         path = f'/api/internal/zeppln/{route}'
         body = json.dumps(payload, separators=(',', ':'))
@@ -510,6 +524,24 @@ class Website(models.Model):
         'Alokai SaaS Token', copy=False, groups='base.group_system',
         help="Authenticates the SaaS callback that reports the domain of the "
              "Alokai instance created for this website.")
+    alokai_zeppln_instance = fields.Boolean(
+        'Zeppln Instance', compute='_compute_alokai_zeppln_instance', compute_sudo=True,
+        help="A Zeppln instance was created for this website and has reported "
+             "its URL.")
+
+    @api.depends('alokai_saas_token', 'alokai_domain')
+    def _compute_alokai_zeppln_instance(self):
+        for website in self:
+            website.alokai_zeppln_instance = bool(website.alokai_saas_token and website.alokai_domain)
+
+    def action_open_zeppln_instance(self):
+        self.ensure_one()
+        if not self.alokai_zeppln_instance:
+            raise UserError(_('This website has no Zeppln instance yet.'))
+        url = self.alokai_domain
+        if '://' not in url:
+            url = 'https://%s' % url
+        return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
 
     @api.depends('alokai_domain', 'domain')
     def _compute_alokai_storefront_url(self):

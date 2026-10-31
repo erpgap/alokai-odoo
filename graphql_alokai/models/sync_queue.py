@@ -16,17 +16,18 @@ from .website import DIRTY_BATCH, slug_key
 _logger = logging.getLogger(__name__)
 
 
-class AlokaiZepplnDirty(models.Model):
-    """Stock and slugs the Zeppln storefront has yet to receive: the Redis
-    dirty flags, in Postgres, as Odoo has no Redis with Zeppln.
+class AlokaiSyncQueue(models.Model):
+    """Stock and slugs the storefronts Odoo pushes to have yet to receive
+    (see website._push_websites): the Redis dirty flags, in Postgres, for
+    storefronts whose Redis Odoo cannot write to.
 
     Rows are only ever added - one per change, the same product as often as
     it changes, so concurrent saves never wait on each other - and in the
     transaction of the change, so a rolled-back save leaves none. The dirty
     cron sends them and deletes what it sent.
     """
-    _name = 'alokai.zeppln.dirty'
-    _description = 'Alokai Zeppln Dirty'
+    _name = 'alokai.sync.queue'
+    _description = 'Alokai Sync Queue'
     _log_access = False
 
     kind = fields.Char(required=True)  # 'stock' or 'slug'
@@ -49,17 +50,19 @@ class AlokaiZepplnDirty(models.Model):
 
     @api.model
     def _send(self):
-        """Send the rows to the storefront, a batch at a time, until none are
-        left or the run has had its time.
+        """Send the rows to every storefront Odoo pushes to, a batch at a
+        time, until none are left or the run has had its time.
 
         A batch is deleted only once the storefront took it, and committed on
         its own. Stock is read in the snapshot the rows were read in, so it
         includes every change they stand for; a change committed since stays
         for the next batch. On a failure the batch is kept and the run stops,
-        to try again on the next.
+        to try again on the next - also while a new storefront is not up yet.
+        A batch any storefront refused goes to all of them again: they only
+        set and delete keys, so taking it twice changes nothing.
         """
-        website = self.env['website']._zeppln_website()
-        if not website:
+        websites = self.env['website']._push_websites()
+        if not websites:
             return
         deadline = time.monotonic() + 50
         while time.monotonic() < deadline:
@@ -82,7 +85,7 @@ class AlokaiZepplnDirty(models.Model):
                     self.env['product.product'].sudo().browse(product_ids).exists() \
                         ._update_products_stock_redis(None)
                 if slug_entries:
-                    website._zeppln_post('slugs', {'slugs': [
+                    websites._push_post('slugs', {'slugs': [
                         # Keys, not slugs: the storefront would not encode
                         # them exactly as Odoo does.
                         {'model': model,
@@ -94,8 +97,8 @@ class AlokaiZepplnDirty(models.Model):
             except requests.RequestException as error:
                 self.env.cr.rollback()
                 self.env.invalidate_all()
-                _logger.warning("Zeppln: sending to %s failed, retrying on the next run: %s",
-                                website.alokai_domain, error)
+                _logger.warning("Sync queue: sending to %s failed, retrying on the next run: %s",
+                                ', '.join(websites.mapped('alokai_domain')), error)
                 return
 
             self.env.cr.execute(SQL(

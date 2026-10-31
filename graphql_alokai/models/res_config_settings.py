@@ -4,7 +4,9 @@
 
 import secrets
 import uuid
-from urllib.parse import urlencode, urlsplit, urlunsplit
+from urllib.parse import urlsplit, urlunsplit
+
+import requests
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
@@ -21,8 +23,6 @@ class ResConfigSettings(models.TransientModel):
         default='https://www.zeppln.com',
         help='Public Zeppln portal used to launch and manage this Alokai instance.',
     )
-    alokai_saas_instance_url = fields.Char(
-        'Zeppln instance URL', related='website_id.alokai_domain', readonly=True)
     alokai_storefront_url = fields.Char(related='website_id.alokai_storefront_url')
     alokai_payment_success_path = fields.Char(
         related='website_id.alokai_payment_success_path', readonly=False, required=True)
@@ -118,30 +118,54 @@ class ResConfigSettings(models.TransientModel):
             instance_url = urlunsplit(('https', parsed_url.netloc, parsed_url.path, '', '')).rstrip('/')
         return instance_url
 
-    def action_create_alokai_instance(self):
-        """Open the local controller, which POSTs the website token to Zeppln."""
-        self.ensure_one()
-        website = self.website_id.sudo()
-        if not website.alokai_saas_token:
-            website.alokai_saas_token = secrets.token_urlsafe(32)
-        return {
-            'type': 'ir.actions.act_url',
-            'url': '/zeppln/launch?%s' % urlencode({
-                'website_id': website.id,
-                'odoo_url': website.domain or self._alokai_public_base_url(),
-            }),
-            'target': 'new',
-        }
+    def _alokai_new_website_name(self):
+        names = set(self.env['website'].sudo().search([]).mapped('name'))
+        name = candidate = _('Zeppln')
+        number = 1
+        while candidate in names:
+            number += 1
+            candidate = '%s %s' % (name, number)
+        return candidate
 
-    def action_open_alokai_instance(self):
-        """Open the selected website's storefront reported by Zeppln."""
+    def action_create_alokai_instance(self):
+        """Create a Zeppln instance. Each gets a website of its own - one
+        storefront per website - with a token, which Odoo hands to Zeppln
+        server to server. Zeppln answers with the page to carry on in, opened
+        for the user. Once the instance is up, Zeppln reports its URL on
+        /zeppln/instance-ready with that token (controllers/zeppln.py).
+
+        A website whose instance has not reported its URL yet is launched
+        again rather than joined by a new one: otherwise every click left a
+        website no instance would ever answer for."""
         self.ensure_one()
-        website = self.website_id
-        if not website.alokai_domain:
-            raise UserError(_('The Alokai instance has not reported its domain yet.'))
-        url = website.alokai_domain
-        if '://' not in url:
-            url = 'https://%s' % url
+        Website = self.env['website'].sudo()
+        website = Website.search([
+            ('alokai_saas_token', '!=', False), ('alokai_domain', '=', False),
+        ], order='id', limit=1)
+        if not website:
+            website = Website.create({
+                'name': self._alokai_new_website_name(),
+                'alokai_saas_token': secrets.token_urlsafe(32),
+            })
+        # The admin's setting, never the request: the token goes there.
+        base_url = self._alokai_saas_base_url()
+        try:
+            response = requests.post(base_url + '/instance/launch', data={
+                'instance': self._alokai_public_base_url(),
+                'odooToken': website.alokai_saas_token,
+            }, allow_redirects=False, timeout=20)
+        except requests.RequestException:
+            # Raising rolls the new website back with the rest.
+            raise UserError(_('Zeppln could not be reached. Please try again later.'))
+        location = response.headers.get('Location')
+        if response.status_code not in (301, 302, 303, 307, 308) or not location:
+            raise UserError(_('Zeppln did not accept the request (HTTP %s).', response.status_code))
+        # Only Zeppln's path and query: a misconfigured or compromised answer
+        # cannot send the user to another host.
+        parsed = urlsplit(location)
+        url = base_url + (parsed.path or '/signup')
+        if parsed.query:
+            url += '?' + parsed.query
         return {
             'type': 'ir.actions.act_url',
             'url': url,

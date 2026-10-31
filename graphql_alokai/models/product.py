@@ -770,10 +770,11 @@ class ProductProduct(models.Model):
     @api.model
     def _update_dirty_products_stock_redis(self):
         """The dirty cron: stock and slugs changed since its last run, to
-        Redis, or to the Zeppln storefront (see website._alokai_sync_mode)."""
+        Redis, or to the storefronts Odoo pushes to (see
+        website._alokai_sync_mode)."""
         mode = self.env['website']._alokai_sync_mode()
-        if mode == 'zeppln':
-            return self.env['alokai.zeppln.dirty']._send()
+        if mode == 'push':
+            return self.env['alokai.sync.queue']._send()
         if mode != 'redis':
             return
 
@@ -838,13 +839,13 @@ class ProductProduct(models.Model):
         if mode == 'redis':
             self.env['stock.quant']._write_dirty_keys_redis(product_ids)
         else:
-            self.env['alokai.zeppln.dirty']._add('stock', [
+            self.env['alokai.sync.queue']._add('stock', [
                 {'ids': list(ids)} for ids in split_every(DIRTY_BATCH, product_ids)])
             self.env['website']._alokai_trigger_dirty_cron()
 
     def _update_products_stock_redis(self, redis_client):
         """Write these products' stock to Redis, or with no `redis_client`,
-        send it to the Zeppln storefront."""
+        send it to the storefronts Odoo pushes to."""
         if not self:
             return
 
@@ -887,7 +888,7 @@ class ProductProduct(models.Model):
                 pipe.set(f'stock:product-{product_id}', json.dumps(data))
             pipe.execute()
         else:
-            self.env['website']._zeppln_website()._zeppln_post('stock', {'stock': stock})
+            self.env['website']._push_websites()._push_post('stock', {'stock': stock})
 
         self.env['product.product.redis_stock'].bulk_update_redis_stock(product_stock_values)
         self.env['product.template.redis_stock'].bulk_update_redis_stock(template_stock_values)

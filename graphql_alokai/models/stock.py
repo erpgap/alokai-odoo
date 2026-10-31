@@ -25,7 +25,7 @@ class StockQuant(models.Model):
             self.env.cr.postcommit.add(lambda: self._write_dirty_keys_redis(product_ids))
         else:
             # In the same transaction: the row is only seen once it commits.
-            self.env['alokai.zeppln.dirty']._add('stock', [{'ids': product_ids}])
+            self.env['alokai.sync.queue']._add('stock', [{'ids': product_ids}])
 
     @api.model
     def _write_dirty_keys_redis(self, product_ids):

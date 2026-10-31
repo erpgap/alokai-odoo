@@ -12,17 +12,17 @@ from urllib.parse import parse_qs, urlsplit
 
 import requests
 
+from odoo.exceptions import UserError
 from odoo.tests import HttpCase, TransactionCase, tagged
 
 from ..models.website import slug_key
 
-FLAG = 'graphql_alokai.saas_instance_created'
-WEBSITE_ID = 'graphql_alokai.saas_website_id'
 POST = 'odoo.addons.graphql_alokai.models.website.requests.post'
+LAUNCH = 'odoo.addons.graphql_alokai.models.res_config_settings.requests.post'
 
 
 def dirty_rows(env, kind):
-    env.cr.execute("SELECT entry FROM alokai_zeppln_dirty WHERE kind = %s ORDER BY id", [kind])
+    env.cr.execute("SELECT entry FROM alokai_sync_queue WHERE kind = %s ORDER BY id", [kind])
     return [row[0] for row in env.cr.fetchall()]
 
 
@@ -31,79 +31,149 @@ class TestAlokaiSaas(HttpCase):
 
     def setUp(self):
         super().setUp()
-        # Zeppln means no Redis in Odoo; and none of this may reach a real one.
+        # Pushing to storefronts means no Redis in Odoo; and none of this may
+        # reach a real one.
         patcher = patch.object(type(self.env['website']), '_redis_enabled', return_value=False)
         patcher.start()
         self.addCleanup(patcher.stop)
         # Start without an instance, whatever the database was used for.
         self.env['website'].search([('alokai_saas_token', '!=', False)]).alokai_saas_token = False
 
-    def _create_instance(self):
-        action = self.env['res.config.settings'].create({}).action_create_alokai_instance()
-        return parse_qs(urlsplit(action['url']).query)
+    def _create_instance(self, answer=None):
+        """Settings' button, with Zeppln answering `answer` (by default a
+        redirect to its signup page, naming another host). Returns the new
+        website, the URL opened for the user and what Zeppln was sent."""
+        calls = []
+
+        def zeppln(url, data, **kwargs):
+            calls.append((url, data))
+            if isinstance(answer, Exception):
+                raise answer
+            return answer or _Response(303, {'Location': 'https://elsewhere.example/signup?session=abc'})
+
+        with patch(LAUNCH, side_effect=zeppln):
+            action = self.env['res.config.settings'].create({}).action_create_alokai_instance()
+        website = self.env['website'].search([('alokai_saas_token', '!=', False)], order='id desc', limit=1)
+        return website, action['url'], calls
 
     def _callback(self, token, payload):
         return self.url_open(
             '/zeppln/instance-ready', json=payload,
             headers={'Authorization': 'Bearer %s' % token} if token else {})
 
-    def test_create_makes_one_website_with_a_token(self):
-        params = self._create_instance()
-        website = self.env['website'].search([('alokai_saas_token', '!=', False)])
-        self.assertEqual(len(website), 1)
-        self.assertEqual(website.name, 'Zeppln')
-        self.assertEqual(params['token'], [website.alokai_saas_token])
-        # Clicking again before the storefront reports in reuses the website.
-        self.assertEqual(self._create_instance()['token'], [website.alokai_saas_token])
-        self.assertEqual(self.env['website'].search_count([('alokai_saas_token', '!=', False)]), 1)
-        self.assertFalse(self.env['ir.config_parameter'].sudo().get_param(FLAG))
+    def test_create_makes_a_website_and_launches_it(self):
+        before = self.env['website'].search_count([])
+        first, url, calls = self._create_instance()
+        self.assertEqual(self.env['website'].search_count([]), before + 1)
 
-    def test_first_call_sets_the_domain_and_sends_everything(self):
-        token = self._create_instance()['token'][0]
-        response = self._callback(token, {'domain': 'https://shop.zeppln.example/'})
+        # The token went to Zeppln server to server, never into a URL.
+        (target, data), = calls
+        self.assertEqual(target, 'https://www.zeppln.com/instance/launch')
+        self.assertEqual(data['odooToken'], first.alokai_saas_token)
+        self.assertNotIn(first.alokai_saas_token, url)
+        # Zeppln's page, on Zeppln's host whatever host its answer named.
+        self.assertEqual(url, 'https://www.zeppln.com/signup?session=abc')
+        self.assertFalse(first.alokai_zeppln_instance, "not until Zeppln reports its URL")
+        self.assertFalse(self.env['website']._push_websites())
+
+    def test_create_again_relaunches_the_website_still_waiting(self):
+        """Clicking again before the instance reports in retries its launch:
+        five clicks are not five websites."""
+        before = self.env['website'].search_count([])
+        first, _url, _calls = self._create_instance()
+        token = first.alokai_saas_token
+        again, _url, calls = self._create_instance()
+        self.assertEqual(again, first)
+        self.assertEqual(again.alokai_saas_token, token)
+        self.assertEqual(calls[0][1]['odooToken'], token)
+        self.assertEqual(self.env['website'].search_count([]), before + 1)
+
+        # Once it has reported in, the next click is a new instance.
+        self._callback(token, {'instance_url': 'https://shop.zeppln.example'})
+        second, _url, _calls = self._create_instance()
+        self.assertNotEqual(second, first)
+        self.assertNotEqual(second.alokai_saas_token, token)
+        self.assertNotEqual(second.name, first.name)
+        self.assertEqual(self.env['website'].search_count([]), before + 2)
+
+    def test_zeppln_unreachable_or_refusing_creates_nothing(self):
+        before = self.env['website'].search_count([])
+        for answer in (requests.ConnectionError('down'), _Response(500)):
+            # A request that raises rolls back; the savepoint stands in for it.
+            with self.assertRaises(UserError), self.env.cr.savepoint():
+                self._create_instance(answer)
+        self.assertEqual(self.env['website'].search_count([]), before)
+
+    def test_the_callback_sets_the_url_and_queues_everything(self):
+        website, _url, _calls = self._create_instance()
+        token = website.alokai_saas_token
+        response = self._callback(token, {'instance_url': 'https://shop.zeppln.example/'})
         self.assertEqual(response.json()['status'], 'initialized')
-        ICP = self.env['ir.config_parameter'].sudo()
-        website = self.env['website'].browse(int(ICP.get_param(WEBSITE_ID)))
+        website.invalidate_recordset()
         self.assertEqual(website.alokai_domain, 'https://shop.zeppln.example')
         self.assertEqual(website.alokai_saas_token, token, "the token stays, to sign what Odoo sends")
-        self.assertEqual(ICP.get_param(FLAG), 'True')
-        settings = self.env['res.config.settings'].create({})
-        self.assertTrue(settings.alokai_saas_instance_created)
-        self.assertEqual(settings.action_open_alokai_instance()['url'], 'https://shop.zeppln.example')
+        self.assertTrue(website.alokai_zeppln_instance)
+        self.assertEqual(website.action_open_zeppln_instance()['url'], 'https://shop.zeppln.example')
+        # From now on stock and slugs go to this storefront.
+        Website = self.env['website']
+        self.assertEqual(Website._push_websites(), website)
+        self.assertEqual(Website._alokai_sync_mode(), 'push')
 
-        # Every product and slug is queued for the storefront.
+        # Every product and slug is queued, for the cron to send once it is up.
         product_ids = {pid for entry in dirty_rows(self.env, 'stock') for pid in entry['ids']}
         self.assertEqual(product_ids, set(self.env['product.product'].search([]).ids))
         slug_models = {entry['model'] for entry in dirty_rows(self.env, 'slug')}
         self.assertIn('product.template', slug_models)
 
-    def test_later_calls_change_nothing(self):
-        """Every restart of the storefront calls again."""
-        token = self._create_instance()['token'][0]
-        self._callback(token, {'domain': 'https://shop.zeppln.example'})
+    def test_the_same_url_again_changes_nothing(self):
+        website, _url, _calls = self._create_instance()
+        token = website.alokai_saas_token
+        self._callback(token, {'instance_url': 'https://shop.zeppln.example'})
         rows = len(dirty_rows(self.env, 'stock'))
-        response = self._callback(token, {'domain': 'https://other.example'})
+        response = self._callback(token, {'instance_url': 'https://shop.zeppln.example'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['status'], 'ignored')
-        website = self.env['website'].browse(int(
-            self.env['ir.config_parameter'].sudo().get_param(WEBSITE_ID)))
-        self.assertEqual(website.alokai_domain, 'https://shop.zeppln.example')
+        self.assertEqual(response.json()['status'], 'unchanged')
         self.assertEqual(len(dirty_rows(self.env, 'stock')), rows)
+
+    def test_a_new_url_replaces_the_old_one(self):
+        """An instance moved to another URL is sent everything again."""
+        website, _url, _calls = self._create_instance()
+        token = website.alokai_saas_token
+        self._callback(token, {'instance_url': 'https://shop.zeppln.example'})
+        response = self._callback(token, {'instance_url': 'https://other.example'})
+        self.assertEqual(response.json()['status'], 'initialized')
+        website.invalidate_recordset()
+        self.assertEqual(website.alokai_domain, 'https://other.example')
+
+    def test_the_callback_finds_its_own_website(self):
+        first, _url, _calls = self._create_instance()
+        self._callback(first.alokai_saas_token, {'instance_url': 'https://one.zeppln.example'})
+        second, _url, _calls = self._create_instance()
+        self._callback(second.alokai_saas_token, {'instance_url': 'https://two.zeppln.example'})
+        (first | second).invalidate_recordset()
+        self.assertEqual(first.alokai_domain, 'https://one.zeppln.example')
+        self.assertEqual(second.alokai_domain, 'https://two.zeppln.example')
 
     def test_a_bad_token_is_refused(self):
         self._create_instance()
         for token in ('wrong', None):
-            self.assertEqual(self._callback(token, {'domain': 'shop.example'}).status_code, 401)
-        self.assertFalse(self.env['ir.config_parameter'].sudo().get_param(FLAG))
+            self.assertEqual(self._callback(token, {'instance_url': 'shop.example'}).status_code, 401)
+        self.assertFalse(self.env['website']._push_websites())
 
-    def test_a_domain_is_required(self):
-        token = self._create_instance()['token'][0]
-        self.assertEqual(self._callback(token, {'domain': ''}).status_code, 400)
+    def test_a_url_is_required(self):
+        website, _url, _calls = self._create_instance()
+        self.assertEqual(self._callback(website.alokai_saas_token, {'instance_url': ''}).status_code, 400)
+
+    def test_open_needs_a_reported_instance(self):
+        website, _url, _calls = self._create_instance()
+        with self.assertRaises(UserError):
+            website.action_open_zeppln_instance()
 
 
 class _Response:
-    def __init__(self, status=200):
+    def __init__(self, status=200, headers=None):
         self.status_code = status
+        self.headers = headers or {}
 
     def raise_for_status(self):
         if self.status_code >= 400:
@@ -111,18 +181,21 @@ class _Response:
 
 
 @tagged('post_install', '-at_install', 'alokai')
-class TestZepplnSync(TransactionCase):
-    """Stock and slugs with Zeppln: queued in Postgres, sent by the dirty cron."""
+class TestPushSync(TransactionCase):
+    """Stock and slugs for storefronts Odoo pushes to (Zeppln's): queued in
+    Postgres, sent by the dirty cron."""
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # A website with a token and a reported domain is one Odoo pushes to:
+        # nothing else switches pushing on (the callback used to set config
+        # parameters that these tests set by hand, so they kept passing after
+        # it stopped).
+        cls.env['website'].search([('alokai_saas_token', '!=', False)]).alokai_saas_token = False
         cls.website = cls.env['website'].create({
             'name': 'Zeppln', 'alokai_domain': 'shop.zeppln.example',
             'alokai_saas_token': 'zeppln-test-token'})
-        ICP = cls.env['ir.config_parameter'].sudo()
-        ICP.set_param(WEBSITE_ID, cls.website.id)
-        ICP.set_param(FLAG, True)
         cls.product = cls.env['product.product'].create({
             'name': 'Zeppln Stock Test', 'is_storable': True,
             'sale_ok': True, 'is_published': True})
@@ -133,7 +206,7 @@ class TestZepplnSync(TransactionCase):
         patcher = patch.object(type(self.env['website']), '_redis_enabled', return_value=False)
         patcher.start()
         self.addCleanup(patcher.stop)
-        self.env.cr.execute("DELETE FROM alokai_zeppln_dirty")
+        self.env.cr.execute("DELETE FROM alokai_sync_queue")
         self.sent = []
 
     def _post(self, url, data, timeout, headers):
@@ -202,3 +275,29 @@ class TestZepplnSync(TransactionCase):
         self.assertEqual(product_ids, set(self.env['product.product'].search([]).ids))
         self.assertTrue(all(len(e['ids']) <= 1000 for e in dirty_rows(self.env, 'stock')))
         self.assertIn('product.template', {e['model'] for e in dirty_rows(self.env, 'slug')})
+
+    def test_every_storefront_gets_each_batch(self):
+        self.env['website'].create({
+            'name': 'Zeppln 2', 'alokai_domain': 'two.zeppln.example',
+            'alokai_saas_token': 'second-token'})
+        self.env['stock.quant'].create({
+            'product_id': self.product.id, 'location_id': self.location.id, 'quantity': 7})
+        self._send()
+        hosts = {urlsplit(url).netloc for url, *_ in self.sent}
+        self.assertEqual(hosts, {'shop.zeppln.example', 'two.zeppln.example'})
+        self.assertFalse(dirty_rows(self.env, 'stock'))
+
+    def test_one_storefront_down_keeps_the_batch_for_all(self):
+        self.env['website'].create({
+            'name': 'Zeppln 2', 'alokai_domain': 'two.zeppln.example',
+            'alokai_saas_token': 'second-token'})
+        self.env['stock.quant'].create({
+            'product_id': self.product.id, 'location_id': self.location.id, 'quantity': 7})
+
+        def second_down(url, data, timeout, headers):
+            if 'two.zeppln.example' in url:
+                raise requests.ConnectionError('not up yet')
+            return self._post(url, data, timeout, headers)
+
+        self._send(second_down)
+        self.assertTrue(dirty_rows(self.env, 'stock'), "kept, and sent to both on the next run")

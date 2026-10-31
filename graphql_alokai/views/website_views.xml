@@ -42,6 +42,15 @@
             </xpath>
             <xpath expr="/form/*" position="before">
                 <header>
+                    <field name="alokai_zeppln_instance" invisible="1"/>
+                    <button
+                        name="action_open_zeppln_instance"
+                        type="object"
+                        string="Open Zeppln instance"
+                        icon="fa-external-link"
+                        class="btn-primary"
+                        invisible="not alokai_zeppln_instance"
+                    />
                     <button
                         name="redis_flushdb"
                         type="object"
