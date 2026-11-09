@@ -335,10 +335,19 @@ class User(OdooObjectType):
     partner = graphene.Field(lambda: Partner)
     totp_required = graphene.Boolean()
 
+    # alokai_limited_user: the session isn't logged in as this user (resetPassword,
+    # login pending its second factor), so only the login and id are returned.
+    def resolve_name(self, info):
+        if self.env.context.get('alokai_limited_user'):
+            return self.login
+        return self.name
+
     def resolve_email(self, info):
         return self.login or None
 
     def resolve_partner(self, info):
+        if self.env.context.get('alokai_limited_user'):
+            return None
         return self.partner_id or None
 
     def resolve_totp_required(self, info):

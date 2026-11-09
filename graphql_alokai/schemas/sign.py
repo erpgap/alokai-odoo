@@ -36,6 +36,35 @@ class CheckoutRedirectOutput(graphene.ObjectType):
     access_token = graphene.String()
 
 
+def _after_login(env, website, user, subscribe_newsletter):
+    """Once the session is fully logged in: claim the cart, subscribe to the
+    newsletter and return the (cart, wishlist items) to send back."""
+    # Update SO
+    order = getattr(user.partner_id, 'last_website_so_id', False)
+    if not order or order.state != 'draft':
+        request.session['sale_order_id'] = None
+        order = website._get_and_cache_current_cart()
+        if order:
+            # Claim the cart for the logged-in partner (recomputes
+            # addresses, pricelist, fiscal position, taxes and prices).
+            order._update_address(user.partner_id.id, ['partner_id'])
+
+    # Subscribe Newsletter
+    if website and website.alokai_mailing_list_id and subscribe_newsletter:
+        MassMailController().subscribe(website.alokai_mailing_list_id.id, user.login, 'email')
+
+    wishlist_items = env['product.wishlist'].sudo().search([
+        ('partner_id', '=', user.partner_id.id), ('website_id', '=', website.id)])
+    # Evaluate publishability once per distinct template (on the shared
+    # prefetched recordset) instead of re-sudoing and recomputing per
+    # wishlist item.
+    valid_templates = wishlist_items.product_id.product_tmpl_id.filtered(
+        lambda t: t.is_published and t._can_be_added_to_cart())
+    wishlist_items = wishlist_items.filtered(
+        lambda wish: wish.product_id.product_tmpl_id in valid_templates)
+    return order, wishlist_items
+
+
 class Login(graphene.Mutation):
     class Arguments:
         email = graphene.String(required=True)
@@ -66,30 +95,14 @@ class Login(graphene.Mutation):
                     if user_match:
                         request.session.finalize(request.env)
 
-            # Update SO
-            order = getattr(user.partner_id, 'last_website_so_id', False)
-            if not order or order.state != 'draft':
-                request.session['sale_order_id'] = None
-                order = website._get_and_cache_current_cart()
-                if order:
-                    # Claim the cart for the logged-in partner (recomputes
-                    # addresses, pricelist, fiscal position, taxes and prices).
-                    order._update_address(user.partner_id.id, ['partner_id'])
+            if not request.session.uid:
+                # Second factor pending: the session isn't logged in yet.
+                # totpVerification finishes the login (cart, wishlist, newsletter).
+                request.session['alokai_login_newsletter'] = bool(subscribe_newsletter)
+                return LoginOutput(user=user.with_context(alokai_limited_user=True),
+                                   cart=None, wishlist_items=[])
 
-            # Subscribe Newsletter
-            if website and website.alokai_mailing_list_id and subscribe_newsletter:
-                MassMailController().subscribe(website.alokai_mailing_list_id.id, email, 'email')
-
-            wishlist_items = env['product.wishlist'].sudo().search([
-                ('partner_id', '=', user.partner_id.id), ('website_id', '=', website.id)])
-            # Evaluate publishability once per distinct template (on the shared
-            # prefetched recordset) instead of re-sudoing and recomputing per
-            # wishlist item.
-            valid_templates = wishlist_items.product_id.product_tmpl_id.filtered(
-                lambda t: t.is_published and t._can_be_added_to_cart())
-            wishlist_items = wishlist_items.filtered(
-                lambda wish: wish.product_id.product_tmpl_id in valid_templates)
-
+            order, wishlist_items = _after_login(env, website, user, subscribe_newsletter)
             return LoginOutput(
                 user=user,
                 # None when empty so the non-nullable Order.id isn't resolved on it.
@@ -172,7 +185,8 @@ class ResetPassword(graphene.Mutation):
 
         try:
             user.with_context(create_user=create_user).api_action_reset_password()
-            return user
+            # Return only what the caller sent.
+            return user.with_context(alokai_limited_user=True)
         except UserError as e:
             raise GraphQLError(e.name or e.value)
         except SignupError:
@@ -258,12 +272,23 @@ class TotpVerification(graphene.Mutation):
         env = info.context['env']
         website = env['website'].get_current_website()
         request.website = website
-        user = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
+        # Verify the code for the user pending in the session, the one
+        # finalize() logs in, as auth_totp's /web/login/totp.
+        pre_uid = request.session.get('pre_uid')
+        if not pre_uid or request.session.uid:
+            raise GraphQLError(_("No login is waiting for a two-factor code."))
+        if user_id != pre_uid:
+            raise GraphQLError(_("Invalid authentication code."))
+        user = env['res.users'].sudo().browse(pre_uid)
         key = False
 
         try:
-            with user._assert_can_auth(user=user_id):
-                user._totp_check(int(re.sub(r'\s', '', code)))
+            with user._assert_can_auth(user=pre_uid):
+                # _totp_check no longer exists in 19.
+                user._check_credentials({
+                    'type': user._mfa_type(),
+                    'token': int(re.sub(r'\s', '', code)),
+                }, {'interactive': True})
         except AccessDenied as e:
             raise GraphQLError(_(str(e)))
         except ValueError:
@@ -272,6 +297,7 @@ class TotpVerification(graphene.Mutation):
         request.session.finalize(request.env)
         request.update_env(user=request.session.uid)
         request.update_context(**request.session.context)
+        _after_login(env, website, user, request.session.pop('alokai_login_newsletter', False))
         if remember_device:
             name = _("%(browser)s on %(platform)s",
                      browser=request.httprequest.user_agent.browser.capitalize(),
