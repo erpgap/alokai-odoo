@@ -253,7 +253,13 @@ class TotpVerification(graphene.Mutation):
         env = info.context['env']
         website = env['website'].get_current_website()
         request.website = website
-        user = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
+        # Verify the code for the user pending in this session, the one finalize() logs in.
+        pre_uid = request.session.get('pre_uid')
+        if not pre_uid or request.session.uid or pre_uid != user_id:
+            raise GraphQLError(_("Verification failed, please log in again."))
+        user = env['res.users'].sudo().browse(pre_uid).exists()
+        if not user:
+            raise GraphQLError(_("Verification failed, please log in again."))
         key = False
 
         try:

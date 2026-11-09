@@ -263,10 +263,11 @@ class Partner(OdooObjectType):
         return self.child_ids or None
 
     def resolve_signup_token(self, info):
-        return self._generate_signup_token()
-    
+        # Signup tokens are delivered by email only, they are not part of the API.
+        return None
+
     def resolve_signup_valid(self, info):
-        return not self.user_ids
+        return None
 
     def resolve_parent_id(self, info):
         return self.parent_id or None
