@@ -109,8 +109,19 @@ class ResConfigSettings(models.TransientModel):
             ICP.set_param('graphql_alokai.saas_base_url', saas_base_url)
         return saas_base_url
 
-    def _alokai_public_base_url(self):
-        instance_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '').rstrip('/')
+    def _alokai_public_base_url(self, website=None):
+        """Public Odoo URL sent to Zeppln for launch validation.
+
+        Prefer the selected website domain (multi-website / vanity domains)
+        and fall back to global web.base.url when absent.
+        """
+        instance_url = ''
+        if website:
+            instance_url = (website.domain or '').strip().rstrip('/')
+            if instance_url and '://' not in instance_url:
+                instance_url = f'https://{instance_url}'
+        if not instance_url:
+            instance_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '').rstrip('/')
         # Odoo may be configured with an internal HTTP base URL even though its
         # public reverse-proxy endpoint is HTTPS. Zeppln only accepts HTTPS.
         parsed_url = urlsplit(instance_url)
@@ -139,19 +150,24 @@ class ResConfigSettings(models.TransientModel):
         website no instance would ever answer for."""
         self.ensure_one()
         Website = self.env['website'].sudo()
-        website = Website.search([
-            ('alokai_saas_token', '!=', False), ('alokai_domain', '=', False),
-        ], order='id', limit=1)
+        # Prefer the website selected in settings so launch URL/token match it.
+        website = self.website_id.sudo() if self.website_id else Website.browse()
+        if not website:
+            website = Website.search([
+                ('alokai_saas_token', '!=', False), ('alokai_domain', '=', False),
+            ], order='id', limit=1)
         if not website:
             website = Website.create({
                 'name': self._alokai_new_website_name(),
                 'alokai_saas_token': secrets.token_urlsafe(32),
             })
+        elif not website.alokai_saas_token:
+            website.write({'alokai_saas_token': secrets.token_urlsafe(32)})
         # The admin's setting, never the request: the token goes there.
         base_url = self._alokai_saas_base_url()
         try:
             response = requests.post(base_url + '/instance/launch', data={
-                'instance': self._alokai_public_base_url(),
+                'instance': self._alokai_public_base_url(website),
                 'odooToken': website.alokai_saas_token,
             }, allow_redirects=False, timeout=20)
         except requests.RequestException:
