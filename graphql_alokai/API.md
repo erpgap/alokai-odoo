@@ -30,7 +30,8 @@ List endpoints share a common shape: `filter`, `currentPage` (1-based),
 | `productVariant` | `productTemplateId: Int`, `combinationId: [Int]` | `ProductVariant!` |
 
 `Products` returns: `products [Product]`, `totalCount Int!`,
-`attributeValues [AttributeValue]` (facets), `minPrice Float`, `maxPrice Float`,
+`attributeValues [AttributeValue]` (facets), `minPrice Float`, `maxPrice Float`
+(+ `formattedMinPrice`, `formattedMaxPrice`, and their `currency`**Currency**),
 `filterCounts` (per-facet counts), `searchUrl String`.
 
 ### Categories
@@ -258,11 +259,23 @@ enum PageTypeEnum { STATIC  PRODUCTS }
 > `/web/image/.../{width}x{height}/...` URL the frontend fills in per size).
 > Generic JSON fields (`combinationInfo`, `jsonLd`, `breadcrumb`, `taxTotals`,
 > `filterCounts`) are returned without a sub-selection.
+>
+> **Money.** Every monetary `Float` (e.g. `amountTotal`, `priceUnit`,
+> `variantPrice`, `minPrice`) has a `formatted*` `String` sibling
+> (`formattedAmountTotal`, `formattedPriceUnit`, …) holding the same amount
+> as Odoo formats it: the amount's own currency (symbol, symbol position,
+> decimal places, rounding) and the shop language's separators, e.g.
+> `"$ 1,234.50"` or `"1.234,50 €"`. Show it as is; keep the number for
+> maths and sorting. The JSON fields carry the same as `formatted_<key>`:
+> `combinationInfo` / `combinationInfoVariant` (`formatted_price`,
+> `formatted_list_price`, `formatted_discount`, and `formatted_price_extra`
+> per `combination` value) and `taxTotals` (`formatted_<key>` beside every
+> `*_amount_currency` amount, in the subtotals and tax groups too).
 
 **Product** — `id name displayName sku barcode description websiteDescription
-typeId visibility status weight price qty slug` · pricing
+typeId visibility status weight price formattedPrice qty slug` · pricing
 (`variantPrice variantPriceAfterDiscount variantHasDiscountedPrice
-combinationInfo combinationInfoVariant`) · stock (`isInStock allowOutOfStock
+formattedVariantPrice formattedVariantPriceAfterDiscount combinationInfo combinationInfoVariant`) · stock (`isInStock allowOutOfStock
 showAvailableQty outOfStockMessage`) · media (`image smallImage thumbnail
 imageUrl mediaGallery[ProductImage]`) · SEO (`metaTitle metaKeyword
 metaDescription metaImage jsonLd breadcrumb jsonLdBreadcrumb`) · reviews
@@ -281,21 +294,25 @@ metaDescription metaImage jsonLd breadcrumb`.
 **Attribute** — `id name displayType variantCreateMode filterVisibility
 values[`**AttributeValue**`]`.
 **AttributeValue** — `id name displayType htmlColor search priceExtra
-attribute`**Attribute**.
+formattedPriceExtra attribute`**Attribute**.
 
 **Order** — `id name dateOrder stage clientOrderRef orderUrl cartQuantity
 invoiceStatus invoiceCount confirmationEmail` (`sent`/`failed`/`pending`) · amounts (`amountUntaxed amountTax amountTotal
 amountDelivery amountSubtotal amountDiscounts amountGiftCards taxTotals
-currencyRate`) · relations (`partner/partnerShipping/partnerInvoice`**Partner**`,
+currencyRate`, each amount with its `formatted*` sibling) · relations (`partner/partnerShipping/partnerInvoice`**Partner**`,
 currency`**Currency**`, shippingMethod`**ShippingMethod**`,
 orderLines/websiteOrderLine/reportOrderLine[`**OrderLine**`],
 transactions/lastTransaction[`**PaymentTransaction**`],
 coupons[`**Coupon**`] giftCards[`**GiftCard**`]`).
-**OrderLine** — `id name quantity priceUnit priceSubtotal priceTotal priceTax
-shopWarning product`**Product**` giftCard`**GiftCard**` coupon`**Coupon**.
+**OrderLine** — `id name quantity priceUnit priceSubtotal priceTotal priceTax`
+(each with its `formatted*` sibling) · as Odoo's cart shows the line:
+`formattedCartPrice` (with or without taxes, per the website's setting),
+`formattedPriceBeforeDiscount` and `formattedDiscountAmount` (`null` when
+the line has no discount) · `shopWarning product`**Product**` giftCard`**GiftCard**` coupon`**Coupon**.
 
 **Invoice** — `id name invoiceDate invoiceDateDue state invoiceUrl amountUntaxed
-amountTax amountTotal amountResidual taxTotals partner`**Partner**`
+amountTax amountTotal amountResidual` (each with its `formatted*` sibling)
+`taxTotals partner`**Partner**`
 currency`**Currency**` invoiceLines[`**InvoiceLine**`]
 transactions[`**PaymentTransaction**`]`.
 
@@ -309,12 +326,12 @@ contacts[`**Partner**`] publicPricelist/currentPricelist`**Pricelist**``.
 **PaymentProvider** — `id name code paymentMethods[`**PaymentMethod**`]`.
 **PaymentMethod** — `id name code active sequence image imagePaymentForm
 imageUrl providers[`**PaymentProvider**`] brands[`**PaymentMethod**`]`.
-**PaymentTransaction** — `id reference amount provider providerReference state
+**PaymentTransaction** — `id reference amount formattedAmount provider providerReference state
 payment`**Payment**` currency`**Currency**` company/customer`**Partner**.
 
 **WishlistItem** — `id partner`**Partner**` product`**Product**.
 
-**ShippingMethod** — `id name price product`**Product**.
+**ShippingMethod** — `id name price formattedPrice product`**Product**.
 
 **WebsiteMenu** — `id name url isFooter isMegaMenu sequence
 parent`**WebsiteMenu**` childs[`**WebsiteMenu**`]
@@ -330,7 +347,9 @@ authorId`**Partner**` tags[`**BlogTag**`]`.
 
 **Lead** — `id name email phone company subject message`.
 **Country** — `id name code states[`**State**`]`. **State** — `id name code`.
-**Currency** — `id name symbol`. **Pricelist** — `id name currency`**Currency**.
+**Currency** — `id name symbol position` (`before`/`after`) `decimalPlaces rounding
+decimalSeparator thousandsSeparator` (the shop language's): all it takes to
+format an amount the storefront computes itself as Odoo formats the rest. **Pricelist** — `id name currency`**Currency**.
 
 ---
 
