@@ -413,11 +413,13 @@ class ProductTemplate(models.Model):
         discount = 0
         discount_perc = 0
         if combination_info['has_discounted_price'] and product_id:
-            discount = combination_info['list_price'] - combination_info['price']
+            # The difference of the prices as shown, so it adds up on screen.
+            currency = combination_info['currency']
+            discount = currency.round(combination_info['list_price']) - currency.round(combination_info['price'])
             discount_perc = combination_info['list_price'] and (discount * 100 / combination_info['list_price']) or 0
 
         combination_info.update({
-            'discount': round(discount, 2),
+            'discount': combination_info['currency'].round(discount),
             'discount_perc': int(round(discount_perc, 2)),
         })
 

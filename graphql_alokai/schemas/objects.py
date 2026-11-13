@@ -9,6 +9,7 @@ from odoo import SUPERUSER_ID, _
 
 from odoo.addons.graphql_base import OdooObjectType
 from odoo.exceptions import AccessError
+from odoo.tools.misc import get_lang
 from odoo.http import request
 from odoo.addons.auth_totp.controllers.home import TRUSTED_DEVICE_COOKIE
 from odoo.addons.graphql_alokai.graphql.registry import type_registry
@@ -117,6 +118,21 @@ def get_parent_company(partner):
     if partner.is_company:
         return partner
     return None
+
+
+def format_tax_totals(tax_totals, currency):
+    """``tax_totals`` with a ``formatted_<key>`` beside each amount in the
+    document's currency (``*amount_currency``), in its subtotals and tax groups."""
+    if not tax_totals:
+        return None
+
+    def with_formatted(values):
+        return dict(values, **{'formatted_' + key: currency.format(value)
+                               for key, value in values.items() if key.endswith('amount_currency')})
+
+    return dict(with_formatted(tax_totals), subtotals=[
+        dict(with_formatted(subtotal), tax_groups=[with_formatted(group) for group in subtotal['tax_groups']])
+        for subtotal in tax_totals['subtotals']])
 
 
 # --------------------- #
@@ -347,6 +363,17 @@ class Currency(OdooObjectType):
     id = graphene.Int(required=True)
     name = graphene.String()
     symbol = graphene.String()
+    position = graphene.String(description="Where the symbol goes: 'before' or 'after' the amount")
+    decimal_places = graphene.Int()
+    rounding = graphene.Float()
+    decimal_separator = graphene.String(description="The shop language's decimal separator")
+    thousands_separator = graphene.String(description="The shop language's thousands separator")
+
+    def resolve_decimal_separator(self, info):
+        return get_lang(self.env).decimal_point
+
+    def resolve_thousands_separator(self, info):
+        return get_lang(self.env).thousands_sep
 
 
 class Category(OdooObjectType):
@@ -403,6 +430,7 @@ class AttributeValue(OdooObjectType):
     html_color = graphene.String()
     search = graphene.String()
     price_extra = graphene.Float(description='Not use in the return Attributes List of the Products Query')
+    formatted_price_extra = graphene.String()
     attribute = graphene.Field(lambda: Attribute)
 
     def resolve_id(self, info):
@@ -415,6 +443,12 @@ class AttributeValue(OdooObjectType):
 
     def resolve_attribute(self, info):
         return self.attribute_id or None
+
+    def resolve_formatted_price_extra(self, info):
+        # Only a product's own attribute values have an extra price.
+        if self._name != 'product.template.attribute.value':
+            return None
+        return self.currency_id.format(self.price_extra)
 
 
 class Attribute(OdooObjectType):
@@ -517,6 +551,8 @@ class Product(OdooObjectType):
     combination_info_variant = generic.GenericScalar(description='Specific to Product Variant')
     variant_price = graphene.Float(description='Specific to Product Variant')
     variant_price_after_discount = graphene.Float(description='Specific to Product Variant')
+    formatted_variant_price = graphene.String()
+    formatted_variant_price_after_discount = graphene.String()
     variant_has_discounted_price = graphene.Boolean(description='Specific to Product Variant')
     is_variant_possible = graphene.Boolean(description='Specific to Product Variant')
     variant_attribute_values = graphene.List(graphene.NonNull(lambda: AttributeValue),
@@ -525,6 +561,7 @@ class Product(OdooObjectType):
     # Specific to use in Product Template
     combination_info = generic.GenericScalar(description='Specific to Product Template')
     price = graphene.Float(description='Specific to Product Template')
+    formatted_price = graphene.String()
     attribute_values = graphene.List(graphene.NonNull(lambda: AttributeValue),
                                      description='Specific to Product Template')
     product_variants = graphene.List(graphene.NonNull(lambda: Product), description='Specific to Product Template')
@@ -644,6 +681,9 @@ class Product(OdooObjectType):
     def resolve_combination_info_variant(self, info):
         pricing_info = get_product_pricing_info(self)
         if pricing_info.get('currency', False) and pricing_info['currency'].id:
+            pricing_info['formatted_price'] = pricing_info['currency'].format(pricing_info['price'])
+            pricing_info['formatted_list_price'] = pricing_info['currency'].format(pricing_info['list_price'])
+            pricing_info['formatted_discount'] = pricing_info['currency'].format(pricing_info.get('discount', 0))
             pricing_info['currency'] = {
                 'id': pricing_info['currency'].id,
                 'name': pricing_info['currency'].name,
@@ -675,6 +715,7 @@ class Product(OdooObjectType):
                 'html_color': attribute_value.html_color,
                 'search': '{}-{}'.format(attribute_value.attribute_id.id, attribute_value.id) or None,
                 'price_extra': attribute_value.price_extra,
+                'formatted_price_extra': attribute_value.currency_id.format(attribute_value.price_extra),
                 'attribute': [{
                     'id': attribute_value.attribute_id.id,
                     'name': attribute_value.attribute_id.name,
@@ -723,6 +764,9 @@ class Product(OdooObjectType):
             return None
 
         if pricing_info.get('currency', False) and pricing_info['currency'].id:
+            pricing_info['formatted_price'] = pricing_info['currency'].format(pricing_info['price'])
+            pricing_info['formatted_list_price'] = pricing_info['currency'].format(pricing_info['list_price'])
+            pricing_info['formatted_discount'] = pricing_info['currency'].format(pricing_info.get('discount', 0))
             pricing_info['currency'] = {
                 'id': pricing_info['currency'].id,
                 'name': pricing_info['currency'].name,
@@ -754,6 +798,7 @@ class Product(OdooObjectType):
                 'html_color': attribute_value.html_color,
                 'search': '{}-{}'.format(attribute_value.attribute_id.id, attribute_value.id) or None,
                 'price_extra': attribute_value.price_extra,
+                'formatted_price_extra': attribute_value.currency_id.format(attribute_value.price_extra),
                 'attribute': [{
                     'id': attribute_value.attribute_id.id,
                     'name': attribute_value.attribute_id.name,
@@ -788,12 +833,27 @@ class Product(OdooObjectType):
     def resolve_json_ld_breadcrumb(self, info):
         return self and self.get_json_ld_breadcrumb() or None
 
+    def resolve_formatted_variant_price(self, info):
+        pricing_info = get_product_pricing_info(self)
+        return pricing_info['currency'].format(pricing_info['list_price'])
+
+    def resolve_formatted_variant_price_after_discount(self, info):
+        pricing_info = get_product_pricing_info(self)
+        return pricing_info['currency'].format(pricing_info['price'])
+
+    def resolve_formatted_price(self, info):
+        return self.currency_id.format(self.list_price)
+
 
 class Payment(OdooObjectType):
     id = graphene.Int()
     name = graphene.String()
     amount = graphene.Float()
+    formatted_amount = graphene.String()
     payment_reference = graphene.String()
+
+    def resolve_formatted_amount(self, info):
+        return self.currency_id.format(self.amount)
 
 
 class PaymentTransaction(OdooObjectType):
@@ -801,6 +861,7 @@ class PaymentTransaction(OdooObjectType):
     reference = graphene.String()
     payment = graphene.Field(lambda: Payment)
     amount = graphene.Float()
+    formatted_amount = graphene.String()
     currency = graphene.Field(lambda: Currency)
     provider = graphene.String()
     provider_reference = graphene.String()
@@ -823,6 +884,9 @@ class PaymentTransaction(OdooObjectType):
     def resolve_customer(self, info):
         return self.partner_id or None
 
+    def resolve_formatted_amount(self, info):
+        return self.currency_id.format(self.amount)
+
 
 class OrderLine(OdooObjectType):
     id = graphene.Int(required=True)
@@ -833,6 +897,16 @@ class OrderLine(OdooObjectType):
     price_subtotal = graphene.Float()
     price_total = graphene.Float()
     price_tax = graphene.Float()
+    formatted_price_unit = graphene.String()
+    formatted_price_subtotal = graphene.String()
+    formatted_price_total = graphene.String()
+    formatted_price_tax = graphene.String()
+    formatted_cart_price = graphene.String(
+        description="The line's price as Odoo's cart shows it: with or without taxes, per the website's setting")
+    formatted_price_before_discount = graphene.String(
+        description="The line's price before its discount (Odoo's cart strikethrough price), when it has one")
+    formatted_discount_amount = graphene.String(
+        description='What the discount takes off the line, when it has one')
     shop_warning = graphene.String()
     gift_card = graphene.Field(lambda: GiftCard)
     coupon = graphene.Field(lambda: Coupon)
@@ -855,6 +929,32 @@ class OrderLine(OdooObjectType):
             coupon = self.coupon_id
         return coupon
 
+    def resolve_formatted_price_unit(self, info):
+        return self.currency_id.format(self.price_unit)
+
+    def resolve_formatted_price_subtotal(self, info):
+        return self.currency_id.format(self.price_subtotal)
+
+    def resolve_formatted_price_total(self, info):
+        return self.currency_id.format(self.price_total)
+
+    def resolve_formatted_price_tax(self, info):
+        return self.currency_id.format(self.price_tax)
+
+    def resolve_formatted_cart_price(self, info):
+        return self.currency_id.format(self._get_cart_display_price())
+
+    def resolve_formatted_price_before_discount(self, info):
+        if not self.discount:
+            return None
+        return self.currency_id.format(self._get_displayed_unit_price() * self.product_uom_qty)
+
+    def resolve_formatted_discount_amount(self, info):
+        if not self.discount:
+            return None
+        before = self.currency_id.round(self._get_displayed_unit_price() * self.product_uom_qty)
+        return self.currency_id.format(before - self.currency_id.round(self._get_cart_display_price()))
+
 
 class Coupon(OdooObjectType):
     id = graphene.Int(required=True)
@@ -870,6 +970,7 @@ class ShippingMethod(OdooObjectType):
     id = graphene.Int(required=True)
     name = graphene.String()
     price = graphene.Float()
+    formatted_price = graphene.String()
     product = graphene.Field(lambda: Product)
 
     def resolve_price(self, info):
@@ -879,6 +980,12 @@ class ShippingMethod(OdooObjectType):
 
     def resolve_product(self, info):
         return self.product_id or None
+
+    def resolve_formatted_price(self, info):
+        # A rated price is in the cart's (pricelist) currency.
+        cart = self.env['website'].get_current_website().sale_get_order()
+        currency = self.free_over and cart.currency_id or self.currency_id
+        return currency.format(ShippingMethod.resolve_price(self, info))
 
 
 class Order(OdooObjectType):
@@ -896,6 +1003,13 @@ class Order(OdooObjectType):
     amount_subtotal = graphene.Float()
     amount_discounts = graphene.Float()
     amount_gift_cards = graphene.Float()
+    formatted_amount_untaxed = graphene.String()
+    formatted_amount_tax = graphene.String()
+    formatted_amount_total = graphene.String()
+    formatted_amount_delivery = graphene.String()
+    formatted_amount_subtotal = graphene.String()
+    formatted_amount_discounts = graphene.String()
+    formatted_amount_gift_cards = graphene.String()
     currency_rate = graphene.String()
     shipping_method = graphene.Field(lambda: ShippingMethod)
     currency = graphene.Field(lambda: Currency)
@@ -926,7 +1040,7 @@ class Order(OdooObjectType):
         return self.date_order or None
 
     def resolve_tax_totals(self, info):
-        return self.tax_totals or None
+        return format_tax_totals(self.tax_totals, self.currency_id)
 
     def resolve_shipping_method(self, info):
         return self.carrier_id or None
@@ -981,6 +1095,27 @@ class Order(OdooObjectType):
         report_order_line = self._get_order_lines_to_report()
         return report_order_line.filtered(lambda rec:not rec.is_delivery) or None
 
+    def resolve_formatted_amount_untaxed(self, info):
+        return self.currency_id.format(self.amount_untaxed)
+
+    def resolve_formatted_amount_tax(self, info):
+        return self.currency_id.format(self.amount_tax)
+
+    def resolve_formatted_amount_total(self, info):
+        return self.currency_id.format(self.amount_total)
+
+    def resolve_formatted_amount_delivery(self, info):
+        return self.currency_id.format(self.amount_delivery)
+
+    def resolve_formatted_amount_subtotal(self, info):
+        return self.currency_id.format(Order.resolve_amount_subtotal(self, info))
+
+    def resolve_formatted_amount_discounts(self, info):
+        return self.currency_id.format(Order.resolve_amount_discounts(self, info))
+
+    def resolve_formatted_amount_gift_cards(self, info):
+        return self.currency_id.format(Order.resolve_amount_gift_cards(self, info))
+
 
 class InvoiceLine(OdooObjectType):
     id = graphene.Int(required=True)
@@ -990,9 +1125,21 @@ class InvoiceLine(OdooObjectType):
     price_unit = graphene.Float()
     price_subtotal = graphene.Float()
     price_total = graphene.Float()
+    formatted_price_unit = graphene.String()
+    formatted_price_subtotal = graphene.String()
+    formatted_price_total = graphene.String()
 
     def resolve_product(self, info):
         return self.product_id or None
+
+    def resolve_formatted_price_unit(self, info):
+        return self.currency_id.format(self.price_unit)
+
+    def resolve_formatted_price_subtotal(self, info):
+        return self.currency_id.format(self.price_subtotal)
+
+    def resolve_formatted_price_total(self, info):
+        return self.currency_id.format(self.price_total)
 
 
 class Invoice(OdooObjectType):
@@ -1007,6 +1154,10 @@ class Invoice(OdooObjectType):
     amount_tax = graphene.Float()
     amount_total = graphene.Float()
     amount_residual = graphene.Float()
+    formatted_amount_untaxed = graphene.String()
+    formatted_amount_tax = graphene.String()
+    formatted_amount_total = graphene.String()
+    formatted_amount_residual = graphene.String()
     currency = graphene.Field(lambda: Currency)
     invoice_lines = graphene.List(graphene.NonNull(lambda: InvoiceLine))
     state = InvoiceState()
@@ -1026,7 +1177,7 @@ class Invoice(OdooObjectType):
         return self.invoice_date_due or None
 
     def resolve_tax_totals(self, info):
-        return self.tax_totals or None
+        return format_tax_totals(self.tax_totals, self.currency_id)
 
     def resolve_currency(self, info):
         return self.currency_id or None
@@ -1042,6 +1193,18 @@ class Invoice(OdooObjectType):
 
     def resolve_transactions(self, info):
         return self.transaction_ids or None
+
+    def resolve_formatted_amount_untaxed(self, info):
+        return self.currency_id.format(self.amount_untaxed)
+
+    def resolve_formatted_amount_tax(self, info):
+        return self.currency_id.format(self.amount_tax)
+
+    def resolve_formatted_amount_total(self, info):
+        return self.currency_id.format(self.amount_total)
+
+    def resolve_formatted_amount_residual(self, info):
+        return self.currency_id.format(self.amount_residual)
 
 
 class PaymentMethod(OdooObjectType):

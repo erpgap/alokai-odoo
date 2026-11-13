@@ -4,3 +4,4 @@
 
 
 from . import test_graphql_1
+from . import test_formatted_money

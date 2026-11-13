@@ -12,7 +12,7 @@ from collections import defaultdict
 from graphene.types import generic
 from odoo.addons.graphql_alokai.graphql.registry import query_registry, type_registry
 from odoo.addons.graphql_alokai.schemas.objects import (
-    SortEnum, Product, Attribute, AttributeValue
+    Currency, SortEnum, Product, Attribute, AttributeValue
 )
 
 
@@ -211,6 +211,9 @@ class Products(graphene.Interface):
     attribute_values = graphene.List(AttributeValue)
     min_price = graphene.Float()
     max_price = graphene.Float()
+    formatted_min_price = graphene.String()
+    formatted_max_price = graphene.String()
+    currency = graphene.Field(Currency, description='The currency of minPrice and maxPrice')
     filter_counts = generic.GenericScalar()
     search_url = graphene.String()
 
@@ -248,6 +251,8 @@ class ProductVariant(graphene.Interface):
     display_image = graphene.Boolean()
     price = graphene.Float()
     list_price = graphene.String()
+    formatted_price = graphene.String()
+    formatted_list_price = graphene.String()
     has_discounted_price = graphene.Boolean()
     is_combination_possible = graphene.Boolean()
 
@@ -330,8 +335,11 @@ class ProductQuery(graphene.ObjectType):
                 filter_data[attribute_name].append(value)
 
         search_url = urls.url_encode(dict(sorted(filter_data.items())))
+        currency = env['website'].get_current_website().company_id.currency_id
         return ProductList(products=products, total_count=total_count, attribute_values=attribute_values,
-                           min_price=min_price, max_price=max_price, filter_counts=filter_counts, search_url=search_url)
+                           min_price=min_price, max_price=max_price, filter_counts=filter_counts, search_url=search_url,
+                           currency=currency, formatted_min_price=currency.format(min_price),
+                           formatted_max_price=currency.format(max_price))
 
     @staticmethod
     def resolve_attribute(self, info, id):
@@ -372,6 +380,8 @@ class ProductQuery(graphene.ObjectType):
             display_image=variant_info['display_image'],
             price=variant_info['price'],
             list_price=variant_info['list_price'],
+            formatted_price=variant_info['currency'].format(variant_info['price']),
+            formatted_list_price=variant_info['currency'].format(variant_info['list_price']),
             has_discounted_price=variant_info['has_discounted_price'],
             is_combination_possible=variant_info['is_combination_possible']
         )
