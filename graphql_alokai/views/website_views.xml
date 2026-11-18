@@ -80,6 +80,12 @@
             <xpath expr="//field[@name='website_id']" position="replace">
                 <field name="website_id" options="{'no_create': True}"/>
             </xpath>
+            <!-- From the Header Menu and Footer Menu screens an entry needs its
+                 website: without one it shows on no website, and its Parent
+                 Menu has nothing to offer. -->
+            <xpath expr="//field[@name='website_id']" position="attributes">
+                <attribute name="required">context.get('alokai_menu_form')</attribute>
+            </xpath>
             <!-- No parent: a top entry (a header item or a footer column). A
                  parent can only be one of those, of the same menu and
                  website, so not the hidden top menu nor a third level. -->
