@@ -684,6 +684,49 @@ class WebsiteMenu(models.Model):
             blog = top.child_id.filtered(lambda menu: menu.url == '/blog')
             blog.sequence = 4
 
+    @api.model
+    def _create_demo_footer_menu(self):
+        """Demo data: the storefront footer menu of every website.
+
+        Each top entry is a column heading, its submenu the column's links:
+
+            Shop     Top sellers, New arrivals, Women, Men
+            Company  About, Sustainability, Stores, Journal
+            Support  Shipping, Returns, Contact, FAQ
+
+        A website that already has a footer menu is left as it is.
+        """
+        columns = [
+            ('Shop', [
+                ('Top sellers', '/products'),
+                ('New arrivals', '/products?sort=newest,DESC'),
+                ('Women', '/women'),
+                ('Men', '/men'),
+            ]),
+            ('Company', [
+                ('About', '/about'),
+                ('Sustainability', '/sustainability'),
+                ('Stores', '/stores'),
+                ('Journal', '/journal'),
+            ]),
+            ('Support', [
+                ('Shipping', '/shipping'),
+                ('Returns', '/returns'),
+                ('Contact', '/contact'),
+                ('FAQ', '/faq'),
+            ]),
+        ]
+        for website in self.env['website'].search([]):
+            if self.search_count([('website_id', '=', website.id), ('is_footer', '=', True)]):
+                continue
+            values = {'website_id': website.id, 'is_footer': True}
+            for sequence, (heading, links) in enumerate(columns, start=1):
+                column = self.create({**values, 'name': heading, 'url': '#', 'sequence': sequence})
+                self.create([
+                    {**values, 'name': name, 'url': url, 'parent_id': column.id, 'sequence': position}
+                    for position, (name, url) in enumerate(links, start=1)
+                ])
+
 class WebsiteMenuImage(models.Model):
     _name = 'website.menu.image'
     _description = 'Website Menu Image'

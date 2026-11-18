@@ -8,4 +8,7 @@
     <!-- The storefront header: Women, Men (each with its submenu), Shop all, Blog -->
     <function model="website.menu" name="_create_demo_header_menu"/>
 
+    <!-- The storefront footer: Shop, Company and Support columns -->
+    <function model="website.menu" name="_create_demo_footer_menu"/>
+
 </odoo>
