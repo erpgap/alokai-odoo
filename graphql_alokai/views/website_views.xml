@@ -183,7 +183,7 @@
         <field name="name">Header Menu</field>
         <field name="res_model">website.menu</field>
         <field name="view_mode">list,form</field>
-        <field name="context">{'search_default_is_menu': 1, 'search_default_group_by_website_id': 1}</field>
+        <field name="context">{'search_default_is_menu': 1, 'search_default_group_by_website_id': 1, 'alokai_menu_form': 1}</field>
         <!-- Not the hidden top menus Odoo keeps: always empty, nothing to edit. -->
         <field name="domain">[('is_main_menu', '=', False)]</field>
         <field name="view_id" ref="website.menu_tree"/>
@@ -194,7 +194,7 @@
         <field name="name">Footer Menu</field>
         <field name="res_model">website.menu</field>
         <field name="view_mode">list,form</field>
-        <field name="context">{'default_is_footer': True, 'search_default_is_footer': 1, 'search_default_group_by_website_id': 1}</field>
+        <field name="context">{'default_is_footer': True, 'search_default_is_footer': 1, 'search_default_group_by_website_id': 1, 'alokai_menu_form': 1}</field>
         <field name="view_id" ref="graphql_alokai.menu_tree"/>
         <field name="target">current</field>
     </record>

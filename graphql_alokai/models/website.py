@@ -707,6 +707,22 @@ class WebsiteMenu(models.Model):
         return Domain('id', 'in' if True in wanted else 'not in', self._alokai_main_menus().ids)
 
     @api.model
+    def default_get(self, fields):
+        # A new entry from the Header Menu or Footer Menu screens belongs to
+        # the website being edited: with none, its Parent Menu offered nothing
+        # (a parent must be of the same website). Only there: elsewhere a menu
+        # without a website is meant, one Odoo copies to every website.
+        values = super().default_get(fields)
+        if self.env.context.get('alokai_menu_form') and 'website_id' in fields and not values.get('website_id'):
+            values['website_id'] = self.env['website'].get_current_website().id
+        return values
+
+    @api.onchange('parent_id')
+    def _onchange_parent_id_website(self):
+        if self.parent_id.website_id:
+            self.website_id = self.parent_id.website_id
+
+    @api.model
     def _alokai_flatten_header_menus(self):
         """Moves what sits under a hidden top menu to the top level: a new
         website's default entries, a module's entry, and, on updating this

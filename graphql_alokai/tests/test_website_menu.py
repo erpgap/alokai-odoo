@@ -75,3 +75,12 @@ class TestWebsiteMenu(TransactionCase):
         self.assertIn(self.main, self.Menu.search([('is_main_menu', '=', True)]))
         self.assertNotIn(self.main, self.Menu.search([('is_main_menu', '=', False)]))
         self.assertTrue(self.main.is_main_menu)
+
+    def test_a_new_entry_from_the_menu_screens_has_the_website(self):
+        # Header Menu and Footer Menu: the website being edited, so Parent
+        # Menu has something to offer.
+        website = self.env['website'].get_current_website()
+        defaults = self.Menu.with_context(alokai_menu_form=1, default_is_footer=True).default_get(['website_id', 'is_footer'])
+        self.assertEqual(defaults.get('website_id'), website.id)
+        # Elsewhere no website stays the default: a menu for every website.
+        self.assertFalse(self.Menu.default_get(['website_id']).get('website_id'))
