@@ -644,6 +644,45 @@ class WebsiteMenu(models.Model):
     menu_image_ids = fields.One2many('website.menu.image', 'menu_id', string='Menu Images')
     is_mega_menu = fields.Boolean(store=True)
 
+    @api.model
+    def _create_demo_header_menu(self):
+        """Demo data: the storefront header menu of every website.
+
+        As fashion stores do: a submenu per department (its whole range, then
+        each kind of product), then the whole catalogue and the blog:
+
+            Women  >  View all, Clothing, Shoes, Accessories
+            Men    >  View all, Clothing, Shoes, Accessories
+            Shop all
+            Blog
+
+        It drops the entries the storefront has elsewhere or not at all: Home
+        (the logo leads there), Contact us (in the footer) and website_sale's
+        Shop (/shop, a page the storefront does not have). A website whose menu
+        already has Women is left as it is, so updating the module keeps any
+        changes made to its menu since.
+        """
+        departments = [('Women', '/women'), ('Men', '/men')]
+        for website in self.env['website'].search([]):
+            top = website.menu_id
+            if not top or top.child_id.filtered(lambda menu: menu.name == 'Women'):
+                continue
+            top.child_id.filtered(lambda menu: menu.url in ('/', '/shop', '/contactus')).unlink()
+            values = {'website_id': website.id}
+            for sequence, (name, url) in enumerate(departments, start=1):
+                department = self.create({**values, 'name': name, 'url': '#', 'parent_id': top.id, 'sequence': sequence})
+                self.create([
+                    {**values, 'name': label, 'url': f'{url}{path}', 'parent_id': department.id, 'sequence': position}
+                    for position, (label, path) in enumerate([
+                        ('View all', ''),
+                        ('Clothing', '/clothing'),
+                        ('Shoes', '/shoes'),
+                        ('Accessories', '/accessories'),
+                    ], start=1)
+                ])
+            self.create({**values, 'name': 'Shop all', 'url': '/products', 'parent_id': top.id, 'sequence': 3})
+            blog = top.child_id.filtered(lambda menu: menu.url == '/blog')
+            blog.sequence = 4
 
 class WebsiteMenuImage(models.Model):
     _name = 'website.menu.image'

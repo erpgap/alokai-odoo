@@ -97,6 +97,7 @@ Features
         'data/demo_products_women_tops.xml',
         'data/remove_default_category_product.xml',
         'data/demo_cms_images.xml',
+        'data/demo_website_menu.xml',
     ],
     'installable': True,
     'auto_install': False,
