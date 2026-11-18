@@ -94,12 +94,17 @@
         </field>
     </record>
 
-    <menuitem name="Menu"
+    <!-- The storefront's header and footer menus, out of debug mode: a
+         merchant edits them, and would not find them behind it. Visible to
+         whoever sees Configuration (Odoo's own Menu entry is debug-only, so
+         its group is removed, not just left out). The mega menu stays in
+         debug mode: the storefront does not use it. -->
+    <menuitem name="Header Menu"
               id="website.menu_website_menu_list"
               action="website.action_website_menu"
               parent="website.menu_website_global_configuration"
               sequence="45"
-              groups="base.group_no_one"/>
+              groups="-base.group_no_one"/>
 
     <menuitem name="Mega Menu"
               id="menu_website_mega_menu_list"
@@ -108,11 +113,11 @@
               sequence="46"
               groups="base.group_no_one"/>
 
-    <menuitem name="Footer"
+    <menuitem name="Footer Menu"
               id="menu_website_footer_list"
               action="graphql_alokai.action_website_footer"
               parent="website.menu_website_global_configuration"
               sequence="47"
-              groups="base.group_no_one"/>
+              groups="-base.group_no_one"/>
 
 </odoo>
