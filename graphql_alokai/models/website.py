@@ -173,6 +173,19 @@ class Website(models.Model):
     _name = 'website'
     _inherit = ['website', 'website.seo.metadata']
 
+    def _compute_menu(self):
+        """Odoo's main menu is the first menu without a parent; here, the
+        hidden top menu (see website.menu _alokai_main_menus), whatever the
+        sequence of the storefront's own top entries, which have no parent
+        either. Odoo adds a module's entries under it, and they are moved to
+        the top level from there."""
+        super()._compute_menu()
+        main_menus = self.env['website.menu']._alokai_main_menus(self.ids)
+        by_website = {menu.website_id.id: menu.id for menu in main_menus}
+        for website in self:
+            if website.id in by_website:
+                website.menu_id = by_website[website.id]
+
     def _compute_json_ld(self):
         for website in self:
             base_url = website._alokai_domain()
@@ -644,54 +657,78 @@ class WebsiteMenu(models.Model):
     menu_image_ids = fields.One2many('website.menu.image', 'menu_id', string='Menu Images')
     is_mega_menu = fields.Boolean(store=True)
 
-    def _alokai_top_menu(self, website_id, is_footer, is_mega_menu):
-        """The website's top menu, under which a header entry belongs.
+    is_main_menu = fields.Boolean(
+        'Hidden Top Menu',
+        compute='_compute_is_main_menu',
+        search='_search_is_main_menu',
+        help="The website's top menu that Odoo creates and relies on. It is "
+             "kept empty: the storefront header's entries are the ones with "
+             "no parent.",
+    )
 
-        The storefront header lists what is under it, so an entry saved with
-        no parent sat beside it and never showed. None for footer and mega
-        menu entries (a footer entry without a parent is a column heading),
-        and none while a website has no menu yet, so its first one still
-        becomes its top menu.
-        """
-        if not website_id or is_footer or is_mega_menu:
-            return self.browse()
-        # Searched rather than read from website.menu_id, a computed field
-        # that is not refreshed when menus are created in the same transaction.
-        return self.search([
-            ('website_id', '=', website_id),
+    # The storefront header's top entries are the header menus without a
+    # parent. Odoo still keeps a top menu per website (Top Menu for Website N):
+    # its own code looks it up (website.menu_id) to add entries, for a new
+    # website and for a module's page. That menu is kept, hidden and empty:
+    # whatever Odoo puts under it moves to the top level.
+
+    @api.model
+    def _alokai_main_menus(self, website_ids=None):
+        """Each website's hidden top menu: its oldest header menu without a
+        parent, the one Odoo creates with the website. The oldest by id, not
+        the first by sequence as Odoo has it, so an entry of the merchant's,
+        also without a parent, never takes its place whatever its sequence."""
+        domain = [
+            ('website_id', '!=', False),
             ('parent_id', '=', False),
             ('is_footer', '=', False),
             ('is_mega_menu', '=', False),
-        ], order='sequence, id', limit=1)
+        ]
+        if website_ids is not None:
+            domain.append(('website_id', 'in', list(website_ids)))
+        groups = self.sudo()._read_group(domain, ['website_id'], ['id:min'])
+        return self.browse([menu_id for _website, menu_id in groups])
+
+    @api.depends('parent_id', 'website_id', 'is_footer', 'is_mega_menu')
+    def _compute_is_main_menu(self):
+        main_menus = self._alokai_main_menus(self.website_id.ids)
+        for menu in self:
+            menu.is_main_menu = menu in main_menus
+
+    def _search_is_main_menu(self, operator, value):
+        if operator not in ('=', '!=', 'in', 'not in'):
+            return NotImplemented
+        values = {bool(v) for v in (value if isinstance(value, (list, tuple, set)) else [value])}
+        wanted = values if operator in ('=', 'in') else {True, False} - values
+        if wanted == {True, False}:
+            return Domain.TRUE
+        if not wanted:
+            return Domain.FALSE
+        return Domain('id', 'in' if True in wanted else 'not in', self._alokai_main_menus().ids)
+
+    @api.model
+    def _alokai_flatten_header_menus(self):
+        """Moves what sits under a hidden top menu to the top level: a new
+        website's default entries, a module's entry, and, on updating this
+        module, the menus made when top entries had that parent."""
+        main_menus = self._alokai_main_menus()
+        under = self.sudo().search([('parent_id', 'in', main_menus.ids)])
+        if under:
+            super(WebsiteMenu, under).write({'parent_id': False})
 
     @api.model_create_multi
     def create(self, vals_list):
-        context = self.env.context
-        for vals in vals_list:
-            if vals.get('parent_id') or vals.get('url') == '/default-main-menu':
-                continue
-            top = self._alokai_top_menu(
-                vals.get('website_id'),
-                vals.get('is_footer', context.get('default_is_footer')),
-                vals.get('is_mega_menu', context.get('default_is_mega_menu')),
-            )
-            if top:
-                vals['parent_id'] = top.id
-        return super().create(vals_list)
+        menus = super().create(vals_list)
+        # Odoo's create may make the menus for every website and parent them
+        # to its top menu itself (a menu with no website), hence the search.
+        if any(not vals.get('url') == '/default-main-menu' for vals in vals_list):
+            self._alokai_flatten_header_menus()
+        return menus
 
     def write(self, vals):
-        if 'parent_id' not in vals or vals['parent_id']:
-            return super().write(vals)
-        # A parent cleared: a header entry goes back under its top menu.
-        for menu in self:
-            top = self._alokai_top_menu(
-                vals.get('website_id', menu.website_id.id),
-                vals.get('is_footer', menu.is_footer),
-                vals.get('is_mega_menu', menu.is_mega_menu),
-            )
-            parent = top.id if top and top != menu else False
-            super(WebsiteMenu, menu).write({**vals, 'parent_id': parent})
-        return True
+        if vals.get('parent_id') and self.browse(vals['parent_id']).is_main_menu:
+            vals = {**vals, 'parent_id': False}
+        return super().write(vals)
 
     @api.model
     def _create_demo_header_menu(self):
@@ -705,21 +742,28 @@ class WebsiteMenu(models.Model):
             Shop all
             Blog
 
-        It drops the entries the storefront has elsewhere or not at all: Home
-        (the logo leads there), Contact us (in the footer) and website_sale's
-        Shop (/shop, a page the storefront does not have). A website whose menu
-        already has Women is left as it is, so updating the module keeps any
-        changes made to its menu since.
+        Top entries have no parent. It drops the entries the storefront has
+        elsewhere or not at all: Home (the logo leads there), Contact us (in
+        the footer) and website_sale's Shop (/shop, a page the storefront does
+        not have). A website whose menu already has Women is left as it is,
+        so updating the module keeps any changes made to its menu since.
         """
+        self._alokai_flatten_header_menus()
         departments = [('Women', '/women'), ('Men', '/men')]
         for website in self.env['website'].search([]):
-            top = website.menu_id
-            if not top or top.child_id.filtered(lambda menu: menu.name == 'Women'):
+            top_entries = self.search([
+                ('website_id', '=', website.id),
+                ('parent_id', '=', False),
+                ('is_footer', '=', False),
+                ('is_mega_menu', '=', False),
+                ('is_main_menu', '=', False),
+            ])
+            if top_entries.filtered(lambda menu: menu.name == 'Women'):
                 continue
-            top.child_id.filtered(lambda menu: menu.url in ('/', '/shop', '/contactus')).unlink()
+            top_entries.filtered(lambda menu: menu.url in ('/', '/shop', '/contactus')).unlink()
             values = {'website_id': website.id}
             for sequence, (name, url) in enumerate(departments, start=1):
-                department = self.create({**values, 'name': name, 'url': '#', 'parent_id': top.id, 'sequence': sequence})
+                department = self.create({**values, 'name': name, 'url': '#', 'sequence': sequence})
                 self.create([
                     {**values, 'name': label, 'url': f'{url}{path}', 'parent_id': department.id, 'sequence': position}
                     for position, (label, path) in enumerate([
@@ -729,9 +773,8 @@ class WebsiteMenu(models.Model):
                         ('Accessories', '/accessories'),
                     ], start=1)
                 ])
-            self.create({**values, 'name': 'Shop all', 'url': '/products', 'parent_id': top.id, 'sequence': 3})
-            blog = top.child_id.filtered(lambda menu: menu.url == '/blog')
-            blog.sequence = 4
+            self.create({**values, 'name': 'Shop all', 'url': '/products', 'sequence': 3})
+            top_entries.filtered(lambda menu: menu.url == '/blog').sequence = 4
 
     @api.model
     def _create_demo_footer_menu(self):

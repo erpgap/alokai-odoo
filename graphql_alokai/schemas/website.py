@@ -26,6 +26,11 @@ class WebsiteQuery(graphene.ObjectType):
         graphene.NonNull(WebsiteMenu),
         no_parent=graphene.Boolean(),
     )
+    website_header_menu = graphene.List(
+        graphene.NonNull(WebsiteMenu),
+        description='The storefront header: the website\'s top entries (header '
+                    'menus without a parent), each with its submenu in childs.',
+    )
     website_mega_menu = graphene.List(
         graphene.NonNull(WebsiteMenu),
         no_parent=graphene.Boolean(),
@@ -63,6 +68,22 @@ class WebsiteQuery(graphene.ObjectType):
             domain += [('parent_id', '=', False)]
 
         return env['website.menu'].search(domain).filtered(lambda m: m.is_visible)
+
+    @staticmethod
+    def resolve_website_header_menu(self, info):
+        env = info.context['env']
+        website = env['website'].get_current_website()
+        Menu = env['website.menu']
+        # Not the hidden top menu Odoo keeps; anything still under it counts
+        # as a top entry too (moved up on the next update).
+        main_menus = Menu._alokai_main_menus([website.id])
+        menus = Menu.search([
+            ('website_id', '=', website.id),
+            ('is_footer', '=', False),
+            ('is_mega_menu', '=', False),
+            '|', ('parent_id', '=', False), ('parent_id', 'in', main_menus.ids),
+        ])
+        return (menus - main_menus).filtered(lambda m: m.is_visible)
 
     @staticmethod
     def resolve_website_mega_menu(self, info, no_parent=False):

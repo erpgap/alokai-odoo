@@ -5,6 +5,10 @@
 -->
 <odoo>
 
+    <!-- Header menus: top entries have no parent; on update, those under the
+         hidden top menu Odoo keeps move up (see website.menu). -->
+    <function model="website.menu" name="_alokai_flatten_header_menus"/>
+
     <!-- Enable sign up and reset password on default website -->
     <function model="website" name="enable_b2c_reset_password"/>
 
