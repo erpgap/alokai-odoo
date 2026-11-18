@@ -644,6 +644,55 @@ class WebsiteMenu(models.Model):
     menu_image_ids = fields.One2many('website.menu.image', 'menu_id', string='Menu Images')
     is_mega_menu = fields.Boolean(store=True)
 
+    def _alokai_top_menu(self, website_id, is_footer, is_mega_menu):
+        """The website's top menu, under which a header entry belongs.
+
+        The storefront header lists what is under it, so an entry saved with
+        no parent sat beside it and never showed. None for footer and mega
+        menu entries (a footer entry without a parent is a column heading),
+        and none while a website has no menu yet, so its first one still
+        becomes its top menu.
+        """
+        if not website_id or is_footer or is_mega_menu:
+            return self.browse()
+        # Searched rather than read from website.menu_id, a computed field
+        # that is not refreshed when menus are created in the same transaction.
+        return self.search([
+            ('website_id', '=', website_id),
+            ('parent_id', '=', False),
+            ('is_footer', '=', False),
+            ('is_mega_menu', '=', False),
+        ], order='sequence, id', limit=1)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        context = self.env.context
+        for vals in vals_list:
+            if vals.get('parent_id') or vals.get('url') == '/default-main-menu':
+                continue
+            top = self._alokai_top_menu(
+                vals.get('website_id'),
+                vals.get('is_footer', context.get('default_is_footer')),
+                vals.get('is_mega_menu', context.get('default_is_mega_menu')),
+            )
+            if top:
+                vals['parent_id'] = top.id
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if 'parent_id' not in vals or vals['parent_id']:
+            return super().write(vals)
+        # A parent cleared: a header entry goes back under its top menu.
+        for menu in self:
+            top = self._alokai_top_menu(
+                vals.get('website_id', menu.website_id.id),
+                vals.get('is_footer', menu.is_footer),
+                vals.get('is_mega_menu', menu.is_mega_menu),
+            )
+            parent = top.id if top and top != menu else False
+            super(WebsiteMenu, menu).write({**vals, 'parent_id': parent})
+        return True
+
     @api.model
     def _create_demo_header_menu(self):
         """Demo data: the storefront header menu of every website.
