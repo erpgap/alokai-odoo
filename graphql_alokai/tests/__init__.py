@@ -25,3 +25,4 @@ from . import test_login_2fa
 from . import test_formatted_money
 from . import test_website_menu
 from . import test_website_logo
+from . import test_image_cache

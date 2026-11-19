@@ -29,6 +29,29 @@ from ..graphql.registry import build_alokai_schema
 # IDs from search engines, deleted products, ...).
 PRODUCT_PLACEHOLDER_MODELS = ('product.template', 'product.product')
 
+# Catalogue images whose URL carries the record's last change (the
+# `<hex write_date>_<name>` filename the storefront gets, see
+# schemas.objects.get_image_filename): a changed image has a new URL, so the
+# current one is kept 30 days, the CDN's rule for images. Public catalogue
+# only: never a customer's or anyone's private image.
+VERSIONED_IMAGE_MODELS = (
+    'product.template', 'product.product', 'product.public.category', 'product.image', 'product.tag',
+)
+VERSIONED_IMAGE_MAX_AGE = 60 * 60 * 24 * 30
+
+
+def _is_current_version(model, id, filename):
+    """Whether `filename` names the record's current version: its leading
+    hex timestamp is the record's write_date. An old URL (the record changed
+    since) is not, and keeps Odoo's own caching."""
+    if model not in VERSIONED_IMAGE_MODELS or not id or not filename:
+        return False
+    version = filename.split('_', 1)[0]
+    record = request.env[model].sudo().browse(int(id)).exists()
+    if not record or not record.write_date:
+        return False
+    return version == hex(int(record.write_date.timestamp()))[2:]
+
 
 class AlokaiBinary(Binary):
     @http.route(['/web/image',
@@ -83,10 +106,13 @@ class AlokaiBinary(Binary):
             stream.public = False
             return stream.get_response(as_attachment=False)
 
-        return super(AlokaiBinary, self).content_image(
+        response = super(AlokaiBinary, self).content_image(
             xmlid=xmlid, model=model, id=id, field=field, filename_field=filename_field, filename=filename,
             mimetype=mimetype, unique=unique, download=download, width=width, height=height, crop=crop,
             access_token=access_token, nocache=nocache)
+        if not nocache and response.status_code == 200 and _is_current_version(model, id, filename):
+            response.headers['Cache-Control'] = f'public, max-age={VERSIONED_IMAGE_MAX_AGE}'
+        return response
 
 
 class GraphQLController(http.Controller, GraphQLControllerMixin):
