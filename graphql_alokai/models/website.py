@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2024 ERPGAP/PROMPTEQUATION LDA
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+import base64
 import re
 import hashlib
 import hmac
@@ -172,6 +173,25 @@ class WebsiteSeoMetadata(models.AbstractModel):
 class Website(models.Model):
     _name = 'website'
     _inherit = ['website', 'website.seo.metadata']
+
+    def _alokai_default_logo(self):
+        """The Alokai wordmark, what a website shows until the merchant sets
+        its own logo (Website > Settings > Logo): Odoo's own default is a
+        placeholder the storefront would show as it is."""
+        with tools.file_open('graphql_alokai/static/img/alokai_wordmark.svg', 'rb') as f:
+            return base64.b64encode(f.read())
+
+    logo = fields.Binary(default=_alokai_default_logo)
+
+    @api.model
+    def _alokai_replace_placeholder_logos(self):
+        """Websites still on Odoo's placeholder logo get the Alokai wordmark;
+        a logo the merchant set is left as it is."""
+        with tools.file_open('website/static/src/img/website_logo.svg', 'rb') as f:
+            placeholder = base64.b64encode(f.read())
+        websites = self.sudo().search([]).filtered(lambda website: website.logo == placeholder)
+        if websites:
+            websites.write({'logo': self._alokai_default_logo()})
 
     def _compute_menu(self):
         """Odoo's main menu is the first menu without a parent; here, the

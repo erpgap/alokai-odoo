@@ -41,7 +41,9 @@
     <record id="website.default_website" model="website">
         <field name="name">Alokai</field>
         <field name="alokai_domain">https://alokai.erpgap.com</field>
-        <field name="logo" type="base64" file="graphql_alokai/static/description/icon.png"/>
+        <!-- The wordmark the storefront header shows; set your own in
+             Website > Settings > Logo. -->
+        <field name="logo" type="base64" file="graphql_alokai/static/img/alokai_wordmark.svg"/>
 
         <field name="social_twitter">https://x.com/erpGap</field>
         <field name="social_linkedin">https://www.linkedin.com/company/erpgap/posts/?feedView=all</field>

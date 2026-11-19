@@ -9,6 +9,10 @@
          hidden top menu Odoo keeps move up (see website.menu). -->
     <function model="website.menu" name="_alokai_flatten_header_menus"/>
 
+    <!-- The storefront shows the website's logo: Odoo's placeholder is
+         replaced by the Alokai wordmark (see website._alokai_default_logo). -->
+    <function model="website" name="_alokai_replace_placeholder_logos"/>
+
     <!-- Enable sign up and reset password on default website -->
     <function model="website" name="enable_b2c_reset_password"/>
 
